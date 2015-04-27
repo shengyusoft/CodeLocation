@@ -1,0 +1,5 @@
+Failed to load the JNI shared librar
+
+32 位运行64位jdk
+
+svn com  信息化运维监管平台 rms

@@ -1,0 +1,74 @@
+/* body {
+	margin: 0;
+	padding: 0;
+	background-color: #E1E9FF;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0 0 0 10px;
+	padding: 0
+}
+
+li {
+	font-size: 12px;
+	line-height: 30px;
+	list-style-type: none;
+}
+
+.button {
+	margin: 10px 0 0 30%;
+	float: left;
+}
+
+.button li {
+	float: left;
+	margin: 0
+}
+
+.button_01 {
+	background-image: url(images/uploadFileBottom.gif);
+	height: 21px;
+	width: 80px;
+	border-width: 0px;
+	font: normal 12px "宋体";
+	color: #3c6691;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.errorFontStyle {
+	background: url(images/validatebox_warning.png) left no-repeat;
+	color: red;
+	width: 20px;
+}
+
+.errorNewsContent {
+	border: 1px solid red;
+} */
+
+html,body{margin:0;padding:0;font-family:"宋体";font-size:12px;height:100%;color:#333;background:#152652 url(images/loginbj.png) repeat-x left top;}
+.loginMain{width:778px;height:600px;margin:0 auto;background:url(images/login.png) no-repeat center top;position:relative;}
+.loginMain dl{position:absolute;left:373px;top:249px;}
+.loginMain dt{height:2.5em;line-height:2.5em;}
+.loginMain dt strong{color:#2a4a61;}
+.loginMain dt.error {background: url("images/error.png") no-repeat scroll 4px center #FFF2F2;border: 1px solid #FF8080;height: auto;line-height: 18px;margin-bottom: 5px;padding: 2px 10px 2px 23px;width: 230px;}
+.loginMain dd{padding:7px 0 0 52px;}
+
+label{cursor:pointer;}
+.pTop{padding-top:10px;}
+.mTop{margin-top:8px;}
+
+input,button{cursor:pointer;vertical-align:middle;}
+input{font-size:12px;}
+input{height:22px;line-height:18px;}
+input.inputText{border:#7f9db9 1px solid;height:22px;line-height:18px;}
+input.inputText:hover{border-right:#0cf 1px solid;border-top:#0cf 1px solid;border-left:#0cf 1px solid;border-bottom:#0cf 1px solid;}
+.inputClick{border:1px solid #f80;background:#fffef9;height:22px;line-height:18px;}
+input.inputText2{border:#7f9db9 1px solid;height:22px;line-height:18px;}
+input.inputText2:hover{border-right:#0cf 1px solid;border-top:#0cf 1px solid;border-left:#0cf 1px solid;border-bottom:#0cf 1px solid;}
+.inputClick2{border:1px solid #f80;background:#fffef9;height:22px;line-height:18px;}
+div,form,img,ul,ol,li,dl,dt,dd,button{margin:0;padding:0;border:0;}
+button{width:172px;height:25px;line-height:25px;font-size:12px;font-weight:bold;color:#fff;text-align:center;background:url(images/loginButton.png);}
+button:hover{background:url(images/loginButton.png);}
+.error{color:red;font-size: 12px;font-weight:bold;text-align: center;margin-top: 15px}

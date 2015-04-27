@@ -1,0 +1,522 @@
+* {
+	font-size: 12px;
+}
+
+body {
+	font-family: helvetica, tahoma, verdana, sans-serif;
+	padding: 20px;
+	font-size: 13px;
+	margin: 0;
+}
+
+h2 {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0;
+	margin-bottom: 15px;
+}
+
+.grid {
+	border: 1px solid #8DB2E3;
+	font: 12px arial, helvetica, sans-serif;
+}
+
+.grid td {
+	font: 100% arial, helvetica, sans-serif;
+	height: 24px;
+	padding: 5px;
+}
+
+.grid {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.grid th {
+	background: none repeat scroll 0 0 #E7F3FE;
+	border: 1px solid #8DB2E3;
+	height: 27px;
+	line-height: 27px;
+	padding-left: 5px;
+}
+
+.grid td {
+	border: 1px solid #8DB2E3;
+	padding-left: 5px;
+}
+
+#layout_west_tree li ul li div {
+	padding: 5px 5px 3px 5px;
+}
+
+#layout_west_tree li div {
+	padding: 5px 5px 3px 10px;
+}
+
+#header {
+	overflow: hidden;
+	height: 69px;
+	background: #2076C3 url("images/index/headbg.png") repeat-x;
+	line-height: 64px;
+	color: #fff;
+	font-family: Verdana, 微软雅黑, 黑体
+}
+
+.light-info {
+	background: #FFFEE6;
+	color: #8F5700;
+	padding: 12px;
+}
+
+.light-tip {
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+	float: left;
+}
+
+.icon {no-repeat;
+	width: 18px;
+	line-height: 18px;
+	display: inline-block;
+}
+
+.icon_company {
+	background: url('images/ext/company.png') no-repeat center center;
+}
+
+.icon_dic {
+	background: url('images/ext/dic.png') no-repeat center center;
+}
+
+.icon_folder {
+	background: url('images/ext/folder.png') no-repeat center center;
+}
+
+.icon_add {
+	background: url('images/ext/add.png') no-repeat center center;
+}
+
+.icon_edit {
+	background: url('images/ext/edit.png') no-repeat center center;
+}
+
+.icon_home {
+	background: url('images/ext/home.png') no-repeat center center;
+}
+
+.icon_refresh {
+	background: url('images/ext/refresh.png') no-repeat center center;
+}
+
+.icon_org {
+	background: url('images/ext/org.png') no-repeat center center;
+}
+
+.icon_resource {
+	background: url('images/ext/resource.png') no-repeat center center;
+}
+
+.icon_role {
+	background: url('images/ext/role.png') no-repeat center center;
+}
+
+.icon_user {
+	background: url('images/ext/user.png') no-repeat center center;
+}
+
+.icon_del {
+	background: url('images/ext/del.png') no-repeat center center;
+}
+
+.icon_sys {
+	background: url('images/ext/sys.png') no-repeat center center;
+}
+
+/* toolbar */
+.icon_toolbar_add {
+	background: url('images/toolbar/add.png') no-repeat center center;
+}
+
+.icon_toolbar_add_disabled {
+	background: url('images/toolbar/add_disabled.png') no-repeat center
+		center;
+}
+
+.icon_toolbar_del {
+	background: url('images/toolbar/del.png') no-repeat center center;
+}
+
+.icon_toolbar_del_disabled {
+	background: url('images/toolbar/del_disabled.png') no-repeat center
+		center;
+}
+
+.icon_toolbar_search {
+	background: url('images/toolbar/search.png') no-repeat center center;
+}
+
+.icon_toolbar_edit {
+	background: url('images/toolbar/edit.png') no-repeat center center;
+}
+
+.icon_toolbar_edit_disabled {
+	background: url('images/toolbar/edit_disabled.png') no-repeat center
+		center;
+}
+
+.icon_toolbar_clear {
+	background: url('images/toolbar/clear.png') no-repeat center center;
+}
+
+.icon_toolbar_detail {
+	background: url('images/toolbar/detail.png') no-repeat center center;
+}
+
+.icon_toolbar_detail_disabled {
+	background: url('images/toolbar/detail_disabled.png') no-repeat center
+		center;
+}
+
+.icon_toolbar_audit {
+	background: url('images/toolbar/audit.png') no-repeat center center;
+}
+
+.icon_toolbar_audit_disabled {
+	background: url('images/toolbar/audit_diabled.png') no-repeat center
+		center;
+}
+
+.icon_toolbar_task_assign {
+	background: url('images/toolbar/task_assign.png') no-repeat center center;
+}
+
+.icon_toolbar_task_undo {
+	background: url('images/toolbar/undo.png') no-repeat center center;
+}
+
+.icon_toolbar_task_accept {
+	background: url('images/toolbar/task_accept.png') no-repeat center center;
+}
+
+.icon_toolbar_task_handler {
+	background: url('images/toolbar/task_handler.png') no-repeat center center;
+}
+
+.icon_toolbar_plan_start {
+	background: url('images/toolbar/plan_start.png') no-repeat center center;
+}
+
+/* rms系统功能性图标 */
+.icon_rms_merchant {
+	background: url('images/rms/merchant.png') no-repeat center center;
+}
+
+.icon_rms_handler_event {
+	background: url('images/rms/handler_event.png') no-repeat center center;
+}
+
+.icon_rms_history_process {
+	background: url('images/rms/history_process.png') no-repeat center
+		center;
+}
+
+.icon_rms_list_document {
+	background: url('images/rms/list_document.png') no-repeat center center;
+}
+
+.icon_rms_list_problem {
+	background: url('images/rms/list_problem.png') no-repeat center center;
+}
+
+.icon_rms_maintanance_daily {
+	background: url('images/rms/maintanance_daily.png') no-repeat center
+		center;
+}
+
+.icon_rms_manger_balance {
+	background: url('images/rms/manger_balance.png') no-repeat center center;
+}
+
+.icon_rms_merchant {
+	background: url('images/rms/merchant.png') no-repeat center center;
+}
+
+.icon_rms_manger_contract {
+	background: url('images/rms/manger_contract.png') no-repeat center
+		center;
+}
+
+.icon_rms_manger_event {
+	background: url('images/rms/manger_event.png') no-repeat center center;
+}
+
+.icon_rms_manger_knowledge {
+	background: url('images/rms/manger_knowledge.png') no-repeat center
+		center;
+}
+
+.icon_rms_manger_problem {
+	background: url('images/rms/manger_problem.png') no-repeat center center;
+}
+
+.icon_rms_manger_system {
+	background: url('images/rms/manger_system.png') no-repeat center center;
+}
+
+.icon_rms_msg_center {
+	background: url('images/rms/msg_center.png') no-repeat center center;
+}
+
+.icon_rms_notification {
+	background: url('images/rms/notification.png') no-repeat center center;
+}
+
+.icon_rms_record_maintenance {
+	background: url('images/rms/record_maintenance.png') no-repeat center
+		center;
+}
+
+.icon_rms_report_event {
+	background: url('images/rms/report_event.png') no-repeat center center;
+}
+
+.icon_rms_report_manger {
+	background: url('images/rms/report_manger.png') no-repeat center center;
+}
+
+.icon_rms_report_problem {
+	background: url('images/rms/report_problem.png') no-repeat center center;
+}
+
+.icon_rms_report_repair {
+	background: url('images/rms/report_repair.png') no-repeat center center;
+}
+
+.icon_rms_report_worksheet {
+	background: url('images/rms/report_worksheet.png') no-repeat center
+		center;
+}
+
+.icon_rms_service_inspection {
+	background: url('images/rms/service_inspection.png') no-repeat center
+		center;
+}
+
+.icon_rms_solution {
+	background: url('images/rms/solution.png') no-repeat center center;
+}
+
+.icon_rms_tasklist {
+	background: url('images/rms/tasklist.png') no-repeat center center;
+}
+
+.icon_rms_taskplan {
+	background: url('images/rms/taskplan.png') no-repeat center center;
+}
+
+.icon_rms_trouble_equipment {
+	background: url('images/rms/trouble_equipment.png') no-repeat center
+		center;
+}
+
+.icon_rms_infomation {
+	background: url('images/rms/infomation.png') no-repeat center center;
+}
+
+.icon_rms_project {
+	background: url('images/rms/building_go.png') no-repeat center center;
+}
+
+.icon_rms_sys_log {
+	background: url('images/rms/login_log.png') no-repeat center center;
+}
+
+
+/* 首页 */
+.icon_rms_notice_clos {
+	background: url('images/rms/clos.png') no-repeat center center;
+}
+
+.icon_rms_notice {
+	background: url('images/rms/notice.png') no-repeat center center;
+}
+
+.icon_rms_todo {
+	background: url('images/rms/todo.png') no-repeat center center;
+}
+
+.icon_rms_knowledge {
+	background: url('images/rms/knowledge.png') no-repeat center center;
+}
+
+.icon_rms_arrow_left {
+	background: url('images/rms/arrow_left.png') no-repeat center center;
+}
+
+.icon_rms_arrow_right {
+	background: url('images/rms/arrow_right.png') no-repeat center center;
+}
+
+.icon_rms_sys_shotcut {
+	background: url('images/rms/shotcut.png') no-repeat center center;
+}
+
+.icon_rms_statistics {
+	background: url('images/rms/statistics.png') no-repeat center center;
+}
+
+.icon_rms_maintain_positiond {
+	background: url('images/rms/maintain_position.png') no-repeat center center;
+}
+
+.icon_rms_time_analyse {
+	background: url('images/rms/time_analyse.png') no-repeat center center;
+}
+
+.icon_rms_purchase {
+	background: url('images/rms/purchase.png') no-repeat center center;
+}
+
+.icon_rms_customer {
+	background: url('images/rms/customer.png') no-repeat center center;
+}
+
+.icon_rms_finance {
+	background: url('images/rms/finance.png') no-repeat center center;
+}
+
+.icon_rms_goods {
+	background: url('images/rms/goods.png') no-repeat center center;
+}
+
+.mygrid-toolbar {
+	width: 100%;
+	vertical-align: middle;
+	background-color: #44ffee44;
+	display: inline-block
+}
+
+.search-toolbar {
+	display: inline-block;
+	margin-right: 10px;
+	float: right
+}
+
+.search-toolbar-many {
+	margin-left: 8px;
+	margin-top:8px
+}
+
+/* upload */
+.file-box {
+	position: relative;
+	width: 100%;
+}
+
+.txt {
+	height: 22px;
+	border: 1px solid #cdcdcd;
+	width: 180px;
+}
+
+.btn {
+	background-color: #FFF;
+	border: 1px solid #CDCDCD;
+	height: 24px;
+	width: 70px;
+}
+
+.file {
+	position: absolute;
+	top: 0;
+	right: 80px;
+	height: 24px;
+	filter: alpha(opacity :  0);
+	opacity: 0;
+	width: 260px
+}
+
+.easyui-accordion ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 10px;
+}
+
+.easyui-accordion ul li {
+	padding: 0px;
+}
+
+.easyui-accordion ul li a {
+	line-height: 24px;
+}
+
+.easyui-accordion ul li div {
+	margin: 2px 0px;
+	padding-left: 10px;
+	padding-top: 2px;
+}
+
+.easyui-accordion ul li div.hover {
+	border: 1px dashed #99BBE8;
+	background: #E0ECFF;
+	cursor: pointer;
+}
+
+.easyui-accordion ul li div.hover a {
+	color: #416AA3;
+}
+
+.easyui-accordion ul li div.selected {
+	border: 1px solid #99BBE8;
+	background: #E0ECFF;
+	cursor: default;
+}
+
+.easyui-accordion ul li div.selected a {
+	color: #416AA3;
+	font-weight: bold;
+}
+
+
+/* 提示框 */
+.tipfloat,.tipfloat .close {
+	background: url('images/tipright.png') no-repeat;
+}
+
+.tipfloat {
+	display: none;
+	z-index: 999;
+	position: fixed;
+	_position: absolute;
+	right: 2px;
+	bottom: 25px;
+	width: 236px;
+	height: 196px;
+	overflow: hidden;
+}
+
+.tipfloat .tiphead {
+	height: 28px;
+	line-height: 28px;
+	overflow: hidden;
+	padding: 0 5px;
+}
+
+.tipfloat .tiphead strong {
+	float: left;
+	color: #fff;
+	font-size: 14px;
+}
+
+.tipfloat .tiphead .close {
+	display: block;
+	float: right;
+	margin: 5px 0 0 0;
+	width: 18px;
+	height: 18px;
+	line-height: 999em;
+	overflow: hidden;
+	cursor: pointer;
+	background-position: -236px 0;
+}
