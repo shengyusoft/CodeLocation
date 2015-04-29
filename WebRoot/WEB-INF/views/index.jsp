@@ -90,7 +90,7 @@ a:hover {
 			<img src="../style/images/6570.png"
 				style="width: 40px; height: 40px; margin-left: 20px; margin-top: 12px; float: left;" />
 			<span
-				style="float: left; font-size: 20px; font-weight: bold; padding-left: 6px;">深圳市健康泉绿色农业科技有限公司</span>
+				style="float: left; font-size: 20px; font-weight: bold; padding-left: 6px;">河南金鹰建设集团有限公司</span>
 			<span style="float: right; padding-right: 20px;">欢迎 <a
 				id="index_edit_user" href="javascript:void(0)"
 				onclick="editUser('${sessionInfo.id}')" style="color: #fff"><b>${sessionInfo.name}</b></a>&nbsp;&nbsp;
@@ -260,7 +260,7 @@ a:hover {
 		<div data-options="region:'south',border:false"
 			style="height: 25px; overflow: hidden; text-align: left; padding: 5px; background-color: #daeef5">
 			<img src="../style/images/Other/logoa.png"
-				style="height: 15px; width: 20px; margin-top: 3px;" />深圳市健康泉绿色农业科技有限公司
+				style="height: 15px; width: 20px; margin-top: 3px;" />河南金鹰建设集团有限公司
 		</div>
 	</div>
 
