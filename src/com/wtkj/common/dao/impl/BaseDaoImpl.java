@@ -97,7 +97,7 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 		Query q = this.getCurrentSession().createQuery(hql);
 		return q.list();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> find(String hql, Map<String, Object> params) {

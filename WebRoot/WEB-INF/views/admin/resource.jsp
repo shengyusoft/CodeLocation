@@ -138,7 +138,8 @@
 						if (result.success) {
 							parent.$.messager.alert('提示', result.msg, 'info');
 							treeGrid.treegrid('reload');
-							parent.layout_west_tree.tree('reload');
+							//parent.layout_west_tree.tree('reload');
+							//parent.init();
 						}
 						progressClose();
 					}, 'JSON');

@@ -20,6 +20,7 @@
 <title>资源管理</title>
 <script type="text/javascript">
 	var dataGrid;
+	var nodeId;
 	var dictionarytypeTree;
 	$(function() {
 	
@@ -28,6 +29,7 @@
 			parentField : 'pid',
 			lines : true,
 			onClick : function(node) {
+				nodeId = node.id;
  				dataGrid.datagrid('load', {
 				    dictionarytypeId: node.id
 				});
@@ -140,6 +142,44 @@
 			} ]
 		});
 	}
+	function addType() {
+		parent.$.modalDialog({
+			title : '添加字典类型',
+			width : 500,
+			height : 300,
+			href : '${ctx}/dictionarytype/addPage',
+			buttons : [ {
+				text : '添加',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialog.handler.find('#dictionaryTypeAddForm');
+					f.submit();
+				}
+			} ]
+		});
+	}
+	
+	function editType() {
+		if(!isEmpty(nodeId)){
+			parent.$.modalDialog({
+				title : '编辑',
+				width : 500,
+				height : 300,
+				href : '${ctx}/dictionarytype/editPage?id=' + nodeId,
+				buttons : [ {
+					text : '编辑',
+					handler : function() {
+						parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+						var f = parent.$.modalDialog.handler.find('#dictionaryTypeEditForm');
+						f.submit();
+					}
+				} ]
+			});
+		}else{
+			parent.$.messager.alert('提示', '没有可编辑对象!', 'info');
+			return;
+		}
+	}
 	
 	function deleteFun(id) {
 		if (id == undefined) {//点击右键菜单才会触发这个
@@ -203,6 +243,8 @@
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div data-options="region:'west',border:false,split:true" title="字典类别" style="width:200px;overflow: hidden; ">
+		<a onclick="addType();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon_add'">添加</a>
+		<a onclick="editType();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon_edit'">编辑</a>
 		<table id="dictionarytypeTree" style="width:180px;margin: 10px 10px 10px 10px"></table>
 	</div>
 	<div id="toolbar" style="display: none;">

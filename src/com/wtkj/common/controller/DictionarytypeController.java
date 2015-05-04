@@ -2,6 +2,7 @@ package com.wtkj.common.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.Json;
 import com.wtkj.common.Tree;
 import com.wtkj.common.model.Dictionarytype;
@@ -22,10 +24,33 @@ public class DictionarytypeController extends BaseController {
 	private DictionarytypeServiceI dictionarytypeService;
 
 	
+	
+	@RequestMapping("/combox")
+	@ResponseBody
+	public List<Dictionarytype> combox(String pid) {
+		return dictionarytypeService.combox(pid);
+	}
+	
 	@RequestMapping("/tree")
 	@ResponseBody
 	public List<Tree> tree(HttpSession session) {
 		return dictionarytypeService.tree();
+	}
+	
+	
+	@RequestMapping("/addPage")
+	public String addPage(HttpServletRequest request) {
+		request.setAttribute("stateList", GlobalConstant.statelist);
+		return "/admin/dictionaryTypeAdd";
+	}
+	
+	
+	@RequestMapping("/editPage")
+	public String editPage(HttpServletRequest request,Long id) {
+		Dictionarytype dic = dictionarytypeService.get(id);
+		request.setAttribute("dictionarytype", dic);
+		request.setAttribute("stateList", GlobalConstant.statelist);
+		return "/admin/dictionaryTypeEdit";
 	}
 
 	@RequestMapping("/add")

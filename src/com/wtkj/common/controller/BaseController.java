@@ -2,6 +2,8 @@ package com.wtkj.common.controller;
 
 import java.text.SimpleDateFormat;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.propertyeditors.CustomBooleanEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wtkj.common.CustomTimestampEditor;
+import com.wtkj.common.GlobalConstant;
+import com.wtkj.common.SessionInfo;
 
 @Controller
 @RequestMapping("/base")
@@ -28,8 +32,8 @@ public class BaseController {
 		/**
 		 * spring mvc针对表单的绑定数据 需要注册基本类型的数据才可以传值到后台
 		 */
-//		binder.registerCustomEditor(Date.class, new CustomDateEditor(
-//				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+		// binder.registerCustomEditor(Date.class, new CustomDateEditor(
+		// new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
 		// binder.registerCustomEditor(Date.class, new CustomDateEditor(new
 		// SimpleDateFormat("yyyy-MM-dd"), true));
 		binder.registerCustomEditor(Boolean.class,
@@ -56,8 +60,9 @@ public class BaseController {
 		/**
 		 * 防止XSS攻击
 		 */
-//		binder.registerCustomEditor(String.class, new StringEscapeEditor(true,
-//				false));
+		// binder.registerCustomEditor(String.class, new
+		// StringEscapeEditor(true,
+		// false));
 	}
 
 	/**
@@ -75,6 +80,12 @@ public class BaseController {
 	public String redirectJsp(@PathVariable String folder,
 			@PathVariable String jspName) {
 		return "/" + folder + "/" + jspName;
+	}
+
+	public SessionInfo getSessionInfo(HttpServletRequest request) {
+		SessionInfo sessionInfo = (SessionInfo) request.getSession()
+				.getAttribute(GlobalConstant.SESSION_INFO);
+		return sessionInfo;
 	}
 
 }

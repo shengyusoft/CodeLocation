@@ -20,15 +20,24 @@ import org.hibernate.validator.constraints.NotBlank;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class Trole extends IdEntity implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String name; // 角色名称
 	private Integer seq; // 排序号
 	private Integer isdefault; // 是否默认
 	private String description; // 备注
 	private Set<Tresource> resources = new HashSet<Tresource>(0);
 	private Set<Tuser> users = new HashSet<Tuser>(0);
+	private String code;
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	@NotBlank
 	public String getName() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.SessionInfo;
+import com.wtkj.common.model.Tuser;
 import com.wtkj.common.model.User;
 
 public interface UserServiceI {
@@ -32,5 +33,7 @@ public interface UserServiceI {
 	List<User> find(String organization,String userType);
 
 	public void editPersonal(User user);
+
+	public List<Tuser> findByRole(String string);
 
 }

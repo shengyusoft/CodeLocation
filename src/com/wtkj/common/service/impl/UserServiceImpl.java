@@ -346,4 +346,11 @@ public class UserServiceImpl implements UserServiceI {
 		userDao.update(t);
 
 	}
+
+	@Override
+	public List<Tuser> findByRole(String roleCode) {
+		String hql = "select * from sys_user u left join sys_user_role ur on u.id = ur.user_id left join sys_role r on ur.role_id=r.id where r.code='"
+				+ roleCode + "'";
+		return userDao.findBySql(hql, Tuser.class);
+	}
 }

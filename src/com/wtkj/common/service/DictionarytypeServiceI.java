@@ -18,5 +18,7 @@ public interface DictionarytypeServiceI {
 
 	public List<Tree> tree();
 
+	public List<Dictionarytype> combox(String pid);
+
 
 }
