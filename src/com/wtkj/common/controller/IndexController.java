@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -23,18 +24,22 @@ import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.SessionInfo;
+import com.wtkj.common.model.Role;
 import com.wtkj.common.model.ShotcutInfoVo;
 import com.wtkj.common.model.SystemLogVo;
+import com.wtkj.common.model.Tuser;
 import com.wtkj.common.model.User;
 import com.wtkj.common.service.ResourceServiceI;
+import com.wtkj.common.service.RoleServiceI;
 import com.wtkj.common.service.ShotcutServiceI;
 import com.wtkj.common.service.SystemLogServiceI;
 import com.wtkj.common.service.UserServiceI;
-import com.wtkj.rms.dailymaintain.model.TaskVo;
 import com.wtkj.rms.dailymaintain.service.TaskServiceI;
 import com.wtkj.rms.msgcenter.model.vo.ArticleVo;
 import com.wtkj.rms.msgcenter.service.ArticleServiceI;
-import com.wtkj.rms.workspace.model.TaskToDoDto;
+import com.wtkj.rms.process.model.Process;
+import com.wtkj.rms.process.model.ProcessVo;
+import com.wtkj.rms.process.service.ProcessServiceI;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,6 +51,9 @@ public class IndexController extends BaseController {
 	private UserServiceI userService;
 
 	@Autowired
+	private RoleServiceI roleService;
+
+	@Autowired
 	private ResourceServiceI resourceService;
 
 	@Autowired
@@ -53,6 +61,9 @@ public class IndexController extends BaseController {
 
 	@Autowired
 	private TaskServiceI taskService;
+
+	@Autowired
+	private ProcessServiceI processService;
 
 	@Autowired
 	private SystemLogServiceI systemLogService;
@@ -109,41 +120,96 @@ public class IndexController extends BaseController {
 	@ResponseBody
 	private Grid toDoGrid(HttpServletRequest request) {
 		Grid grid = new Grid();
-		SessionInfo sessionInfo = (SessionInfo) request.getSession()
-				.getAttribute(GlobalConstant.SESSION_INFO);
-		List<TaskVo> tasks = null;
-		List<TaskToDoDto> tasktodos = new ArrayList<TaskToDoDto>();
-		try {
-			tasks = taskService.findToDoTask(sessionInfo.getId());
-			for (TaskVo vo : tasks) {
-				TaskToDoDto dto = new TaskToDoDto();
-				dto.setName(vo.getName());
-				dto.setLevel(vo.getLevel());
-				dto.setType(GlobalConstant.TODO_RCWH);
-				dto.setId(vo.getId());
-				dto.setState(vo.getTaskState());
-				dto.setTag("task");
-				if (vo.getLevel() == 2) {// 重要
-					dto.setLevelText("<font color='#FFC000'>重要</font>");
-				} else if (vo.getLevel() == 3) {// 紧急
-					dto.setLevelText("<font color='#FF0000'>重要</font>");
-				} else {// 一般
-					dto.setLevelText("重要");
-				}
-				tasktodos.add(dto);
-			}
-			// TODO 加载其他待办...here!
+		SessionInfo sessionInfo = getSessionInfo(request);
+		User user = null;
+		if (sessionInfo != null && sessionInfo.getId() != null) {
+			user = userService.get(sessionInfo.getId());
+		}
+		int state = getStateByCurrentUser(roleService, user);
 
-			grid.setRows(tasktodos);
-			grid.setTotal((long) tasktodos.size());
+		List<Process> ps = new ArrayList<Process>();
+		List<ProcessVo> pvs = new ArrayList<ProcessVo>();
+
+		try {
+			ps = processService.findProcessByState(state);
+			for (Process p : ps) {
+				pvs.add(process2Vo(p));
+			}
+			grid.setRows(pvs);
+			grid.setTotal((long) pvs.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return grid;
 
 	}
 
+	private ProcessVo process2Vo(Process po) {
+		ProcessVo p = null;
+		if (po != null && po.getApplyUser() != null) {
+			p = new ProcessVo();
+			BeanUtils.copyProperties(po, p);
+			User user = userService.get(po.getApplyUser().getId());
+			p.setApplyUserId(user.getId());
+			p.setApplyUserName(user.getName());
+		}
+		return p;
+	}
+
+	// 通过当前用户，获取对应的流程状态,此流程 给每个人 只付一种权限
+	private int getStateByCurrentUser(RoleServiceI roleService, User user) {
+		int state = 0;
+		StringBuffer sb = new StringBuffer();
+		List<Role> roles = roleService.findByUser(user);
+		for (Role role : roles) {
+			sb.append(role.getName() + ",");
+		}
+		String roleStr = sb.toString();
+		if (!StringUtils.isEmpty(roleStr)) {
+			if (roleStr.indexOf("会计") >= 0) {
+				state = 1;
+			} else if (roleStr.indexOf("总经理") >= 0) {
+				state = 2;
+			} else if (roleStr.indexOf("出纳") >= 0) {
+				state = 3;
+			} else {
+				state = 0;
+			}
+		}
+		return state;
+	}
+
+	/**
+	 * 加载我的待办
+	 * 
+	 * @param request
+	 * @param sessionInfo
+	 */
+	/*
+	 * @RequestMapping("/toDoGrid")
+	 * 
+	 * @ResponseBody private Grid toDoGrid(HttpServletRequest request) { Grid
+	 * grid = new Grid(); SessionInfo sessionInfo = (SessionInfo)
+	 * request.getSession() .getAttribute(GlobalConstant.SESSION_INFO);
+	 * List<TaskVo> tasks = null; List<TaskToDoDto> tasktodos = new
+	 * ArrayList<TaskToDoDto>(); try { tasks =
+	 * taskService.findToDoTask(sessionInfo.getId()); for (TaskVo vo : tasks) {
+	 * TaskToDoDto dto = new TaskToDoDto(); dto.setName(vo.getName());
+	 * dto.setLevel(vo.getLevel()); dto.setType(GlobalConstant.TODO_RCWH);
+	 * dto.setId(vo.getId()); dto.setState(vo.getTaskState());
+	 * dto.setTag("task"); if (vo.getLevel() == 2) {// 重要
+	 * dto.setLevelText("<font color='#FFC000'>重要</font>"); } else if
+	 * (vo.getLevel() == 3) {// 紧急
+	 * dto.setLevelText("<font color='#FF0000'>重要</font>"); } else {// 一般
+	 * dto.setLevelText("重要"); } tasktodos.add(dto); } // TODO 加载其他待办...here!
+	 * 
+	 * grid.setRows(tasktodos); grid.setTotal((long) tasktodos.size()); } catch
+	 * (Exception e) { e.printStackTrace(); }
+	 * 
+	 * return grid;
+	 * 
+	 * }
+	 */
 	@ResponseBody
 	@RequestMapping("/login")
 	public Json login(HttpServletRequest request, HttpServletResponse response,

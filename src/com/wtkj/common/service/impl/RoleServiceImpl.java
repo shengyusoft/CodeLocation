@@ -17,6 +17,8 @@ import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.common.model.Role;
 import com.wtkj.common.model.Tresource;
 import com.wtkj.common.model.Trole;
+import com.wtkj.common.model.Tuser;
+import com.wtkj.common.model.User;
 import com.wtkj.common.service.RoleServiceI;
 
 @Service
@@ -24,6 +26,9 @@ public class RoleServiceImpl implements RoleServiceI {
 
 	@Autowired
 	private BaseDaoI<Trole> roleDao;
+
+	@Autowired
+	private BaseDaoI<Tuser> userDao;
 
 	@Autowired
 	private BaseDaoI<Tresource> resourceDao;
@@ -88,7 +93,8 @@ public class RoleServiceImpl implements RoleServiceI {
 		List<Role> ul = new ArrayList<Role>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Trole t ";
-		List<Trole> l = roleDao.find(hql + whereHql(role, params) + orderHql(ph), params, ph.getPage(), ph.getRows());
+		List<Trole> l = roleDao.find(hql + whereHql(role, params)
+				+ orderHql(ph), params, ph.getPage(), ph.getRows());
 		for (Trole t : l) {
 			Role u = new Role();
 			BeanUtils.copyProperties(t, u);
@@ -101,7 +107,8 @@ public class RoleServiceImpl implements RoleServiceI {
 	public Long count(Role role, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Trole t ";
-		return roleDao.count("select count(*) " + hql + whereHql(role, params), params);
+		return roleDao.count("select count(*) " + hql + whereHql(role, params),
+				params);
 	}
 
 	private String whereHql(Role role, Map<String, Object> params) {
@@ -127,7 +134,8 @@ public class RoleServiceImpl implements RoleServiceI {
 	@Override
 	public void grant(Role role) {
 		Trole t = roleDao.get(Trole.class, role.getId());
-		if ((role.getResourceIds() != null) && !role.getResourceIds().equalsIgnoreCase("")) {
+		if ((role.getResourceIds() != null)
+				&& !role.getResourceIds().equalsIgnoreCase("")) {
 			String ids = "";
 			boolean b = false;
 			for (String id : role.getResourceIds().split(",")) {
@@ -138,8 +146,9 @@ public class RoleServiceImpl implements RoleServiceI {
 				}
 				ids += id;
 			}
-			t.setResources(new HashSet<Tresource>(resourceDao.find("select distinct t from Tresource t where t.id in ("
-					+ ids + ")")));
+			t.setResources(new HashSet<Tresource>(resourceDao
+					.find("select distinct t from Tresource t where t.id in ("
+							+ ids + ")")));
 		} else {
 			t.setResources(null);
 		}
@@ -161,5 +170,20 @@ public class RoleServiceImpl implements RoleServiceI {
 			}
 		}
 		return lt;
+	}
+
+	@Override
+	public List<Role> findByUser(User user) {
+		List<Role> ul = new ArrayList<Role>();
+		String sql = "select r.* from sys_role r left join sys_user_role ru on r.id = ru.role_id left join sys_user u on ru.user_id=u.id where u.id="
+				+ user.getId();
+		List<Trole> l = roleDao.findBySql(sql, Trole.class);
+
+		for (Trole t : l) {
+			Role u = new Role();
+			BeanUtils.copyProperties(t, u);
+			ul.add(u);
+		}
+		return ul;
 	}
 }

@@ -29,7 +29,6 @@ public class ProcessServiceImpl implements ProcessServiceI {
 	@Autowired
 	private BaseDaoI<Tdictionary> dictionaryDao;
 
-
 	@Override
 	public Long add(Process p, HttpServletRequest request) {
 		return (Long) processDao.save(p);
@@ -116,9 +115,19 @@ public class ProcessServiceImpl implements ProcessServiceI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-
+	@Override
+	public List<Process> findProcessByState(int state) {
+		String sql = "";
+		if (state > 0) {
+			sql = " select * from process p where p.state=" + state;
+		} else {
+			// 被退回的流程，用户重新申请
+			sql = " select * from process p where p.state < 0";
+		}
+		return processDao.findBySql(sql, Process.class);
+	}
 
 }

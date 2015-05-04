@@ -14,7 +14,7 @@ function init() {
 	loadMenu();
 	editTip();
 	taskRemind();// 任务提醒
-    loadToDo();//加载我的待办
+	loadToDo();// 加载我的待办
 }
 
 function loadindex() {
@@ -138,7 +138,7 @@ function loadMenu() {
 
 }
 
-function shotTab(url,title,icon){
+function shotTab(url, title, icon) {
 	addTab({
 		url : ctxPath + '' + url,
 		title : title,
@@ -271,7 +271,7 @@ function logout() {
 }
 
 function editUser(userid) {
-	if(isEmpty(userid)){
+	if (isEmpty(userid)) {
 		$.messager.alert("登录过期,请重新登录!");
 		return;
 	}
@@ -319,7 +319,6 @@ function editUserPwd() {
 	});
 }
 
-
 // 文章详情
 function detailArticle(title, type, id) {
 	var url = ctxPath + '/' + type + '/detailPage?id=' + id;
@@ -334,134 +333,104 @@ function detailArticle(title, type, id) {
 }
 
 var toDoGrid;
-function loadToDo(){
-	toDoGrid = $('#myTaskGrid').datagrid({
-		url : ctxPath + '/admin/toDoGrid',
-		striped : true,
-		showHeader : false,
-		fit: true,
-		nowrap : true,
-		idField : 'id',
-		frozenColumns : [ [
+function loadToDo() {
+	toDoGrid = $('#myTaskGrid')
+			.datagrid(
+					{
+						url : ctxPath + '/admin/toDoGrid',
+						striped : true,
+						showHeader : false,
+						fit : true,
+						nowrap : true,
+						idField : 'id',
+						frozenColumns : [ [
 
-				{
-					id:'img_tag',
-					width : '80',
-					align : 'center',
-					formatter : function(value, row, index) {
-						return "<img style='vertical-align: middle;' src='"+ctxPath+"/style/images/rms/clos.png'";
-					}
-				},
-				{
-					width : '80',
-					title : '待办类型',
-					align : 'center',
-					field : 'type',
-					formatter : function(value, row, index) {
-						var str = '【'+value+'】';
-						return str;
-					}
-				},
-				{
-					width : '300',
-					title : '待办名称',
-					align : 'center',
-					sortable : true,
-					field : 'name',
-					formatter : function(value, row, index) {
-						var str = '<span class="STYLE1">'+value+'</span>';
-						if(index == 0){
-							str = '<span class="STYLE1" style="color:red">'+value+'</span>';
-						}
-						return str;
-					}
+								{
+									id : 'img_tag',
+									width : 80,
+									align : 'center',
+									formatter : function(value, row, index) {
+										return "<img style='vertical-align: middle;' src='"
+												+ ctxPath
+												+ "/style/images/rms/clos.png'";
+									}
+								},
+								{
+									width : 150,
+									title : '待办任务',
+									align : 'center',
+									field : 'processName',
+									formatter : function(value, row, index) {
+										var str = '【' + value + '】';
+										return str;
+									}
+								},
+								{
+									width : 120,
+									title : '到达时间',
+									align : 'center',
+									field : 'arriveDT',
+									formatter : function(value, row, index) {
+										if (isEmpty(value)) {
+											return '';
+										} else {
+											return value.substring(0, value
+													.indexOf(' '));
+										}
+									}
+								},
+								{
+									width : 90,
+									field : 'action',
+									title : '操作',
+									formatter : function(value, row, index) {
+										var str = $
+												.formatString(
+														'<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo(\'{0}\',\'{1}\');" >去处理</a>',
+														row.id, row.state);
+										return str;
+									}
+								} ] ],
+						toolbar : '#toolbar'
+					});
 
-				},
-				{
-					width : '80',
-					title : '重要等级',
-					align : 'center',
-					field : 'levelText'
-				}, {
-					width : 90,
-					field : 'action',
-					title : '操作',
-					formatter : function(value, row, index) {
-						var str = $.formatString('<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo(\'{0}\',\'{1}\',\'{2}\');" >去处理</a>', 
-								row.id,row.tag,row.state);
-						return str;
-					}
-				} ] ],
-		toolbar : '#toolbar'		
-	});
-	
-	 $('#myTaskGrid').datagrid('getPanel').addClass('lines-no');
+	$('#myTaskGrid').datagrid('getPanel').addClass('lines-no');
 }
 
 // 任务处理
-function handlerToDo(id,tag,state) {
-	var buttonText = '';
-	var buttonIcon = '';
-	if(state == 1){//接受
-		buttonText = '接受';
-		buttonIcon = 'icon_toolbar_task_accept';
-	}else{//处理
-		buttonText = '处理';
-		buttonIcon = 'icon_toolbar_task_handler';
-	}
-	var url = ctxPath + '/'+tag+'/todoPage?id=' + id;
-	
+function handlerToDo(id, state) {
+	debugger;
 	parent.$.modalDialog({
-		title : '待办处理',
-		width : '870',
-		height : '560',
-		href : url,
-		buttons : [ {
-			text : buttonText,
-			iconCls:buttonIcon,
-			handler : function() {
-				parent.$.modalDialog.openner_dataGrid = toDoGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-				if(state > 1){
-					var f = parent.$.modalDialog.handler
-					.find('#handlerForm');
-					f.submit();
-				}else{
-					parent.$.messager.confirm('确认', '确认接受所选的任务吗?', function(ok) {
-						if(ok){
-							$.ajax({
-								type : "post",
-								url : ctxPath + "/task/acceptBatch",
-								cache : false,
-								data : {
-									ids : id
-								},
-								dataType : "json",
-								success : function(result) {
-									if (result.success) {
-										parent.$.modalDialog.handler.dialog('close');
-										parent.$.messager.alert('提示', result.msg, 'success',
-												'icon_remind');
-										toDoGrid.datagrid('reload');
-									}
-								},
-								error : function(error) {
-									alert(error);
-								}
-					
-							});
-						}
-					});
-				}
-			}
-		},{
-			text : '退出',
-			handler : function() {
-				// 因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-				parent.$.modalDialog.handler.dialog('close');
-			}
-		} ]
+		title : '报销申请',
+		width : '900',
+		height : '500',
+		resizable : true,
+		href : ctxPath+'/reimbursement/handlerPage?id='+id,
+		buttons : [
+				{
+					text : '通过',
+					handler : function() {
+						var f = parent.$.modalDialog.handler
+								.find('#processForm');
+						parent.$.modalDialog.handler.find('#option').val(0);
+						f.submit();
+					}
+				},{
+					text : '退回',
+					handler : function() {
+						var f = parent.$.modalDialog.handler
+								.find('#processForm');
+						parent.$.modalDialog.handler.find('#option').val(1);
+						f.submit();
+					}
+				}, {
+					text : '退出',
+					handler : function() {
+						parent.$.modalDialog.handler.dialog('close');
+					}
+				} ]
 	});
-	
+
 }
 
 // 任务提醒

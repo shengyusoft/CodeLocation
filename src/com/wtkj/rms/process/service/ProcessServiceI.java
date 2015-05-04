@@ -27,4 +27,6 @@ public interface ProcessServiceI {
 
 	public void deleteByDocIds(String ids);
 
+	public List<Process> findProcessByState(int state);
+
 }

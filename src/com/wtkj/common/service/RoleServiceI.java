@@ -5,6 +5,7 @@ import java.util.List;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.Tree;
 import com.wtkj.common.model.Role;
+import com.wtkj.common.model.User;
 
 public interface RoleServiceI {
 
@@ -23,5 +24,7 @@ public interface RoleServiceI {
 	public void grant(Role role);
 
 	public List<Tree> tree();
+
+	public List<Role> findByUser(User user);
 
 }

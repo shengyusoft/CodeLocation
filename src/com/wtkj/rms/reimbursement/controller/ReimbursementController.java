@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -22,6 +23,7 @@ import com.wtkj.common.service.UserServiceI;
 import com.wtkj.common.utils.DateUtil;
 import com.wtkj.rms.process.model.Process;
 import com.wtkj.rms.process.model.ProcessHistory;
+import com.wtkj.rms.process.model.ProcessVo;
 import com.wtkj.rms.process.service.ProcessHistoryServiceI;
 import com.wtkj.rms.process.service.ProcessServiceI;
 import com.wtkj.rms.reimbursement.model.po.Reimbursement;
@@ -67,10 +69,10 @@ public class ReimbursementController extends BaseController {
 	@SuppressWarnings("unused")
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(Reimbursement p, HttpServletRequest request) {
+	public Json add(Reimbursement reimbursement, HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			Long docId = reimbursementService.add(p, request);
+			Long docId = reimbursementService.add(reimbursement, request);
 
 			// 提交后保存流程以及流程历史操作记录
 			Process process = new Process();
@@ -79,32 +81,33 @@ public class ReimbursementController extends BaseController {
 			String processName = "";
 			Long userId = getSessionInfo(request).getId();
 			User user = userService.get(userId);
-			String dateStr = DateUtil.convertDateToString(new Date());
-			processName += user.getName() + "-报销单-" + dateStr;
+			Tuser tuser = new Tuser();
+			tuser.setId(user.getId());
 
 			if (user == null) {
 				throw new Exception("操作人为空！请重新登录");
 			}
 
-			process.setProcessName(processName);
+			process.setProcessName(user.getName() + "申请报销");
+			process.setApplyUser(tuser);
 			process.setDocId(docId);
 			process.setStartDT(new Date());
+			process.setArriveDT(new Date());
 			process.setState(ProcessStateConstant.BX_INIT);
 			Long processId = processService.add(process, request);
-			
-			//更新
-			p.setId(docId);
+
+			// 更新
+			reimbursement.setId(docId);
 			process.setId(processId);
-			p.setProcess(process);
-			reimbursementService.edit(p, request);
+			reimbursement.setProcess(process);
+			reimbursementService.edit(reimbursement, request);
 
 			// 历史记录保存
 			if (processId != null && processId > 0) {
 				ProcessHistory history = new ProcessHistory();
 				process.setId(processId);
 				history.setProcess(process);
-				Tuser tuser = new Tuser();
-				tuser.setId(user.getId());
+
 				history.setOperator(tuser);
 				history.setOperateDT(new Date());
 				history.setOperateDetail(user.getName() + " 于 "
@@ -125,74 +128,73 @@ public class ReimbursementController extends BaseController {
 	@SuppressWarnings("unused")
 	@RequestMapping("/commit")
 	@ResponseBody
-	public Json commit(Reimbursement p, HttpServletRequest request) {
+	public Json commit(Reimbursement reimbursement, HttpServletRequest request) {
 		Json j = new Json();
 		try {
 			Long userId = getSessionInfo(request).getId();
 			User user = userService.get(userId);
+			Tuser tuser = new Tuser();
+			tuser.setId(user.getId());
 
-			if (p.getId() != null && p.getId() > 0 && p.getProcess() != null) {
-				reimbursementService.edit(p, request);
+			if (reimbursement.getId() != null && reimbursement.getId() > 0
+					&& reimbursement.getProcess() != null) {
+				reimbursementService.edit(reimbursement, request);
 				// 审批不通过重新申请的情况
-				Process process = p.getProcess();
+				Process process = reimbursement.getProcess();
+				process.setApplyUser(tuser);
+				process.setArriveDT(new Date());
 				process.setState(ProcessStateConstant.BX_APPLYED);
 				processService.edit(process, request);
 
 				// 历史记录保存
 				ProcessHistory history = new ProcessHistory();
 				history.setProcess(process);
-				Tuser tuser = new Tuser();
-				tuser.setId(user.getId());
 				history.setOperator(tuser);
 				history.setOperateDT(new Date());
 
 				// 查询会计人员
 				String nextOper = getNextOperator("role_account");
-				
+
 				history.setOperateDetail(user.getName() + " 于 "
 						+ DateUtil.convertDateToString(new Date())
-						+ "重新申请报销单成功,下一步执行人为"+nextOper);
+						+ "重新申请报销单成功,下一步执行人为" + nextOper);
 				processHistoryService.add(history, request);
 
 			} else {
 				// 第一次申请提交报销单
-				Long docId = reimbursementService.add(p, request);
+				Long docId = reimbursementService.add(reimbursement, request);
 				// 提交后保存流程以及流程历史操作记录
 				Process process = new Process();
-				// 流程名称：格式：用户名-类型-时间
-				String processName = "";
-				String dateStr = DateUtil.convertDateToString(new Date());
-				processName += user.getName() + "-报销单-" + dateStr;
 				if (user == null) {
 					throw new Exception("操作人为空！请重新登录");
 				}
-				process.setProcessName(processName);
+				process.setProcessName(user.getName() + "申请报销");
+				process.setApplyUser(tuser);
 				process.setDocId(docId);
 				process.setStartDT(new Date());
+				process.setArriveDT(new Date());
 				// 状态为申请成功
 				process.setState(ProcessStateConstant.BX_APPLYED);
 				Long processId = processService.add(process, request);
-				
-				//更新
-				p.setId(docId);
+
+				// 更新
+				reimbursement.setId(docId);
 				process.setId(processId);
-				p.setProcess(process);
-				reimbursementService.edit(p, request);
+				reimbursement.setProcess(process);
+				reimbursementService.edit(reimbursement, request);
 
 				// 历史记录保存
 				if (processId != null && processId > 0) {
 					ProcessHistory history = new ProcessHistory();
 					process.setId(processId);
 					history.setProcess(process);
-					Tuser tuser = new Tuser();
-					tuser.setId(user.getId());
 					history.setOperator(tuser);
 					history.setOperateDT(new Date());
 					// 查询会计人员
 					String nextOper = getNextOperator("role_account");
 					history.setOperateDetail(user.getName() + " 于 "
 							+ DateUtil.convertDateToString(new Date())
-							+ "申请报销单成功,下一步执行人为"+nextOper);
+							+ "申请报销单成功,下一步执行人为" + nextOper);
 					processHistoryService.add(history, request);
 				}
 			}
@@ -271,16 +273,43 @@ public class ReimbursementController extends BaseController {
 		return "/basic/reimbursement/reimbursementDetail";
 	}
 
+	@RequestMapping("/handlerPage")
+	public String handlerPage(HttpServletRequest request, Long id) {
+		Process process = processService.get(id);
+		if (process == null || process.getApplyUser() == null) {
+			return "/error";
+		}
+		ProcessVo p = new ProcessVo();
+		BeanUtils.copyProperties(process, p);
+		long userId = process.getApplyUser().getId();
+		User user = userService.get(userId);
+		p.setApplyUserId(user.getId());
+		p.setApplyUserName(user.getName());
+		request.setAttribute("process", p);
+		return "/basic/reimbursement/processAudit";
+	}
+
 	// 流程审批相关,process docid,remark
 	// 前台需要将process 的id 置入
 	// 审批通过
-	@RequestMapping("/complete")
+	@RequestMapping("/complate")
 	@ResponseBody
-	public Json complate(Process process, HttpServletRequest request) {
+	public Json complate(ProcessVo vo, HttpServletRequest request) {
 		Json j = new Json();
 		Reimbursement reimbursement = null;
-		if (process != null && process.getDocId() > 0) {
-			reimbursement = reimbursementService.get(process.getDocId());
+		if (vo == null || vo.getId() <= 0) {
+			j.setMsg("error!");
+			return j;
+		}
+		Process po = processService.get(vo.getId());
+		vo = process2Vo(po);
+
+		if (vo != null && vo.getDocId() != null && vo.getDocId() > 0) {
+			if (vo.getOption() == 1) {
+				return abort(vo, request);
+			}
+
+			reimbursement = reimbursementService.get(vo.getDocId());
 			if (reimbursement != null) {
 				Long userId = getSessionInfo(request).getId();
 				if (userId > 0) {
@@ -289,59 +318,63 @@ public class ReimbursementController extends BaseController {
 						String roleNames = user.getRoleNames();
 						// 状态更新
 						if (roleNames.indexOf("会计") >= 0) {
-							process.setState(ProcessStateConstant.BX_AUDIT_KJ);// 会计审批通过
+							po.setState(ProcessStateConstant.BX_AUDIT_KJ);// 会计审批通过
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_top_manger");
-							updateHistory(request, user, process,
-									"会计：" + user.getName() + "审批通过,下一步执行人为:"+op);
+							updateHistory(request, user, po,
+									"会计：" + user.getName() + "审批通过,下一步执行人为:"
+											+ op);
 
 						} else if (roleNames.indexOf("总经理") >= 0) {
-							process.setState(ProcessStateConstant.BX_AUDIT_ZJL);// 总经理审批通过
+							po.setState(ProcessStateConstant.BX_AUDIT_ZJL);// 总经理审批通过
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_cashier");
-							updateHistory(request, user, process,
-									"总经理：" + user.getName() + "审批通过,下一步执行人为:"+op);
+							updateHistory(request, user, po,
+									"总经理：" + user.getName() + "审批通过,下一步执行人为:"
+											+ op);
 						} else if (roleNames.indexOf("出纳") >= 0) {
-							process.setState(ProcessStateConstant.BX_CN);// 出纳成功，流程结束
-							process.setEndDT(new Date());
+							po.setState(ProcessStateConstant.BX_CN);// 出纳成功，流程结束
+							vo.setEndDT(new Date());
 							// 增加流程操作历史记录
-							updateHistory(request, user, process,
+							updateHistory(request, user, po,
 									"出纳：" + user.getName() + "出纳成功!报销流程结束");
 						} else if (roleNames.indexOf("超级管理员") >= 0) {
 							// 可以审批所有的单子
-							process.setState(process.getState() + 1);
+							po.setState(vo.getState() + 1);
 							// 增加流程操作历史记录
-							if (process.getState() < 4) {
-								updateHistory(request, user, process, "超级管理员："
+							if (po.getState() < 4) {
+								updateHistory(request, user, po, "超级管理员："
 										+ user.getName() + "审批通过!");
 							} else {
-								updateHistory(request, user, process, "超级管理员："
+								updateHistory(request, user, po, "超级管理员："
 										+ user.getName() + "出纳成功!");
 							}
 						}
 
 						try {
-							processService.edit(process, request);
+							po.setArriveDT(new Date());
+							processService.edit(po, request);
 							j.setSuccess(true);
 							j.setMsg("审批成功！");
 						} catch (Exception e) {
+							j.setSuccess(false);
+							j.setMsg("审批失败！");
 							j.setMsg(e.getMessage());
 						}
 					}
 				}
 			}
 		}
-		j.setSuccess(false);
-		j.setMsg("审批失败！");
 		return j;
 	}
 
 	// 审批不通过
 	@RequestMapping("/abort")
 	@ResponseBody
-	public Json abort(Process process, HttpServletRequest request) {
+	public Json abort(ProcessVo vo, HttpServletRequest request) {
 		Json j = new Json();
-		if (process == null || process.getDocId() <= 0) {
+		if (vo == null || vo.getId() <= 0 || vo.getDocId() == null
+				|| vo.getDocId() <= 0) {
 			j.setMsg("流程为空!");
 			return j;
 		}
@@ -351,13 +384,14 @@ public class ReimbursementController extends BaseController {
 
 		Long userId = getSessionInfo(request).getId();
 		user = userService.get(userId);
+		Process po = processService.get(vo.getId());
 
 		if (user == null) {
 			j.setMsg("办理人为空,请重新登录!");
 			return j;
 		}
 
-		reimbursement = reimbursementService.get(process.getDocId());
+		reimbursement = reimbursementService.get(vo.getDocId());
 
 		if (reimbursement == null) {
 			j.setMsg("报销单为空,数据异常!");
@@ -368,28 +402,27 @@ public class ReimbursementController extends BaseController {
 
 		// 状态更新
 		if (roleNames.indexOf("会计") >= 0) {
-			process.setState(ProcessStateConstant.BX_BACK_KJ);// 会计审批不通过
+			po.setState(ProcessStateConstant.BX_BACK_KJ);// 会计审批不通过
 			// 增加流程操作历史记录
-			updateHistory(request, user, process, "会计：" + user.getName()
-					+ "审批不通过");
+			updateHistory(request, user, po, "会计：" + user.getName() + "审批不通过");
 
 		} else if (roleNames.indexOf("总经理") >= 0) {
-			process.setState(ProcessStateConstant.BX_BACK_ZJL);// 总经理审批不通过
+			po.setState(ProcessStateConstant.BX_BACK_ZJL);// 总经理审批不通过
 			// 增加流程操作历史记录
-			updateHistory(request, user, process, "总经理：" + user.getName()
-					+ "审批不通过");
+			updateHistory(request, user, po, "总经理：" + user.getName() + "审批不通过");
 		} else if (roleNames.indexOf("超级管理员") >= 0) {
 			// 可以审批所有的单子
-			process.setState(process.getState() + 1);
+			po.setState(vo.getState() + 1);
 			// 增加流程操作历史记录
-			if (process.getState() < 4) {
-				updateHistory(request, user, process, "超级管理员：" + user.getName()
+			if (po.getState() < 4) {
+				updateHistory(request, user, po, "超级管理员：" + user.getName()
 						+ "审批不通过!");
 			}
 		}
 
 		try {
-			processService.edit(process, request);
+			po.setArriveDT(new Date());
+			processService.edit(po, request);
 			j.setSuccess(true);
 			j.setMsg("审批成功！");
 		} catch (Exception e) {
@@ -411,6 +444,30 @@ public class ReimbursementController extends BaseController {
 		history.setOperateDetail(detail);
 		history.setProcess(process);
 		processHistoryService.add(history, request);
+	}
+
+	private Process process2Po(ProcessVo vo) {
+		Process p = null;
+		if (vo != null) {
+			p = new Process();
+			BeanUtils.copyProperties(vo, p);
+			Tuser user = new Tuser();
+			user.setId(vo.getApplyUserId());
+			p.setApplyUser(user);
+		}
+		return p;
+	}
+
+	private ProcessVo process2Vo(Process po) {
+		ProcessVo p = null;
+		if (po != null && po.getApplyUser() != null) {
+			p = new ProcessVo();
+			BeanUtils.copyProperties(po, p);
+			User user = userService.get(po.getApplyUser().getId());
+			p.setApplyUserId(user.getId());
+			p.setApplyUserName(user.getName());
+		}
+		return p;
 	}
 
 }
