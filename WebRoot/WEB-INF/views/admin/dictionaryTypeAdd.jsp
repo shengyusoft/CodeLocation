@@ -7,15 +7,15 @@
 	$(function() {
 		$('#pid').combotree({
 			url : '${ctx}/dictionarytype/tree',
+			parentField : 'pid',
 			lines : true,
-			required:true,
-			panelHeight : 'auto'
+			//required:true,
+			panelHeight : '500px'
 		});
 		
 		$('#dictionaryTypeAddForm').form({
 			url : '${ctx}/dictionarytype/add',
 			onSubmit : function() {
-				debugger;
 				progressLoad();
 				var isValid = $(this).form('validate');
 				if (!isValid) {
@@ -27,7 +27,7 @@
 				progressClose();
 				result = $.parseJSON(result);
 				if (result.success) {
-					parent.$.modalDialog.openner_dataGrid.datagrid('reload');//
+					parent.$.modalDialog.openner_tree.tree('reload'); 
 					parent.$.modalDialog.handler.dialog('close');
 				}else{
 					parent.$.messager.alert('提示', result.msg, 'warning');
@@ -48,7 +48,7 @@
 			</tr>
 			<tr>
 				<td>所属类别</td>
-				<td><select id="pid" name="pid" style="width: 140px;" ></select></td>
+				<td><select id="pid" name="pid" style="width: 160px;" ></select></td>
 				<td>排序</td>
 				<td><input name="seq" value="0"  class="easyui-numberspinner" style="width: 140px;" data-options="editable:false,required:true"></td>
 			</tr>

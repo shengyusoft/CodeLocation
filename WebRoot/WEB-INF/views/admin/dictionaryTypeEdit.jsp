@@ -25,7 +25,7 @@
 				progressClose();
 				result = $.parseJSON(result);
 				if (result.success) {
-					parent.$.modalDialog.openner_dataGrid.datagrid('reload');
+					parent.$.modalDialog.openner_tree.tree('reload'); 
 					parent.$.modalDialog.handler.dialog('close');
 				}
 			}

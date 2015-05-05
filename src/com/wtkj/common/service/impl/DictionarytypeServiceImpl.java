@@ -71,7 +71,9 @@ public class DictionarytypeServiceImpl implements DictionarytypeServiceI {
 		r.setId(t.getId());
 		r.setName(t.getName());
 		r.setSeq(t.getSeq());
-		r.setPid(t.getDictionarytype().getId().toString());
+		if(t.getDictionarytype() != null){
+			r.setPid(t.getDictionarytype().getId().toString());
+		}
 		return r;
 	}
 

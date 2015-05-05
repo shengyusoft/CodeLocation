@@ -17,15 +17,15 @@
 		$.canDelete = true;
 	</script>
 </c:if>
-<title>资源管理</title>
+<title>编码字典管理</title>
 <script type="text/javascript">
 	var dataGrid;
 	var nodeId;
 	var dictionarytypeTree;
 	$(function() {
-	
 		dictionarytypeTree = $('#dictionarytypeTree').tree({
 			url : '${ctx}/dictionarytype/tree',
+			state : 'closed',
 			parentField : 'pid',
 			lines : true,
 			onClick : function(node) {
@@ -39,6 +39,7 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/dictionary/dataGrid',
 			striped : true,
+			fit:true,
 			rownumbers : true,
 			pagination : true,
 			singleSelect : true,
@@ -60,7 +61,7 @@
 				align : 'center',
 				sortable : true
 			}, {
-				width : '80',
+				width : '150',
 				title : '名称',
 				field : 'text',
 				align : 'center',
@@ -69,6 +70,12 @@
 				width : '80',
 				title : '排序号',
 				field : 'seq',
+				align : 'center',
+				sortable : true
+			}, {
+				width : '80',
+				title : '等级',
+				field : 'lvs',
 				align : 'center',
 				sortable : true
 			},{
@@ -151,7 +158,7 @@
 			buttons : [ {
 				text : '添加',
 				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialog.openner_tree = dictionarytypeTree;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler.find('#dictionaryTypeAddForm');
 					f.submit();
 				}
@@ -169,7 +176,7 @@
 				buttons : [ {
 					text : '编辑',
 					handler : function() {
-						parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+						parent.$.modalDialog.openner_tree = dictionarytypeTree;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 						var f = parent.$.modalDialog.handler.find('#dictionaryTypeEditForm');
 						f.submit();
 					}

@@ -1,7 +1,6 @@
 package com.wtkj.common.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,21 +14,23 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "sys_dictionary", schema = "")
 @DynamicInsert(true)
 @DynamicUpdate(true)
-public class Tdictionary extends IdEntity implements java.io.Serializable{
-	
+public class Tdictionary extends IdEntity implements java.io.Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String code;
 	private String text;
 	private Tdictionarytype dictionarytype;
 	private Integer seq;
 	private Integer state; // 状态 0启用 1停用
 	private Integer isdefault; // 是否默认
-	
-	public Tdictionary(){
-		
+	private Integer lvs;// 等级
+	private String description;// 说明
+
+	public Tdictionary() {
+
 	}
-	
+
 	public Tdictionary(String code, String text,
 			Tdictionarytype dictionarytype, Integer seq, Integer state,
 			Integer isdefault) {
@@ -61,7 +62,8 @@ public class Tdictionary extends IdEntity implements java.io.Serializable{
 	}
 
 	@NotNull
-	@ManyToOne/*(fetch = FetchType.LAZY)*/
+	@ManyToOne
+	/* (fetch = FetchType.LAZY) */
 	@JoinColumn(name = "dictionarytype_id")
 	public Tdictionarytype getDictionarytype() {
 		return dictionarytype;
@@ -94,6 +96,21 @@ public class Tdictionary extends IdEntity implements java.io.Serializable{
 	public void setIsdefault(Integer isdefault) {
 		this.isdefault = isdefault;
 	}
-	
+
+	public Integer getLvs() {
+		return lvs;
+	}
+
+	public void setLvs(Integer lvs) {
+		this.lvs = lvs;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

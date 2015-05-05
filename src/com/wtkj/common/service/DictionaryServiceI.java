@@ -25,4 +25,6 @@ public interface DictionaryServiceI {
 	
 	public List<Dictionary> find(String code, String codeType);
 	
+	public List<Dictionary> findCodeLk(String code, String codeType);
+	
 }

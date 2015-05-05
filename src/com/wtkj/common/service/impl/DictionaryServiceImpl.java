@@ -29,6 +29,8 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 	@Override
 	public void add(Dictionary r) {
 		Tdictionary t = new Tdictionary();
+		t.setDescription(r.getDescription());
+		t.setLvs(r.getLvs());
 		t.setIsdefault(GlobalConstant.NOT_DEFAULT);
 		t.setState(GlobalConstant.ENABLE);
 		t.setCode(r.getCode());
@@ -48,6 +50,8 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 	@Override
 	public void edit(Dictionary r) {
 		Tdictionary t = dictionaryDao.get(Tdictionary.class, r.getId());
+		t.setDescription(r.getDescription());
+		t.setLvs(r.getLvs());
 		t.setText(r.getText());
 		t.setSeq(r.getSeq());
 		t.setCode(r.getCode());
@@ -66,6 +70,8 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 		r.setText(t.getText());
 		r.setSeq(t.getSeq());
 		r.setCode(t.getCode());
+		r.setDescription(t.getDescription());
+		r.setLvs(t.getLvs());
 		if (t.getDictionarytype() != null) {
 			r.setDictionarytypeId(t.getDictionarytype().getId());
 			r.setDictionarytypeName(t.getDictionarytype().getName());
@@ -148,10 +154,6 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 
 	@Override
 	public List<Dictionary> find(String code, String codeType) {
-		dictionaryDao
-				.find("from Tdictionary t where t.state=0 and t.dictionarytype.code='"
-						+ codeType + "' and t.code='" + code + "'");
-
 		List<Dictionary> ld = new ArrayList<Dictionary>();
 		List<Tdictionary> lt = dictionaryDao
 				.find("from Tdictionary t where t.state=0 and t.dictionarytype.code='"
@@ -192,4 +194,25 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 			return null;
 		}
 	}
+
+	// 通过编码方式查找子编码
+	@Override
+	public List<Dictionary> findCodeLk(String code, String codeType) {
+		List<Dictionary> ld = new ArrayList<Dictionary>();
+		String hql = " from Tdictionary t where t.dictionarytype.code='"
+				+ codeType + "' and t.code like '" + code + "%'";
+		System.out.println("================>>"+hql);
+		List<Tdictionary> lt = dictionaryDao.find(hql);
+		if (lt != null && lt.size() > 0) {
+			for (int i = 0; i < lt.size(); i++) {
+				Dictionary d = new Dictionary();
+				d.setId(lt.get(i).getId());
+				d.setDescription(lt.get(i).getDescription());
+				d.setText(lt.get(i).getText());
+				ld.add(d);
+			}
+		}
+		return ld;
+	}
+
 }

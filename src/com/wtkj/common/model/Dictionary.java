@@ -2,13 +2,14 @@ package com.wtkj.common.model;
 
 /**
  * 数据字典model
+ * 
  * @author Sunhb
- *
+ * 
  */
-public class Dictionary  implements java.io.Serializable{
-	
+public class Dictionary implements java.io.Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
 	private String code;
 	private String text;
@@ -17,12 +18,14 @@ public class Dictionary  implements java.io.Serializable{
 	private Integer seq;
 	private Integer state; // 状态 0启用 1停用
 	private Integer isdefault; // 是否默认
-	
-	public Dictionary(){
-		
+	private Integer lvs;// 等级
+	private String description;//说明
+
+	public Dictionary() {
+
 	}
-	
-	public Dictionary(String code, String text,Integer seq, Integer state,
+
+	public Dictionary(String code, String text, Integer seq, Integer state,
 			Integer isdefault) {
 		super();
 		this.code = code;
@@ -31,7 +34,6 @@ public class Dictionary  implements java.io.Serializable{
 		this.state = state;
 		this.isdefault = isdefault;
 	}
-	
 
 	public Long getId() {
 		return id;
@@ -96,5 +98,23 @@ public class Dictionary  implements java.io.Serializable{
 	public void setDictionarytypeName(String dictionarytypeName) {
 		this.dictionarytypeName = dictionarytypeName;
 	}
+
+	public Integer getLvs() {
+		return lvs;
+	}
+
+	public void setLvs(Integer lvs) {
+		this.lvs = lvs;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 
 }
