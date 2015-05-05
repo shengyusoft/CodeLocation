@@ -52,10 +52,10 @@
 				title : '地点',
 				rowspan : 2,
 				align : 'center',
-				field : 'place',
-				formatter : function(value, row, index) {
+				field : 'placeName'
+				/* formatter : function(value, row, index) {
 					return value==null?'':value.description;
-				}
+				} */
 			}, {
 				width : '120',
 				title : '工作',
@@ -77,7 +77,7 @@
 				title : '状态',
 				rowspan : 2,
 				align : 'center',
-				field : 'process',
+				field : 'process_vo',
 				formatter : function(value, row, index) {
 					if(value != null){
 						switch (value.state){

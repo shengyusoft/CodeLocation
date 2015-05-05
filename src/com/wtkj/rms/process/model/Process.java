@@ -116,5 +116,5 @@ public class Process extends IdEntity implements Serializable {
 	public void setOption(int option) {
 		this.option = option;
 	}
-
+	
 }

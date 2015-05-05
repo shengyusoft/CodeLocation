@@ -1,5 +1,6 @@
 package com.wtkj.rms.reimbursement.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,10 @@ import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.ProcessStateConstant;
 import com.wtkj.common.controller.BaseController;
+import com.wtkj.common.model.Dictionarytype;
 import com.wtkj.common.model.Tuser;
 import com.wtkj.common.model.User;
+import com.wtkj.common.service.DictionarytypeServiceI;
 import com.wtkj.common.service.UserServiceI;
 import com.wtkj.common.utils.DateUtil;
 import com.wtkj.rms.process.model.Process;
@@ -27,6 +30,7 @@ import com.wtkj.rms.process.model.ProcessVo;
 import com.wtkj.rms.process.service.ProcessHistoryServiceI;
 import com.wtkj.rms.process.service.ProcessServiceI;
 import com.wtkj.rms.reimbursement.model.po.Reimbursement;
+import com.wtkj.rms.reimbursement.model.vo.ReimbursementVo;
 import com.wtkj.rms.reimbursement.service.ReimbursementServiceI;
 
 @Controller
@@ -40,6 +44,8 @@ public class ReimbursementController extends BaseController {
 	private ProcessHistoryServiceI processHistoryService;
 	@Autowired
 	private UserServiceI userService;
+	@Autowired
+	private DictionarytypeServiceI dictionarytypeService;
 
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request) {
@@ -48,15 +54,35 @@ public class ReimbursementController extends BaseController {
 
 	@RequestMapping("/combox")
 	@ResponseBody
-	public List<Reimbursement> findAll() {
-		return reimbursementService.findAll();
+	public List<ReimbursementVo> findAll() {
+		List<Reimbursement> reimbursements = reimbursementService.findAll();
+		return convert2Vo(reimbursements);
+	}
+	
+	private List<ReimbursementVo> convert2Vo(List<Reimbursement> reimbursements){
+		List<ReimbursementVo> vos = new ArrayList<ReimbursementVo>();
+		for (Reimbursement reimbursement : reimbursements) {
+			ReimbursementVo vo = new ReimbursementVo();
+			BeanUtils.copyProperties(reimbursement, vo);
+			if(reimbursement.getProcess() != null && reimbursement.getProcess().getId()!=null){
+				vo.setProcess_vo(process2Vo(processService.get(reimbursement.getProcess().getId())));
+			}
+			
+			if(reimbursement.getPlace() !=null){
+				Dictionarytype dt = dictionarytypeService.get(reimbursement.getPlace().getId());
+				vo.setPlaceId(dt.getId());
+				vo.setPlaceName(dt.getName());
+			}
+			vos.add(vo);
+		}
+		return vos;
 	}
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
 	public Grid dataGrid(Reimbursement reimbursement, PageFilter ph) {
 		Grid grid = new Grid();
-		grid.setRows(reimbursementService.dataGrid(reimbursement, ph));
+		grid.setRows(convert2Vo(reimbursementService.dataGrid(reimbursement, ph)));
 		grid.setTotal(reimbursementService.count(reimbursement, ph));
 		return grid;
 	}
