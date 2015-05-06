@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(function() {
-		debugger;
-		var type = parent.$.modalDialog.type;
+		
 		$('#reimbursementAddForm').form({
-			url : '${pageContext.request.contextPath}/reimbursement/commit',
+			url : '${pageContext.request.contextPath}/reimbursement/apply',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
@@ -108,7 +107,8 @@
 				<tr>
 					<th>时间范围 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
-						<input class="Wdate" type="text" name="startDT" id="startDT" style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
+						<input type="hidden" name="option" id="option" value="" />
+						<input class="Wdate" data-options="required:true" name="startDT" id="startDT" style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
 					</td>
 					<td>
 						<input class="Wdate" type="text" name="endDT" id="endDT"style="width: 98%; height: 100%;"onfocus="showDate('yyyy-MM-dd')" />
@@ -117,7 +117,7 @@
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
-						<select id="province" name="province" class="easyui-validatebox span2" style="width: 140px;">
+						<select id="province" data-options="required:true" name="province" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
 					</td>
 					<td>
@@ -125,8 +125,7 @@
 					</select>
 					</td>
 					<td>
-						<select id="place" name="place.id"
-						class="easyui-validatebox span2" style="width: 140px;">
+						<select id="place" name="place.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 140px;">
 					</select>
 					</td>
 				</tr>
@@ -147,7 +146,7 @@
 							<tr>
 								<th width="80">交通费&nbsp;</th>
 								<td>
-									<input name="trafficFee" type="number" id="trafficFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
+									<input name="trafficFee" data-options="required:true" type="number" id="trafficFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
 								</td>
 								<th width="80">就餐费&nbsp;</th>
 								<td>

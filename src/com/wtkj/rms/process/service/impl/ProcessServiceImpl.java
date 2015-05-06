@@ -83,7 +83,7 @@ public class ProcessServiceImpl implements ProcessServiceI {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Process t ";
 		return processDao.count(
-				"select count *) " + hql + whereHql(Process, params), params);
+				"select count(*) " + hql + whereHql(Process, params), params);
 	}
 
 	private String whereHql(Process process, Map<String, Object> params) {

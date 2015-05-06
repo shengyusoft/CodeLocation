@@ -56,33 +56,41 @@ public class ReimbursementController extends BaseController {
 	@ResponseBody
 	public List<ReimbursementVo> findAll() {
 		List<Reimbursement> reimbursements = reimbursementService.findAll();
-		return convert2Vo(reimbursements);
+		return convert2Vos(reimbursements);
 	}
-	
-	private List<ReimbursementVo> convert2Vo(List<Reimbursement> reimbursements){
+
+	private List<ReimbursementVo> convert2Vos(List<Reimbursement> reimbursements) {
 		List<ReimbursementVo> vos = new ArrayList<ReimbursementVo>();
 		for (Reimbursement reimbursement : reimbursements) {
-			ReimbursementVo vo = new ReimbursementVo();
-			BeanUtils.copyProperties(reimbursement, vo);
-			if(reimbursement.getProcess() != null && reimbursement.getProcess().getId()!=null){
-				vo.setProcess_vo(process2Vo(processService.get(reimbursement.getProcess().getId())));
-			}
-			
-			if(reimbursement.getPlace() !=null){
-				Dictionarytype dt = dictionarytypeService.get(reimbursement.getPlace().getId());
-				vo.setPlaceId(dt.getId());
-				vo.setPlaceName(dt.getName());
-			}
-			vos.add(vo);
+			vos.add(convert2Vo(reimbursement));
 		}
 		return vos;
+	}
+	
+	private ReimbursementVo convert2Vo(Reimbursement reimbursement){
+		ReimbursementVo vo = new ReimbursementVo();
+		BeanUtils.copyProperties(reimbursement, vo);
+		if (reimbursement.getProcess() != null
+				&& reimbursement.getProcess().getId() != null) {
+			vo.setProcess_vo(process2Vo(processService.get(reimbursement
+					.getProcess().getId())));
+		}
+
+		if (reimbursement.getPlace() != null) {
+			Dictionarytype dt = dictionarytypeService.get(reimbursement
+					.getPlace().getId());
+			vo.setPlaceId(dt.getId());
+			vo.setPlaceName(dt.getName());
+		}
+		return vo;
 	}
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
 	public Grid dataGrid(Reimbursement reimbursement, PageFilter ph) {
 		Grid grid = new Grid();
-		grid.setRows(convert2Vo(reimbursementService.dataGrid(reimbursement, ph)));
+		grid.setRows(convert2Vos(reimbursementService
+				.dataGrid(reimbursement, ph)));
 		grid.setTotal(reimbursementService.count(reimbursement, ph));
 		return grid;
 	}
@@ -90,6 +98,24 @@ public class ReimbursementController extends BaseController {
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
 		return "/basic/reimbursement/reimbursementAdd";
+	}
+
+	//仅仅是个转发器，根据类型匹配是保存还是提交
+	@RequestMapping("/apply")
+	@ResponseBody
+	public Json apply(Reimbursement reimbursement, HttpServletRequest request) {
+		if (reimbursement == null) {
+			Json j = new Json();
+			j.setSuccess(false);
+			j.setMsg("空的报销单,提交或保存失败");
+			return j;
+		}
+
+		if (reimbursement.getOption() == 0) {
+			return add(reimbursement, request);
+		} else {
+			return commit(reimbursement, request);
+		}
 	}
 
 	@SuppressWarnings("unused")
@@ -274,7 +300,10 @@ public class ReimbursementController extends BaseController {
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, Long id) {
 		Reimbursement reimbursement = reimbursementService.get(id);
-		request.setAttribute("reimbursement", reimbursement);
+		
+		if(reimbursement != null){
+			request.setAttribute("reimbursement", convert2Vo(reimbursement));
+		}
 		return "/basic/reimbursement/reimbursementEdit";
 	}
 
@@ -295,7 +324,9 @@ public class ReimbursementController extends BaseController {
 	@RequestMapping("/detailPage")
 	public String detailPage(HttpServletRequest request, Long id) {
 		Reimbursement reimbursement = reimbursementService.get(id);
-		request.setAttribute("reimbursement", reimbursement);
+		if(reimbursement != null){
+			request.setAttribute("reimbursement", convert2Vo(reimbursement));
+		}
 		return "/basic/reimbursement/reimbursementDetail";
 	}
 

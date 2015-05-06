@@ -83,14 +83,19 @@ public class ProcessHistoryServiceImpl implements ProcessHistoryServiceI {
 	public Long count(ProcessHistory ProcessHistory, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from ProcessHistory t ";
-		return processHistoryDao.count(
-				"select count *) " + hql + whereHql(ProcessHistory, params),
-				params);
+		return processHistoryDao.count("select count (*) " + hql + whereHql(ProcessHistory, params),params);
 	}
 
 	private String whereHql(ProcessHistory processHistory,
 			Map<String, Object> params) {
 		String hql = "";
+		if (processHistory != null) {
+			hql += " where 1=1 ";
+			if (processHistory.getProcess() != null) {
+				hql += " and t.process.id = :processId ";
+				params.put("processId", processHistory.getProcess().getId());
+			}
+		}
 		return hql;
 	}
 

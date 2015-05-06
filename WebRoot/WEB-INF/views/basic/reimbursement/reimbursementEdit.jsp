@@ -72,14 +72,14 @@
 	});
 	
 	$('#place').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid=27",
 	    valueField:'id', //值字段
 	    textField:'name', //显示的字段
-	    value : '${reimbursement.place.id}',
+	    value : '${reimbursement.placeId}',
+	    defaultValue : '--请选择--',
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
-	    value:'--请选择--'
+	    editable:true//不可编辑，只能选择
 	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -91,10 +91,11 @@
 					<th>时间范围 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
 						<input type="hidden" name="id" value="${reimbursement.id}" />
-						<input class="Wdate" type="text" name="startDT" value="${reimbursement.startDT}" id="startDT" style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
+						<input type="hidden" name="process.id" value="${reimbursement.process_vo.id}" />
+						<input class="Wdate" data-options="required:true" type="text" name="startDT" value="${reimbursement.startDT}" id="startDT" style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
 					</td>
 					<td>
-						<input class="Wdate" type="text" name="endDT" value="${reimbursement.endDT}" id="endDT"style="width: 98%; height: 100%;"onfocus="showDate('yyyy-MM-dd')" />
+						<input class="Wdate" data-options="required:true" type="text" name="endDT" value="${reimbursement.endDT}" id="endDT"style="width: 98%; height: 100%;"onfocus="showDate('yyyy-MM-dd')" />
 					</td>
 				</tr>
 				<tr>
@@ -108,8 +109,7 @@
 					</select>
 					</td>
 					<td>
-						<select id="place" name="place.id"
-						class="easyui-validatebox span2" style="width: 140px;">
+						<select id="place" name="place.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 140px;">
 					</select>
 					</td>
 				</tr>
@@ -132,7 +132,7 @@
 							<tr>
 								<th width="80">交通费&nbsp;</th>
 								<td>
-									<input name="trafficFee" value="${reimbursement.trafficFee}" type="number" id="trafficFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
+									<input name="trafficFee" value="${reimbursement.trafficFee}" type="number" id="trafficFee" data-options="required:true"  style="width: 100%; height: 100%" class="easyui-validatebox span2" />
 								</td>
 								<th width="80">就餐费&nbsp;</th>
 								<td>

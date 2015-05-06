@@ -53,9 +53,9 @@
 				rowspan : 2,
 				align : 'center',
 				field : 'placeName'
-				/* formatter : function(value, row, index) {
-					return value==null?'':value.description;
-				} */
+			/* formatter : function(value, row, index) {
+				return value==null?'':value.description;
+			} */
 			}, {
 				width : '120',
 				title : '工作',
@@ -69,29 +69,37 @@
 				rowspan : 2,
 				align : 'center',
 				field : 'costDetail'
-			} , {
+			}, {
 				title : '费用小计',
 				colspan : 8
 			}, {
-				width : '80',
+				width : '100',
 				title : '状态',
 				rowspan : 2,
 				align : 'center',
 				field : 'process_vo',
 				formatter : function(value, row, index) {
-					if(value != null){
-						switch (value.state){
-							case 0 : return '初始化';
-							case 1 : return '<font color="green">已申请</font>';
-							case 2 : return '<font color="green">会计审批通过</font>';
-							case 3 : return '<font color="green">总经理审批通过</font>';
-							case 4 : return '<font color="green">【财务出纳成功】</font>';
-							case -2 : return '<font color="red">【会计审核退回】</font>';
-							case -3 : return '<font color="red">【总经理审核退回】</font>';
+					if (value != null) {
+						debugger;
+						switch (value.state) {
+						case 0:
+							return '初始化';
+						case 1:
+							return '<font color="green">已申请</font>';
+						case 2:
+							return '<font color="green">会计审批通过</font>';
+						case 3:
+							return '<font color="green">总经理审批通过</font>';
+						case 4:
+							return '<font color="green">【财务出纳成功】</font>';
+						case -2:
+							return '<font color="red">【会计审核退回】</font>';
+						case -3:
+							return '<font color="red">【总经理审核退回】</font>';
 						}
 					}
 				}
-			} ],[ {
+			} ], [ {
 				width : '80',
 				title : '交通费',
 				align : 'center',
@@ -131,7 +139,7 @@
 				title : '其他费',
 				align : 'center',
 				field : 'otherFee'
-			}] ],
+			} ] ],
 			toolbar : '#toolbar'
 		});
 
@@ -151,7 +159,7 @@
 
 	function clearFun() {
 		$('#name').val('');
-		var o=$('#dataGrid').datagrid('getData'); 
+		var o = $('#dataGrid').datagrid('getData');
 	}
 
 	function addFun() {
@@ -161,28 +169,35 @@
 			height : '500',
 			resizable : true,
 			href : '${ctx}/reimbursement/addPage',
-			buttons : [ /* {
-				text : '保存',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-					parent.$.modalDialog.type=0;
-					var f = parent.$.modalDialog.handler.find('#reimbursementAddForm');
-					f.submit();
-				}
-			}, */{
-				text : '申请',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler.find('#reimbursementAddForm');
-					parent.$.modalDialog.type=1;
-					f.submit();
-				}
-			},{
-				text : '退出',
-				handler : function() {
-					parent.$.modalDialog.handler.dialog('close');
-				}
-			} ]
+			buttons : [
+					{
+						text : '保存',
+						handler : function() {
+							//传入后台区分是保存还是申请
+							parent.$.modalDialog.openner_dataGrid = dataGrid;
+							parent.$.modalDialog.handler.find('#option').val(0);
+							parent.$.modalDialog.type = 0;
+							var f = parent.$.modalDialog.handler
+									.find('#reimbursementAddForm');
+							f.submit();
+						}
+					},
+					{
+						text : '申请',
+						handler : function() {
+							parent.$.modalDialog.openner_dataGrid = dataGrid;
+							parent.$.modalDialog.handler.find('#option').val(1);
+							var f = parent.$.modalDialog.handler
+									.find('#reimbursementAddForm');
+							parent.$.modalDialog.type = 1;
+							f.submit();
+						}
+					}, {
+						text : '退出',
+						handler : function() {
+							parent.$.modalDialog.handler.dialog('close');
+						}
+					} ]
 		});
 	}
 
@@ -217,33 +232,57 @@
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可编辑对象!');
+			parent.$.messager.alert('提示', '没有可编辑对象!');
 			return;
 		}
 
 		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			parent.$.messager.alert('提示', '只能对一条记录编辑!');
 			return;
 		}
 
 		id = rows[0].id;
+		var state = rows[0].process_vo.state;
+		if (!isEmpty(state) && state > 0) {
+			parent.$.messager.alert('提示', '申请已提交，不可编辑!');
+			return;
+		}
 
-		parent.$
-				.modalDialog({
-					title : '编辑商品',
-					width : '900',
-					height : '500',
-					href : '${ctx}/reimbursement/editPage?id=' + id,
-					buttons : [ {
-						text : '编辑',
-						handler : function() {
-							parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-							var f = parent.$.modalDialog.handler
-									.find('#reimbursementEditForm');
-							f.submit();
-						}
-					} ]  
-				});
+		parent.$.modalDialog({
+			title : '编辑报销单',
+			width : '900',
+			height : '500',
+			href : '${ctx}/reimbursement/editPage?id=' + id,
+			buttons : [
+						{
+							text : '编辑',
+							handler : function() {
+								//传入后台区分是保存还是申请
+								parent.$.modalDialog.openner_dataGrid = dataGrid;
+								parent.$.modalDialog.handler.find('#option').val(0);
+								parent.$.modalDialog.type = 0;
+								var f = parent.$.modalDialog.handler
+										.find('#reimbursementEditForm');
+								f.submit();
+							}
+						},
+						{
+							text : '申请',
+							handler : function() {
+								parent.$.modalDialog.openner_dataGrid = dataGrid;
+								parent.$.modalDialog.handler.find('#option').val(1);
+								var f = parent.$.modalDialog.handler
+										.find('#reimbursementEditForm');
+								parent.$.modalDialog.type = 1;
+								f.submit();
+							}
+						}, {
+							text : '退出',
+							handler : function() {
+								parent.$.modalDialog.handler.dialog('close');
+							}
+						} ]
+		});
 	}
 
 	function detailFun() {
@@ -262,9 +301,9 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '商品详情',
-			width : '815',
-			height : '500',
+			title : '报销流程详情',
+			//width : 800,
+			height : 760,
 			href : '${ctx}/reimbursement/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -284,7 +323,8 @@
 	<div id="toolbar" class="mygrid-toolbar" style="inline: true">
 
 		<c:choose>
-			<c:when test="${fn:contains(sessionInfo.resourceList, '/reimbursement/add')}">
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/reimbursement/add')}">
 				<a onclick="addFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_add'">添加 </a>
@@ -336,7 +376,8 @@
 			</c:otherwise>
 		</c:choose>
 
-		<c:if test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
+		<c:if
+			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
 			<div id="searchbar" class="search-toolbar">
 				<span>商品名称:</span> <input type="text" id="name"> <a
 					onclick="searchFun();" href="javascript:void(0);"

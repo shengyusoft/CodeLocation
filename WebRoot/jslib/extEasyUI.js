@@ -246,6 +246,19 @@ $.extend($.fn.validatebox.defaults.rules, {
     },
 });
 
+$.extend($.fn.validatebox.defaults.rules, { 
+	selectValueRequired: { 
+		validator: function(value,param){ 			
+			 if (value == "" || value.indexOf('请选择') >= 0) { 
+			 	return false;
+			 }else {
+			 	return true;
+			 }  
+		}, 
+		message: '该下拉框为必选项' 
+	} 
+}); 
+
 // 扩展tree，使其可以获取实心节点
 $.extend($.fn.tree.methods, {
 	getCheckedExt : function(jq) {// 获取checked节点(包括实心)

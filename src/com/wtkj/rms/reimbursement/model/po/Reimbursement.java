@@ -8,13 +8,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.wtkj.common.model.IdEntity;
-import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tdictionarytype;
 import com.wtkj.rms.process.model.Process;
 
@@ -49,6 +49,7 @@ public class Reimbursement extends IdEntity implements Serializable {
 	private Double trainFee;// 培训费
 	private Double otherFee;// 其他费
 	private Process process;
+	private int option;
 
 //	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -167,5 +168,16 @@ public class Reimbursement extends IdEntity implements Serializable {
 	public void setOtherFee(Double otherFee) {
 		this.otherFee = otherFee;
 	}
+
+	@Transient
+	public int getOption() {
+		return option;
+	}
+
+	public void setOption(int option) {
+		this.option = option;
+	}
+	
+	
 
 }

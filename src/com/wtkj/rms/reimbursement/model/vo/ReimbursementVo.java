@@ -30,6 +30,7 @@ public class ReimbursementVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	private Date startDT;// 开始时间
 	private Date endDT;// 结束时间
 
@@ -48,6 +49,14 @@ public class ReimbursementVo implements Serializable {
 	private Double trainFee;// 培训费
 	private Double otherFee;// 其他费
 	private ProcessVo process_vo;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Date getStartDT() {
 		return startDT;
