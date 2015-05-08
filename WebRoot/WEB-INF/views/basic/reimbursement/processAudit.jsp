@@ -6,8 +6,6 @@
 		$('#processForm').form({
 			url : '${pageContext.request.contextPath}/reimbursement/complate',
 			onSubmit : function() {
-				debugger;
-				
 				progressLoad();
 				var isValid = $(this).form('validate');
 				if (!isValid) {
@@ -32,38 +30,121 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
+		<table class="grid">
+			<tr>
+				<th>时间范围 &nbsp;<label
+					style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+				<td><input class="Wdate" readonly="readonly" type="text"
+					name="startDT" value="${reimbursement.startDT}" id="startDT"
+					style="width: 98%; height: 100%;" /></td>
+				<td><input class="Wdate" readonly="readonly" type="text"
+					name="endDT" value="${reimbursement.endDT}" id="endDT"
+					style="width: 98%; height: 100%;" /></td>
+			</tr>
+			<tr>
+				<th>地点 &nbsp;</th>
+				<td><input name="processName" value="${reimbursement.placeName}"
+					type="text" id="processName" style="width: 100%; height: 100%"
+					class="easyui-validatebox span2" readonly="readonly" /></td>
+			</tr>
+			<tr>
+				<th>工作事情&nbsp;</th>
+				<td colspan="4"><textarea style="width: 100%" rows="3"
+						name="workDetail" id="workDetail"> ${reimbursement.workDetail}
+						</textarea></td>
+			</tr>
+			<tr>
+				<th>费用明细&nbsp;</th>
+				<td colspan="4"><textarea style="width: 100%" rows="3"
+						readonly="readonly" name="costDetail" id="costDetail">${reimbursement.costDetail}</textarea></td>
+			</tr>
+			<tr>
+				<th>费用小计&nbsp;</th>
+				<td colspan="3">
+					<table title="费用小计" width="800">
+						<tr>
+							<th width="80">交通费&nbsp;</th>
+							<td><input name="trafficFee"
+								value="${reimbursement.trafficFee}" type="number"
+								id="trafficFee" readonly="readonly"
+								style="width: 100%; height: 100%"
+								class="easyui-validatebox span2" /></td>
+							<th width="80">就餐费&nbsp;</th>
+							<td><input name="mealFee" readonly="readonly"
+								value="${reimbursement.mealFee}" type="number" id="mealFee"
+								style="width: 100%; height: 100%"
+								class="easyui-validatebox span2" /></td>
+							<th width="80">办公费&nbsp;</th>
+							<td><input name="officeFee"
+								value="${reimbursement.officeFee}" type="number" id="officeFee"
+								style="width: 100%; height: 100%" readonly="readonly"
+								class="easyui-validatebox span2" /></td>
+							<th width="80">招待费&nbsp;</th>
+							<td><input name="receiveFee" readonly="readonly"
+								value="${reimbursement.receiveFee}" type="number"
+								id="receiveFee" style="width: 100%; height: 100%"
+								class="easyui-validatebox span2" /></td>
+						</tr>
+						<tr>
+							<th width="80">证章费&nbsp;</th>
+							<td><input name="badgeFee" readonly="readonly"
+								value="${reimbursement.badgeFee}" type="number" id="badgeFee"
+								style="width: 100%; height: 100%"
+								class="easyui-validatebox span2" /></td>
+							<th width="80">通讯费&nbsp;</th>
+							<td><input name="communicationFee"
+								value="${reimbursement.communicationFee}" readonly="readonly"
+								type="number" id="communicationFee"
+								style="width: 100%; height: 100%"
+								class="easyui-validatebox span2" /></td>
+							<th width="80">培训费&nbsp;</th>
+							<td><input name="trainFee" value="${reimbursement.trainFee}"
+								readonly="readonly" type="number" id="trainFee"
+								style="width: 100%; height: 100%"
+								class="easyui-validatebox span2" /></td>
+							<th width="80">其它&nbsp;</th>
+							<td><input name="otherFee" value="${reimbursement.otherFee}"
+								readonly="readonly" type="number" id="otherFee"
+								style="width: 100%; height: 100%"
+								class="easyui-validatebox span2" /></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
 		<form id="processForm" method="post">
 			<table class="grid">
 				<tr>
 					<th>流程名称 &nbsp;</th>
-					<td><input type="hidden" name="id" value="${process.id}" /> 
-					<input type="hidden" name="option" id="option" value="" type="text" /><input
-						name="processName" value="${process.processName}" type="text"
+					<td><input type="hidden" name="id" value="${reimbursement.process_vo.id}" /> <input
+						type="hidden" name="option" id="option" value="" type="text" /><input
+						name="processName" value="${reimbursement.process_vo.processName}" type="text"
 						id="processName" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" readonly="readonly" /></td>
 					<th>申请人 &nbsp;</th>
-					<td>
-					<input type="hidden" name="applyUserId" value="${process.applyUserId}" /> 
-					<input name="applyUserName" value="${process.applyUserName}"
-						type="text" id="applyUserName" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" readonly="readonly" /></td>
+					<td><input type="hidden" name="applyUserId"
+						value="${reimbursement.process_vo.applyUserId}" /> <input name="applyUserName"
+						value="${reimbursement.process_vo.applyUserName}" type="text" id="applyUserName"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<th>开始时间 &nbsp;</th>
-					<td>
-						<input class="Wdate" type="text" name="startDT"
+					<td><input class="Wdate" type="text" name="startDT"
 						readonly="readonly" style="width: 98%; height: 100%;"
-						value="${process.startDT}" /></td>
+						value="${reimbursement.process_vo.startDT}" /></td>
 					<th>结束时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="endDT"
-						readonly="readonly" value="${process.endDT}" id="endDT"
+						readonly="readonly" value="${reimbursement.process_vo.endDT}" id="endDT"
 						style="width: 98%; height: 100%;" /></td>
 				</tr>
 				<tr>
 					<th>办理意见&nbsp;</th>
-					<td colspan="4"><textarea style="width: 100%" rows="5" name="remark" id="remark"></textarea></td>
+					<td colspan="4"><textarea style="width: 100%" rows="3"
+							name="remark" id="remark"></textarea></td>
 				</tr>
 			</table>
 		</form>
+
 	</div>
 </div>

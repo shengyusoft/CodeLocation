@@ -34,7 +34,7 @@ public class Reimbursement extends IdEntity implements Serializable {
 
 	private Date startDT;// 开始时间
 	private Date endDT;// 结束时间
-
+ 
 	private Tdictionarytype place;// 何地
 	private String workDetail;// 办何事
 	private String costDetail;// 费用明细

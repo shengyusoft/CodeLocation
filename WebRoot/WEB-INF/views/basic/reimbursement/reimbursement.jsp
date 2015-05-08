@@ -300,10 +300,12 @@
 
 		id = rows[0].id;
 
+		debugger;
 		parent.$.modalDialog({
 			title : '报销流程详情',
-			//width : 800,
-			height : 760,
+			autoScroll:true,
+			width :  document.body.clientWidth*0.7,
+			height :  document.body.clientHeight*0.9,
 			href : '${ctx}/reimbursement/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -372,7 +374,7 @@
 			<c:otherwise>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
-					color="gray">详情</font> </a>
+					color="gray">查看流程</font> </a>
 			</c:otherwise>
 		</c:choose>
 

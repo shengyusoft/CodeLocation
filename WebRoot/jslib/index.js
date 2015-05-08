@@ -399,9 +399,8 @@ function loadToDo() {
 
 // 任务处理
 function handlerToDo(id, state) {
-	debugger;
 	parent.$.modalDialog({
-		title : '报销申请',
+		title : '报销审批',
 		width : '900',
 		height : '500',
 		resizable : true,

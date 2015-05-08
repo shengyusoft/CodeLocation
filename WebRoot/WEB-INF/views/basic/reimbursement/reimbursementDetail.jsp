@@ -10,11 +10,41 @@
 	$(function() {
 		loadProcessHistories();
 		//创建模板
-		$('#process')[0].style.left = '416px';
-		$('#process')[0].style.top = '16px';
-		$('#process')[0].style.height = '45px';
-		$('#process')[0].style.width = '110px';
+		initProcessImg();
+		
 	});
+	
+	function initProcessImg(){
+		var state = $('#state').val();
+		if(isEmpty(state)){
+			return;
+		}
+		if(state <= 0){
+			//申请
+			$('#process')[0].style.left = '47px';
+			$('#process')[0].style.top = '86px';
+			$('#process')[0].style.height = '42px';
+			$('#process')[0].style.width = '76px';
+		}else if(state == 1){
+			//会计
+			$('#process')[0].style.left = '170px';
+			$('#process')[0].style.top = '86px';
+			$('#process')[0].style.height = '42px';
+			$('#process')[0].style.width = '70px';
+		}else if(state == 2){
+			//总经理
+			$('#process')[0].style.left = '399px';
+			$('#process')[0].style.top = '86px';
+			$('#process')[0].style.height = '42px';
+			$('#process')[0].style.width = '84px';
+		}else if(state == 3){
+			//出纳
+			$('#process')[0].style.left = '643px';
+			$('#process')[0].style.top = '86px';
+			$('#process')[0].style.height = '43px';
+			$('#process')[0].style.width = '83px';
+		}
+	}
 
 	function loadProcessHistories() {
 		var processId = $('#processId').val();
@@ -24,6 +54,7 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : ctxPath + '/processHistory/dataGrid',
 			striped : true,
+			fitColumns : true,
 			rownumbers : true,
 			nowrap : true,
 			idField : 'id',
@@ -59,16 +90,18 @@
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',fit:true,collapsed:false"
-		style="overflow: hidden; width: 1000px; border: none">
+		style="overflow:hidden; border: none">
 		<div style="position: relative; padding: 0px; margin: 0px">
-			<img src="${ctx}/style/images/flow/djpd-image.png" />
+			<img src="${ctx}/style/images/flow/flow_bx.png" />
 			<div id='process' style="position: absolute; border: 2px solid red;"></div>
 		</div>
 		<div style="color: green;size: 18px;font-size: 18px;">历史记录</div>
 		<table id="dataGrid" data-options="fit:true,border:false">
 			<tr>
 				<td><input type="hidden" name="processId" id="processId"
-					value="${reimbursement.process_vo.id}"></td>
+					value="${reimbursement.process_vo.id}">
+					<input type="hidden" name="state" id="state"
+					value="${reimbursement.process_vo.state}"></td>
 			</tr>
 		</table>
 	</div>

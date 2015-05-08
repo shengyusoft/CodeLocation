@@ -66,8 +66,8 @@ public class ReimbursementController extends BaseController {
 		}
 		return vos;
 	}
-	
-	private ReimbursementVo convert2Vo(Reimbursement reimbursement){
+
+	private ReimbursementVo convert2Vo(Reimbursement reimbursement) {
 		ReimbursementVo vo = new ReimbursementVo();
 		BeanUtils.copyProperties(reimbursement, vo);
 		if (reimbursement.getProcess() != null
@@ -89,8 +89,8 @@ public class ReimbursementController extends BaseController {
 	@ResponseBody
 	public Grid dataGrid(Reimbursement reimbursement, PageFilter ph) {
 		Grid grid = new Grid();
-		grid.setRows(convert2Vos(reimbursementService
-				.dataGrid(reimbursement, ph)));
+		grid.setRows(convert2Vos(reimbursementService.dataGrid(reimbursement,
+				ph)));
 		grid.setTotal(reimbursementService.count(reimbursement, ph));
 		return grid;
 	}
@@ -100,7 +100,7 @@ public class ReimbursementController extends BaseController {
 		return "/basic/reimbursement/reimbursementAdd";
 	}
 
-	//仅仅是个转发器，根据类型匹配是保存还是提交
+	// 仅仅是个转发器，根据类型匹配是保存还是提交
 	@RequestMapping("/apply")
 	@ResponseBody
 	public Json apply(Reimbursement reimbursement, HttpServletRequest request) {
@@ -300,8 +300,8 @@ public class ReimbursementController extends BaseController {
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, Long id) {
 		Reimbursement reimbursement = reimbursementService.get(id);
-		
-		if(reimbursement != null){
+
+		if (reimbursement != null) {
 			request.setAttribute("reimbursement", convert2Vo(reimbursement));
 		}
 		return "/basic/reimbursement/reimbursementEdit";
@@ -324,7 +324,7 @@ public class ReimbursementController extends BaseController {
 	@RequestMapping("/detailPage")
 	public String detailPage(HttpServletRequest request, Long id) {
 		Reimbursement reimbursement = reimbursementService.get(id);
-		if(reimbursement != null){
+		if (reimbursement != null) {
 			request.setAttribute("reimbursement", convert2Vo(reimbursement));
 		}
 		return "/basic/reimbursement/reimbursementDetail";
@@ -333,16 +333,13 @@ public class ReimbursementController extends BaseController {
 	@RequestMapping("/handlerPage")
 	public String handlerPage(HttpServletRequest request, Long id) {
 		Process process = processService.get(id);
-		if (process == null || process.getApplyUser() == null) {
+		if (process == null || process.getApplyUser() == null
+				|| process.getDocId() == null) {
 			return "/error";
 		}
-		ProcessVo p = new ProcessVo();
-		BeanUtils.copyProperties(process, p);
-		long userId = process.getApplyUser().getId();
-		User user = userService.get(userId);
-		p.setApplyUserId(user.getId());
-		p.setApplyUserName(user.getName());
-		request.setAttribute("process", p);
+		Reimbursement po = reimbursementService.get(process.getDocId());
+		ReimbursementVo reimbursement = convert2Vo(po);
+		request.setAttribute("reimbursement", reimbursement);
 		return "/basic/reimbursement/processAudit";
 	}
 
@@ -359,13 +356,13 @@ public class ReimbursementController extends BaseController {
 			return j;
 		}
 		Process po = processService.get(vo.getId());
+		po.setRemark(vo.getRemark());//审批意见
+		po.setOption(vo.getOption());
 		vo = process2Vo(po);
-
 		if (vo != null && vo.getDocId() != null && vo.getDocId() > 0) {
 			if (vo.getOption() == 1) {
 				return abort(vo, request);
 			}
-
 			reimbursement = reimbursementService.get(vo.getDocId());
 			if (reimbursement != null) {
 				Long userId = getSessionInfo(request).getId();
@@ -499,10 +496,12 @@ public class ReimbursementController extends BaseController {
 		tuser.setId(user.getId());
 		history.setOperator(tuser);
 		history.setOperateDetail(detail);
+		history.setRemark(process.getRemark());
 		history.setProcess(process);
 		processHistoryService.add(history, request);
 	}
 
+	@SuppressWarnings("unused")
 	private Process process2Po(ProcessVo vo) {
 		Process p = null;
 		if (vo != null) {
