@@ -369,7 +369,7 @@
 				test="${fn:contains(sessionInfo.resourceList, '/reimbursement/detail')}">
 				<a onclick="detailFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">详情 </a>
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">查看流程</a>
 			</c:when>
 			<c:otherwise>
 				<a href="javascript:void(0);" class="easyui-linkbutton"

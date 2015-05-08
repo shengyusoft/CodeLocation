@@ -210,9 +210,9 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '编辑',
-			width : 750,
-			height : 490,
+			title : '工程款拨付修改',
+			width : document.body.clientWidth*0.75,
+			height : 400,
 			href : '${ctx}/projectAppropriateReg/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
