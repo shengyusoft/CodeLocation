@@ -153,7 +153,7 @@
 	function addFun() {
 		parent.$.modalDialog({
 			title : '工程款拨付登记',
-			width : document.body.clientWidth*0.7,
+			width : document.body.clientWidth*0.75,
 			height : 400,
 			href : '${ctx}/projectAppropriateReg/addPage',
 			buttons : [ {
@@ -242,9 +242,9 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '加气详情',
-			width : '815',
-			height : '500',
+			title : '工程款拨付详情',
+			width : document.body.clientWidth*0.75,
+			height : 400,
 			href : '${ctx}/projectAppropriateReg/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -262,7 +262,6 @@
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div id="toolbar" class="mygrid-toolbar" style="inline: true">
-
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/add')}">
@@ -320,7 +319,7 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>项目名称:</span> <input type="text" id="contractName"> <a
+				<span>项目名称:</span> <input type="text" id="projectName"> <a
 					onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
