@@ -5,15 +5,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.wtkj.common.PageFilter;
+import com.wtkj.common.model.User;
 import com.wtkj.rms.code.model.po.Project;
 import com.wtkj.rms.reimbursement.model.po.Reimbursement;
 import com.wtkj.rms.reimbursement.model.vo.ReimbursementVo;
 
 public interface ReimbursementServiceI {
 
-	public List<Reimbursement> dataGrid(ReimbursementVo Reimbursement, PageFilter ph);
+	public List<Reimbursement> dataGrid(User user, ReimbursementVo Reimbursement, PageFilter ph);
 
-	public Long count(ReimbursementVo Reimbursement, PageFilter ph);
+	public Long count(User user, ReimbursementVo Reimbursement, PageFilter ph);
 
 	public Reimbursement get(Long id);
 

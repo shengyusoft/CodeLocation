@@ -35,6 +35,15 @@
 				rowspan : 2
 			}, {
 				width : '150',
+				title : '申请人',
+				rowspan : 2,
+				align : 'center',
+				field : 'process_vo1',
+				formatter : function(value, row, index) {
+					return isEmpty(row.process_vo)?'':row.process_vo.applyUserName;
+				}
+			}, {
+				width : '150',
 				title : '时间范围',
 				rowspan : 2,
 				sortable : true,
@@ -144,10 +153,16 @@
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.placeName = "";
+		queryParams['process_vo.applyUserName'] = "";
 
 		var name = $('#placeName').val();
 		if (!isEmpty(name)) {
 			queryParams.placeName = name;
+		}
+		
+		var applyUserName = $('#applyUserName').val();
+		if (!isEmpty(applyUserName)) {
+			queryParams['process_vo.applyUserName'] = applyUserName;
 		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -155,6 +170,7 @@
 
 	function clearFun() {
 		$('#placeName').val('');
+		$('#applyUserName').val('');
 	}
 
 	function addFun() {
@@ -386,8 +402,9 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>地点:</span> <input type="text" id="placeName"> <a
-					onclick="searchFun();" href="javascript:void(0);"
+				<span>地点:</span> <input type="text" id="placeName">
+				<span>申请人:</span> <input type="text" id="applyUserName">
+				 <a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
 					onclick="clearFun();" href="javascript:void(0);"

@@ -75,11 +75,11 @@ public class ProcessVo implements Serializable {
 		return arriveDT;
 	}
 
-	public long getApplyUserId() {
+	public Long getApplyUserId() {
 		return applyUserId;
 	}
 
-	public void setApplyUserId(long applyUserId) {
+	public void setApplyUserId(Long applyUserId) {
 		this.applyUserId = applyUserId;
 	}
 

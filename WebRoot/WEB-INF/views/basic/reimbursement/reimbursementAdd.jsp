@@ -9,10 +9,6 @@
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
-				if(isValid){
-					isValid = validate();
-				}
-				
 				if (!isValid) {
 					progressClose();
 				}
@@ -86,18 +82,6 @@
 	    value:'--请选择--'
 	});
 	
-	function validate(){
-		var startDT= $('#startDT').val();
-		var endDT= $('#endDT').val();
-		var place= $('#place').combobox('getValue');
-		var costDetail= $('#costDetail').val();
-		if(isEmpty(startDT) || isEmpty(endDT) || isEmpty(place) || isEmpty(costDetail)){
-			return false;
-		}
-		return true;
-		
-	}
-	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -108,10 +92,10 @@
 					<th>时间范围 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
 						<input type="hidden" name="option" id="option" value="" />
-						<input class="Wdate" data-options="required:true" name="startDT" id="startDT" style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
+						<input class="easyui-datebox" dateFormat="yyyy-MM-dd" data-options="required:true" name="startDT" id="startDT" />
 					</td>
 					<td>
-						<input class="Wdate" type="text" name="endDT" id="endDT"style="width: 98%; height: 100%;"onfocus="showDate('yyyy-MM-dd')" />
+						<input class="easyui-datebox" dateFormat="yyyy-MM-dd" data-options="required:true" type="text" name="endDT" id="endDT" />
 					</td>
 				</tr>
 				<tr>
@@ -131,13 +115,13 @@
 				</tr>
 				<tr>
 					<th>工作事情&nbsp;</th>
-					<td colspan="4"><textarea style="width: 100%" rows="5"
-							name="workDetail" id="workDetail"></textarea></td>
+					<td colspan="4"><textarea  class="easyui-validatebox" style="width: 100%" rows="5"
+							name="workDetail" data-options="required:true" id="workDetail"></textarea></td>
 				</tr>
 				<tr>
 					<th>费用明细&nbsp;</th>
-					<td colspan="4"><textarea style="width: 100%" rows="5"
-							name="costDetail" id="costDetail"></textarea></td>
+					<td colspan="4"><textarea  class="easyui-validatebox" style="width: 100%" rows="5"
+							name="costDetail" data-options="required:true" id="costDetail"></textarea></td>
 				</tr>
 				<tr>
 					<th>费用小计&nbsp;</th>
@@ -146,7 +130,7 @@
 							<tr>
 								<th width="80">交通费&nbsp;</th>
 								<td>
-									<input name="trafficFee" data-options="required:true" type="number" id="trafficFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
+									<input name="trafficFee" type="number" id="trafficFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
 								</td>
 								<th width="80">就餐费&nbsp;</th>
 								<td>

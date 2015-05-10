@@ -47,9 +47,23 @@ public class ReimbursementController extends BaseController {
 	@Autowired
 	private DictionarytypeServiceI dictionarytypeService;
 
+	//根据不同的用户显示不同的页面
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request) {
-		return "/basic/reimbursement/reimbursement";
+		String reStr = "";
+		Long userId = getSessionInfo(request).getId();
+		User user = userService.get(userId);
+		if(user == null){
+			reStr= "/error";
+		}
+		if(!StringUtils.isEmpty(user.getRoleNames())){
+			if(user.getRoleNames().indexOf("普通员工") >= 0){
+				reStr= "/basic/reimbursement/reimbursement";
+			}else{
+				reStr= "/basic/reimbursement/reimbursementAudit";
+			}
+		}
+		return reStr;
 	}
 
 	@RequestMapping("/combox")
@@ -99,10 +113,22 @@ public class ReimbursementController extends BaseController {
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(ReimbursementVo vo, PageFilter ph) {
+	public Grid dataGrid(HttpServletRequest request,ReimbursementVo vo, PageFilter ph) {
 		Grid grid = new Grid();
-		grid.setRows(convert2Vos(reimbursementService.dataGrid(vo, ph)));
-		grid.setTotal(reimbursementService.count(vo, ph));
+		Long userId = getSessionInfo(request).getId();
+		User user = userService.get(userId);
+		
+		if(!StringUtils.isEmpty(user.getRoleNames())){
+			if(user.getRoleNames().indexOf("普通员工") >= 0){
+				grid.setRows(convert2Vos(reimbursementService.dataGrid(user,vo, ph)));
+				grid.setTotal(reimbursementService.count(user,vo, ph));
+				return grid;
+			}
+		}
+		
+		grid.setRows(convert2Vos(reimbursementService.dataGrid(null,vo, ph)));
+		grid.setTotal(reimbursementService.count(null,vo, ph));
+		
 		return grid;
 	}
 
@@ -284,11 +310,26 @@ public class ReimbursementController extends BaseController {
 	@ResponseBody
 	public Json delete(String ids) {
 		Json j = new Json();
+		
 		if (StringUtils.isEmpty(ids)) {
 			j.setMsg("没有记录!");
 			j.setSuccess(true);
 			return j;
 		}
+		
+		String[] idArray = ids.split(",");
+		for (String id : idArray) {
+			Reimbursement rt = reimbursementService.get(Long.valueOf(id));
+			if(rt == null || rt.getProcess() == null || rt.getProcess().getState() == null){
+				continue;
+			}
+			if(rt.getProcess().getState() > 0){
+				j.setMsg("选择记录中存在记录已经提交的，不可以删除！");
+				j.setSuccess(false);
+				return j;
+			}
+		}
+		
 		try {
 			// 级联删除流程信息
 			processService.deleteByDocIds(ids);
