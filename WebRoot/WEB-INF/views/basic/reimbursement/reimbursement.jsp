@@ -26,7 +26,7 @@
 			sortOrder : 'asc',
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
-			columns : [ [
+			frozenColumns : [ [
 
 			{
 				checkbox : true,
@@ -34,18 +34,16 @@
 				width : '30',
 				rowspan : 2
 			}, {
-				width : '140',
+				width : '150',
 				title : '时间范围',
 				rowspan : 2,
 				sortable : true,
 				align : 'center',
 				field : 'startDT',
 				formatter : function(value, row, index) {
-					if (isEmpty(value)) {
-						return '';
-					} else {
-						return value.substring(0, value.indexOf(' '));
-					}
+					var st = formatDate(row.startDT);
+					var et = formatDate(row.endDT);
+					return st + "--" + et;
 				}
 			}, {
 				width : '140',
@@ -53,14 +51,10 @@
 				rowspan : 2,
 				align : 'center',
 				field : 'placeName'
-			/* formatter : function(value, row, index) {
-				return value==null?'':value.description;
-			} */
 			}, {
-				width : '120',
+				width : '130',
 				title : '工作',
 				rowspan : 2,
-				sortable : true,
 				align : 'center',
 				field : 'workDetail'
 			}, {
@@ -70,10 +64,7 @@
 				align : 'center',
 				field : 'costDetail'
 			}, {
-				title : '费用小计',
-				colspan : 8
-			}, {
-				width : '100',
+				width : '120',
 				title : '状态',
 				rowspan : 2,
 				align : 'center',
@@ -99,7 +90,12 @@
 						}
 					}
 				}
-			} ], [ {
+			} ] ],
+
+			columns : [ [{
+				title : '费用小计',
+				colspan : 8
+			}],[ {
 				width : '80',
 				title : '交通费',
 				align : 'center',
@@ -140,6 +136,7 @@
 				align : 'center',
 				field : 'otherFee'
 			} ] ],
+
 			toolbar : '#toolbar'
 		});
 
@@ -147,58 +144,62 @@
 
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
-		queryParams.name = "";
+		queryParams.placeName = "";
 
-		var name = $('#name').val();
+		var name = $('#placeName').val();
 		if (!isEmpty(name)) {
-			queryParams.name = name;
+			queryParams.placeName = name;
 		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
 
 	function clearFun() {
-		$('#name').val('');
-		var o = $('#dataGrid').datagrid('getData');
+		$('#placeName').val('');
 	}
 
 	function addFun() {
-		parent.$.modalDialog({
-			title : '报销申请',
-			width : '900',
-			height : '500',
-			resizable : true,
-			href : '${ctx}/reimbursement/addPage',
-			buttons : [
-					{
-						text : '保存',
-						handler : function() {
-							//传入后台区分是保存还是申请
-							parent.$.modalDialog.openner_dataGrid = dataGrid;
-							parent.$.modalDialog.handler.find('#option').val(0);
-							parent.$.modalDialog.type = 0;
-							var f = parent.$.modalDialog.handler
-									.find('#reimbursementAddForm');
-							f.submit();
-						}
-					},
-					{
-						text : '申请',
-						handler : function() {
-							parent.$.modalDialog.openner_dataGrid = dataGrid;
-							parent.$.modalDialog.handler.find('#option').val(1);
-							var f = parent.$.modalDialog.handler
-									.find('#reimbursementAddForm');
-							parent.$.modalDialog.type = 1;
-							f.submit();
-						}
-					}, {
-						text : '退出',
-						handler : function() {
-							parent.$.modalDialog.handler.dialog('close');
-						}
-					} ]
-		});
+		parent.$
+				.modalDialog({
+					title : '报销申请',
+					width : '900',
+					height : '500',
+					resizable : true,
+					href : '${ctx}/reimbursement/addPage',
+					buttons : [
+							{
+								text : '保存',
+								handler : function() {
+									//传入后台区分是保存还是申请
+									parent.$.modalDialog.openner_dataGrid = dataGrid;
+									parent.$.modalDialog.handler
+											.find('#option').val(0);
+									parent.$.modalDialog.type = 0;
+									var f = parent.$.modalDialog.handler
+											.find('#reimbursementAddForm');
+									f.submit();
+								}
+							},
+							{
+								text : '申请',
+								handler : function() {
+									parent.$.modalDialog.openner_dataGrid = dataGrid;
+									parent.$.modalDialog.handler
+											.find('#option').val(1);
+									var f = parent.$.modalDialog.handler
+											.find('#reimbursementAddForm');
+									parent.$.modalDialog.type = 1;
+									f.submit();
+								}
+							},
+							{
+								text : '退出',
+								handler : function() {
+									parent.$.modalDialog.handler
+											.dialog('close');
+								}
+							} ]
+				});
 	}
 
 	function deleteFun() {
@@ -248,41 +249,46 @@
 			return;
 		}
 
-		parent.$.modalDialog({
-			title : '编辑报销单',
-			width : '900',
-			height : '500',
-			href : '${ctx}/reimbursement/editPage?id=' + id,
-			buttons : [
-						{
-							text : '编辑',
-							handler : function() {
-								//传入后台区分是保存还是申请
-								parent.$.modalDialog.openner_dataGrid = dataGrid;
-								parent.$.modalDialog.handler.find('#option').val(0);
-								parent.$.modalDialog.type = 0;
-								var f = parent.$.modalDialog.handler
-										.find('#reimbursementEditForm');
-								f.submit();
-							}
-						},
-						{
-							text : '申请',
-							handler : function() {
-								parent.$.modalDialog.openner_dataGrid = dataGrid;
-								parent.$.modalDialog.handler.find('#option').val(1);
-								var f = parent.$.modalDialog.handler
-										.find('#reimbursementEditForm');
-								parent.$.modalDialog.type = 1;
-								f.submit();
-							}
-						}, {
-							text : '退出',
-							handler : function() {
-								parent.$.modalDialog.handler.dialog('close');
-							}
-						} ]
-		});
+		parent.$
+				.modalDialog({
+					title : '编辑报销单',
+					width : '900',
+					height : '500',
+					href : '${ctx}/reimbursement/editPage?id=' + id,
+					buttons : [
+							{
+								text : '编辑',
+								handler : function() {
+									//传入后台区分是保存还是申请
+									parent.$.modalDialog.openner_dataGrid = dataGrid;
+									parent.$.modalDialog.handler
+											.find('#option').val(0);
+									parent.$.modalDialog.type = 0;
+									var f = parent.$.modalDialog.handler
+											.find('#reimbursementEditForm');
+									f.submit();
+								}
+							},
+							{
+								text : '申请',
+								handler : function() {
+									parent.$.modalDialog.openner_dataGrid = dataGrid;
+									parent.$.modalDialog.handler
+											.find('#option').val(1);
+									var f = parent.$.modalDialog.handler
+											.find('#reimbursementEditForm');
+									parent.$.modalDialog.type = 1;
+									f.submit();
+								}
+							},
+							{
+								text : '退出',
+								handler : function() {
+									parent.$.modalDialog.handler
+											.dialog('close');
+								}
+							} ]
+				});
 	}
 
 	function detailFun() {
@@ -303,9 +309,9 @@
 		debugger;
 		parent.$.modalDialog({
 			title : '报销流程详情',
-			autoScroll:true,
-			width :  document.body.clientWidth*0.7,
-			height :  document.body.clientHeight*0.9,
+			autoScroll : true,
+			width : document.body.clientWidth * 0.7,
+			height : document.body.clientHeight * 0.9,
 			href : '${ctx}/reimbursement/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -381,7 +387,7 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>商品名称:</span> <input type="text" id="name"> <a
+				<span>地点:</span> <input type="text" id="placeName"> <a
 					onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a

@@ -13,9 +13,9 @@ public class ProcessVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long id;
 	private String processName;// 格式：申请人-类型-时间(类型)
-	private long applyUserId;// 申请人
+	private Long applyUserId;// 申请人
 	private String applyUserName;
-	private int state;// 流程状态
+	private Integer state;// 流程状态
 	private Date startDT;// 开始时间
 	private Date endDT;// 结束时间
 	private Long docId;// 启动流程的具体资源，比如报销，这里存的就是报销的ID
@@ -23,11 +23,11 @@ public class ProcessVo implements Serializable {
 	private String remark;
 	private int option;// 审批是否统一，仅仅用于前台传值
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -39,11 +39,11 @@ public class ProcessVo implements Serializable {
 		this.processName = processName;
 	}
 
-	public int getState() {
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

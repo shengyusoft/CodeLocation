@@ -8,14 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.ctc.wstx.util.StringUtil;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tuser;
 import com.wtkj.rms.code.model.po.Project;
+import com.wtkj.rms.process.model.Process;
 import com.wtkj.rms.process.model.ProcessHistory;
+import com.wtkj.rms.process.model.ProcessVo;
 import com.wtkj.rms.reimbursement.model.po.Reimbursement;
+import com.wtkj.rms.reimbursement.model.vo.ReimbursementVo;
 import com.wtkj.rms.reimbursement.service.ReimbursementServiceI;
 
 @Service
@@ -71,13 +76,12 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 	}
 
 	@Override
-	public List<Reimbursement> dataGrid(Reimbursement Reimbursement,
-			PageFilter ph) {
+	public List<Reimbursement> dataGrid(ReimbursementVo vo, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Reimbursement t ";
-		List<Reimbursement> l = reimbursementDao.find(
-				hql + whereHql(Reimbursement, params) + orderHql(ph), params,
-				ph.getPage(), ph.getRows());
+		List<Reimbursement> l = reimbursementDao.find(hql
+				+ whereHql(vo, params) + orderHql(ph), params, ph.getPage(),
+				ph.getRows());
 
 		return l;
 	}
@@ -91,22 +95,36 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 	}
 
 	@Override
-	public Long count(Reimbursement Reimbursement, PageFilter ph) {
+	public Long count(ReimbursementVo vo, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Reimbursement t ";
 		return reimbursementDao.count(
-				"select count(*) " + hql + whereHql(Reimbursement, params),
-				params);
+				"select count(*) " + hql + whereHql(vo, params), params);
 	}
 
-	private String whereHql(Reimbursement r, Map<String, Object> params) {
+	private String whereHql(ReimbursementVo r, Map<String, Object> params) {
 		String hql = "";
 		if (r != null) {
 			hql += " where 1=1 ";
-			if (r.getProcess() != null && r.getProcess().getState() > 0) {
-				hql += " and t.process.state = :state";
-				params.put("state", r.getProcess().getState());
+			ProcessVo process = r.getProcess_vo();
+			if (process != null) {
+				if (process.getState() != null) {
+					hql += " and t.process.state = :state";
+					params.put("state", process.getState());
+				}
+
+				if (process.getApplyUserId() > 0) {
+					hql += " and t.applyUser.id = :userId";
+					params.put("userId", process.getApplyUserId());
+				}
 			}
+
+			if (!StringUtils.isEmpty(r.getPlaceName())) {
+				hql += " and t.place.description like :place";
+				params.put("place", "%%" + r.getPlaceName() + "%%");
+
+			}
+
 			if (r.getStartDT() != null) {
 				hql += " and t.startDT > :startDT";
 				params.put("startDT", r.getStartDT());

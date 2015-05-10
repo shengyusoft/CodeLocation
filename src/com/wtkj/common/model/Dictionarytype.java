@@ -1,5 +1,7 @@
 package com.wtkj.common.model;
 
+import org.springframework.beans.BeanUtils;
+
 /**
  * 数据字典-字典类别model
  * @author Sunhb
@@ -77,5 +79,4 @@ public class Dictionarytype  implements java.io.Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 }

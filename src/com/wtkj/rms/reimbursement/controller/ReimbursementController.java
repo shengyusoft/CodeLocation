@@ -80,18 +80,29 @@ public class ReimbursementController extends BaseController {
 			Dictionarytype dt = dictionarytypeService.get(reimbursement
 					.getPlace().getId());
 			vo.setPlaceId(dt.getId());
-			vo.setPlaceName(dt.getName());
+			vo.setPlaceName(dt.getDescription());
 		}
 		return vo;
 	}
 
+	/*
+	 * private Reimbursement convert2Po(ReimbursementVo vo) { Reimbursement po =
+	 * new Reimbursement(); BeanUtils.copyProperties(vo, po); if
+	 * (vo.getProcess_vo() != null && vo.getProcess_vo().getId() != null) {
+	 * po.setProcess(processService.get(vo.getProcess_vo().getId())); }
+	 * 
+	 * if (vo.getProcess_vo().getApplyUserId() > 0) { User u =
+	 * userService.get(vo.getProcess_vo().getApplyUserId());
+	 * 
+	 * } return po; }
+	 */
+
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(Reimbursement reimbursement, PageFilter ph) {
+	public Grid dataGrid(ReimbursementVo vo, PageFilter ph) {
 		Grid grid = new Grid();
-		grid.setRows(convert2Vos(reimbursementService.dataGrid(reimbursement,
-				ph)));
-		grid.setTotal(reimbursementService.count(reimbursement, ph));
+		grid.setRows(convert2Vos(reimbursementService.dataGrid(vo, ph)));
+		grid.setTotal(reimbursementService.count(vo, ph));
 		return grid;
 	}
 
@@ -356,7 +367,7 @@ public class ReimbursementController extends BaseController {
 			return j;
 		}
 		Process po = processService.get(vo.getId());
-		po.setRemark(vo.getRemark());//审批意见
+		po.setRemark(vo.getRemark());// 审批意见
 		po.setOption(vo.getOption());
 		vo = process2Vo(po);
 		if (vo != null && vo.getDocId() != null && vo.getDocId() > 0) {

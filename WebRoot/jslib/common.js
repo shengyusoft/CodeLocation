@@ -65,16 +65,12 @@ function isEmpty(param) {
 	return false;
 }
 
-function formatterdate(value) {
-	var date = new Date('2014-12-26 00:00:00', 'yyyy-mm-dd HH:mm:ss');
-	alert('date' + date);
-	var year = date.getFullYear();
-	var month = date.getMonth() + 1;
-	month = month > 9 ? month : '0' + month;
-	var day = date.getDate();
-	day = day > 9 ? day : '0' + day;
-	var str = year + '-' + month + '-' + day;
-	return str;
+function formatDate(value) {
+	if (isEmpty(value)) {
+		return '';
+	} else {
+		return value.substring(0, value.indexOf(' '));
+	}
 }
 
 /**

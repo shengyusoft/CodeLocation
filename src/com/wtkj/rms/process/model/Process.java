@@ -31,7 +31,7 @@ public class Process extends IdEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String processName;// 格式：申请人-类型-时间(类型)
 	private Tuser applyUser;// 申请人
-	private int state;// 流程状态
+	private Integer state;// 流程状态
 
 	private Date startDT;// 开始时间
 	private Date endDT;// 结束时间
@@ -48,11 +48,11 @@ public class Process extends IdEntity implements Serializable {
 		this.processName = processName;
 	}
 
-	public int getState() {
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 
