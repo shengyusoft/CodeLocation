@@ -157,6 +157,10 @@ public abstract class DateUtil {
 		return getDateTime(getDatePattern(), aDate);
 	}
 
+	public static String convertDateToString(Date aDate, String aMask) {
+		return getDateTime(aMask, aDate);
+	}
+
 	/**
 	 * This method converts a String to a date using the datePattern
 	 * 
@@ -187,9 +191,9 @@ public abstract class DateUtil {
 		return cal.getTime();
 	}
 
-	
 	/**
 	 * 获取日期年月日去除时分秒
+	 * 
 	 * @param sdate
 	 * @return
 	 */
@@ -204,16 +208,18 @@ public abstract class DateUtil {
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTime();
 	}
-	
-	
+
 	/**
 	 * 日期加减运算
+	 * 
 	 * @param date
-	 * @param unit 单位 :年月日
-	 * @param size 量
+	 * @param unit
+	 *            单位 :年月日
+	 * @param size
+	 *            量
 	 * @return
 	 */
-	public static Date dateAdd(Date date,int unit, int size) {
+	public static Date dateAdd(Date date, int unit, int size) {
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(unit, size);

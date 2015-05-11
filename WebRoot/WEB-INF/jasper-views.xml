@@ -23,4 +23,9 @@
 		<property name="url" value="/WEB-INF/reports/taskHistoryReport.jrxml" />
 		<property name="reportDataKey" value="datasource" />
 	</bean>
+	<!--报销
+	<bean id="bxReport" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/bx.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>-->
 </beans>
