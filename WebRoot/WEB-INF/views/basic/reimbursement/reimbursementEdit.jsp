@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(function() {
 		$('#reimbursementEditForm').form({
-			url : '${pageContext.request.contextPath}/reimbursement/edit',
+			url : '${pageContext.request.contextPath}/reimbursement/apply',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
@@ -90,6 +90,7 @@
 				<tr>
 					<th>时间范围 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
+						<input type="hidden" name="option" id="option" value="" />
 						<input type="hidden" name="id" value="${reimbursement.id}" />
 						<input type="hidden" name="process.id" value="${reimbursement.process_vo.id}" />
 						<input class="Wdate" data-options="required:true" type="text" name="startDT" value="${reimbursement.startDT}" id="startDT" style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />

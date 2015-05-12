@@ -230,7 +230,10 @@ public class ReimbursementController extends BaseController {
 				reimbursementService.edit(reimbursement, request);
 				// 审批不通过重新申请的情况
 				Process process = reimbursement.getProcess();
-				process.setApplyUser(tuser);
+				if(process.getId() != null){
+					process = processService.get(process.getId());
+				}
+				//process.setApplyUser(tuser);
 				process.setArriveDT(new Date());
 				process.setState(ProcessStateConstant.BX_APPLYED);
 				processService.edit(process, request);
@@ -373,6 +376,7 @@ public class ReimbursementController extends BaseController {
 		return j;
 	}
 
+	//查看那流程详情
 	@RequestMapping("/detailPage")
 	public String detailPage(HttpServletRequest request, Long id) {
 		Reimbursement reimbursement = reimbursementService.get(id);
@@ -380,6 +384,16 @@ public class ReimbursementController extends BaseController {
 			request.setAttribute("reimbursement", convert2Vo(reimbursement));
 		}
 		return "/basic/reimbursement/reimbursementDetail";
+	}
+	
+	//查看申请详情
+	@RequestMapping("/detailPage2")
+	public String detailPage2(HttpServletRequest request, Long id) {
+		Reimbursement reimbursement = reimbursementService.get(id);
+		if (reimbursement != null) {
+			request.setAttribute("reimbursement", convert2Vo(reimbursement));
+		}
+		return "/basic/reimbursement/reimbursementDetail2";
 	}
 
 	@RequestMapping("/handlerPage")

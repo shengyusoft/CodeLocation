@@ -96,7 +96,7 @@
 			<div id='process' style="position: absolute; border: 2px solid red;"></div>
 		</div>
 		<div style="color: green;size: 18px;font-size: 18px;">历史记录</div>
-		<table id="dataGrid" data-options="fit:true,border:false">
+		<table id="dataGrid" data-options="fit:true,border:false,scroll:true" style="overflow-y: scroll;">
 			<tr>
 				<td><input type="hidden" name="processId" id="processId"
 					value="${reimbursement.process_vo.id}">

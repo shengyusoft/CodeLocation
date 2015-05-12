@@ -305,6 +305,55 @@
 							} ]
 				});
 	}
+	
+	function auditFun(id, state) {
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有审核对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能审核一条记录!');
+			return;
+		}
+
+		id = rows[0].process_vo.id;
+		
+		parent.$.modalDialog({
+			title : '报销审批',
+			width : '900',
+			height : '500',
+			resizable : true,
+			href : ctxPath+'/reimbursement/handlerPage?id='+id,
+			buttons : [
+					{
+						text : '通过',
+						handler : function() {
+							var f = parent.$.modalDialog.handler
+									.find('#processForm');
+							parent.$.modalDialog.openner_dataGrid = dataGrid;
+							parent.$.modalDialog.handler.find('#option').val(0);
+							f.submit();
+						}
+					},{
+						text : '退回',
+						handler : function() {
+							var f = parent.$.modalDialog.handler
+									.find('#processForm');
+							parent.$.modalDialog.openner_dataGrid = dataGrid;
+							parent.$.modalDialog.handler.find('#option').val(1);
+							f.submit();
+						}
+					}, {
+						text : '退出',
+						handler : function() {
+							parent.$.modalDialog.handler.dialog('close');
+						}
+					} ]
+		});
+
+	}
 
 	function detailFun() {
 		var id = null;
@@ -320,14 +369,43 @@
 		}
 
 		id = rows[0].id;
-
-		debugger;
 		parent.$.modalDialog({
 			title : '报销流程详情',
 			autoScroll : true,
 			width : document.body.clientWidth * 0.7,
 			height : document.body.clientHeight * 0.9,
 			href : '${ctx}/reimbursement/detailPage?id=' + id,
+			buttons : [ {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialog.handler.dialog('close');
+				}
+			} ]
+		});
+	}
+	
+	//申请详情
+	function detail2Fun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可查看对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能查看一条记录!');
+			return;
+		}
+
+		id = rows[0].id;
+		parent.$.modalDialog({
+			title : '报销申请详情',
+			autoScroll : true,
+			width : '900',
+			height : '500',
+			href : '${ctx}/reimbursement/detailPage2?id=' + id,
 			buttons : [ {
 				text : '退出',
 				handler : function() {
@@ -384,6 +462,20 @@
 					color="gray">删除</font> </a>
 			</c:otherwise>
 		</c:choose>
+		
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/reimbursement/detail2')}">
+				<a onclick="detail2Fun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">申请详情</a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
+					color="gray">申请详情</font> </a>
+			</c:otherwise>
+		</c:choose>
 
 		<c:choose>
 			<c:when
@@ -396,6 +488,20 @@
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
 					color="gray">查看流程</font> </a>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/reimbursement/handlerPage')}">
+				<a onclick="auditFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit'">审核 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
+					color="gray">审核</font> </a>
 			</c:otherwise>
 		</c:choose>
 
