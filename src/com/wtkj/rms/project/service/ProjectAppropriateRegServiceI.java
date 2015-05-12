@@ -21,4 +21,6 @@ public interface ProjectAppropriateRegServiceI {
 	public void edit(ProjectAppropriateReg p, HttpServletRequest request);
 
 	public void delete(String ids);
+
+	public void batchUpdateState(String ids, int i);
 }

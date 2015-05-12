@@ -1,6 +1,5 @@
 package com.wtkj.rms.project.service.impl;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import org.springframework.util.StringUtils;
 
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
-import com.wtkj.common.model.Tdictionary;
 import com.wtkj.rms.project.model.ProjectAppropriateReg;
 import com.wtkj.rms.project.service.ProjectAppropriateRegServiceI;
 
@@ -23,9 +21,6 @@ public class ProjectAppropriateRegServiceImpl implements
 
 	@Autowired
 	private BaseDaoI<ProjectAppropriateReg> projectAppropriateRegDao;
-
-	@Autowired
-	private BaseDaoI<Tdictionary> dictionaryDao;
 
 	@Override
 	public void add(ProjectAppropriateReg p, HttpServletRequest request) {
@@ -112,5 +107,26 @@ public class ProjectAppropriateRegServiceImpl implements
 			orderString = " order by t." + ph.getSort() + " " + ph.getOrder();
 		}
 		return orderString;
+	}
+
+	@Override
+	public void batchUpdateState(String ids, int state) {
+		String sqlids = "";
+		if (!StringUtils.isEmpty(ids) && ids.length() > 0) {
+			String[] idArray = ids.split(",");
+			if (idArray.length == 1) {
+				sqlids = "'" + idArray[0] + "'";
+			} else {
+				for (int i = 0; i < idArray.length; i++) {
+					String id = idArray[i];
+					sqlids += i == idArray.length ? ("'" + id + "'") : ("'"
+							+ id + "',");
+				}
+			}
+		}
+		String sql = "update ProjectAppropriateReg set state=" + state
+				+ " where id in (" + sqlids + ")";
+		projectAppropriateRegDao.executeSql(sql);
+
 	}
 }

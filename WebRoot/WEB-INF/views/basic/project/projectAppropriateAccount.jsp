@@ -11,12 +11,12 @@
 	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-groupview.js"
 	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
-<title>工程款拨付登记管理</title>
+<title>工程款到帐及拨付情况表</title>
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
 		dataGrid = $('#dataGrid').datagrid({
-			url : '${ctx}' + '/projectAppropriateReg/dataGrid',
+			url : '${ctx}' + '/projectAppropriateAccount/dataGrid',
 			striped : true,
 			rownumbers : true,
 			pagination : true,

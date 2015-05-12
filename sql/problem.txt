@@ -23,4 +23,11 @@ d流程回退测试，实现回退后重新申请
 晚上部署
 
 
+工程款到帐及拨付情况表（分组--**项目）次数 rownum
+登记的同时添加拨付情况
+http://uule.iteye.com/blog/1883067
+dataGrid创建子grid
+http://www.2cto.com/kf/201208/147505.html
+
+
 

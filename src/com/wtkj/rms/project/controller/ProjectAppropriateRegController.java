@@ -1,5 +1,7 @@
 package com.wtkj.rms.project.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,9 @@ import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.controller.BaseController;
-import com.wtkj.common.service.DictionaryServiceI;
+import com.wtkj.rms.project.model.ProjectAppropriateAccountVo;
 import com.wtkj.rms.project.model.ProjectAppropriateReg;
+import com.wtkj.rms.project.service.ProjectAppropriateAccountServiceI;
 import com.wtkj.rms.project.service.ProjectAppropriateRegServiceI;
 
 @Controller
@@ -24,7 +27,7 @@ public class ProjectAppropriateRegController extends BaseController {
 	private ProjectAppropriateRegServiceI projectAppropriateRegService;
 
 	@Autowired
-	private DictionaryServiceI dictionaryService;
+	private ProjectAppropriateAccountServiceI projectAppropriateAccountService;
 
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request) {
@@ -33,10 +36,13 @@ public class ProjectAppropriateRegController extends BaseController {
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(ProjectAppropriateReg projectAppropriateReg, PageFilter ph) {
+	public Grid dataGrid(ProjectAppropriateReg projectAppropriateReg,
+			PageFilter ph) {
 		Grid grid = new Grid();
-		grid.setRows(projectAppropriateRegService.dataGrid(projectAppropriateReg, ph));
-		grid.setTotal(projectAppropriateRegService.count(projectAppropriateReg, ph));
+		grid.setRows(projectAppropriateRegService.dataGrid(
+				projectAppropriateReg, ph));
+		grid.setTotal(projectAppropriateRegService.count(projectAppropriateReg,
+				ph));
 		return grid;
 	}
 
@@ -53,7 +59,7 @@ public class ProjectAppropriateRegController extends BaseController {
 			projectAppropriateRegService.add(vo, request);
 			j.setSuccess(true);
 			j.setMsg("添加成功！");
-//			j.setObj(vo);
+			// j.setObj(vo);
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
 		}
@@ -71,7 +77,7 @@ public class ProjectAppropriateRegController extends BaseController {
 		}
 
 		try {
-			//TODO 关联拨付情况表，注意级联删除
+			// TODO 关联拨付情况表，注意级联删除
 			projectAppropriateRegService.delete(ids);
 			j.setMsg("删除成功！");
 			j.setSuccess(true);
@@ -113,6 +119,40 @@ public class ProjectAppropriateRegController extends BaseController {
 		ProjectAppropriateReg vo = projectAppropriateRegService.get(id);
 		request.setAttribute("projectAppropriateReg", vo);
 		return "/basic/project/projectAppropriateRegDetail";
+	}
+
+	// 综合部会计确认
+	@RequestMapping("/confirm")
+	public Json confirm(String ids) {
+		Json j = new Json();
+		if (StringUtils.isEmpty(ids)) {
+			j.setMsg("没有记录!");
+			j.setSuccess(true);
+			return j;
+		}
+
+		try {
+			// 批量确认
+			projectAppropriateRegService.batchUpdateState(ids, 1);
+
+			// 确认的同时产生拨付情况的数据
+			if (!StringUtils.isEmpty(ids) && ids.length() > 0) {
+				String[] idArray = ids.split(",");
+				for (String id : idArray) {
+					ProjectAppropriateAccountVo at = new ProjectAppropriateAccountVo();
+					int maxTimes = projectAppropriateAccountService.findMaxTimes();
+					at.setToAccountDT(new Date());
+					at.setProjectAppRegId(Long.valueOf(id));
+					projectAppropriateAccountService.add(at, null);
+				}
+			}
+
+			j.setMsg("确认成功！");
+			j.setSuccess(true);
+		} catch (Exception e) {
+			j.setMsg(e.getMessage());
+		}
+		return j;
 	}
 
 }
