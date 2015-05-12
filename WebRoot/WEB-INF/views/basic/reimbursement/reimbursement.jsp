@@ -141,6 +141,53 @@
 
 	});
 
+	function ExporterExcel() {
+		//获取Datagride的列  
+		var rows = $('#dataGrid').datagrid('getRows');
+		var dop = $("#dataGrid").datagrid("options");
+		debugger;
+		
+		var frozenColumns = dop.frozenColumns[0];
+		var columns = dop.columns;
+		
+		//ActiveX调用office excelIE(起作用)
+	 	var oXL = new ActiveXObject("Excel.Application"); //创建AX对象excel   
+		var oWB = oXL.Workbooks.Add(); //获取workbook对象   
+		var oSheet = oWB.ActiveSheet; //激活当前sheet  
+		//设置工作薄名称  
+		oSheet.name = "导出Excel报表";
+		
+		//设置表头  
+		for ( var i = 0; i < frozenColumns.length; i++) {
+			console.log(frozenColumns[i].title);
+			oSheet.Cells(1, i + 1).value = frozenColumns[i+1].title;
+		}
+		
+		for ( var i = 1; i < columns[1].length; i++) {
+			var ci = 5;
+			console.log(columns[1][i].title);
+			oSheet.Cells(1, ci + 1).value = columns[1][i].title;
+			ci++;
+		}
+		//设置内容部分  
+		for ( var i = 0; i < rows.length; i++) {
+			//动态获取每一行每一列的数据值  
+			for ( var j = 0; j < frozenColumns.length; j++) {
+				oSheet.Cells(i + 2, j + 1).value = rows[i][frozenColumns[j+1].field];
+			}
+		}
+		
+		for ( var i = 0; i < rows.length; i++) {
+			//动态获取每一行每一列的数据值  
+			for ( var j = 0; j < columns[1].length; j++) {
+				var cj = 5;
+				oSheet.Cells(i + 2, cj + 1).value = rows[i][columns[1][j+1].field];
+				cj++;
+			}
+		}
+		oXL.Visible = true; //设置excel可见属性  
+	}
+
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.placeName = "";
@@ -382,7 +429,9 @@
 					color="gray">查看流程</font> </a>
 			</c:otherwise>
 		</c:choose>
-
+		<a onclick="ExporterExcel();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出excel</a>
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
 			<div id="searchbar" class="search-toolbar">
