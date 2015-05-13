@@ -6,9 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="${ctx}/jslib/easyui1.3.3/themes/default/easyui.css">
 <jsp:include page="../../inc.jsp"></jsp:include>
 <script type="text/javascript"
-	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-groupview.js"
+	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-detailview.js"
 	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
 <title>工程款拨付登记管理</title>
@@ -25,8 +26,44 @@
 			sortName : 'id',
 			sortOrder : 'asc',
 			pageSize : 10,
+			view: detailview,   
+		    detailFormatter:function(index,row){   
+		        return '<div style="padding:2px"><table id="ddv-' + index + '"></table></div>';   
+		    },
+		    onExpandRow: function(index,row){ 
+		        $('#ddv-'+index).datagrid({ 
+		            url:'${ctx}' + '/projectAppropriateAccount/dataGrid', 
+		            striped : true,
+		            singleSelect:true, 
+		            rownumbers:true, 
+		            loadMsg:'', 
+		            height:'auto', 
+		            columns:[[ 
+		                {field:'toAccountFee',title:'到帐金额（元）',width:100}, 
+		                {field:'toAccountDT',title:'到帐时间',width:150}, 
+		                {field:'applyFee',title:'申请拨付金额',width:120},
+		                {field:'applyFee',title:'申请拨付时间',width:100},
+		                {field:'applyFee',title:'实际拨付金额（元）',width:150},
+		                {field:'applyFee',title:'实际拨付时间',width:100},
+		                {field:'applyFee',title:'收款人',width:100},
+		                {field:'applyFee',title:'开户行',width:120},
+		                {field:'applyFee',title:'帐号',width:150},
+		                {field:'applyFee',title:'备注1',width:200},
+		                {field:'applyFee',title:'备注2',width:200}
+		            ]], 
+		            onResize:function(){ 
+		                $('#dataGrid').datagrid('fixDetailRowHeight',index); 
+		            }, 
+		            onLoadSuccess:function(){ 
+		                setTimeout(function(){ 
+		                    $('#dataGrid').datagrid('fixDetailRowHeight',index); 
+		                },0); 
+		            } 
+		        }); 
+		        $('#dataGrid').datagrid('fixDetailRowHeight',index); 
+		    },
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
-			frozenColumns : [ [ {
+			columns : [ [ {
 				checkbox : true,
 				field : 'id',
 				rowspan : 2,
@@ -80,9 +117,57 @@
 				formatter : function(value, row, index) {
 					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
 				}
+			},{
+				title : '联系人信息',
+				colspan : 3,
+				align : 'center'
+			},{
+				title : '收款人信息',
+				colspan : 3,
+				align : 'center'
+			}, {
+				width : '90',
+				title : '备注',
+				rowspan : 2,
+				align : 'center',
+				field : 'remark'
+			} ], [ {
+				width : '80',
+				title : '姓名',
+				sortable : true,
+				align : 'center',
+				field : 'contactName'
+			}, {
+				width : '120',
+				title : '电话',
+				sortable : true,
+				align : 'center',
+				field : 'contactTel'
+			}, {
+				width : '120',
+				title : '身份证号',
+				align : 'center',
+				field : 'contactIdCard'
+			},{
+				width : '100',
+				title : '户名',
+				sortable : true,
+				align : 'center',
+				field : 'payee'
+			}, {
+				width : '120',
+				title : '开户行',
+				sortable : true,
+				align : 'center',
+				field : 'bank'
+			}, {
+				width : '120',
+				title : '帐号',
+				align : 'center',
+				field : 'accountNum'
 			} ] ],
 
-			columns : [ [ {
+			/* columns : [ [ {
 				title : '联系人信息',
 				colspan : 3,
 				align : 'center'
@@ -136,7 +221,7 @@
 				rowspan : 2,
 				align : 'center',
 				field : 'accountNum'
-			} ] ],
+			} ] ], */
 
 			toolbar : '#toolbar'
 		});
@@ -162,11 +247,11 @@
 	function addFun() {
 		parent.$.modalDialog({
 			title : '工程款拨付登记',
-			width : document.body.clientWidth*0.75,
-			height : 400,
+			width : document.body.clientWidth*0.9,
+			height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/addPage',
 			buttons : [ {
-				text : '添加',
+				text : '登记',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
