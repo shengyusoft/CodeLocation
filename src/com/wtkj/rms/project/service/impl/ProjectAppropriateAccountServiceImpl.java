@@ -148,6 +148,10 @@ public class ProjectAppropriateAccountServiceImpl implements
 				params.put("toDT", vo.getToAccountDT());
 			}
 
+			if (vo.getProjectAppRegId() != null && vo.getProjectAppRegId() > 0) {
+				hql += " and t.projectAppropriateReg.id = :pregId";
+				params.put("pregId", vo.getProjectAppRegId());
+			}
 		}
 
 		return hql;

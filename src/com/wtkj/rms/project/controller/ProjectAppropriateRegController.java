@@ -59,7 +59,7 @@ public class ProjectAppropriateRegController extends BaseController {
 			projectAppropriateRegService.add(vo, request);
 			j.setSuccess(true);
 			j.setMsg("添加成功！");
-			// j.setObj(vo);
+			j.setObj(vo);
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
 		}
@@ -99,6 +99,14 @@ public class ProjectAppropriateRegController extends BaseController {
 		request.setAttribute("projectAppropriateReg", vo);
 		return "/basic/project/projectAppropriateRegEdit";
 	}
+	
+	//会计部处理
+		@RequestMapping("/handlerPage")
+		public String handlerPage(HttpServletRequest request, long id) {
+			ProjectAppropriateReg vo = projectAppropriateRegService.get(id);
+			request.setAttribute("projectAppropriateReg", vo);
+			return "/basic/project/projectAppropriateRegHandler";
+		}
 
 	@RequestMapping("/edit")
 	@ResponseBody

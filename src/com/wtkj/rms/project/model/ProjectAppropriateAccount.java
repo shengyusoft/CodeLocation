@@ -56,7 +56,7 @@ public class ProjectAppropriateAccount extends IdEntity implements
 
 	private String remark2;// 备注2，会计部填写
 
-	// 0初始化综合部确认后状态;1工程部提交;会计部提价2
+	// 0初始化综合部确认后状态;1工程部提交;会计部确认2
 	private int state;// 状态
 	
 	@NotNull

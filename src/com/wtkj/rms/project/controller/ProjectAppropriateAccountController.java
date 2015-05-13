@@ -38,7 +38,7 @@ public class ProjectAppropriateAccountController extends BaseController {
 
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
-		return "/basic/projectAppropriateAccount/projectAppropriateAccountAdd";
+		return "/basic/project/projectAppropriateAccountAdd";
 	}
 
 	@RequestMapping("/add")
@@ -87,8 +87,18 @@ public class ProjectAppropriateAccountController extends BaseController {
 		ProjectAppropriateAccountVo vo = projectAppropriateAccountService
 				.get(id);
 		request.setAttribute("projectAppropriateAccount", vo);
-		return "/basic/projectAppropriateAccount/projectAppropriateAccountEdit";
+		return "/basic/project/projectAppropriateAccountEdit";
 	}
+	
+	//会计部处理
+	@RequestMapping("/handlerPage")
+	public String handlerPage(HttpServletRequest request, long id) {
+		ProjectAppropriateAccountVo vo = projectAppropriateAccountService
+				.get(id);
+		request.setAttribute("projectAppropriateAccount", vo);
+		return "/basic/project/projectAppropriateAccountHandler";
+	}
+
 
 	@RequestMapping("/edit")
 	@ResponseBody
@@ -103,13 +113,28 @@ public class ProjectAppropriateAccountController extends BaseController {
 		}
 		return j;
 	}
+	
+	@RequestMapping("/handler")
+	@ResponseBody
+	public Json handler(ProjectAppropriateAccountVo vo, HttpServletRequest request) {
+		Json j = new Json();
+		try {
+			vo.setState(2);
+			projectAppropriateAccountService.edit(vo, request);
+			j.setSuccess(true);
+			j.setMsg("编辑成功！");
+		} catch (Exception e) {
+			j.setMsg(e.getMessage());
+		}
+		return j;
+	}
 
 	@RequestMapping("/detailPage")
 	public String detailPage(HttpServletRequest request, long id) {
 		ProjectAppropriateAccountVo vo = projectAppropriateAccountService
 				.get(id);
 		request.setAttribute("ProjectAppropriateAccount", vo);
-		return "/basic/projectAppropriateAccount/projectAppropriateAccountDetail";
+		return "/basic/project/projectAppropriateAccountDetail";
 	}
 
 }

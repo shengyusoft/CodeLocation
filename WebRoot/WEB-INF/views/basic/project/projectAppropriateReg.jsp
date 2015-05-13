@@ -33,6 +33,9 @@
 		    onExpandRow: function(index,row){ 
 		        $('#ddv-'+index).datagrid({ 
 		            url:'${ctx}' + '/projectAppropriateAccount/dataGrid', 
+		            queryParams:{
+		            	projectAppRegId : row.id
+		            },
 		            striped : true,
 		            singleSelect:true, 
 		            rownumbers:true, 
@@ -42,14 +45,27 @@
 		                {field:'toAccountFee',title:'到帐金额（元）',width:100}, 
 		                {field:'toAccountDT',title:'到帐时间',width:150}, 
 		                {field:'applyFee',title:'申请拨付金额',width:120},
-		                {field:'applyFee',title:'申请拨付时间',width:100},
-		                {field:'applyFee',title:'实际拨付金额（元）',width:150},
-		                {field:'applyFee',title:'实际拨付时间',width:100},
-		                {field:'applyFee',title:'收款人',width:100},
-		                {field:'applyFee',title:'开户行',width:120},
-		                {field:'applyFee',title:'帐号',width:150},
-		                {field:'applyFee',title:'备注1',width:200},
-		                {field:'applyFee',title:'备注2',width:200}
+		                {field:'applyDT',title:'申请拨付时间',width:100},
+		                {field:'actualFee',title:'实际拨付金额（元）',width:150},
+		                {field:'actualDT',title:'实际拨付时间',width:100},
+		                {field:'payee',title:'收款人',width:100},
+		                {
+		    				width : '120',
+		    				title : '状态',
+		    				align : 'center',
+		    				field : 'state',
+		    				formatter : function(value, row, index) {
+		    					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
+		    				}
+		    			},
+		                {field:'bank',title:'开户行',width:120},
+		                {field:'accountNum',title:'帐号',width:150},
+		                {field:'remark1',title:'备注1',width:200},
+		                {field:'remark2',title:'备注2',width:200},
+		                {field : 'id',hidden:true},
+		                {field : 'projectAppRegName',hidden:true},
+		                {field : 'projectAppRegId',hidden:true},
+		                {field : 'times',hidden:true}
 		            ]], 
 		            onResize:function(){ 
 		                $('#dataGrid').datagrid('fixDetailRowHeight',index); 
@@ -252,11 +268,18 @@
 			href : '${ctx}/projectAppropriateReg/addPage',
 			buttons : [ {
 				text : '登记',
+				id:'paregBtn',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
 							.find('#projectAppropriateRegAddForm');
 					f.submit();
+				}
+			}, {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialog.handler.dialog('close');
 				}
 			} ]
 		});
@@ -313,6 +336,37 @@
 			}
 		});
 	}
+	
+
+	function handlerFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可编辑对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			return;
+		}
+		id = rows[0].id;
+		parent.$.modalDialog({
+			title : '工程款拨付修改',
+			width : document.body.clientWidth*0.9,
+			height : document.body.clientHeight*0.9,
+			href : '${ctx}/projectAppropriateReg/handlerPage?id=' + id,
+			buttons : [ {
+				text : '编辑',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialog.handler
+							.find('#projectAppropriateRegEditForm');
+					f.submit();
+				}
+			} ]
+		});
+	}
 
 	function editFun() {
 		var id = null;
@@ -331,8 +385,8 @@
 
 		parent.$.modalDialog({
 			title : '工程款拨付修改',
-			width : document.body.clientWidth*0.75,
-			height : 400,
+			width : document.body.clientWidth*0.9,
+			height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -363,8 +417,8 @@
 
 		parent.$.modalDialog({
 			title : '工程款拨付详情',
-			width : document.body.clientWidth*0.75,
-			height : 400,
+			width : document.body.clientWidth*0.9,
+			height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',

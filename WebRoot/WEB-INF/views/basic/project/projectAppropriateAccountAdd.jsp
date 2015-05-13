@@ -3,75 +3,78 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(function() {
-		$('#projectAppropriateRegAddForm').form({
-			url : '${pageContext.request.contextPath}/projectAppropriateReg/add',
-			onSubmit : function() {
-				progressLoad();
-				var isValid = $(this).form('validate');
-				if (!isValid) {
-					progressClose();
-				}
-				return isValid;
-			},
-			success : function(result) {
-				progressClose();
-				result = $.parseJSON(result);
-				if (result.success) {
-					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
-					parent.$.modalDialog.openner_dataGrid.datagrid('reload');
-					parent.$.modalDialog.handler.dialog('close');
-				} else {
-					parent.$.messager.alert('错误', result.msg, 'error');
-				}
-			}
-		});
+		$('#projectAppropriateAccountAddForm')
+				.form(
+						{
+							url : '${pageContext.request.contextPath}/projectAppropriateAccount/add',
+							onSubmit : function() {
+								progressLoad();
+								var isValid = $(this).form('validate');
+								if (!isValid) {
+									progressClose();
+								}
+								return isValid;
+							},
+							success : function(result) {
+								progressClose();
+								result = $.parseJSON(result);
+								if (result.success) {
+									//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
+									parent.$.modalDialogTwo.openner_dataGrid
+											.datagrid('reload');
+									parent.$.modalDialogTwo.handler
+											.dialog('close');
+								} else {
+									parent.$.messager.alert('错误', result.msg,
+											'error');
+								}
+							}
+						});
 	});
-	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="projectAppropriateRegAddForm" method="post">
+		<form id="projectAppropriateAccountAddForm" method="post">
 			<table class="grid">
 				<tr>
-					<th>项目名称 &nbsp;<label
+					<th>到帐金额（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" style="width: 100%; height: 100%"
-						type="text" id="projectName" class="easyui-validatebox span2"
+					<td>
+					<input id="projectAppRegId" type="hidden" name="projectAppRegId"></input>
+					<input name="toAccountFee"
+						style="width: 100%; height: 100%" type="number" id="toAccountFee"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<th>到帐时间 &nbsp;</th>
+					<td><input name="toAccountDT"
+						style="width: 100%; height: 100%" type="number" id="toAccountDT"
+						readonly="readonly" class="easyui-validatebox span2" /></td>
+					<th>申请拨付金额 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input class="easyui-validatebox span2" type="number"
+						name="applyFee" id="applyFee" style="width: 98%; height: 100%;"
 						data-options="required:true" /></td>
-					<th>中标价（元） &nbsp;<label
+				</tr>
+				<tr>
+					<th>申请拨付时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bidPrice" style="width: 100%; height: 100%"
-						type="number" id="bidPrice" class="easyui-validatebox span2"
+					<td><input class="Wdate" type="text" name="applyDT"
+						id="applyDT" style="width: 98%; height: 100%;"
+						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+					<th>实际拨付金额（元）&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="actualFee"
+						style="width: 100%; height: 100%" type="number"
+						id="actualFee" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-					<th>中标日期 &nbsp;<label
+					<th>实际拨付时间&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="bidDT"
-						id="bidDT" style="width: 98%; height: 100%;"
+					<td><input class="Wdate" type="text" name="actualDT"
+						id="actualDT" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
-					<th>合同工期（年） &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="name" style="width: 100%; height: 100%"
-						type="number" id="name" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-					<th>管理费比例 （%）&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="managerFeeRate" style="width: 100%; height: 100%"
-						type="number" id="managerFeeRate" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-					<th>管理费数额（元）&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="managerFee" style="width: 100%; height: 100%"
-						type="number" id="managerFee" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-				</tr>
-				<tr>
-					<td colspan="6">收款人信息</td>
-				</tr>
-				<tr>
-					<th>户名 &nbsp;<label
+					<th>收款人 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="payee" style="width: 100%; height: 100%"
 						type="text" id="accountNum" class="easyui-validatebox span2"
@@ -88,27 +91,12 @@
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<td colspan="6">联系人信息</td>
+					<th>备注1&nbsp;</th>
+					<td colspan="5"><textarea style="width: 100%" rows="3"
+							name="remark"></textarea></td>
 				</tr>
 				<tr>
-					<th>姓名 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactName" style="width: 100%; height: 100%"
-						type="text" id="contactName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-					<th>电话&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactTel" style="width: 100%; height: 100%"
-						type="text" id="contactTel" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-					<th>身份证号&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactIdCard" style="width: 100%; height: 100%"
-						type="text" id="contactIdCard" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-				</tr>
-				<tr>
-					<th>备注&nbsp;</th>
+					<th>备注2&nbsp;</th>
 					<td colspan="5"><textarea style="width: 100%" rows="3"
 							name="remark"></textarea></td>
 				</tr>

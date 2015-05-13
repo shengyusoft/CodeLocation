@@ -40,11 +40,18 @@ public class ProjectAppropriateRegServiceImpl implements
 			} else {
 				for (int i = 0; i < idArray.length; i++) {
 					String id = idArray[i];
-					sqlids += i == idArray.length ? ("'" + id + "'") : ("'"
-							+ id + "',");
+					if(i == 0){
+						sqlids += "'" + id + "'";
+					}else{
+						sqlids += ",'" + id + "'";
+					}
 				}
 			}
 		}
+		if(sqlids.lastIndexOf(",") > 0){
+			sqlids = sqlids.substring(0, sqlids.lastIndexOf(","));
+		}
+		
 		String sql = "delete from ProjectAppropriateReg where id in (" + sqlids
 				+ ")";
 		projectAppropriateRegDao.executeSql(sql);

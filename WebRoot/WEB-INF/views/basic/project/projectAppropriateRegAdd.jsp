@@ -4,8 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
+	var dataGrid;
 	$(function() {
-		var dataGrid;
 		$('#projectAppropriateRegAddForm').form({
 			url : '${pageContext.request.contextPath}/projectAppropriateReg/add',
 			onSubmit : function() {
@@ -20,9 +20,15 @@
 				progressClose();
 				result = $.parseJSON(result);
 				if (result.success) {
+					$("#paregBtn").linkbutton("disable");
+					if(result.obj){
+						console.log(result.obj);
+						console.log(result.obj.id);
+						$('#projectAppRegId').val(result.obj.id);
+					}
 					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
 					parent.$.modalDialog.openner_dataGrid.datagrid('reload');
-					parent.$.modalDialog.handler.dialog('close');
+					//parent.$.modalDialog.handler.dialog('close');
 				} else {
 					parent.$.messager.alert('错误', result.msg, 'error');
 				}
@@ -43,79 +49,228 @@
 			columns : [ [ {
 				checkbox : true,
 				field : 'id',
-				rowspan : 2,
 				width : '30',
 			}, {
 				width : '120',
-				title : '项目名称',
-				rowspan : 2,
+				title : '到帐金额（元）',
 				align : 'center',
 				field : 'toAccountFee'
 			}, {
 				width : '90',
-				title : '中标价（元）',
-				rowspan : 2,
+				title : '到帐时间',
 				sortable : true,
 				align : 'center',
 				field : 'toAccountDT'
 			}, {
 				width : '120',
-				title : '管理费比例',
-				rowspan : 2,
+				title : '申请拨付金额',
 				sortable : true,
 				align : 'center',
 				field : 'applyFee'
 			}, {
 				width : '120',
-				title : '管理费数额',
-				rowspan : 2,
+				title : '申请拨付时间',
 				sortable : true,
 				align : 'center',
 				field : 'applyDT'
 			}, {
 				width : '120',
-				title : '中标日期',
-				rowspan : 2,
+				title : '实际拨付金额（元）',
 				sortable : true,
 				align : 'center',
 				field : 'actualFee'
 			}, {
 				width : '90',
-				title : '合同工期',
-				rowspan : 2,
+				title : '实际拨付时间',
 				align : 'center',
 				field : 'actualDT'
 			}, {
 				width : '90',
 				title : '状态',
-				rowspan : 2,
+				align : 'center',
+				field : 'state'
+			}, {
+				width : '90',
+				title : '收款人',
 				align : 'center',
 				field : 'payee'
-			} ] ],
+			}, {
+				width : '90',
+				title : '开户行',
+				align : 'center',
+				field : 'bank'
+			}, {
+				width : '90',
+				title : '帐号',
+				align : 'center',
+				field : 'accountNum'
+			}, {
+				width : '90',
+				title : '备注1',
+				align : 'center',
+				field : 'remark1'
+			}, {
+				width : '90',
+				title : '备注2',
+				align : 'center',
+				field : 'remark2'
+			} ,{field : 'projectAppRegName',hidden:true},
+            {field : 'projectAppRegId',hidden:true},
+            {field : 'times',hidden:true} ] ],
 			toolbar : '#toolbar'
 		});
 	});
 	
+	//拨付情况表方法
 	function addFun() {
-		debugger;
+		var pid = $('#projectAppRegId').val();
+		if(isEmpty(pid)){
+			parent.$.messager.alert('警告', '请先进行工程款拨付登记!');
+			return;
+		}
 		parent.parent.$.modalDialogTwo({
-			title : '工程款拨付登记',
-			width : document.body.clientWidth*0.75,
-			height : 600,
-			href : '${ctx}/projectAppropriateReg/editPage',
+			title : '工程款到帐及拨付登记',
+			width : document.body.clientWidth*0.7,
+			height : 400,
+			href : '${ctx}/projectAppropriateAccount/addPage',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
 					parent.$.modalDialogTwo.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
-							.find('#projectAppropriateRegAddForm');
+					var f = parent.$.modalDialogTwo.handler
+							.find('#projectAppropriateAccountAddForm');
+					var projectAppRegId = parent.$.modalDialogTwo.handler
+					.find('#projectAppRegId');
+					if(projectAppRegId){
+						projectAppRegId.val(pid);
+					}
 					f.submit();
+				}
+			}, {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialogTwo.handler.dialog('close');
 				}
 			} ]
 		});
 	}
 	
+	function deleteFun() {
+		var selected = getSelected();
+		if (isEmpty(selected)) {
+			parent.$.messager.alert('警告', '至少选中一条记录!');
+			return;
+		}
+		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
+			if (b) {
+				progressLoad();
+				$.post('${ctx}/projectAppropriateAccount/delete', {
+					ids : selected
+				}, function(result) {
+					if (result.success) {
+						parent.$.messager.alert('提示', result.msg, 'info');
+						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
+						removeSelectedRow(dataGrid);
+						dataGrid.datagrid('reload');
+					} else {
+						parent.$.messager.alert('警告', result.msg, 'warning');
+					}
+					progressClose();
+				}, 'JSON');
+			}
+		});
+	}
+	
+	function confirmFun() {
+		var selected = getSelected();
+		if (isEmpty(selected)) {
+			parent.$.messager.alert('警告', '至少选中一条记录!');
+			return;
+		}
+		parent.$.messager.confirm('询问', '对选择的工程款拨付加以确认？', function(b) {
+			if (b) {
+				progressLoad();
+				$.post('${ctx}/projectAppropriateAccount/confirm', {
+					ids : selected
+				}, function(result) {
+					if (result.success) {
+						parent.$.messager.alert('提示', result.msg, 'info');
+						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
+						removeSelectedRow(dataGrid);
+						dataGrid.datagrid('reload');
+					} else {
+						parent.$.messager.alert('警告', result.msg, 'warning');
+					}
+					progressClose();
+				}, 'JSON');
+			}
+		});
+	}
 
+	function editFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可编辑对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			return;
+		}
+
+		id = rows[0].id;
+
+		parent.$.modalDialog({
+			title : '工程款到帐及拨付修改',
+			width : document.body.clientWidth*0.75,
+			height : 400,
+			href : '${ctx}/projectAppropriateAccount/editPage?id=' + id,
+			buttons : [ {
+				text : '编辑',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialog.handler
+							.find('#projectAppropriateAccountEditForm');
+					f.submit();
+				}
+			} ]
+		});
+	}
+
+	function detailFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可查看对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能查看一条记录!');
+			return;
+		}
+
+		id = rows[0].id;
+
+		parent.$.modalDialog({
+			title : '工程款到帐及拨付详情',
+			width : document.body.clientWidth*0.75,
+			height : 400,
+			href : '${ctx}/projectAppropriateAccount/detailPage?id=' + id,
+			buttons : [ {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialog.handler.dialog('close');
+				}
+			} ]
+		});
+	}
+	
+	//二次弹窗
 	$.modalDialogTwo = function(options) {
 		if ($.modalDialogTwo.handler == undefined) {// 避免重复弹出
 			var opts = $.extend({
@@ -147,7 +302,9 @@
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" style="width: 100%; height: 100%"
+					<td>
+					<input id="projectAppRegId" type="hidden" name="projectAppRegId"></input>
+					<input name="projectName" style="width: 100%; height: 100%"
 						type="text" id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 					<th>中标价（元） &nbsp;<label
@@ -225,7 +382,7 @@
 				</tr>
 			</table>
 		</form>
-		<span width="100%" style="font-size:14px;color:blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
+		<span style="font-size:14px;color:blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
 		<div id='ddg'>
 			<table id="dataGrid" data-options="fit:true,border:false"></table>
 		</div>
@@ -233,7 +390,7 @@
 		<div style="display: none" id="toolbar" class="mygrid-toolbar" style="inline: true">
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/add')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/add')}">
 				<a onclick="addFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_add'">添加 </a>
@@ -246,7 +403,7 @@
 		</c:choose>
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/edit')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/edit')}">
 				<a onclick="editFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_edit'">编辑</a>
@@ -259,7 +416,7 @@
 		</c:choose>
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/delete')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/delete')}">
 				<a onclick="deleteFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_del'">删除 </a>
@@ -273,7 +430,7 @@
 
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/detail')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/detail')}">
 				<a onclick="detailFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail'">详情 </a>
@@ -287,7 +444,7 @@
 		
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/confirm')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/handler')}">
 				<a onclick="confirmFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_audit'">处理</a>
@@ -298,19 +455,6 @@
 					color="gray">处理</font> </a>
 			</c:otherwise>
 		</c:choose>
-
-		<c:if
-			test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/search')}">
-			<div id="searchbar" class="search-toolbar">
-				<span>项目名称:</span> <input type="text" id="projectName"> <a
-					onclick="searchFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-			</div>
-		</c:if>
 	</div>
 	</div>
 	

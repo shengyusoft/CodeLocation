@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
+	var dataGrid1;
 	$(function() {
-		$('#projectAppropriateRegEditForm').form({
-			url : '${pageContext.request.contextPath}/projectAppropriateReg/edit',
+		$('#projectAppropriateRegAddForm').form({
+			url : '${pageContext.request.contextPath}/projectAppropriateReg/add',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
@@ -17,16 +20,283 @@
 				progressClose();
 				result = $.parseJSON(result);
 				if (result.success) {
+					$("#paregBtn").linkbutton("disable");
+					if(result.obj){
+						console.log(result.obj);
+						console.log(result.obj.id);
+						$('#projectAppRegId').val(result.obj.id);
+					}
 					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
 					parent.$.modalDialog.openner_dataGrid.datagrid('reload');
-					parent.$.modalDialog.handler.dialog('close');
+					//parent.$.modalDialog.handler.dialog('close');
 				} else {
 					parent.$.messager.alert('错误', result.msg, 'error');
 				}
 			}
 		});
+		var projectAppRegId = '${projectAppropriateReg.id}';
+		console.log(projectAppRegId);
+		dataGrid1 = $('#dataGrid1').datagrid({
+			url : '${ctx}' + '/projectAppropriateAccount/dataGrid',
+			striped : true,
+			rownumbers : true,
+			pagination : true,
+			queryParams:{
+            	projectAppRegId : projectAppRegId
+            },
+			nowrap : true,
+			idField : 'id',
+			sortName : 'id',
+			sortOrder : 'asc',
+			pageSize : 10,
+			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
+			columns : [ [ {
+				checkbox : true,
+				field : 'id',
+				width : '30',
+			}, {
+				width : '120',
+				title : '到帐金额（元）',
+				align : 'center',
+				field : 'toAccountFee'
+			}, {
+				width : '90',
+				title : '到帐时间',
+				sortable : true,
+				align : 'center',
+				field : 'toAccountDT'
+			}, {
+				width : '120',
+				title : '申请拨付金额',
+				sortable : true,
+				align : 'center',
+				field : 'applyFee'
+			}, {
+				width : '120',
+				title : '申请拨付时间',
+				sortable : true,
+				align : 'center',
+				field : 'applyDT'
+			}, {
+				width : '120',
+				title : '实际拨付金额（元）',
+				sortable : true,
+				align : 'center',
+				field : 'actualFee'
+			}, {
+				width : '90',
+				title : '实际拨付时间',
+				align : 'center',
+				field : 'actualDT'
+			}, {
+				width : '90',
+				title : '状态',
+				align : 'center',
+				field : 'state'
+			}, {
+				width : '90',
+				title : '收款人',
+				align : 'center',
+				field : 'payee'
+			}, {
+				width : '90',
+				title : '开户行',
+				align : 'center',
+				field : 'bank'
+			}, {
+				width : '90',
+				title : '帐号',
+				align : 'center',
+				field : 'accountNum'
+			}, {
+				width : '90',
+				title : '备注1',
+				align : 'center',
+				field : 'remark1'
+			}, {
+				width : '90',
+				title : '备注2',
+				align : 'center',
+				field : 'remark2'
+			}, {field : 'projectAppRegName',hidden:true},
+            {field : 'projectAppRegId',hidden:true},
+            {field : 'times',hidden:true} ] ],
+			toolbar : '#toolbar'
+		});
 	});
 	
+	//拨付情况表方法
+	function addFun() {
+		var pid = $('#projectAppRegId').val();
+		if(isEmpty(pid)){
+			parent.$.messager.alert('警告', '请先进行工程款拨付登记!');
+			return;
+		}
+		parent.parent.$.modalDialogTwo({
+			title : '工程款到帐及拨付登记',
+			width : document.body.clientWidth*0.7,
+			height : 400,
+			href : '${ctx}/projectAppropriateAccount/addPage',
+			buttons : [ {
+				text : '添加',
+				handler : function() {
+					parent.$.modalDialogTwo.openner_dataGrid = dataGrid1;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
+					var f = parent.$.modalDialogTwo.handler
+							.find('#projectAppropriateAccountAddForm');
+					var projectAppRegId = parent.$.modalDialogTwo.handler
+					.find('#projectAppRegId');
+					if(projectAppRegId){
+						projectAppRegId.val(pid);
+					}
+					f.submit();
+				}
+			}, {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialogTwo.handler.dialog('close');
+				}
+			} ]
+		});
+	}
+	
+	function deleteFun() {
+		var selected = getSelected();
+		if (isEmpty(selected)) {
+			parent.$.messager.alert('警告', '至少选中一条记录!');
+			return;
+		}
+		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
+			if (b) {
+				progressLoad();
+				$.post('${ctx}/projectAppropriateAccount/delete', {
+					ids : selected
+				}, function(result) {
+					if (result.success) {
+						parent.$.messager.alert('提示', result.msg, 'info');
+						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
+						removeSelectedRow(dataGrid1);
+						dataGrid1.datagrid('reload');
+					} else {
+						parent.$.messager.alert('警告', result.msg, 'warning');
+					}
+					progressClose();
+				}, 'JSON');
+			}
+		});
+	}
+	
+	function confirmFun() {
+		var selected = getSelected();
+		if (isEmpty(selected)) {
+			parent.$.messager.alert('警告', '至少选中一条记录!');
+			return;
+		}
+		parent.$.messager.confirm('询问', '对选择的工程款拨付加以确认？', function(b) {
+			if (b) {
+				progressLoad();
+				$.post('${ctx}/projectAppropriateAccount/confirm', {
+					ids : selected
+				}, function(result) {
+					if (result.success) {
+						parent.$.messager.alert('提示', result.msg, 'info');
+						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
+						removeSelectedRow(dataGrid1);
+						dataGrid1.datagrid('reload');
+					} else {
+						parent.$.messager.alert('警告', result.msg, 'warning');
+					}
+					progressClose();
+				}, 'JSON');
+			}
+		});
+	}
+
+	function editFun() {
+		var id = null;
+		var rows = dataGrid1.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可编辑对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			return;
+		}
+
+		id = rows[0].id;
+
+		parent.$.modalDialog({
+			title : '工程款到帐及拨付修改',
+			width : document.body.clientWidth*0.75,
+			height : 400,
+			href : '${ctx}/projectAppropriateAccount/editPage?id=' + id,
+			buttons : [ {
+				text : '编辑',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid1;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialog.handler
+							.find('#projectAppropriateAccountEditForm');
+					f.submit();
+				}
+			} ]
+		});
+	}
+
+	function detailFun() {
+		var id = null;
+		var rows = dataGrid1.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可查看对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能查看一条记录!');
+			return;
+		}
+
+		id = rows[0].id;
+
+		parent.$.modalDialog({
+			title : '工程款到帐及拨付详情',
+			width : document.body.clientWidth*0.75,
+			height : 400,
+			href : '${ctx}/projectAppropriateAccount/detailPage?id=' + id,
+			buttons : [ {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialog.handler.dialog('close');
+				}
+			} ]
+		});
+	}
+	
+	//二次弹窗
+	$.modalDialogTwo = function(options) {
+		if ($.modalDialogTwo.handler == undefined) {// 避免重复弹出
+			var opts = $.extend({
+				title : '',
+				width : 840,
+				height : 680,
+				modal : true,
+				onClose : function() {
+					$.modalDialogTwo.handler = undefined;
+					$(this).dialog('destroy');
+				},
+				onOpen : function() {
+					// parent.$.messager.progress({
+					// title : '提示',
+					// text : '数据加载中，请稍后....'
+					// }); 
+				}
+			}, options);
+			opts.modal = true;// 强制此dialog为模式化，无视传递过来的modal参数
+			return $.modalDialogTwo.handler = $('<div/>').dialog(opts);
+		}
+	};
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -36,7 +306,9 @@
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input type="hidden" name="id"
+					<td>
+					<input id="projectAppRegId" type="hidden" value="${projectAppropriateReg.id}"></input>
+					<input type="hidden" name="id"
 						id="id" value="${projectAppropriateReg.id}"/> <input name="projectName" style="width: 100%; height: 100%"
 						type="text" id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" value="${projectAppropriateReg.projectName}" /></td>
@@ -115,5 +387,82 @@
 				</tr>
 			</table>
 		</form>
+
+		<span style="font-size:14px;color:blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
+		<div>
+			<table id="dataGrid1" data-options="fit:true,border:false"></table>
+		</div>
+		
+		<div id="toolbar" class="mygrid-toolbar" style="inline: true">
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/add')}">
+				<a onclick="addFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_add'">添加 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_add_disabled'"><font
+					color="gray">添加</font> </a>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/edit')}">
+				<a onclick="editFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_edit'">编辑</a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_edit_disabled'"><font
+					color="gray">编辑</font> </a>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/delete')}">
+				<a onclick="deleteFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_del'">删除 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_del_disabled'"><font
+					color="gray">删除</font> </a>
+			</c:otherwise>
+		</c:choose>
+
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/detail')}">
+				<a onclick="detailFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">详情 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
+					color="gray">详情</font> </a>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/handler')}">
+				<a onclick="confirmFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit'">处理</a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
+					color="gray">处理</font> </a>
+			</c:otherwise>
+		</c:choose>
 	</div>
+	</div>
+	
+	
 </div>

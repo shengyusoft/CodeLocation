@@ -6,8 +6,8 @@
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
-		var projectAppRegId = '${projectAppropriateReg.id}';
-		dataGrid = $('#dataGrid2').datagrid({
+		var projectAppRegId = '${projectAppropriateReg.projectAppRegId}';
+		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectAppropriateAccount/dataGrid',
 			striped : true,
 			rownumbers : true,
@@ -63,36 +63,68 @@
 				width : '90',
 				title : '状态',
 				align : 'center',
-				field : 'state'
+				field : 'payee'
 			}, {
 				width : '90',
 				title : '收款人',
 				align : 'center',
-				field : 'payee'
+				field : 'actualDT'
 			}, {
 				width : '90',
 				title : '开户行',
 				align : 'center',
-				field : 'bank'
+				field : 'actualDT'
 			}, {
 				width : '90',
 				title : '帐号',
 				align : 'center',
-				field : 'accountNum'
+				field : 'actualDT'
 			}, {
 				width : '90',
 				title : '备注1',
 				align : 'center',
-				field : 'remark1'
+				field : 'actualDT'
 			}, {
 				width : '90',
 				title : '备注2',
 				align : 'center',
-				field : 'remark2'
+				field : 'actualDT'
 			} ] ],
 			toolbar : '#toolbar'
 		});
 	});
+	
+	function handlerFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可编辑对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			return;
+		}
+
+		id = rows[0].id;
+
+		parent.$.modalDialog({
+			title : '会计确认',
+			width : document.body.clientWidth*0.75,
+			height : 400,
+			href : '${ctx}/projectAppropriateAccount/handlerPage?id=' + id,
+			buttons : [ {
+				text : '编辑',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialog.handler
+							.find('#projectAppropriateAccountEditForm');
+					f.submit();
+				}
+			} ]
+		});
+	}
 	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -184,8 +216,23 @@
 		</form>
 
 		<span style="font-size:14px;color:blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
-		<div>
-			<table id="dataGrid2" data-options="fit:true,border:false"></table>
+		<div id='ddg'>
+			<table id="dataGrid" data-options="fit:true,border:false"></table>
+		</div>
+		<div id="toolbar" class="mygrid-toolbar" style="inline: true">
+			<c:choose>
+				<c:when
+					test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/handler')}">
+					<a onclick="handlerFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_audit'">确认拨款</a>
+				</c:when>
+				<c:otherwise>
+					<a href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
+						color="gray">确认拨款</font> </a>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	
