@@ -125,19 +125,10 @@
 				align : 'center',
 				field : 'contractDuration'
 			}, {
-				width : '90',
-				title : '状态',
-				rowspan : 2,
-				align : 'center',
-				field : 'state',
-				formatter : function(value, row, index) {
-					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
-				}
-			},{
 				title : '联系人信息',
 				colspan : 3,
 				align : 'center'
-			},{
+			}, {
 				title : '收款人信息',
 				colspan : 3,
 				align : 'center'
@@ -264,7 +255,8 @@
 		parent.$.modalDialog({
 			title : '工程款拨付登记',
 			width : document.body.clientWidth*0.9,
-			height : document.body.clientHeight*0.9,
+			height : 550,
+			//height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/addPage',
 			buttons : [ {
 				text : '登记',
@@ -352,17 +344,24 @@
 		}
 		id = rows[0].id;
 		parent.$.modalDialog({
-			title : '工程款拨付修改',
+			title : '工程款拨付处理',
 			width : document.body.clientWidth*0.9,
-			height : document.body.clientHeight*0.9,
+			height : 550,
+			//height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/handlerPage?id=' + id,
-			buttons : [ {
+			buttons : [ /* {
 				text : '编辑',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
 							.find('#projectAppropriateRegEditForm');
 					f.submit();
+				}
+			}, */ {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialog.handler.dialog('close');
 				}
 			} ]
 		});
@@ -386,15 +385,23 @@
 		parent.$.modalDialog({
 			title : '工程款拨付修改',
 			width : document.body.clientWidth*0.9,
-			height : document.body.clientHeight*0.9,
+			//height : document.body.clientHeight*0.9,
+			height : 550,
 			href : '${ctx}/projectAppropriateReg/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
+				id:'paregBtn',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
 							.find('#projectAppropriateRegEditForm');
 					f.submit();
+				}
+			},{
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialog.handler.dialog('close');
 				}
 			} ]
 		});
@@ -418,7 +425,8 @@
 		parent.$.modalDialog({
 			title : '工程款拨付详情',
 			width : document.body.clientWidth*0.9,
-			height : document.body.clientHeight*0.9,
+			height : 550,
+			//height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -492,8 +500,8 @@
 		
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/confirm')}">
-				<a onclick="confirmFun();" href="javascript:void(0);"
+				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/handler')}">
+				<a onclick="handlerFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_audit'">处理</a>
 			</c:when>

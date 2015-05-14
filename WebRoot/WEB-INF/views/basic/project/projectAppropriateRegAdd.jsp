@@ -35,12 +35,16 @@
 			}
 		});
 		
+		debugger;
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectAppropriateAccount/dataGrid',
 			striped : true,
 			rownumbers : true,
 			pagination : true,
 			nowrap : true,
+			queryParams:{
+            	projectAppRegId : isEmpty($('#projectAppRegId').val())?0:$('#projectAppRegId').val()
+            },
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
@@ -88,7 +92,10 @@
 				width : '90',
 				title : '状态',
 				align : 'center',
-				field : 'state'
+				field : 'state',
+				formatter : function(value, row, index) {
+					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
+				}
 			}, {
 				width : '90',
 				title : '收款人',
@@ -128,7 +135,7 @@
 			parent.$.messager.alert('警告', '请先进行工程款拨付登记!');
 			return;
 		}
-		parent.parent.$.modalDialogTwo({
+		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付登记',
 			width : document.body.clientWidth*0.7,
 			height : 400,
@@ -223,7 +230,7 @@
 
 		id = rows[0].id;
 
-		parent.$.modalDialog({
+		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付修改',
 			width : document.body.clientWidth*0.75,
 			height : 400,
@@ -231,8 +238,8 @@
 			buttons : [ {
 				text : '编辑',
 				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
+					parent.$.modalDialogTwo.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialogTwo.handler
 							.find('#projectAppropriateAccountEditForm');
 					f.submit();
 				}
@@ -255,7 +262,7 @@
 
 		id = rows[0].id;
 
-		parent.$.modalDialog({
+		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付详情',
 			width : document.body.clientWidth*0.75,
 			height : 400,
@@ -269,44 +276,19 @@
 			} ]
 		});
 	}
-	
-	//二次弹窗
-	$.modalDialogTwo = function(options) {
-		if ($.modalDialogTwo.handler == undefined) {// 避免重复弹出
-			var opts = $.extend({
-				title : '',
-				width : 840,
-				height : 680,
-				modal : true,
-				onClose : function() {
-					$.modalDialogTwo.handler = undefined;
-					$(this).dialog('destroy');
-				},
-				onOpen : function() {
-					// parent.$.messager.progress({
-					// title : '提示',
-					// text : '数据加载中，请稍后....'
-					// }); 
-				}
-			}, options);
-			opts.modal = true;// 强制此dialog为模式化，无视传递过来的modal参数
-			return $.modalDialogTwo.handler = $('<div/>').dialog(opts);
-		}
-	};
 </script>
-<div class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'center',border:false" title=""
+<div class="easyui-layout" data-options="fit:true,border:false" style="overflow: hidden">
+	<div data-options="border:false" title=""
 		style="overflow: hidden; padding: 3px;">
 		<form id="projectAppropriateRegAddForm" method="post">
 			<table class="grid">
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-					<input id="projectAppRegId" type="hidden" name="projectAppRegId"></input>
-					<input name="projectName" style="width: 100%; height: 100%"
-						type="text" id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td><input id="projectAppRegId" type="hidden"
+						name="projectAppRegId"></input> <input name="projectName"
+						style="width: 100%; height: 100%" type="text" id="projectName"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
 					<th>中标价（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bidPrice" style="width: 100%; height: 100%"
@@ -314,9 +296,9 @@
 						data-options="required:true" /></td>
 					<th>中标日期 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="bidDT"
-						id="bidDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+					<td><input class="Wdate" type="text" name="bidDT" id="bidDT"
+						style="width: 98%; height: 100%;" data-options="required:true"
+						onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
 					<th>合同工期（年） &nbsp;<label
@@ -326,8 +308,9 @@
 						data-options="required:true" /></td>
 					<th>管理费比例 （%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="managerFeeRate" style="width: 100%; height: 100%"
-						type="number" id="managerFeeRate" class="easyui-validatebox span2"
+					<td><input name="managerFeeRate"
+						style="width: 100%; height: 100%" type="number"
+						id="managerFeeRate" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 					<th>管理费数额（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -361,9 +344,9 @@
 				<tr>
 					<th>姓名 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactName" style="width: 100%; height: 100%"
-						type="text" id="contactName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td><input name="contactName"
+						style="width: 100%; height: 100%" type="text" id="contactName"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
 					<th>电话&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="contactTel" style="width: 100%; height: 100%"
@@ -371,9 +354,9 @@
 						data-options="required:true" /></td>
 					<th>身份证号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactIdCard" style="width: 100%; height: 100%"
-						type="text" id="contactIdCard" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td><input name="contactIdCard"
+						style="width: 100%; height: 100%" type="text" id="contactIdCard"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
@@ -382,12 +365,15 @@
 				</tr>
 			</table>
 		</form>
-		<span style="font-size:14px;color:blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
-		<div id='ddg'>
-			<table id="dataGrid" data-options="fit:true,border:false"></table>
-		</div>
-		
-		<div style="display: none" id="toolbar" class="mygrid-toolbar" style="inline: true">
+	</div>
+	<span style="font-size: 14px; color: blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
+	
+	<div data-options="fit:true,border:false" style="overflow: auto;height: 180px">
+		<table id="dataGrid" data-options="fit:true,border:false"></table>
+	</div>
+
+	<div style="display: none" id="toolbar" class="mygrid-toolbar"
+		style="inline: true">
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/add')}">
@@ -441,22 +427,5 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
-		
-		<c:choose>
-			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/handler')}">
-				<a onclick="confirmFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_audit'">处理</a>
-			</c:when>
-			<c:otherwise>
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
-					color="gray">处理</font> </a>
-			</c:otherwise>
-		</c:choose>
 	</div>
-	</div>
-	
-	
 </div>

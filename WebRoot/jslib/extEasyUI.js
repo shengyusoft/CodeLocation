@@ -12,6 +12,27 @@ $.fn.datagrid.defaults.loadMsg = '加载中....';
  * 
  * panel关闭时回收内存，主要用于layout使用iframe嵌入网页时的内存泄漏问题
  */
+
+//二次弹窗
+$.modalDialogTwo = function(options) {
+	if ($.modalDialogTwo.handler == undefined) {// 避免重复弹出
+		var opts = $.extend({
+			title : '',
+			width : 840,
+			height : 680,
+			modal : true,
+			onClose : function() {
+				$.modalDialogTwo.handler = undefined;
+				$(this).dialog('destroy');
+			},
+			onOpen : function() {
+			}
+		}, options);
+		opts.modal = true;// 强制此dialog为模式化，无视传递过来的modal参数
+		return $.modalDialogTwo.handler = $('<div/>').dialog(opts);
+	}
+};
+
 $.fn.panel.defaults.onBeforeDestroy = function() {
 	var frame = $('iframe', this);
 	try {

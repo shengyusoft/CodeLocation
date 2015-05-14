@@ -1,5 +1,7 @@
 package com.wtkj.rms.project.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,8 +91,8 @@ public class ProjectAppropriateAccountController extends BaseController {
 		request.setAttribute("projectAppropriateAccount", vo);
 		return "/basic/project/projectAppropriateAccountEdit";
 	}
-	
-	//会计部处理
+
+	// 会计部处理
 	@RequestMapping("/handlerPage")
 	public String handlerPage(HttpServletRequest request, long id) {
 		ProjectAppropriateAccountVo vo = projectAppropriateAccountService
@@ -98,7 +100,6 @@ public class ProjectAppropriateAccountController extends BaseController {
 		request.setAttribute("projectAppropriateAccount", vo);
 		return "/basic/project/projectAppropriateAccountHandler";
 	}
-
 
 	@RequestMapping("/edit")
 	@ResponseBody
@@ -113,13 +114,17 @@ public class ProjectAppropriateAccountController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping("/handler")
 	@ResponseBody
-	public Json handler(ProjectAppropriateAccountVo vo, HttpServletRequest request) {
+	public Json handler(ProjectAppropriateAccountVo vo,
+			HttpServletRequest request) {
 		Json j = new Json();
 		try {
 			vo.setState(2);
+			if (vo.getActualDT() == null) {
+				vo.setActualDT(new Date());
+			}
 			projectAppropriateAccountService.edit(vo, request);
 			j.setSuccess(true);
 			j.setMsg("编辑成功！");
@@ -133,7 +138,7 @@ public class ProjectAppropriateAccountController extends BaseController {
 	public String detailPage(HttpServletRequest request, long id) {
 		ProjectAppropriateAccountVo vo = projectAppropriateAccountService
 				.get(id);
-		request.setAttribute("ProjectAppropriateAccount", vo);
+		request.setAttribute("projectAppropriateAccount", vo);
 		return "/basic/project/projectAppropriateAccountDetail";
 	}
 

@@ -20,9 +20,9 @@
 								result = $.parseJSON(result);
 								if (result.success) {
 									//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
-									parent.$.modalDialog.openner_dataGrid
+									parent.$.modalDialogTwo.openner_dataGrid
 											.datagrid('reload');
-									parent.$.modalDialog.handler
+									parent.$.modalDialogTwo.handler
 											.dialog('close');
 								} else {
 									parent.$.messager.alert('错误', result.msg,
@@ -38,38 +38,33 @@
 		<form id="projectAppropriateAccountEditForm" method="post">
 			<table class="grid">
 				<tr>
-					<th>到帐金额（元） &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<th>到帐金额（元） &nbsp;</th>
 					<td>
 					<input id="projectAppRegId" type="hidden" name="projectAppRegId" value="${projectAppropriateAccount.projectAppRegId}"></input>
 					<input type="hidden" name="id" id="id" value="${projectAppropriateAccount.id}"></input>
 					<input name="toAccountFee"
 						style="width: 100%; height: 100%" type="number" id="toAccountFee"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+						class="easyui-validatebox span2" readonly="readonly" /></td>
 					<th>到帐时间 &nbsp;</th>
 					<td><input name="toAccountDT" value="${projectAppropriateAccount.toAccountDT}"
 						style="width: 100%; height: 100%" type="number" id="toAccountDT"
 						readonly="readonly" class="easyui-validatebox span2" /></td>
-					<th>申请拨付金额 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<th>申请拨付金额 &nbsp;</th>
 					<td><input class="easyui-validatebox span2" type="number"
 						name="applyFee" value="${projectAppropriateAccount.applyFee}" id="applyFee" style="width: 98%; height: 100%;"
-						data-options="required:true" /></td>
+						readonly="readonly" /></td>
 				</tr>
 				<tr>
-					<th>申请拨付时间 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<th>申请拨付时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="applyDT" value="${projectAppropriateAccount.applyDT}"
 						id="applyDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
-					<th>实际拨付金额（元）&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+						readonly="readonly" onfocus="showDate('yyyy-MM-dd')" /></td>
+					<th>实际拨付金额（元）&nbsp;</th>
 					<td><input name="actualFee" value="${projectAppropriateAccount.actualFee}"
 						style="width: 100%; height: 100%" type="number"
 						id="actualFee" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-					<th>实际拨付时间&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<th>实际拨付时间&nbsp;</th>
 					<td><input class="Wdate" type="text" name="actualDT" value="${projectAppropriateAccount.actualDT}"
 						id="actualDT" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
@@ -93,7 +88,7 @@
 				</tr>
 				<tr>
 					<th>备注1&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="3"
+					<td colspan="5"><textarea style="width: 100%" rows="3" readonly="readonly"
 							name="remark1">${projectAppropriateAccount.remark1}</textarea></td>
 				</tr>
 				<tr>

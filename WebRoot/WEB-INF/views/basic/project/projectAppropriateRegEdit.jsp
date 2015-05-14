@@ -48,8 +48,8 @@
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
-			pageSize : 10,
-			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
+			pageSize : 5,
+			pageList : [ 10, 15 ],
 			columns : [ [ {
 				checkbox : true,
 				field : 'id',
@@ -92,7 +92,10 @@
 				width : '90',
 				title : '状态',
 				align : 'center',
-				field : 'state'
+				field : 'state',
+				formatter : function(value, row, index) {
+					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
+				}
 			}, {
 				width : '90',
 				title : '收款人',
@@ -118,9 +121,7 @@
 				title : '备注2',
 				align : 'center',
 				field : 'remark2'
-			}, {field : 'projectAppRegName',hidden:true},
-            {field : 'projectAppRegId',hidden:true},
-            {field : 'times',hidden:true} ] ],
+			} ] ],
 			toolbar : '#toolbar'
 		});
 	});
@@ -227,7 +228,7 @@
 
 		id = rows[0].id;
 
-		parent.$.modalDialog({
+		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付修改',
 			width : document.body.clientWidth*0.75,
 			height : 400,
@@ -235,8 +236,8 @@
 			buttons : [ {
 				text : '编辑',
 				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid1;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
+					parent.$.modalDialogTwo.openner_dataGrid = dataGrid1;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialogTwo.handler
 							.find('#projectAppropriateAccountEditForm');
 					f.submit();
 				}
@@ -259,7 +260,7 @@
 
 		id = rows[0].id;
 
-		parent.$.modalDialog({
+		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付详情',
 			width : document.body.clientWidth*0.75,
 			height : 400,
@@ -268,59 +269,38 @@
 				text : '退出',
 				handler : function() {
 					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialog.handler.dialog('close');
+					parent.$.modalDialogTwo.handler.dialog('close');
 				}
 			} ]
 		});
 	}
-	
-	//二次弹窗
-	$.modalDialogTwo = function(options) {
-		if ($.modalDialogTwo.handler == undefined) {// 避免重复弹出
-			var opts = $.extend({
-				title : '',
-				width : 840,
-				height : 680,
-				modal : true,
-				onClose : function() {
-					$.modalDialogTwo.handler = undefined;
-					$(this).dialog('destroy');
-				},
-				onOpen : function() {
-					// parent.$.messager.progress({
-					// title : '提示',
-					// text : '数据加载中，请稍后....'
-					// }); 
-				}
-			}, options);
-			opts.modal = true;// 强制此dialog为模式化，无视传递过来的modal参数
-			return $.modalDialogTwo.handler = $('<div/>').dialog(opts);
-		}
-	};
 </script>
-<div class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'center',border:false" title=""
+<div class="easyui-layout" data-options="fit:true,border:false" style="overflow: hidden;">
+	<div data-options="border:false" title=""
 		style="overflow: hidden; padding: 3px;">
 		<form id="projectAppropriateRegEditForm" method="post">
 			<table class="grid">
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-					<input id="projectAppRegId" type="hidden" value="${projectAppropriateReg.id}"></input>
-					<input type="hidden" name="id"
-						id="id" value="${projectAppropriateReg.id}"/> <input name="projectName" style="width: 100%; height: 100%"
-						type="text" id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.projectName}" /></td>
+					<td><input id="projectAppRegId" type="hidden"
+						value="${projectAppropriateReg.id}"></input> <input type="hidden"
+						name="id" id="id" value="${projectAppropriateReg.id}" /> <input
+						name="projectName" style="width: 100%; height: 100%" type="text"
+						id="projectName" class="easyui-validatebox span2"
+						data-options="required:true"
+						value="${projectAppropriateReg.projectName}" /></td>
 					<th>中标价（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bidPrice" style="width: 100%; height: 100%"
 						type="number" id="bidPrice" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.bidPrice}" /></td>
+						data-options="required:true"
+						value="${projectAppropriateReg.bidPrice}" /></td>
 					<th>中标日期 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="bidDT"
-						id="bidDT" style="width: 98%; height: 100%;" value="${projectAppropriateReg.bidDT}"
+					<td><input class="Wdate" type="text" name="bidDT" id="bidDT"
+						style="width: 98%; height: 100%;"
+						value="${projectAppropriateReg.bidDT}"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
@@ -328,17 +308,21 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="name" style="width: 100%; height: 100%"
 						type="number" id="name" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.contractDuration}" /></td>
+						data-options="required:true"
+						value="${projectAppropriateReg.contractDuration}" /></td>
 					<th>管理费比例 （%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="managerFeeRate" style="width: 100%; height: 100%"
-						type="number" id="managerFeeRate" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.managerFeeRate}" /></td>
+					<td><input name="managerFeeRate"
+						style="width: 100%; height: 100%" type="number"
+						id="managerFeeRate" class="easyui-validatebox span2"
+						data-options="required:true"
+						value="${projectAppropriateReg.managerFeeRate}" /></td>
 					<th>管理费数额（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="managerFee" style="width: 100%; height: 100%"
 						type="number" id="managerFee" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.managerFee}"/></td>
+						data-options="required:true"
+						value="${projectAppropriateReg.managerFee}" /></td>
 				</tr>
 				<tr>
 					<td colspan="6">收款人信息</td>
@@ -348,7 +332,8 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="payee" style="width: 100%; height: 100%"
 						type="text" id="payee" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.payee}" /></td>
+						data-options="required:true"
+						value="${projectAppropriateReg.payee}" /></td>
 					<th>开户行&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bank" style="width: 100%; height: 100%"
@@ -358,7 +343,8 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="accountNum" style="width: 100%; height: 100%"
 						type="text" id="accountNum" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.accountNum}" /></td>
+						data-options="required:true"
+						value="${projectAppropriateReg.accountNum}" /></td>
 				</tr>
 				<tr>
 					<td colspan="6">联系人信息</td>
@@ -366,19 +352,22 @@
 				<tr>
 					<th>姓名 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactName" style="width: 100%; height: 100%"
-						type="text" id="contactName" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.contactName}"  /></td>
+					<td><input name="contactName"
+						style="width: 100%; height: 100%" type="text" id="contactName"
+						class="easyui-validatebox span2" data-options="required:true"
+						value="${projectAppropriateReg.contactName}" /></td>
 					<th>电话&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="contactTel" style="width: 100%; height: 100%"
 						type="text" id="contactTel" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.contactTel}"  /></td>
+						data-options="required:true"
+						value="${projectAppropriateReg.contactTel}" /></td>
 					<th>身份证号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactIdCard" style="width: 100%; height: 100%"
-						type="text" id="contactIdCard" class="easyui-validatebox span2"
-						data-options="required:true" value="${projectAppropriateReg.contactIdCard}"  /></td>
+					<td><input name="contactIdCard"
+						style="width: 100%; height: 100%" type="text" id="contactIdCard"
+						class="easyui-validatebox span2" data-options="required:true"
+						value="${projectAppropriateReg.contactIdCard}" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
@@ -387,13 +376,13 @@
 				</tr>
 			</table>
 		</form>
+	</div>
+	<span style="font-size: 14px; color: blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
+	<div data-options="fit:true,border:false" style="overflow: auto;height: 180px">
+		<table id="dataGrid1" data-options="fit:true,border:false"></table>
+	</div>
 
-		<span style="font-size:14px;color:blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
-		<div>
-			<table id="dataGrid1" data-options="fit:true,border:false"></table>
-		</div>
-		
-		<div id="toolbar" class="mygrid-toolbar" style="inline: true">
+	<div id="toolbar" class="mygrid-toolbar" style="inline: true">
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/add')}">
@@ -433,7 +422,6 @@
 					color="gray">删除</font> </a>
 			</c:otherwise>
 		</c:choose>
-
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/detail')}">
@@ -447,22 +435,5 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
-		
-		<c:choose>
-			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/handler')}">
-				<a onclick="confirmFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_audit'">处理</a>
-			</c:when>
-			<c:otherwise>
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
-					color="gray">处理</font> </a>
-			</c:otherwise>
-		</c:choose>
 	</div>
-	</div>
-	
-	
 </div>
