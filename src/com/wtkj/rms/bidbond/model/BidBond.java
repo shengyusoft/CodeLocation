@@ -23,7 +23,7 @@ import com.wtkj.common.model.Tuser;
  * 
  */
 @Entity
-@Table(name = "BidBondApply", schema = "")
+@Table(name = "BidBond", schema = "")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class BidBond extends IdEntity implements Serializable {
@@ -38,7 +38,7 @@ public class BidBond extends IdEntity implements Serializable {
 	private String projectName;// 项目名称
 	private String bidSection;// 标段
 	private Double bondFee;// 保证金数额
-	private Double bondFeeCH;// 保证金数额(中文大写)
+	private String bondFeeCH;// 保证金数额(中文大写)
 
 	// 收 款 人信息
 	private String payeeBank;// 开户行
@@ -72,7 +72,7 @@ public class BidBond extends IdEntity implements Serializable {
 	// 类型0申请 1退回
 	private int type;
 
-	//
+	// 0普通人员提交 1财务提交，财务提交后不可更改
 	private int state;
 
 	public String getIdNumber() {
@@ -123,11 +123,11 @@ public class BidBond extends IdEntity implements Serializable {
 		this.bondFee = bondFee;
 	}
 
-	public Double getBondFeeCH() {
+	public String getBondFeeCH() {
 		return bondFeeCH;
 	}
 
-	public void setBondFeeCH(Double bondFeeCH) {
+	public void setBondFeeCH(String bondFeeCH) {
 		this.bondFeeCH = bondFeeCH;
 	}
 

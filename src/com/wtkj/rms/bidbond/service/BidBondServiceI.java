@@ -5,26 +5,25 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.wtkj.common.PageFilter;
-import com.wtkj.rms.code.model.po.Project;
-import com.wtkj.rms.code.model.vo.ProjectVo;
+import com.wtkj.rms.bidbond.model.BidBondVo;
 
 public interface BidBondServiceI {
 
-	public List<ProjectVo> dataGrid(ProjectVo ProjectVo, PageFilter ph);
+	public List<BidBondVo> dataGrid(BidBondVo BidBondVo, PageFilter ph);
 
-	public Long count(ProjectVo ProjectVo, PageFilter ph);
+	public Long count(BidBondVo BidBondVo, PageFilter ph);
 
-	public ProjectVo get(Long id);
+	public BidBondVo get(Long id);
 
-	public void add(ProjectVo ProjectVo, HttpServletRequest request);
+	public void add(BidBondVo BidBondVo, HttpServletRequest request);
 
-	public void edit(ProjectVo ProjectVo, HttpServletRequest request);
+	public void edit(BidBondVo BidBondVo, HttpServletRequest request);
 
 	public void delete(Long id);
 
 	public void delete(String ids);
-	
-	public List<ProjectVo> findAll();
 
-	public List<Project> checkRelate(String ids);
+	public List<BidBondVo> findAll();
+
+	public long countAll(int type);
 }
