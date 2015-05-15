@@ -35,7 +35,6 @@
 			}
 		});
 		
-		debugger;
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectAppropriateAccount/dataGrid',
 			striped : true,

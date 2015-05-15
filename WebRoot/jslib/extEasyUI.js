@@ -267,6 +267,52 @@ $.extend($.fn.validatebox.defaults.rules, {
     },
 });
 
+$.extend($.fn.validatebox.defaults.rules, {
+	eqPwd : {
+		validator : function(value, param) {
+			return value == $(param[0]).val();
+		},
+		message : '密码不一致！'
+	},
+
+	num: {// 验证整数或小数
+        validator: function (value) {
+            return /^\d+(\.\d+)?$/i.test(value);
+        },
+        message: '请输入数字，并确保格式正确'
+    },
+});
+
+Date.prototype.format = function (format) {
+    /*
+    * eg:format="yyyy-MM-dd hh:mm:ss";
+    */
+    if (!format) {
+        format = "yyyy-MM-dd hh:mm:ss";
+    }
+    var o = {
+        "M+": this.getMonth() + 1, // month
+        "d+": this.getDate(), // day
+        "h+": this.getHours(), // hour
+        "m+": this.getMinutes(), // minute
+        "s+": this.getSeconds(), // second
+        "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
+        "S": this.getMilliseconds()
+        // millisecond
+    };
+
+    if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+        }
+    }
+    return format;
+};
+
 $.extend($.fn.validatebox.defaults.rules, { 
 	selectValueRequired: { 
 		validator: function(value,param){ 			

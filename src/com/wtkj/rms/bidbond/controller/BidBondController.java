@@ -23,6 +23,7 @@ import com.wtkj.common.utils.NumberToCN;
 import com.wtkj.rms.bidbond.model.BidBondVo;
 import com.wtkj.rms.bidbond.service.BidBondServiceI;
 
+//缴纳退回申请
 @Controller
 @RequestMapping("/bidBond")
 public class BidBondController extends BaseController {
@@ -34,8 +35,12 @@ public class BidBondController extends BaseController {
 	private UserServiceI userService;
 
 	@RequestMapping("/manager")
-	public String manager(HttpServletRequest request) {
-		return "/basic/bidBond/bidBond";
+	public String manager(HttpServletRequest request, int type) {
+		if (type == 0) {
+			return "/basic/bidbond/bidBondPay";
+		} else {
+			return "/basic/bidbond/bidBondBack";
+		}
 	}
 
 	@RequestMapping("/combox")
@@ -54,28 +59,34 @@ public class BidBondController extends BaseController {
 	}
 
 	@RequestMapping("/addPage")
-	public String addPage(HttpServletRequest request) {
-		return "/basic/bidBond/bidBondAdd";
+	public String addPage(HttpServletRequest request, int type) {
+		// 根据类型返回 缴纳或者退回页面
+		if (type == 0) {
+			return "/basic/bidbond/bidBondPayAdd";
+		} else {
+			return "/basic/bidbond/bidBondBackAdd";
+		}
 	}
 
+	// 提交的时候需要传type值
 	@RequestMapping("/add")
 	@ResponseBody
 	public Json add(BidBondVo vo, HttpServletRequest request) {
-		//普通员工提交
+		// 普通员工提交
 		Json j = new Json();
 		try {
-			//缴号自动生成，编号规则为年份+月份+编号
+			// 缴号自动生成，编号规则为年份+月份+编号
 			vo.setIdNumber(generateIdNum(0));
-			
-			//申请人和申请时间
+
+			// 申请人和申请时间
 			SessionInfo sessionInfo = getSessionInfo(request);
-			if(sessionInfo.getId() != null && sessionInfo.getId() > 0){
+			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
 				vo.setApplierId(sessionInfo.getId());
 			}
 			vo.setApplyDT(new Date());
-			
-			//保证金转大写
-			if(vo.getBondFee() != null){
+
+			// 保证金转大写
+			if (vo.getBondFee() != null) {
 				BigDecimal fee = new BigDecimal(vo.getBondFee());
 				String feeCH = NumberToCN.number2CNMontrayUnit(fee);
 				vo.setBondFeeCH(feeCH);
@@ -89,13 +100,13 @@ public class BidBondController extends BaseController {
 		}
 		return j;
 	}
-	
-	//生成缴号:编号规则为年份+月份+编号
-	private String generateIdNum(int type){
-		long number = bidBondService.countAll(type);//获取缴纳申请总数
+
+	// 生成缴号:编号规则为年份+月份+编号
+	private String generateIdNum(int type) {
+		long number = bidBondService.countAll(type);// 获取缴纳申请总数
 		String dateStr = DateUtil.convertDateToString(new Date(), "yyyyMMdd");
-		String nstr = String.format("%04d", number);//4位数补零
-		return dateStr+nstr;
+		String nstr = String.format("%04d", number);// 4位数补零
+		return dateStr + nstr;
 	}
 
 	@RequestMapping("/delete")
@@ -128,10 +139,15 @@ public class BidBondController extends BaseController {
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, Long id) {
 		BidBondVo bidBond = bidBondService.get(id);
-		request.setAttribute("bidBondService", bidBond);
-		return "/basic/bidBond/bidBondEdit";
+		request.setAttribute("bidBond", bidBond);
+		if (bidBond.getType() == 0) {
+			return "/basic/bidbond/bidBondPayEdit";// 缴纳
+		} else {
+			return "/basic/bidbond/bidBondBackEdit";// 退款
+		}
 	}
 
+	// 申请人编辑
 	@RequestMapping("/edit")
 	@ResponseBody
 	public Json edit(BidBondVo vo, HttpServletRequest request) {
@@ -150,7 +166,69 @@ public class BidBondController extends BaseController {
 	public String detailPage(HttpServletRequest request, Long id) {
 		BidBondVo bidBond = bidBondService.get(id);
 		request.setAttribute("bidBond", bidBond);
-		return "/basic/bidBond/bidBondDetail";
+		return "/basic/bidbond/bidBondDetail";
+	}
+
+	/**
+	 * 财务处理
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/handlerPage")
+	public String handlerPage(HttpServletRequest request, Long id) {
+		BidBondVo bidBond = bidBondService.get(id);
+		request.setAttribute("bidBond", bidBond);
+		if (bidBond.getType() == 0) {
+			return "/basic/bidbond/bidBondPayHandler";// 缴纳
+		} else {
+			return "/basic/bidbond/bidBondBackHandler";// 退款
+		}
+	}
+
+	/**
+	 * 财务提交
+	 * 
+	 * @param vo
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/commit")
+	@ResponseBody
+	public Json commit(BidBondVo vo, HttpServletRequest request) {
+		Json j = new Json();
+		try {
+			// 出纳确认提交后不能修改啊
+			vo.setState(1);
+			// 办理人办理时间
+			SessionInfo sessionInfo = getSessionInfo(request);
+			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
+				vo.setHandlerId(sessionInfo.getId());
+			}
+			vo.setHandlerDT(new Date());
+
+			// 转出金额转大写
+			if (vo.getOutAccountFee() != null && vo.getOutAccountFee() > 0) {
+				BigDecimal fee = new BigDecimal(vo.getOutAccountFee());
+				String feeCH = NumberToCN.number2CNMontrayUnit(fee);
+				vo.setOutAccountFeeCH(feeCH);
+			}
+
+			// 到帐金额转大写
+			if (vo.getToAccountFee() != null && vo.getToAccountFee() > 0) {
+				BigDecimal fee = new BigDecimal(vo.getToAccountFee());
+				String feeCH = NumberToCN.number2CNMontrayUnit(fee);
+				vo.setToAccountFeeCH(feeCH);
+			}
+
+			bidBondService.edit(vo, request);
+			j.setSuccess(true);
+			j.setMsg("编辑成功！");
+		} catch (Exception e) {
+			j.setMsg(e.getMessage());
+		}
+		return j;
 	}
 
 }

@@ -45,9 +45,9 @@ function getSelected() {
 	return str;
 }
 
-//获取所有选中的行
+// 获取所有选中的行
 function getSelecteds(dataGrid) {
-	if(dataGrid){
+	if (dataGrid) {
 		var rows = dataGrid.datagrid("getSelections");
 		var str = '';
 		for ( var i = 0; rows && i < rows.length; i++) {
@@ -190,6 +190,16 @@ function getTextByTaskState(state) {
 	}
 
 }
+
+var Common = {
+	formatter : function(value, row, index) {
+		if (!isEmpty(value)) {
+			var date = new Date(value);
+			return date.format('yyyy-MM-dd');
+		}
+		return '';
+	}
+};
 
 // html编辑器,fix bug,第二次进入编辑器时,必须全屏然后才可以获取焦点
 function initKingEditor(editor) {
