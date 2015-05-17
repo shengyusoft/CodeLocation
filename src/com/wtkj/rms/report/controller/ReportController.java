@@ -100,11 +100,12 @@ public class ReportController extends BaseController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping("/bxreport")
-	public ModelAndView rate(HttpServletRequest request) throws IOException {
+	@RequestMapping("/bidBondReport")
+	public ModelAndView bidBondReport(long id,HttpServletRequest request) throws IOException {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		parameterMap.put("format", "excel");
-		return new ModelAndView("bxReport", parameterMap);
+		parameterMap.put("format", "pdf");
+		parameterMap.put("id", id);
+		return new ModelAndView("bidBondReport", parameterMap);
 	}
 
 	/**

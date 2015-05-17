@@ -197,6 +197,32 @@
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
+	
+	
+	
+	function printFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可查看对象!');
+			return;
+		}
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录查看!');
+			return;
+		}
+		var iWidth = 700; //弹出窗口的宽度;
+		var iHeight = 600; //弹出窗口的高度;
+		id = rows[0].id;
+		//获得窗口的垂直位置
+		var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+		//获得窗口的水平位置
+		var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+		var url = ctxPath + "/report/bidBondReport?id=" + id;
+		var tmp = window.open(url, "_blank", "width=700,height=600,top=" + iTop
+				+ ",left=" + iLeft);
+		tmp.focus();
+	}
 
 	function clearFun() {
 		$('#idNumber').val('');
@@ -270,12 +296,12 @@
 		}
 
 		id = rows[0].id;
-		
-		if(state == 1){
+
+		if (state == 1) {
 			parent.$.messager.alert('警告', '财务已提交不可修改!');
 			return;
 		}
-		
+
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请修改',
 			width : '830',
@@ -299,7 +325,7 @@
 					} ]
 		});
 	}
-	
+
 	//财务处理
 	function handlerFun() {
 		var id = null;
@@ -316,39 +342,46 @@
 
 		id = rows[0].id;
 		var state = rows[0].state;
-		if(state == 1){
+		if (state == 1) {
 			parent.$.messager.alert('警告', '财务已提交不可修改!');
 			return;
 		}
-		parent.$.modalDialog({
-			title : '投标保证金缴纳确认',
-			width : '830',
-			height : '600',
-			href : '${ctx}/bidBond/handlerPage?id=' + id,
-			buttons : [
-					{
-						text : '提交',
-						handler : function() {
-							parent.$.messager.confirm('提醒', '必须将转帐截图发到申请人的邮箱（或公司群）!提交后不能修改,确认提交？', function(b) {
-								if (b) {
-									//TODO 预留短信接口!
-									parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-									var f = parent.$.modalDialog.handler
-											.find('#bidBondPayHandlerForm');
-									f.submit();
-								}else{
-									return;
+		parent.$
+				.modalDialog({
+					title : '投标保证金缴纳确认',
+					width : '830',
+					height : '600',
+					href : '${ctx}/bidBond/handlerPage?id=' + id,
+					buttons : [
+							{
+								text : '提交',
+								handler : function() {
+									parent.$.messager
+											.confirm(
+													'提醒',
+													'必须将转帐截图发到申请人的邮箱（或公司群）!提交后不能修改,确认提交？',
+													function(b) {
+														if (b) {
+															//TODO 预留短信接口!
+															parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+															var f = parent.$.modalDialog.handler
+																	.find('#bidBondPayHandlerForm');
+															f.submit();
+														} else {
+															return;
+														}
+													});
 								}
-							});
-						}
-					}, {
-						text : '退出',
-						handler : function() {
-							//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-							parent.$.modalDialog.handler.dialog('close');
-						}
-					} ]
-		});
+							},
+							{
+								text : '退出',
+								handler : function() {
+									//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+									parent.$.modalDialog.handler
+											.dialog('close');
+								}
+							} ]
+				});
 	}
 
 	function detailFun() {
@@ -453,6 +486,10 @@
 					color="gray">处理</font> </a>
 			</c:otherwise>
 		</c:choose>
+		
+		<a onclick="printFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">预览</a>
 
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/bidBond/search')}">

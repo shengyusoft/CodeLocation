@@ -28,4 +28,9 @@
 		<property name="url" value="/WEB-INF/reports/bx.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>-->
+	
+	<bean id="bidBondReport" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/bidBond.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
 </beans>
