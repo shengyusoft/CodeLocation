@@ -88,6 +88,14 @@ public class BidBondServiceImpl implements BidBondServiceI {
 	}
 
 	@Override
+	public Long count(BidBondVo vo) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String hql = " from BidBond t ";
+		return bidBondDao.count(
+				"select count(*) " + hql + whereHql(vo, params), params);
+	}
+
+	@Override
 	public Long count(BidBondVo BidBondVo, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from BidBond t ";
@@ -99,6 +107,16 @@ public class BidBondServiceImpl implements BidBondServiceI {
 		String hql = "";
 		if (vo != null) {
 			hql += " where 1=1 ";
+			if (vo.getId() != null && vo.getId() > 0) {
+				hql += " and t.id = :id";
+				params.put("id", vo.getId());
+			}
+
+			if (vo.getApplierId() != null && vo.getApplierId() > 0) {
+				hql += " and t.applier.id = :applierId";
+				params.put("applierId", vo.getApplierId());
+			}
+
 			if (!StringUtils.isEmpty(vo.getIdNumber())) {
 				hql += " and t.idNumber like :idNumber";
 				params.put("idNumber", "%%" + vo.getIdNumber() + "%%");
@@ -171,6 +189,12 @@ public class BidBondServiceImpl implements BidBondServiceI {
 		String hql = "select count(*) from BidBond t where t.type=:type";
 		params.put("type", type);
 		return bidBondDao.count(hql, params);
+	}
+
+	@Override
+	public Long countByState(int state) {
+		return bidBondDao.count("select count(*) from BidBond t where t.state="
+				+ state);
 	}
 
 }

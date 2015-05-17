@@ -16,12 +16,14 @@
 a {
 	text-decoration: none;
 }
-.lines-no .datagrid-body td{
-    border-right:0px dotted transparent;
-    border-bottom:0px dotted transparent;
+
+.lines-no .datagrid-body td {
+	border-right: 0px dotted transparent;
+	border-bottom: 0px dotted transparent;
 }
-.datagrid-header{
-border-color: white;
+
+.datagrid-header {
+	border-color: white;
 }
 </style>
 <style scoped="scoped">
@@ -145,7 +147,8 @@ a:hover {
 								<div id="task_to_do" title="我的待办"
 									data-options="iconCls:'icon_rms_todo'"
 									style="padding: 10px; overflow: scroll;">
-									<table id="myTaskGrid" style="border: 0px;width: 480px;" data-options="border:false"></table>
+									<table id="myTaskGrid" style="border: 0px; width: 480px;"
+										data-options="border:false"></table>
 								</div>
 								<div id="index_notice" title="通知公告"
 									data-options="iconCls:'icon_rms_notice'"
@@ -218,12 +221,14 @@ a:hover {
 							<div class="easyui-tabs" style="padding-top: 5px; height: 270px;">
 								<div title="快捷方式" style="padding: 10px;">
 									<c:forEach items="${shotcuts}" var="d" varStatus="status">
-											<div style="float: left; width: 60px; height: 70px; margin: 8px;">
-											<a href="#" onclick="shotTab('${d.resourceUrl}','${d.resourceName}','${d.resourceIcon}')" >
-												<img src="${imgPath}/shotcut/${d.iconUrl}" style="height: 55px; width: 55px;" /><br /> 
-												<span>${d.resourceName}</span>
+										<div
+											style="float: left; width: 60px; height: 70px; margin: 8px;">
+											<a href="#"
+												onclick="shotTab('${d.resourceUrl}','${d.resourceName}','${d.resourceIcon}')">
+												<img src="${imgPath}/shotcut/${d.iconUrl}"
+												style="height: 55px; width: 55px;" /><br /> <span>${d.resourceName}</span>
 											</a>
-											</div>
+										</div>
 									</c:forEach>
 
 									<!-- <div
@@ -276,13 +281,15 @@ a:hover {
 
 	<div class="tipfloat">
 		<h2 class="tiphead">
-			<strong>任务提醒</strong><span title="关闭" class="close">关闭</span>
+			<strong>通知提醒</strong><span title="关闭" class="close">关闭</span>
 		</h2>
-		你有${tasknum}个新任务<br>详情请查看任务派单
-		<c:forEach var="task" items="${tasklist}">
+		<textarea
+			style="overflow: auto; width: 100%; color: rgb(52, 20, 147); border-bottom: none; border-top: none;"
+			id="tipmsg1" readonly="readonly"></textarea>
+		<%-- <c:forEach var="task" items="${tasklist}">
 			<a href="#">${task.name}</a>
 			<br>
-		</c:forEach>
+		</c:forEach> --%>
 	</div>
 </body>
 </html>

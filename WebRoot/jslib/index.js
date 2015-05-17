@@ -436,18 +436,21 @@ function handlerToDo(id, state) {
 function taskRemind() {
 	$.ajax({
 		type : "post",
-		url : ctxPath + "/task/findTask",
+		//url : ctxPath + "/bidBond/findHandler",
+		url : ctxPath + "/bidBond/findHanlder",
 		cache : false,
 		dataType : "json",
 		success : function(result) {
-			if (result.success) {
+			if (result.success && !isEmpty(result.msg)) {
+				debugger;
+				$('#tipmsg').val(result.msg);
+				$('#tipmsg1').val(result.msg);
 				showRemind();
 			}
 		},
 		error : function(error) {
 			alert(error);
 		}
-
 	});
 }
 

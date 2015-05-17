@@ -14,6 +14,7 @@ public class BidBondVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// type=0 就是缴 号，type=1就是退 号
+	private Long id;
 	private String idNumber;
 	private String projectName;// 项目名称
 	private String bidSection;// 标段
@@ -55,6 +56,14 @@ public class BidBondVo implements Serializable {
 	private String handlerName;
 
 	private Date handlerDT;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	// 类型0申请 1退回
 	private int type;

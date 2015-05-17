@@ -102,7 +102,7 @@
 				align : 'center',
 				field : 'state',
 				formatter : function(value, row, index) {
-					return value == 0?'<font color="red">财务未提交</font>':'<font color="green">财务未提交</font>';
+					return value == 0?'<font color="red">财务未提交</font>':'<font color="green">财务已提交</font>';
 				}
 			}, {
 				title : '申请信息',
@@ -207,7 +207,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请登记',
 			width : '815',
-			height : '500',
+			height : '535',
 			resizable : true,
 			href : '${ctx}/bidBond/addPage?type=0',
 			buttons : [
@@ -270,11 +270,16 @@
 		}
 
 		id = rows[0].id;
-
+		
+		if(state == 1){
+			parent.$.messager.alert('警告', '财务已提交不可修改!');
+			return;
+		}
+		
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请修改',
-			width : '815',
-			height : '500',
+			width : '830',
+			height : '600',
 			href : '${ctx}/bidBond/editPage?id=' + id,
 			buttons : [
 					{
@@ -282,8 +287,59 @@
 						handler : function() {
 							parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 							var f = parent.$.modalDialog.handler
-									.find('#bidBondEditForm');
+									.find('#bidBondPayEditForm');
 							f.submit();
+						}
+					}, {
+						text : '退出',
+						handler : function() {
+							//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+							parent.$.modalDialog.handler.dialog('close');
+						}
+					} ]
+		});
+	}
+	
+	//财务处理
+	function handlerFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可编辑对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			return;
+		}
+
+		id = rows[0].id;
+		var state = rows[0].state;
+		if(state == 1){
+			parent.$.messager.alert('警告', '财务已提交不可修改!');
+			return;
+		}
+		parent.$.modalDialog({
+			title : '投标保证金缴纳确认',
+			width : '830',
+			height : '600',
+			href : '${ctx}/bidBond/handlerPage?id=' + id,
+			buttons : [
+					{
+						text : '提交',
+						handler : function() {
+							parent.$.messager.confirm('提醒', '必须将转帐截图发到申请人的邮箱（或公司群）!提交后不能修改,确认提交？', function(b) {
+								if (b) {
+									//TODO 预留短信接口!
+									parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+									var f = parent.$.modalDialog.handler
+											.find('#bidBondPayHandlerForm');
+									f.submit();
+								}else{
+									return;
+								}
+							});
 						}
 					}, {
 						text : '退出',
@@ -310,8 +366,8 @@
 		id = rows[0].id;
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请详情',
-			width : '815',
-			height : '500',
+			width : '820',
+			height : '600',
 			href : '${ctx}/bidBond/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -381,6 +437,20 @@
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
 					color="gray">详情</font> </a>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/bidBond/confirm')}">
+				<a onclick="handlerFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">处理 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
+					color="gray">处理</font> </a>
 			</c:otherwise>
 		</c:choose>
 

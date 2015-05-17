@@ -12,11 +12,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.SessionInfo;
 import com.wtkj.common.controller.BaseController;
+import com.wtkj.common.model.User;
 import com.wtkj.common.service.UserServiceI;
 import com.wtkj.common.utils.DateUtil;
 import com.wtkj.common.utils.NumberToCN;
@@ -51,8 +53,18 @@ public class BidBondController extends BaseController {
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(BidBondVo vo, PageFilter ph) {
+	public Grid dataGrid(BidBondVo vo, PageFilter ph, HttpServletRequest request) {
 		Grid grid = new Grid();
+		SessionInfo sessionInfo = getSessionInfo(request);
+
+		if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
+			User user = userService.get(sessionInfo.getId());
+			// 普通用户看到自己的申请信息
+			if (user.getRoleNames().indexOf("普通用户") >= 0) {
+				vo.setApplierId(sessionInfo.getId());
+			}
+		}
+
 		grid.setRows(bidBondService.dataGrid(vo, ph));
 		grid.setTotal(bidBondService.count(vo, ph));
 		return grid;
@@ -185,6 +197,32 @@ public class BidBondController extends BaseController {
 		} else {
 			return "/basic/bidbond/bidBondBackHandler";// 退款
 		}
+	}
+
+	// 查找有没有需要提醒的任务
+	@RequestMapping("/findHanlder")
+	@ResponseBody
+	public Json findHanlder(HttpServletRequest request, Long id) {
+		Json j = new Json();
+		try {
+			SessionInfo sessionInfo = (SessionInfo) request.getSession()
+					.getAttribute(GlobalConstant.SESSION_INFO);
+			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
+				User user = userService.get(sessionInfo.getId());
+				// 普通用户看到自己的申请信息
+				if (user.getRoleNames().indexOf("出纳") >= 0) {
+					BidBondVo vo = new BidBondVo();
+					vo.setState(0);
+					Long num = bidBondService.countByState(1);
+					String msg = num + "个保证金缴纳申请，请注意处理，详情查看那保证金管理！";
+					j.setMsg(msg);
+				}
+			}
+		} catch (Exception e) {
+			j.setMsg(e.getMessage());
+		}
+		j.setSuccess(true);
+		return j;
 	}
 
 	/**

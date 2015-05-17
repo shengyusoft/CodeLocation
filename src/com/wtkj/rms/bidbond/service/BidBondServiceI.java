@@ -13,6 +13,8 @@ public interface BidBondServiceI {
 
 	public Long count(BidBondVo BidBondVo, PageFilter ph);
 
+	public Long count(BidBondVo BidBondVo);
+
 	public BidBondVo get(Long id);
 
 	public void add(BidBondVo BidBondVo, HttpServletRequest request);
@@ -26,4 +28,6 @@ public interface BidBondServiceI {
 	public List<BidBondVo> findAll();
 
 	public long countAll(int type);
+
+	public Long countByState(int i);
 }
