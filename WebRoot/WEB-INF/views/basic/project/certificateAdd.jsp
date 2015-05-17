@@ -72,7 +72,7 @@
 					<th>证书类型&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
-						<select id="card_type" name="card_type" style="width: 100%;height: 100%""
+						<select id="card_type" name="card_type" style="width: 100%;height: 100%"
 							class="easyui-validatebox span2" 
 							data-options="required:true">
 							<option value="A证">A证</option>
@@ -89,7 +89,7 @@
 				<tr>
 					<th>证书状态&nbsp;<label style="color: red; vertical-align: middle;text-align: center;">*</label></th>
 					<td>
-						<select id="card_status" name="card_status" style="width: 100%;height: 100%""
+						<select id="card_status" name="card_status" style="width: 100%;height: 100%"
 							class="easyui-validatebox span2" data-options="required:true">
 							<option value="正常" selected>正常</option>
     						<option value="已使用">已使用</option>

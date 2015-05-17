@@ -14,6 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.wtkj.common.model.IdEntity;
 import com.wtkj.common.model.Tdictionary;
+import com.wtkj.common.model.Tdictionarytype;
 
 /**
  * 项目登记管理
@@ -32,9 +33,9 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private String projectName;// 项目名称
 
 	// 省市县区划
-	private Tdictionary provice;
-	private Tdictionary city;
-	private Tdictionary county;
+	private Tdictionarytype provice;
+	private Tdictionarytype city;
+	private Tdictionarytype county;
 
 	private Tdictionary bd;// 标段
 	private String qualifyRequirement;// 资质要求
@@ -42,11 +43,11 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private Tdictionary techniqueMgr;// 技术负责人
 
 	// A证,B证,C证
-	private Tdictionary certificateA;// 技术负责人
-	private Tdictionary certificateB;// 技术负责人
-	private Tdictionary certificateC;// 技术负责人
+	private Certificate certificateA;// 技术负责人
+	private Certificate certificateB;// 技术负责人
+	private Certificate certificateC;// 技术负责人
 
-	private Tdictionary member5Card;// 五大员证
+	private Certificate member5Card;// 五大员证
 	private Tdictionary delegator;// 委托人
 
 	private Date registDT;// 报名时间
@@ -57,7 +58,7 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id")
 	public Tdictionary getCompany() {
 		return company;
@@ -76,40 +77,40 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "province_id")
-	public Tdictionary getProvice() {
+	public Tdictionarytype getProvice() {
 		return provice;
 	}
 
-	public void setProvice(Tdictionary provice) {
+	public void setProvice(Tdictionarytype provice) {
 		this.provice = provice;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "city_id")
-	public Tdictionary getCity() {
+	public Tdictionarytype getCity() {
 		return city;
 	}
 
-	public void setCity(Tdictionary city) {
+	public void setCity(Tdictionarytype city) {
 		this.city = city;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "county_id")
-	public Tdictionary getCounty() {
+	public Tdictionarytype getCounty() {
 		return county;
 	}
 
-	public void setCounty(Tdictionary county) {
+	public void setCounty(Tdictionarytype county) {
 		this.county = county;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bd_id")
 	public Tdictionary getBd() {
 		return bd;
@@ -128,7 +129,7 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "pmgr_id")
 	public Tdictionary getProjectMgr() {
 		return projectMgr;
@@ -139,7 +140,7 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "tec_id")
 	public Tdictionary getTechniqueMgr() {
 		return techniqueMgr;
@@ -150,51 +151,51 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "A_id")
-	public Tdictionary getCertificateA() {
+	public Certificate getCertificateA() {
 		return certificateA;
 	}
 
-	public void setCertificateA(Tdictionary certificateA) {
+	public void setCertificateA(Certificate certificateA) {
 		this.certificateA = certificateA;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "B_id")
-	public Tdictionary getCertificateB() {
+	public Certificate getCertificateB() {
 		return certificateB;
 	}
 
-	public void setCertificateB(Tdictionary certificateB) {
+	public void setCertificateB(Certificate certificateB) {
 		this.certificateB = certificateB;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "C_id")
-	public Tdictionary getCertificateC() {
+	public Certificate getCertificateC() {
 		return certificateC;
 	}
 
-	public void setCertificateC(Tdictionary certificateC) {
+	public void setCertificateC(Certificate certificateC) {
 		this.certificateC = certificateC;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "m5_id")
-	public Tdictionary getMember5Card() {
+	public Certificate getMember5Card() {
 		return member5Card;
 	}
 
-	public void setMember5Card(Tdictionary member5Card) {
+	public void setMember5Card(Certificate member5Card) {
 		this.member5Card = member5Card;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "delegate_id")
 	public Tdictionary getDelegator() {
 		return delegator;

@@ -14,6 +14,7 @@ import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.controller.BaseController;
+import com.wtkj.common.model.Dictionary;
 import com.wtkj.rms.project.model.Certificate;
 import com.wtkj.rms.project.service.CertificateServiceI;
 
@@ -28,6 +29,24 @@ public class CertificateController extends BaseController {
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request) {
 		return "/basic/project/certificate";
+	}
+	
+	@RequestMapping("/comboxbytype")
+	@ResponseBody
+	public List<Certificate> combox(String type) {
+		if (type.equals("A")){
+			type="A证";
+		}
+		if (type.equals("B")){
+			type="B证";
+		}
+		if (type.equals("C")){
+			type="C证";
+		}
+		if (type.equals("D")){
+			type="五大员证";
+		}
+		return certificateService.combox(type);
 	}
 
 	@RequestMapping("/combox")

@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.common.model.Tdictionary;
+import com.wtkj.common.model.Tdictionarytype;
+import com.wtkj.rms.project.model.Certificate;
 import com.wtkj.rms.project.model.ProjectRegist;
 import com.wtkj.rms.project.service.ProjectRegistServiceI;
 
@@ -25,10 +27,18 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 	@Autowired
 	private BaseDaoI<Tdictionary> dictionaryDao;
+	
+	
+	@Autowired
+	private BaseDaoI<Tdictionarytype> dictionarytypeDao;
+	
+	@Autowired
+	private BaseDaoI<Certificate> certificateDao;
 
 	@Override
 	public void add(ProjectRegist p, HttpServletRequest request) {
-		p.setRegistDT(new Date());
+		//p.setRegistDT(new Date());
+		System.out.println("=================="+p.getCertificateA());
 		p.setProjectMgr(dictionaryDao.get(Tdictionary.class, p.getProjectMgr()
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
@@ -36,23 +46,24 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
 				.getId()));
 
-		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
+		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p.getProvice()
 				.getId()));
-		p.setCity(dictionaryDao.get(Tdictionary.class, p.getCity().getId()));
-		p.setCounty(dictionaryDao.get(Tdictionary.class, p.getCounty().getId()));
+		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity().getId()));
+		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty().getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
-		p.setMember5Card(dictionaryDao.get(Tdictionary.class, p
+		p.setMember5Card(certificateDao.get(Certificate.class, p
 				.getMember5Card().getId()));
 
-		p.setCertificateA(dictionaryDao.get(Tdictionary.class, p
+		p.setCertificateA(certificateDao.get(Certificate.class, p
 				.getCertificateA().getId()));
-		p.setCertificateB(dictionaryDao.get(Tdictionary.class, p
+		p.setCertificateB(certificateDao.get(Certificate.class, p
 				.getCertificateB().getId()));
-		p.setCertificateC(dictionaryDao.get(Tdictionary.class, p
+		p.setCertificateC(certificateDao.get(Certificate.class, p
 				.getCertificateC().getId()));
-
+		
+//
 		projectRegistDao.save(p);
 	}
 
@@ -85,21 +96,21 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
 				.getId()));
 
-		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
+		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p.getProvice()
 				.getId()));
-		p.setCity(dictionaryDao.get(Tdictionary.class, p.getCity().getId()));
-		p.setCounty(dictionaryDao.get(Tdictionary.class, p.getCounty().getId()));
+		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity().getId()));
+		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty().getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
-		p.setMember5Card(dictionaryDao.get(Tdictionary.class, p
+		p.setMember5Card(certificateDao.get(Certificate.class, p
 				.getMember5Card().getId()));
 
-		p.setCertificateA(dictionaryDao.get(Tdictionary.class, p
+		p.setCertificateA(certificateDao.get(Certificate.class, p
 				.getCertificateA().getId()));
-		p.setCertificateB(dictionaryDao.get(Tdictionary.class, p
+		p.setCertificateB(certificateDao.get(Certificate.class, p
 				.getCertificateB().getId()));
-		p.setCertificateC(dictionaryDao.get(Tdictionary.class, p
+		p.setCertificateC(certificateDao.get(Certificate.class, p
 				.getCertificateC().getId()));
 		projectRegistDao.update(p);
 	}

@@ -35,6 +35,7 @@ public class ProjectRegistController extends BaseController {
 	@ResponseBody
 	public Grid dataGrid(ProjectRegist projectRegist, PageFilter ph) {
 		Grid grid = new Grid();
+		//System.out.println("==================="+projectRegist);
 		grid.setRows(projectRegistService.dataGrid(projectRegist, ph));
 		grid.setTotal(projectRegistService.count(projectRegist, ph));
 		return grid;
@@ -49,6 +50,7 @@ public class ProjectRegistController extends BaseController {
 	@ResponseBody
 	public Json add(ProjectRegist vo, HttpServletRequest request) {
 		Json j = new Json();
+		System.out.println("==================="+vo.getCertificateA()+"---"+vo.getBd());
 		try {
 			projectRegistService.add(vo, request);
 			j.setSuccess(true);

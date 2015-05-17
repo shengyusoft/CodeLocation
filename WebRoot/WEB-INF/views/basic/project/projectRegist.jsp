@@ -21,7 +21,7 @@
 			striped : true,
 			rownumbers : true,
 			pagination : true,
-			fitColumns : true,
+			//fitColumns : true,
 			nowrap : true,
 			idField : 'id',
 			sortName : 'id',
@@ -38,7 +38,7 @@
 				align : 'center',
 				field : 'company',
 				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
+					return isEmpty(value)?'':value.text ;
 				}
 			}, {
 				width : '120',
@@ -51,24 +51,36 @@
 				title : '省',
 				sortable : true,
 				align : 'center',
-				field : 'privince'
+				field : 'provice',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.name;
+				}
 			}, {
 				width : '120',
 				title : '市',
 				sortable : true,
 				align : 'center',
-				field : 'city'
+				field : 'city',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.name;
+				}
 			}, {
 				width : '120',
 				title : '县',
 				sortable : true,
 				align : 'center',
-				field : 'county'
+				field : 'county',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.name;
+				}
 			}, {
-				width : '标段',
-				title : '加气时间',
+				width : '120',
+				title : '标段',
 				align : 'center',
-				field : 'bd'
+				field : 'bd',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.text;
+				}
 			}, {
 				width : '140',
 				title : '资质要求',
@@ -79,7 +91,10 @@
 				title : '项目经理',
 				sortable : true,
 				align : 'center',
-				field : 'projectMgr'
+				field : 'projectMgr',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.text;
+				}
 			}, {
 				width : '120',
 				title : '报名时间',
@@ -141,12 +156,12 @@
 	
 	
 	function addFun() {
-		parent.$.messager.alert('提醒', '功能正在努力建设中...');
-		/* parent.$.modalDialog({
-			title : '添加项目',
+		//parent.$.messager.alert('提醒', '功能正在努力建设中...');
+		parent.$.modalDialog({
+			title : '报名登记',
 			width : 750,
 			height : 490,
-			href : '${ctx}/project/addPage',
+			href : '${ctx}/projectRegist/addPage',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
@@ -156,7 +171,7 @@
 					f.submit();
 				}
 			} ]
-		}); */
+		}); 
 	}
 
 	function deleteFun() {
@@ -182,7 +197,7 @@
 									rows[i]);
 							dataGrid.datagrid('deleteRow', index);
 						} */
-						dataGrid.datagrid('reload');
+						/*dataGrid.datagrid('reload');
 					}else{
 						parent.$.messager.alert('警告', result.msg, 'warning');
 					}
@@ -252,8 +267,8 @@
 					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 					parent.$.modalDialog.handler.dialog('close');
 				}
-			} ] */
-		});
+			} ]
+		}); */
 	}
 </script>
 </head>

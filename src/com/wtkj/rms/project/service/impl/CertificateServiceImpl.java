@@ -1,5 +1,6 @@
 package com.wtkj.rms.project.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +102,25 @@ public class CertificateServiceImpl implements CertificateServiceI {
 	@Override
 	public List<Certificate> checkRelate(String ids) {
 		return null;
+	}
+
+	@Override
+	public List<Certificate> combox(String type) {
+		List<Certificate> ld = new ArrayList<Certificate>();
+		List<Certificate> lt = certificateDao
+				.find("from Certificate t where t.card_type='"
+						+ type + "'");
+		if (lt != null && lt.size() > 0) {
+			for (int i = 0; i < lt.size(); i++) {
+				if (lt.get(i).getCard_status().equals("正常")) {
+					Certificate d = new Certificate();
+					d.setId(lt.get(i).getId());
+					d.setCard_name(lt.get(i).getCard_name());
+					ld.add(d);
+				}
+			}
+		}
+		return ld;
 	}
 
 }
