@@ -214,7 +214,7 @@ public class BidBondController extends BaseController {
 					BidBondVo vo = new BidBondVo();
 					vo.setState(0);
 					Long num = bidBondService.countByState(1);
-					String msg = num + "个保证金缴纳申请，请注意处理，详情查看那保证金管理！";
+					String msg = num + "个保证金缴纳退回业务，请注意处理，详情查看那保证金管理！";
 					j.setMsg(msg);
 				}
 			}
