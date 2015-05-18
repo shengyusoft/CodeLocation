@@ -11,18 +11,20 @@
 	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-groupview.js"
 	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
-<title>项目登记管理</title>
+<title>项目开标登记</title>
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
-		//init();
 		dataGrid = $('#dataGrid').datagrid({
-			url : '${ctx}' + '/projectRegist/dataGrid',
+			url : '${ctx}' + '/projectBookRegist/dataGrid',
 			striped : true,
 			rownumbers : true,
 			pagination : true,
-			//fitColumns : true,
+			fitColumns : true,
 			nowrap : true,
+			queryParams : {
+				type : 1
+			},
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
@@ -34,53 +36,10 @@
 				width : '30',
 			}, {
 				width : '120',
-				title : '公司名称',
-				align : 'center',
-				field : 'company',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text ;
-				}
-			}, {
-				width : '120',
 				title : '项目名称',
 				sortable : true,
 				align : 'center',
 				field : 'projectName'
-			}, {
-				width : '120',
-				title : '省',
-				sortable : true,
-				align : 'center',
-				field : 'provice',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.name;
-				}
-			}, {
-				width : '120',
-				title : '市',
-				sortable : true,
-				align : 'center',
-				field : 'city',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.name;
-				}
-			}, {
-				width : '120',
-				title : '县',
-				sortable : true,
-				align : 'center',
-				field : 'county',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.name;
-				}
-			}, {
-				width : '120',
-				title : '标段',
-				align : 'center',
-				field : 'bd',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
 			}, {
 				width : '140',
 				title : '资质要求',
@@ -88,92 +47,91 @@
 				field : 'qualifyRequirement'
 			}, {
 				width : '120',
-				title : '项目经理',
+				title : '投标人',
 				sortable : true,
 				align : 'center',
-				field : 'projectMgr',
+				field : 'bidder'
+			}, {
+				width : '120',
+				title : '联系方式',
+				sortable : true,
+				align : 'center',
+				field : 'contract'
+			}, {
+				width : '120',
+				title : '登记人',
+				sortable : true,
+				align : 'center',
+				field : 'projectName',
 				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
+					return isEmpty(value) ? '' : value.name;
 				}
 			}, {
 				width : '120',
-				title : '报名时间',
+				title : '预定费用',
 				sortable : true,
 				align : 'center',
-				field : 'registDT'
+				field : 'bookFee'
+			}, {
+				width : '120',
+				title : '登记时间',
+				sortable : true,
+				align : 'center',
+				field : 'registDT',
+				formatter : Common.formatter
+			}, {
+				width : '120',
+				title : '备注',
+				sortable : true,
+				align : 'center',
+				field : 'remark'
 			} ] ],
 
 			toolbar : '#toolbar'
 		});
 
 	});
-	
-	//必要的初始化
-	function init(){
-		$('#delegatorId').combobox({
-			url : "${pageContext.request.contextPath}/dictionary/combox?code=wtr",
-			parentField : 'dictionaryId',
-			valueField : 'id',
-			textField : 'text',
-			panelHeight : 'auto'				
-		});
-	}
-	
+
 	function searchFun() {
-		debugger;
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
-		queryParams.st = "";
-		queryParams.et = "";
-		//queryParams['delegator.id'] = -1;
-		//queryParams.delegator.id = -1;
-		
+		queryParams.bidder = "";
+
 		var projectName = $('#projectName').val();
-		var st = $('#st').val();
-		var et = $('#et').val();
-		//var delegatorId = $('#delegatorId').combobox('getValue');
-		
-		if(!isEmpty(projectName)){
+		var bidder = $('#bidder').val();
+
+		if (!isEmpty(projectName)) {
 			queryParams.projectName = projectName;
 		}
-		if(!isEmpty(st)){
-			queryParams.st = st;
+		if (!isEmpty(bidder)) {
+			queryParams.bidder = st;
 		}
-		if(!isEmpty(et)){
-			queryParams.et = et;
-		}
-	/* 	if(!isEmpty(delegatorId)){
-			queryParams['delegator.id'] = delegatorId;
-		}else{
-			queryParams['delegator.id'] = '';
-		} */
+
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
 
 	function clearFun() {
 		$('#projectName').val('');
-		$('#st').val('');
-		$('#et').val('');
-		//$('#delegatorId').combobox('clear');
+		$('#bidder').val('');
 	}
-	
+
 	function addFun() {
 		parent.$.modalDialog({
-			title : '项目登记',
+			title : '项目登记登记',
 			width : 750,
 			height : 490,
-			href : '${ctx}/projectRegist/addPage',
+			href : '${ctx}/projectBookRegist/addPage',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
-							.find('#projectRegistAddForm');
+							.find('#projectBookRegistAddForm');
 					f.submit();
 				}
 			} ]
-		}); 
+		});
 	}
 
 	function deleteFun() {
@@ -185,7 +143,7 @@
 		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
 			if (b) {
 				progressLoad();
-				$.post('${ctx}/projectRegist/delete', {
+				$.post('${ctx}/projectBookRegist/delete', {
 					ids : selected
 				}, function(result) {
 					if (result.success) {
@@ -193,13 +151,13 @@
 						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
 						removeSelectedRow(dataGrid);
 						dataGrid.datagrid('reload');
-					}else{
+					} else {
 						parent.$.messager.alert('警告', result.msg, 'warning');
 					}
 					progressClose();
 				}, 'JSON');
 			}
-		}); 
+		});
 	}
 
 	function editFun() {
@@ -214,28 +172,28 @@
 			parent.$.messager.alert('警告', '只能对一条记录编辑!');
 			return;
 		}
-		
+
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '项目登记编辑',
+			title : '项目预订登记编辑',
 			width : 750,
 			height : 490,
-			href : '${ctx}/projectRegist/editPage?id=' + id,
+			href : '${ctx}/projectBookRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
-							.find('#projectRegistEditForm');
+							.find('#projectBookRegistEditForm');
 					f.submit();
 				}
 			} ]
-		}); 
+		});
 	}
 
 	function detailFun() {
-	 	var id = null;
+		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
 			parent.$.messager.alert('警告', '没有可查看对象!');
@@ -250,10 +208,10 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '项目登记详情',
+			title : '项目预订登记详情',
 			width : '815',
 			height : '500',
-			href : '${ctx}/projectRegist/detailPage?id=' + id,
+			href : '${ctx}/projectBookRegist/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
 				handler : function() {
@@ -261,7 +219,7 @@
 					parent.$.modalDialog.handler.dialog('close');
 				}
 			} ]
-		}); 
+		});
 	}
 </script>
 </head>
@@ -273,7 +231,7 @@
 
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectRegist/add')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/add')}">
 				<a onclick="addFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_add'">添加 </a>
@@ -286,7 +244,7 @@
 		</c:choose>
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectRegist/edit')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/edit')}">
 				<a onclick="editFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_edit'">编辑</a>
@@ -299,7 +257,7 @@
 		</c:choose>
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectRegist/delete')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/delete')}">
 				<a onclick="deleteFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_del'">删除 </a>
@@ -313,7 +271,7 @@
 
 		<c:choose>
 			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectRegist/detail')}">
+				test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/detail')}">
 				<a onclick="detailFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail'">详情 </a>
@@ -325,31 +283,20 @@
 			</c:otherwise>
 		</c:choose>
 
-		<c:if test="${fn:contains(sessionInfo.resourceList, '/projectRegist/search')}">
+		<c:if
+			test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/search')}">
 			<table>
 				<tr>
-					
 					<th>项目名称名称:</th>
-					<td><input type="text" id="projectName"> </td>
-					<th>时间段:</th>
-					<td>
-						<input class="Wdate" type="text" name="st" id="st"
-						style="height: 100%" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> - 
-						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> 
-					</td>
-					<!-- <th>委托人:</th>
-					<td>
-						<select id="delegatorId" name="delegatorId" style="width:120px" 
-						class="easyui-validatebox span2"></select>
-					</td> -->
-					<td>
-						<a onclick="searchFun();" href="javascript:void(0);" class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
-					
-						<a onclick="clearFun();" href="javascript:void(0);"class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-					</td>
+					<td><input type="text" id="projectName"></td>
+					<th>投标人:</th>
+					<td><input type="text" id="bidder"></td>
+					<td><a onclick="searchFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+						onclick="clearFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
 				</tr>
 			</table>
 		</c:if>

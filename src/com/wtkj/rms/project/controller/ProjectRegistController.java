@@ -27,30 +27,36 @@ public class ProjectRegistController extends BaseController {
 	private DictionaryServiceI dictionaryService;
 
 	@RequestMapping("/manager")
-	public String manager(HttpServletRequest request) {
-		return "/basic/project/projectRegist";
+	public String manager(HttpServletRequest request, int type) {
+		if (type == 0) {
+			return "/basic/project/projectRegist";
+		} else {
+			return "/basic/project/projectBidRegist";
+		}
 	}
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
 	public Grid dataGrid(ProjectRegist projectRegist, PageFilter ph) {
 		Grid grid = new Grid();
-		//System.out.println("==================="+projectRegist);
 		grid.setRows(projectRegistService.dataGrid(projectRegist, ph));
 		grid.setTotal(projectRegistService.count(projectRegist, ph));
 		return grid;
 	}
 
 	@RequestMapping("/addPage")
-	public String addPage(HttpServletRequest request) {
-		return "/basic/project/projectRegistAdd";
+	public String addPage(HttpServletRequest request, int type) {
+		if (type == 0) {
+			return "/basic/project/projectRegistAdd";
+		} else {
+			return "/basic/project/projectBidRegistAdd";
+		}
 	}
 
 	@RequestMapping("/add")
 	@ResponseBody
 	public Json add(ProjectRegist vo, HttpServletRequest request) {
 		Json j = new Json();
-		System.out.println("==================="+vo.getCertificateA()+"---"+vo.getBd());
 		try {
 			projectRegistService.add(vo, request);
 			j.setSuccess(true);
@@ -92,7 +98,11 @@ public class ProjectRegistController extends BaseController {
 	public String editPage(HttpServletRequest request, String id) {
 		ProjectRegist vo = projectRegistService.get(id);
 		request.setAttribute("projectRegist", vo);
-		return "/basic/project/projectRegistEdit";
+		if (vo.getType() == 0) {
+			return "/basic/project/projectRegistEdit";// 缴纳
+		} else {
+			return "/basic/project/projectBidRegistEdit";// 退款
+		}
 	}
 
 	@RequestMapping("/edit")
@@ -113,7 +123,12 @@ public class ProjectRegistController extends BaseController {
 	public String detailPage(HttpServletRequest request, String id) {
 		ProjectRegist vo = projectRegistService.get(id);
 		request.setAttribute("projectRegist", vo);
-		return "/basic/project/projectRegistDetail";
+		if (vo.getType() == 0) {
+			return "/basic/project/projectRegistDetail";
+
+		} else {
+			return "/basic/project/projectBidRegistDetail";
+		}
 	}
 
 }

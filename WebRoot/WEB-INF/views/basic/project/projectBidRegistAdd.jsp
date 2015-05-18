@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(function() {
-		$('#projectRegistAddForm').form({
+		$('#projectBidRegistAddForm').form({
 			url : '${pageContext.request.contextPath}/projectRegist/add',
 			onSubmit : function() {
 				progressLoad();
@@ -165,11 +165,13 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="projectRegistAddForm" method="post" >
+		<form id="projectBidRegistAddForm" method="post" >
 			<table class="grid">
 				<tr>
 					<th>公司名称 &nbsp;</th>
-					<td><select id="company" name="company.id" 
+					<td>
+					<input name="type" type="hidden" value="1"></input>
+					<select id="company" name="company.id" 
 						class="easyui-validatebox span2" style="width: 100%;">
 					</select></td>
 					<th>项目名称 &nbsp;<label
@@ -253,7 +255,7 @@
 						class="easyui-validatebox span2" style="width: 100%;"
 						data-options="required:true">
 					</select></td>
-					<th>报名时间 &nbsp;<label
+					<th>开标时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT"
 						id="registDT" style="width: 98%; height: 100%;"

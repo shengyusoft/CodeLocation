@@ -11,7 +11,7 @@
 	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-groupview.js"
 	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
-<title>项目登记管理</title>
+<title>项目开标登记</title>
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
@@ -23,6 +23,9 @@
 			pagination : true,
 			//fitColumns : true,
 			nowrap : true,
+			queryParams : {
+				type : 1
+			},
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
@@ -97,7 +100,7 @@
 				}
 			}, {
 				width : '120',
-				title : '报名时间',
+				title : '开标时间',
 				sortable : true,
 				align : 'center',
 				field : 'registDT'
@@ -160,16 +163,16 @@
 	
 	function addFun() {
 		parent.$.modalDialog({
-			title : '项目登记',
+			title : '项目登记登记',
 			width : 750,
 			height : 490,
-			href : '${ctx}/projectRegist/addPage',
+			href : '${ctx}/projectRegist/addPage?type=1',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
-							.find('#projectRegistAddForm');
+							.find('#projectBidRegistAddForm');
 					f.submit();
 				}
 			} ]
@@ -227,7 +230,7 @@
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 					var f = parent.$.modalDialog.handler
-							.find('#projectRegistEditForm');
+							.find('#projectBidRegistEditForm');
 					f.submit();
 				}
 			} ]

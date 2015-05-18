@@ -200,7 +200,7 @@
 	
 	
 	
-	function printFun() {
+	function printFun(type) {
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
@@ -211,17 +211,23 @@
 			parent.$.messager.alert('警告', '只能对一条记录查看!');
 			return;
 		}
-		var iWidth = 700; //弹出窗口的宽度;
-		var iHeight = 600; //弹出窗口的高度;
 		id = rows[0].id;
-		//获得窗口的垂直位置
-		var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
-		//获得窗口的水平位置
-		var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
-		var url = ctxPath + "/report/bidBondReport?id=" + id;
-		var tmp = window.open(url, "_blank", "width=700,height=600,top=" + iTop
-				+ ",left=" + iLeft);
-		tmp.focus();
+		var url = ctxPath + "/report/bidBondReport?id=" + id+"&&type="+type;
+		if(type == 0){
+			var iWidth = 700; //弹出窗口的宽度;
+			var iHeight = 600; //弹出窗口的高度;
+			id = rows[0].id;
+			//获得窗口的垂直位置
+			var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+			//获得窗口的水平位置
+			var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+			var tmp = window.open(url, "_blank", "width=700,height=600,top=" + iTop
+					+ ",left=" + iLeft);
+			tmp.focus();
+		}else{
+			var tmp = window.open(url);
+			tmp.focus();
+		}
 	}
 
 	function clearFun() {
@@ -487,9 +493,13 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<a onclick="printFun();" href="javascript:void(0);"
+		<a onclick="printFun(0);" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">预览</a>
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览</a>
+					
+		<a onclick="printFun(1);" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/bidBond/search')}">

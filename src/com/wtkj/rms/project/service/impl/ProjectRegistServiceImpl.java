@@ -27,18 +27,17 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 	@Autowired
 	private BaseDaoI<Tdictionary> dictionaryDao;
-	
-	
+
 	@Autowired
 	private BaseDaoI<Tdictionarytype> dictionarytypeDao;
-	
+
 	@Autowired
 	private BaseDaoI<Certificate> certificateDao;
 
 	@Override
 	public void add(ProjectRegist p, HttpServletRequest request) {
-		//p.setRegistDT(new Date());
-		System.out.println("=================="+p.getCertificateA());
+		// p.setRegistDT(new Date());
+		System.out.println("==================" + p.getCertificateA());
 		p.setProjectMgr(dictionaryDao.get(Tdictionary.class, p.getProjectMgr()
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
@@ -46,10 +45,12 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
 				.getId()));
 
-		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p.getProvice()
+		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p
+				.getProvice().getId()));
+		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity()
 				.getId()));
-		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity().getId()));
-		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty().getId()));
+		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty()
+				.getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
@@ -62,8 +63,8 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				.getCertificateB().getId()));
 		p.setCertificateC(certificateDao.get(Certificate.class, p
 				.getCertificateC().getId()));
-		
-//
+
+		//
 		projectRegistDao.save(p);
 	}
 
@@ -96,10 +97,12 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
 				.getId()));
 
-		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p.getProvice()
+		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p
+				.getProvice().getId()));
+		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity()
 				.getId()));
-		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity().getId()));
-		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty().getId()));
+		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty()
+				.getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
@@ -119,7 +122,7 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 	public ProjectRegist get(String id) {
 		ProjectRegist p = null;
 		if (!StringUtils.isEmpty(id)) {
-			p = projectRegistDao.get(ProjectRegist.class, id);
+			p = projectRegistDao.get(ProjectRegist.class, Long.valueOf(id));
 		}
 		return p;
 
@@ -148,10 +151,35 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		String hql = "";
 		if (p != null) {
 			hql += " where 1=1 ";
+			
+			if(p.getType() >= 0 ){
+				hql += " and t.type = :type";
+				params.put("type", p.getType());
+			}
+			
 			if (p.getCompany() != null) {
 				hql += " and t.company.name like :name and t.company.dictionarytype.code=:type";
 				params.put("name", "%%" + p.getCompany().getText() + "%%");
 				params.put("name", "company");
+			}
+			if (!StringUtils.isEmpty(p.getProjectName())) {
+				hql += " and t.projectName like :projectName";
+				params.put("projectName", "%%" + p.getProjectName() + "%%");
+			}
+
+			if (p.getSt() != null) {
+				hql += " and t.registDT >= :registDT1";
+				params.put("registDT1", p.getSt());
+			}
+
+			if (p.getEt() != null) {
+				hql += " and t.registDT <= :registDT2";
+				params.put("registDT2", p.getEt());
+			}
+
+			if (p.getDelegator() != null) {
+				hql += " and t.delegator.id <= :delegatorId";
+				params.put("delegatorId", p.getDelegator().getId());
 			}
 		}
 

@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -56,7 +57,12 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private String bidCost;// 投标费用
 	private String remark;
 
-	
+	// 0项目登记 1项目开标登记
+	private int type;
+
+	private Date st;
+	private Date et;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id")
@@ -66,6 +72,14 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	public void setCompany(Tdictionary company) {
 		this.company = company;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public String getProjectName() {
@@ -243,6 +257,24 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	@Transient
+	public Date getSt() {
+		return st;
+	}
+
+	public void setSt(Date st) {
+		this.st = st;
+	}
+
+	@Transient
+	public Date getEt() {
+		return et;
+	}
+
+	public void setEt(Date et) {
+		this.et = et;
 	}
 
 }
