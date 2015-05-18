@@ -16,10 +16,8 @@ import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.SessionInfo;
 import com.wtkj.common.controller.BaseController;
-import com.wtkj.common.model.Tuser;
-import com.wtkj.common.model.User;
 import com.wtkj.common.service.UserServiceI;
-import com.wtkj.rms.project.model.ProjectBookRegist;
+import com.wtkj.rms.project.model.ProjectBookRegistVo;
 import com.wtkj.rms.project.service.ProjectBookRegistServiceI;
 
 //缴纳退回申请
@@ -34,19 +32,19 @@ public class ProjectBookRegistController extends BaseController {
 	private UserServiceI userService;
 
 	@RequestMapping("/manager")
-	public String manager(HttpServletRequest request, int type) {
-		return "/basic/projectBookRegist/projectBookRegist";
+	public String manager(HttpServletRequest request) {
+		return "/basic/project/projectBookRegist";
 	}
 
 	@RequestMapping("/combox")
 	@ResponseBody
-	public List<ProjectBookRegist> findAll() {
+	public List<ProjectBookRegistVo> findAll() {
 		return projectBookRegistService.findAll();
 	}
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(ProjectBookRegist vo, PageFilter ph,
+	public Grid dataGrid(ProjectBookRegistVo vo, PageFilter ph,
 			HttpServletRequest request) {
 		Grid grid = new Grid();
 		grid.setRows(projectBookRegistService.dataGrid(vo, ph));
@@ -55,15 +53,14 @@ public class ProjectBookRegistController extends BaseController {
 	}
 
 	@RequestMapping("/addPage")
-	public String addPage(HttpServletRequest request, int type) {
+	public String addPage(HttpServletRequest request) {
 		// 根据类型返回 缴纳或者退回页面
-		return "/basic/projectBookRegist/projectBookRegistAdd";
+		return "/basic/project/projectBookRegistAdd";
 	}
 
-	// 提交的时候需要传type值
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(ProjectBookRegist vo, HttpServletRequest request) {
+	public Json add(ProjectBookRegistVo vo, HttpServletRequest request) {
 		// 普通员工提交
 		Json j = new Json();
 		try {
@@ -71,12 +68,7 @@ public class ProjectBookRegistController extends BaseController {
 			// 申请人和申请时间
 			SessionInfo sessionInfo = getSessionInfo(request);
 			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
-				User user = userService.get(sessionInfo.getId());
-				if (user != null) {
-					Tuser tu = new Tuser();
-					tu.setId(sessionInfo.getId());
-					vo.setRegister(tu);
-				}
+				vo.setRegisterId(sessionInfo.getId());
 			}
 			projectBookRegistService.add(vo, request);
 			j.setSuccess(true);
@@ -109,21 +101,21 @@ public class ProjectBookRegistController extends BaseController {
 
 	@RequestMapping("/get")
 	@ResponseBody
-	public ProjectBookRegist get(Long id) {
+	public ProjectBookRegistVo get(Long id) {
 		return projectBookRegistService.get(id);
 	}
 
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, Long id) {
-		ProjectBookRegist p = projectBookRegistService.get(id);
-		request.setAttribute("projectBookRegist", p);
-		return "/basic/projectBookRegist/projectBookRegistEdit";// 缴纳
+		ProjectBookRegistVo vo = projectBookRegistService.get(id);
+		request.setAttribute("projectBookRegist", vo);
+		return "/basic/project/projectBookRegistEdit";// 缴纳
 	}
 
 	// 申请人编辑
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Json edit(ProjectBookRegist vo, HttpServletRequest request) {
+	public Json edit(ProjectBookRegistVo vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
 			projectBookRegistService.edit(vo, request);
@@ -137,9 +129,9 @@ public class ProjectBookRegistController extends BaseController {
 
 	@RequestMapping("/detailPage")
 	public String detailPage(HttpServletRequest request, Long id) {
-		ProjectBookRegist projectBookRegist = projectBookRegistService.get(id);
+		ProjectBookRegistVo projectBookRegist = projectBookRegistService.get(id);
 		request.setAttribute("projectBookRegist", projectBookRegist);
-		return "/basic/projectBookRegist/projectBookRegistDetail";
+		return "/basic/project/projectBookRegistDetail";
 	}
 
 }
