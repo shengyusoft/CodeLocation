@@ -2,20 +2,6 @@ package com.wtkj.rms.project.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import com.wtkj.common.model.IdEntity;
-import com.wtkj.common.model.Tuser;
-
 /**
  * 投标项目预定登记表（登陆员工填写该表）
  * 
@@ -23,25 +9,30 @@ import com.wtkj.common.model.Tuser;
  * 
  */
 
-@Entity
-@Table(name = "ProjectBookRegist", schema = "")
-@DynamicInsert(true)
-@DynamicUpdate(true)
-public class ProjectBookRegist extends IdEntity implements java.io.Serializable {
+public class ProjectBookRegistVo implements java.io.Serializable {
 	private static final long serialVersionUID = 6625249529038114020L;
+	private Long id;
 	private String projectName;// 项目名称
 	private String qualifyRequirement;// 资质要求
 	private String bidder;// 投标人姓名
 	private String contract;// 联系方式
 
 	private Double bookFee;// 预定费用
-	private Tuser register;// 登记人
+
 	private Date registDT;// 登记时间
 	private String remark;// 备注
 
 	private Long registerId;
 
 	private String registerName;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getProjectName() {
 		return projectName;
@@ -83,17 +74,6 @@ public class ProjectBookRegist extends IdEntity implements java.io.Serializable 
 		this.bookFee = bookFee;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "registerId")
-	public Tuser getRegister() {
-		return register;
-	}
-
-	public void setRegister(Tuser register) {
-		this.register = register;
-	}
-
 	public Date getRegistDT() {
 		return registDT;
 	}
@@ -110,7 +90,6 @@ public class ProjectBookRegist extends IdEntity implements java.io.Serializable 
 		this.remark = remark;
 	}
 
-	@Transient
 	public Long getRegisterId() {
 		return registerId;
 	}
@@ -119,7 +98,6 @@ public class ProjectBookRegist extends IdEntity implements java.io.Serializable 
 		this.registerId = registerId;
 	}
 
-	@Transient
 	public String getRegisterName() {
 		return registerName;
 	}
