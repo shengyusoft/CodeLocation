@@ -26,24 +26,24 @@
 			}
 		});
 	});
-	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="projectBookRegistAddForm" method="post" >
+		<form id="projectBookRegistAddForm" method="post">
 			<table class="grid">
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" style="width: 100%;"
-						type="text" id="projectName" class="easyui-validatebox span2"
+					<td><input name="projectName" style="width: 100%;" type="text"
+						id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-					<th>资质要求&nbsp;<label
+					<th>预订费用&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="qualifyRequirement" style="width: 100%; height: 100%"
-						type="text" id="qualifyRequirement" class="easyui-validatebox span2"
+					<td><input name="bookFee" type="text" id="bookFee"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
+
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label
@@ -53,15 +53,15 @@
 						data-options="required:true" /></td>
 					<th>联系方式 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contract" style="width: 100%; height: 100%" data-options="required:true"
-						type="text" id="contract" class="easyui-validatebox span2"/></td>
+					<td><input name="contract" style="width: 100%; height: 100%"
+						data-options="required:true" type="text" id="contract"
+						class="easyui-validatebox span2" /></td>
 				</tr>
 				<tr>
-					<th>预订费用&nbsp;<label
+					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bookFee" type="text" id="bookFee"
-						style="width: 100%; height: 100%" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td colspan="3"><textarea style="width: 100%" rows="5"
+							name="qualifyRequirement"></textarea></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>

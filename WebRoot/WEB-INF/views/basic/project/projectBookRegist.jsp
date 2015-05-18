@@ -20,11 +20,7 @@
 			striped : true,
 			rownumbers : true,
 			pagination : true,
-			fitColumns : true,
 			nowrap : true,
-			queryParams : {
-				type : 1
-			},
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
@@ -62,10 +58,7 @@
 				title : '登记人',
 				sortable : true,
 				align : 'center',
-				field : 'projectName',
-				formatter : function(value, row, index) {
-					return isEmpty(value) ? '' : value.name;
-				}
+				field : 'registName'
 			}, {
 				width : '120',
 				title : '预定费用',
@@ -104,7 +97,7 @@
 			queryParams.projectName = projectName;
 		}
 		if (!isEmpty(bidder)) {
-			queryParams.bidder = st;
+			queryParams.bidder = bidder;
 		}
 
 		//重新加载datagrid的数据  
@@ -118,9 +111,9 @@
 
 	function addFun() {
 		parent.$.modalDialog({
-			title : '项目登记登记',
+			title : '项目预订登记',
 			width : 750,
-			height : 490,
+			height : 350,
 			href : '${ctx}/projectBookRegist/addPage',
 			buttons : [ {
 				text : '添加',
@@ -176,9 +169,9 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '项目预订登记编辑',
+			title : '项目预订编辑',
 			width : 750,
-			height : 490,
+			height : 350,
 			href : '${ctx}/projectBookRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -209,8 +202,8 @@
 
 		parent.$.modalDialog({
 			title : '项目预订登记详情',
-			width : '815',
-			height : '500',
+			width : 750,
+			height : 400,
 			href : '${ctx}/projectBookRegist/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -287,7 +280,7 @@
 			test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/search')}">
 			<table>
 				<tr>
-					<th>项目名称名称:</th>
+					<th>项目名称:</th>
 					<td><input type="text" id="projectName"></td>
 					<th>投标人:</th>
 					<td><input type="text" id="bidder"></td>

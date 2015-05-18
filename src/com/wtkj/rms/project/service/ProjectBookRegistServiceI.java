@@ -5,30 +5,30 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.wtkj.common.PageFilter;
-import com.wtkj.rms.project.model.ProjectBookRegist;
+import com.wtkj.rms.project.model.ProjectBookRegistVo;
 
 public interface ProjectBookRegistServiceI {
 
-	public List<ProjectBookRegist> dataGrid(
-			ProjectBookRegist ProjectBookRegist, PageFilter ph);
+	public List<ProjectBookRegistVo> dataGrid(
+			ProjectBookRegistVo ProjectBookRegistVo, PageFilter ph);
 
-	public Long count(ProjectBookRegist ProjectBookRegist, PageFilter ph);
+	public Long count(ProjectBookRegistVo ProjectBookRegistVo, PageFilter ph);
 
-	public Long count(ProjectBookRegist ProjectBookRegist);
+	public Long count(ProjectBookRegistVo ProjectBookRegistVo);
 
-	public ProjectBookRegist get(Long id);
+	public ProjectBookRegistVo get(Long id);
 
-	public void add(ProjectBookRegist ProjectBookRegist,
+	public void add(ProjectBookRegistVo ProjectBookRegistVo,
 			HttpServletRequest request);
 
-	public void edit(ProjectBookRegist ProjectBookRegist,
+	public void edit(ProjectBookRegistVo ProjectBookRegistVo,
 			HttpServletRequest request);
 
 	public void delete(Long id);
 
 	public void delete(String ids);
 
-	public List<ProjectBookRegist> findAll();
+	public List<ProjectBookRegistVo> findAll();
 
 	public long countAll();
 }

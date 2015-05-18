@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(function() {
-		$('#certificateEditForm').form({
-			url : '${pageContext.request.contextPath}/certificate/edit',
+		$('#projectBookRegistEditForm').form({
+			url : '${pageContext.request.contextPath}/projectBookRegist/edit',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
@@ -26,82 +26,53 @@
 			}
 		});
 	});
-	document.getElementById("card_status").value="${certificate.card_status}"
-	document.getElementById("card_type").value="${certificate.card_type}"
-	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="certificateEditForm" method="post"
-			style="width: 800px; height: 330px;">
+		<form id="projectBookRegistEditForm" method="post">
 			<table class="grid">
 				<tr>
-					<th>证书名称 &nbsp;<label
+					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input type="hidden" name="id" id="id"
-						value="${certificate.id}"> <input name="card_name"
-						style="width: 100%; height: 100%" type="text" id="card_name"
-						class="easyui-validatebox span2" data-options="required:true"
-						value="${certificate.card_name}" /></td>
-					<th>证书编码 &nbsp;<label
+					<td><input type="hidden" name="id"
+						value="${projectBookRegist.id}"></input> <input type="hidden"
+						name="registerId" value="${projectBookRegist.registerId}"></input>
+						<input type="hidden" name="registDT"
+						value="${projectBookRegist.registDT}"></input> <input
+						name="projectName" value="${projectBookRegist.projectName}"
+						style="width: 100%;" type="text" id="projectName"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<th>预订费用&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="card_code" style="width: 100%; height: 100%"
-						value="${certificate.card_code}" type="text" id="card_code"
-						class="easyui-validatebox span2" data-options="required:true"/></td>
-				</tr>
-				<tr>
-					<th>证书获取时间&nbsp;</th>
-					<td><input class="Wdate" type="text" name="card_getdate" value="${certificate.card_getdate}" id="card_getdate" 
-							style="width: 100%;height:100%"
-							onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
-					<th>证书到期时间 &nbsp;</th>
-					<td><input class="Wdate" type="text" name="card_enddate" id="card_enddate"
-							style="width: 100%;height:100%" value="${certificate.card_enddate}"
-							onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
-				</tr>
+					<td><input name="bookFee" value="${projectBookRegist.bookFee}"
+						type="text" id="bookFee" style="width: 100%; height: 100%"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
 
-				<tr>
-					<th>发证单位&nbsp;</th>
-					<td><input name="card_issuer" type="text" id="card_issuer"
-						value="${certificate.card_issuer}" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" /></td>
-					<th>证书所有人 &nbsp;</th>
-					<td><input name="card_owner" style="width: 100%; height: 100%"
-						value="${certificate.card_owner}" type="text" id="card_owner"
-						class="easyui-validatebox span2" /></td>
 				</tr>
 				<tr>
-					<th>证书类型&nbsp;<label
+					<th>投标人姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="card_type" name="card_type" style="width: 100%;height: 100%""
-							class="easyui-validatebox span2" 
-							data-options="required:true">
-							<option value="A证">A证</option>
-    						<option value="B证">B证</option>
-    						<option value="C证">C证</option>
-    						<option value="五大员证">五大员证</option>
-						</select></td>
-					<th>证书等级 &nbsp;</th>
-					<td><input name="card_level" style="width: 100%; height: 100%"
-						value="${certificate.card_level}" type="text" id="card_level"
-						class="easyui-validatebox span2" /></td>
+					<td><input name="bidder" value="${projectBookRegist.bidder}"
+						type="text" id="bidder" style="width: 100%; height: 100%"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<th>联系方式 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="contract"
+						value="${projectBookRegist.contract}"
+						style="width: 100%; height: 100%" data-options="required:true"
+						type="text" id="contract" class="easyui-validatebox span2" /></td>
 				</tr>
 				<tr>
-					<th>证书状态&nbsp;<label
+					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="card_status" name="card_status" value="${certificate.card_status}" style="width: 100%;height: 100%"
-							class="easyui-validatebox span2" data-options="required:true">
-							<option value="正常" selected>正常</option>
-    						<option value="已使用">已使用</option>
-    						<option value="已过期">已过期</option>
-						</select></td>
-					
+					<td colspan="3"><textarea style="width: 100%" rows="5"
+							name="qualifyRequirement">${projectBookRegist.qualifyRequirement}</textarea></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
 					<td colspan="3"><textarea style="width: 100%" rows="5"
-							name="remark">${certificate.remark}</textarea></td>
+							name="remark">${projectBookRegist.remark}</textarea></td>
 				</tr>
 			</table>
 		</form>
