@@ -271,6 +271,7 @@
 		}
 
 		id = rows[0].id;
+		var state = rows[0].state;
 		
 		if(state == 1){
 			parent.$.messager.alert('警告', '财务已提交不可修改!');
