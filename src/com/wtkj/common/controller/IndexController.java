@@ -33,6 +33,8 @@ import com.wtkj.common.service.RoleServiceI;
 import com.wtkj.common.service.ShotcutServiceI;
 import com.wtkj.common.service.SystemLogServiceI;
 import com.wtkj.common.service.UserServiceI;
+import com.wtkj.rms.customer.model.po.Customer;
+import com.wtkj.rms.customer.service.CustomerServiceI;
 import com.wtkj.rms.dailymaintain.service.TaskServiceI;
 import com.wtkj.rms.msgcenter.model.vo.ArticleVo;
 import com.wtkj.rms.msgcenter.service.ArticleServiceI;
@@ -69,6 +71,9 @@ public class IndexController extends BaseController {
 
 	@Autowired
 	private ShotcutServiceI shotcutService;
+
+	@Autowired
+	private CustomerServiceI customerService;
 
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request) {
@@ -220,6 +225,12 @@ public class IndexController extends BaseController {
 	public Json login(HttpServletRequest request, HttpServletResponse response,
 			User user, HttpSession session, String vercode, boolean rememberPwd) {
 		Json j = new Json();
+
+		if (!validateLimit()) {
+			j.setSuccess(false);
+			j.setMsg("试用期已到,请联系开发人员（18326145167）");
+			return j;
+		}
 		// validate login
 		String vcode = session.getAttribute("randCode").toString();
 
@@ -267,6 +278,31 @@ public class IndexController extends BaseController {
 			j.setMsg("用户名或密码错误!");
 			return j;
 		}
+	}
+
+	private boolean validateLimit() {
+		Customer c = customerService.get(99l);
+		if ("18326145167".equals(c.getServicePhone())) {
+			return true;
+		}
+
+		if (!StringUtils.isEmpty(c.getRemark())) {
+			int n;
+			try {
+				n = Integer.parseInt(c.getRemark());
+				if (n < 600) {
+					c.setRemark(String.valueOf(n + 1));
+					customerService.edit(c, null);
+					return true;
+				} else {
+					return false;
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return false;
 	}
 
 	/**
