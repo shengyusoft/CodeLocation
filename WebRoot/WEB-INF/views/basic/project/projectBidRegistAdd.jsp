@@ -198,7 +198,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="bd" name="bd.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -211,13 +211,13 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="projectMgr" name="projectMgr.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>技术负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="techniqueMgr" name="techniqueMgr.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
@@ -225,13 +225,13 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="certificateA" name="certificateA.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>B证&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="certificateB" name="certificateB.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
@@ -239,13 +239,13 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="certificateC" name="certificateC.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>五大员证 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="member5Card" name="member5Card.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
@@ -253,7 +253,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="delegator" name="delegator.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>开标时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>

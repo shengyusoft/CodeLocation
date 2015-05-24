@@ -139,7 +139,7 @@
 					<th>公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="company" name="company.id" 
-						class="easyui-validatebox span2" data-options="required:true" style="width: 100%;">
+						class="easyui-validatebox span2" data-options="editable:false,required:true" style="width: 100%;">
 					</select></td>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -150,13 +150,13 @@
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="3">
-						省：<select id="provice" data-options="required:true" name="provice.id" class="easyui-validatebox span2" style="width: 100px;">
+						省：<select id="provice" data-options="editable:false,required:true" name="provice.id" class="easyui-validatebox span2" style="width: 100px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 100px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						县(区)：<select id="county" name="county.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 100px;">
+						县(区)：<select id="county" name="county.id" data-options="editable:false,required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 100px;">
 					</select>
 					</td>
 				</tr>
@@ -165,7 +165,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="bd" name="bd.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>中标价&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -191,13 +191,13 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="projectMgr" name="projectMgr.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>技术负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="techniqueMgr" name="techniqueMgr.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				
@@ -206,7 +206,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="aqy" name="aqy.id"
 						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 					<th>项目负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
