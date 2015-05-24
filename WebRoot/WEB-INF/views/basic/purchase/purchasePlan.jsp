@@ -23,7 +23,7 @@
 			nowrap : true,
 			idField : 'id',
 			sortName : 'id',
-			sortpurchasePlan : 'asc',
+			sortpurchasePlan : 'desc',
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [
