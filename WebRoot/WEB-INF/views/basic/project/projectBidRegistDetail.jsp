@@ -118,8 +118,10 @@
 	   }
 	});
 	
+	var provice = $('#provice').combobox('getValue');
 	$('#city').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+provice,
+    	parentField : 'pid',
 	    valueField:'id', //值字段
 	    textField:'name', //显示的字段
 	    panelHeight:'auto',
@@ -129,8 +131,10 @@
 	    value:'${projectRegist.city.id}'
 	});
 	
+	var city = $('#city').combobox('getValue');
 	$('#county').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
+    	parentField : 'pid',
 	    valueField:'id', //值字段
 	    textField:'name', //显示的字段
 	    panelHeight:'auto',

@@ -39,6 +39,7 @@
 		parentField : 'dictionaryId',
 		valueField : 'id',
 		value:'${projectRegist.company.id}',
+		required:true,
 		textField : 'text',
 		panelHeight : 'auto'				
 	});
@@ -186,11 +187,12 @@
 		<form id="projectRegistEditForm" method="post" >
 			<table class="grid">
 				<tr>
-					<th>公司名称 &nbsp;</th>
+					<th>公司名称 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
 					<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input>
 					<input type="hidden" name="type" id="type" value="${projectRegist.type}"></input>
-					<select id="company" name="company.id" 
+					<select id="company" name="company.id" data-options="required:true"
 						class="easyui-validatebox span2" style="width: 100%;">
 					</select></td>
 					<th>项目名称 &nbsp;<label

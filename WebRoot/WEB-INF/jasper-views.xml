@@ -29,8 +29,14 @@
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>-->
 	
-	<bean id="bidBondReport" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
-		<property name="url" value="/WEB-INF/reports/bidBond.jasper" />
+	<!--投标保证金缴纳-->
+	<bean id="bidBondPay" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/bidBondPay.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	<!--投标保证金退还-->
+	<bean id="bidBondBack" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/bidBondBack.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
 </beans>

@@ -83,7 +83,7 @@
 				}
 			}, {
 				width : '140',
-				title : '中标价',
+				title : '中标价（元）',
 				align : 'center',
 				field : 'bid_cost'
 			}, {
@@ -116,7 +116,7 @@
 				}
 			}, {
 				width : '120',
-				title : '安全员',
+				title : '专职安全员',
 				sortable : true,
 				align : 'center',
 				field : 'aqy',
@@ -125,7 +125,7 @@
 				}
 			}, {
 				width : '120',
-				title : '项目负责人',
+				title : '施工负责人',
 				sortable : true,
 				align : 'center',
 				field : 'headman'

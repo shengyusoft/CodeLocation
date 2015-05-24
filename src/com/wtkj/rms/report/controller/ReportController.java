@@ -94,14 +94,14 @@ public class ReportController extends BaseController {
 
 
 	/**
-	 * 利率报表
+	 * 投标保证金缴纳
 	 * 
 	 * @param request
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping("/bidBondReport")
-	public ModelAndView bidBondReport(long id,int type,HttpServletRequest request) throws IOException {
+	@RequestMapping("/bidBondPay")
+	public ModelAndView bidBondPay(long id,int type,HttpServletRequest request) throws IOException {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		if(type == 0){
 			parameterMap.put("format", "pdf");
@@ -109,7 +109,26 @@ public class ReportController extends BaseController {
 			parameterMap.put("format", "xls");
 		}
 		parameterMap.put("id", id);
-		return new ModelAndView("bidBondReport", parameterMap);
+		return new ModelAndView("bidBondPay", parameterMap);
+	}
+	
+	/**
+	 * 投标保证金退还
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/bidBondBack")
+	public ModelAndView bidBondBack(long id,int type,HttpServletRequest request) throws IOException {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		if(type == 0){
+			parameterMap.put("format", "pdf");
+		}else{
+			parameterMap.put("format", "xls");
+		}
+		parameterMap.put("id", id);
+		return new ModelAndView("bidBondBack", parameterMap);
 	}
 
 	/**

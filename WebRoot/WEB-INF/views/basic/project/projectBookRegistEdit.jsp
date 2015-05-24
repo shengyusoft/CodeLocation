@@ -43,11 +43,10 @@
 						name="projectName" value="${projectBookRegist.projectName}"
 						style="width: 100%;" type="text" id="projectName"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
-					<th>预订费用&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<th>预订费用&nbsp;</th>
 					<td><input name="bookFee" value="${projectBookRegist.bookFee}"
 						type="text" id="bookFee" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+						class="easyui-validatebox span2" /></td>
 
 				</tr>
 				<tr>

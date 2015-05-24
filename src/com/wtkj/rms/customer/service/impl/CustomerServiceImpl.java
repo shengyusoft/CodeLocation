@@ -50,7 +50,6 @@ public class CustomerServiceImpl implements CustomerServiceI {
 	@Override
 	public Customer get(Long id) {
 		return customerDao.get(Customer.class, id);
-
 	}
 
 	@Override

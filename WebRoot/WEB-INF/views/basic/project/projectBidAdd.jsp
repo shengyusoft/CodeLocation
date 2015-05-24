@@ -167,7 +167,7 @@
 						class="easyui-validatebox span2" style="width: 100%;"
 						data-options="editable:false,required:true">
 					</select></td>
-					<th>中标价&nbsp;<label
+					<th>中标价（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bid_cost" style="width: 100%; height: 100%"
 						type="text" id="bid_cost" class="easyui-validatebox span2"
@@ -202,16 +202,23 @@
 				</tr>
 				
 				<tr>
-					<th>安全员&nbsp;<label
+					<th>专职安全员&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="aqy" name="aqy.id"
 						class="easyui-validatebox span2" style="width: 100%;"
 						data-options="editable:false,required:true">
 					</select></td>
-					<th>项目负责人&nbsp;<label
+					<th>施工负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="headman" type="text" id="headman"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<th colspan="2">施工负责人身份证&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td colspan="2"><input name="headmanIdCard" type="text" id="headmanIdCard"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2" value="${projectBid.headmanIdCard}"
 						data-options="required:true" /></td>
 				</tr>
 				<tr>

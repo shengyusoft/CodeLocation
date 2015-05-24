@@ -212,7 +212,7 @@
 			return;
 		}
 		id = rows[0].id;
-		var url = ctxPath + "/report/bidBondReport?id=" + id+"&&type="+type;
+		var url = ctxPath + "/report/bidBondPay?id=" + id+"&&type="+type;
 		if(type == 0){
 			var iWidth = 700; //弹出窗口的宽度;
 			var iHeight = 600; //弹出窗口的高度;

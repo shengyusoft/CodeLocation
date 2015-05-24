@@ -42,12 +42,13 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	private Float bid_cost;
 	private Float manage_cost;
 	private Date duration;
-	
+
 	private Tdictionary projectMgr;// 项目经理
 	private Tdictionary techniqueMgr;// 技术负责人
 	private Tdictionary aqy;// 委托人
 
 	private String headman;
+	private String headmanIdCard;
 	private String tel;
 	private String recordman;
 	private String remark;
@@ -114,7 +115,6 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	public void setBd(Tdictionary bd) {
 		this.bd = bd;
 	}
-
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -205,6 +205,12 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 		this.recordman = recordman;
 	}
 
-	
+	public String getHeadmanIdCard() {
+		return headmanIdCard;
+	}
+
+	public void setHeadmanIdCard(String headmanIdCard) {
+		this.headmanIdCard = headmanIdCard;
+	}
 
 }
