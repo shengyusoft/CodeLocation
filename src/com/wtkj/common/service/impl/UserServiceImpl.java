@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserServiceI {
 	@Override
 	public void edit(User user) {
 		Tuser t = userDao.get(Tuser.class, user.getId());
+		BeanUtils.copyProperties(user, t);
 		t.setAge(user.getAge());
 		t.setLoginname(user.getLoginname());
 		t.setName(user.getName());

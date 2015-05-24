@@ -53,7 +53,7 @@
 				<tr>
 					<th width="20%">登录名</th>
 					<td><input name="loginname" style="width: 134px;" type="text"
-						class="easyui-validatebox" data-options="required:true" value=""></td>
+						class="easyui-validatebox" readonly="readonly" disabled="disabled" value="默认为手机号码"></td>
 					<th width="20%">姓名</th>
 					<td><input name="name" type="text" style="width: 134px;"
 						class="easyui-validatebox" data-options="required:true" value=""></td>
@@ -90,7 +90,7 @@
 					<th>办公电话</th>
 					<td><input type="text" name="officePhone" style="width: 134px;" /></td>
 					<th>手机号码</th>
-					<td><input type="text" name="mobilePhone" style="width: 140px;" /></td>
+					<td><input type="text" class="easyui-validatebox" name="mobilePhone" style="width: 140px;" data-options="required:true"/></td>
 				</tr>
 				<tr>
 					<th>传值号码</th>

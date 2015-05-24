@@ -59,7 +59,7 @@
 				<tr>
 					<th width="20%">登录名</th>
 					<td><input name="id" type="hidden" style="width: 134px;" value="${user.id}">
-					<input name="loginname" type="text" class="easyui-validatebox" data-options="required:true" value="${user.loginname}"></td>
+					<input name="loginname" type="text" class="easyui-validatebox" readonly="readonly" disabled="disabled" value="${user.loginname}"></td>
 					<th width="20%">姓名</th>
 					<td><input name="name" type="text" style="width: 134px;" class="easyui-validatebox" data-options="required:true" value="${user.name}"></td>
 				</tr>
@@ -89,7 +89,7 @@
 					<th>办公电话</th>
 					<td><input type="text" name="officePhone" value="${user.officePhone}" style="width: 134px;" /></td>
 					<th>手机号码</th>
-					<td><input type="text" name="mobilePhone" value="${user.mobilePhone}" style="width: 140px;" /></td>
+					<td><input type="text" class="easyui-validatebox" data-options="required:true" name="mobilePhone" value="${user.mobilePhone}" style="width: 140px;" /></td>
 				</tr>
 				<tr>
 					<th>传值号码</th>

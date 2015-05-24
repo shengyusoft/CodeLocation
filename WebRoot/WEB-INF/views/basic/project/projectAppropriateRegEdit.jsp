@@ -6,8 +6,8 @@
 <script type="text/javascript">
 	var dataGrid1;
 	$(function() {
-		$('#projectAppropriateRegAddForm').form({
-			url : '${pageContext.request.contextPath}/projectAppropriateReg/add',
+		$('#projectAppropriateRegEditForm').form({
+			url : '${pageContext.request.contextPath}/projectAppropriateReg/edit',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
@@ -20,7 +20,7 @@
 				progressClose();
 				result = $.parseJSON(result);
 				if (result.success) {
-					$("#paregBtn").linkbutton("disable");
+					//$("#paregBtn").linkbutton("disable");
 					if(result.obj){
 						console.log(result.obj);
 						console.log(result.obj.id);
@@ -135,8 +135,8 @@
 		}
 		parent.parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付登记',
-			width : document.body.clientWidth*0.7,
-			height : 400,
+			width : 700,
+			height : 450,
 			href : '${ctx}/projectAppropriateAccount/addPage',
 			buttons : [ {
 				text : '添加',
@@ -162,41 +162,24 @@
 	}
 	
 	function deleteFun() {
-		var selected = getSelected();
+		var selected = parent.getSelecteds(dataGrid1);
 		if (isEmpty(selected)) {
 			parent.$.messager.alert('警告', '至少选中一条记录!');
 			return;
 		}
+		var rows = dataGrid1.datagrid('getSelections');
+		for(var i=0;i<rows.length;i++){
+			var state = rows[i].state;
+			if(state == 2){
+				parent.$.messager.alert('警告', '存在已经确认的记录，不能删除!');
+				return;
+			}
+		}
+		
 		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
 			if (b) {
 				progressLoad();
 				$.post('${ctx}/projectAppropriateAccount/delete', {
-					ids : selected
-				}, function(result) {
-					if (result.success) {
-						parent.$.messager.alert('提示', result.msg, 'info');
-						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
-						removeSelectedRow(dataGrid1);
-						dataGrid1.datagrid('reload');
-					} else {
-						parent.$.messager.alert('警告', result.msg, 'warning');
-					}
-					progressClose();
-				}, 'JSON');
-			}
-		});
-	}
-	
-	function confirmFun() {
-		var selected = getSelected();
-		if (isEmpty(selected)) {
-			parent.$.messager.alert('警告', '至少选中一条记录!');
-			return;
-		}
-		parent.$.messager.confirm('询问', '对选择的工程款拨付加以确认？', function(b) {
-			if (b) {
-				progressLoad();
-				$.post('${ctx}/projectAppropriateAccount/confirm', {
 					ids : selected
 				}, function(result) {
 					if (result.success) {
@@ -227,11 +210,17 @@
 		}
 
 		id = rows[0].id;
+		
+		var state = rows[0].state;
+		if(state > 0){
+			parent.$.messager.alert('提示', '会计已经确认，不能修改!');
+			return;
+		}
 
 		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付修改',
-			width : document.body.clientWidth*0.75,
-			height : 400,
+			width : 700,
+			height : 450,
 			href : '${ctx}/projectAppropriateAccount/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -244,7 +233,7 @@
 			} ]
 		});
 	}
-
+	
 	function detailFun() {
 		var id = null;
 		var rows = dataGrid1.datagrid('getSelections');
@@ -262,8 +251,8 @@
 
 		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付详情',
-			width : document.body.clientWidth*0.75,
-			height : 400,
+			width : 700,
+			height : 450,
 			href : '${ctx}/projectAppropriateAccount/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -306,8 +295,8 @@
 				<tr>
 					<th>合同工期（年） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="name" style="width: 100%; height: 100%"
-						type="number" id="name" class="easyui-validatebox span2"
+					<td><input name="contractDuration" style="width: 100%; height: 100%"
+						type="number" id="contractDuration" class="easyui-validatebox span2"
 						data-options="required:true"
 						value="${projectAppropriateReg.contractDuration}" /></td>
 					<th>管理费比例 （%）&nbsp;<label

@@ -138,10 +138,9 @@ a:hover {
 										<li style="margin-top: 10px;">上次登录：${sessionInfo.lastLoginTimeStr}</li>
 									</ul>
 								</div>
-								<div style="float: right;">
+								<!-- <div style="float: right;">
 									<img src="../style/images/Other/13.png" />
-								</div>
-
+								</div> -->
 							</div>
 							<div class="easyui-tabs" style="margin-top: 5px; height: 270px;">
 								<div id="task_to_do" title="我的待办"
@@ -149,66 +148,6 @@ a:hover {
 									style="padding: 10px; overflow: scroll;">
 									<table id="myTaskGrid" style="border: 0px; width: 480px;"
 										data-options="border:false"></table>
-								</div>
-								<div id="index_notice" title="通知公告"
-									data-options="iconCls:'icon_rms_notice'"
-									style="padding: 10px; background: #FCFCFD">
-									<table id="notice">
-										<c:forEach items="${notices}" var="d" varStatus="status">
-											<tr>
-												<td width="20px" class="icon_rms_notice_clos" />
-												<c:choose>
-													<c:when test="${status.first == true}">
-														<td width="300px"><a class="STYLE1"
-															style="color: red" href="#"
-															onclick="detailArticle('${d.title}','notice','${d.id}')">${d.title}</a>
-														</td>
-													</c:when>
-
-													<c:otherwise>
-														<td width="300px"><a class="STYLE1" href="#"
-															onclick="detailArticle('${d.title}','notice','${d.id}')">${d.title}</a>
-														</td>
-													</c:otherwise>
-
-												</c:choose>
-												<td width="120px">【${d.organizationName}】</td>
-												<td width="60px" style="color: #cc0000">${d.publishDTText}</td>
-												<td width="60px">阅<font color="#cc0000">${d.numberOfScan}</font>次
-												</td>
-											</tr>
-										</c:forEach>
-									</table>
-								</div>
-								<div id="index_knowledge" title="我的知识"
-									data-options="iconCls:'icon_rms_manger_knowledge'"
-									style="padding: 10px; background: #FCFCFD">
-									<table id="knowledge">
-										<c:forEach items="${knowledges}" var="d" varStatus="status">
-											<tr>
-												<td width="20px" class="icon_rms_notice_clos" />
-												<c:choose>
-													<c:when test="${status.first == true}">
-														<td width="300px"><a class="STYLE1"
-															style="color: red" href="#"
-															onclick="detailArticle('${d.title}','knowledge','${d.id}')">${d.title}</a>
-														</td>
-													</c:when>
-
-													<c:otherwise>
-														<td width="300px"><a class="STYLE1" href="#"
-															onclick="detailArticle('${d.title}','notice','${d.id}')">${d.title}</a>
-														</td>
-													</c:otherwise>
-
-												</c:choose>
-												<td width="120px">【${d.organizationName}】</td>
-												<td width="60px" style="color: #cc0000">${d.createDTText}</td>
-												<td width="60px">阅<font color="#cc0000">${d.numberOfScan}</font>次
-												</td>
-											</tr>
-										</c:forEach>
-									</table>
 								</div>
 							</div>
 						</div>

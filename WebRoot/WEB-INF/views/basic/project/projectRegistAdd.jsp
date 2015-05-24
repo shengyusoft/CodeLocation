@@ -168,8 +168,10 @@
 		<form id="projectRegistAddForm" method="post" >
 			<table class="grid">
 				<tr>
-					<th>公司名称 &nbsp;</th>
-					<td><select id="company" name="company.id" 
+					<th>公司名称 1&nbsp;</th>
+					<td>
+					<input type="hidden" name="type" id="type" value="0"></input>
+					<select id="company" name="company.id" 
 						class="easyui-validatebox span2" style="width: 100%;">
 					</select></td>
 					<th>项目名称 &nbsp;<label

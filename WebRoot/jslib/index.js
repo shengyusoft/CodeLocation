@@ -334,66 +334,62 @@ function detailArticle(title, type, id) {
 
 var toDoGrid;
 function loadToDo() {
-	toDoGrid = $('#myTaskGrid')
-			.datagrid(
-					{
-						url : ctxPath + '/admin/toDoGrid',
-						striped : true,
-						showHeader : false,
-						fit : true,
-						nowrap : true,
-						idField : 'id',
-						frozenColumns : [ [
-
-								{
-									id : 'img_tag',
-									width : 80,
-									align : 'center',
-									formatter : function(value, row, index) {
-										return "<img style='vertical-align: middle;' src='"
-												+ ctxPath
-												+ "/style/images/rms/clos.png'";
-									}
-								},
-								{
-									width : 150,
-									title : '待办任务',
-									align : 'center',
-									field : 'processName',
-									formatter : function(value, row, index) {
-										var str = '【' + value + '】';
-										return str;
-									}
-								},
-								{
-									width : 120,
-									title : '到达时间',
-									align : 'center',
-									field : 'arriveDT',
-									formatter : function(value, row, index) {
-										if (isEmpty(value)) {
-											return '';
-										} else {
-											return value.substring(0, value
-													.indexOf(' '));
-										}
-									}
-								},
-								{
-									width : 90,
-									field : 'action',
-									title : '操作',
-									formatter : function(value, row, index) {
-										var str = $
-												.formatString(
-														'<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo(\'{0}\',\'{1}\');" >去处理</a>',
-														row.id, row.state);
-										return str;
-									}
-								} ] ],
-						toolbar : '#toolbar'
-					});
-
+	toDoGrid = $('#myTaskGrid').datagrid({
+		url : ctxPath + '/admin/toDoGrid',
+		striped : true,
+		showHeader : false,
+		fit : true,
+		nowrap : true,
+		idField : 'id',
+		frozenColumns : [ [
+				{
+					id : 'img_tag',
+					width : 80,
+					align : 'center',
+					formatter : function(value, row, index) {
+						return "<img style='vertical-align: middle;' src='"
+								+ ctxPath
+								+ "/style/images/rms/clos.png'";
+					}
+				},
+				{
+					width : 150,
+					title : '待办任务',
+					align : 'center',
+					field : 'processName',
+					formatter : function(value, row, index) {
+						var str = '【' + value + '】';
+						return str;
+					}
+				},
+				{
+					width : 120,
+					title : '到达时间',
+					align : 'center',
+					field : 'arriveDT',
+					formatter : function(value, row, index) {
+						if (isEmpty(value)) {
+							return '';
+						} else {
+							return value.substring(0, value
+									.indexOf(' '));
+						}
+					}
+				},
+				{
+					width : 90,
+					field : 'action',
+					title : '操作',
+					formatter : function(value, row, index) {
+						var str = $.formatString(
+										'<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo(\'{0}\',\'{1}\');" >去处理</a>',
+										row.id, row.state);
+						return str;
+					}
+				} ] ],
+		toolbar : '#toolbar'
+	});
+	
 	$('#myTaskGrid').datagrid('getPanel').addClass('lines-no');
 }
 
@@ -412,6 +408,7 @@ function handlerToDo(id, state) {
 						var f = parent.$.modalDialog.handler
 								.find('#processForm');
 						parent.$.modalDialog.handler.find('#option').val(0);
+						parent.$.modalDialog.openner_dataGrid = $('#myTaskGrid');
 						f.submit();
 					}
 				},{
@@ -420,6 +417,8 @@ function handlerToDo(id, state) {
 						var f = parent.$.modalDialog.handler
 								.find('#processForm');
 						parent.$.modalDialog.handler.find('#option').val(1);
+						//$('#myTaskGrid').datagrid('getPanel')
+						parent.$.modalDialog.openner_dataGrid = $('#myTaskGrid');
 						f.submit();
 					}
 				}, {
@@ -442,7 +441,6 @@ function taskRemind() {
 		dataType : "json",
 		success : function(result) {
 			if (result.success && !isEmpty(result.msg)) {
-				debugger;
 				$('#tipmsg').val(result.msg);
 				$('#tipmsg1').val(result.msg);
 				showRemind();

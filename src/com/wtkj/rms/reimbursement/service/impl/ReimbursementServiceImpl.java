@@ -76,12 +76,13 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 	}
 
 	@Override
-	public List<Reimbursement> dataGrid(User user,ReimbursementVo vo, PageFilter ph) {
+	public List<Reimbursement> dataGrid(User user, ReimbursementVo vo,
+			PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Reimbursement t ";
-		List<Reimbursement> l = reimbursementDao.find(hql
-				+ whereHql(user,vo, params) + orderHql(ph), params, ph.getPage(),
-				ph.getRows());
+		List<Reimbursement> l = reimbursementDao.find(
+				hql + whereHql(user, vo, params) + orderHql(ph), params,
+				ph.getPage(), ph.getRows());
 
 		return l;
 	}
@@ -95,38 +96,57 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 	}
 
 	@Override
-	public Long count(User user,ReimbursementVo vo, PageFilter ph) {
+	public Long count(User user, ReimbursementVo vo, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Reimbursement t ";
 		return reimbursementDao.count(
-				"select count(*) " + hql + whereHql(user,vo, params), params);
+				"select count(*) " + hql + whereHql(user, vo, params), params);
 	}
 
-	private String whereHql(User user, ReimbursementVo r, Map<String, Object> params) {
+	private String whereHql(User user, ReimbursementVo r,
+			Map<String, Object> params) {
 		String hql = "";
 		if (r != null) {
 			hql += " where 1=1 ";
 			ProcessVo process = r.getProcess_vo();
-			
-			if(user != null){
-				hql += " and t.process.applyUser.id = :userId";
-				params.put("userId", user.getId());
+
+			if (user != null) {
+				// 申请人查看自己申请的
+				if (user.getRoleNames().indexOf("普通员工") >= 0) {
+					hql += " and t.process.applyUser.id = :userId";
+					params.put("userId", user.getId());
+				}else if(user.getRoleNames().indexOf("会计") >= 0){
+					// 如果申请人是别人则审批人查看已到到达自己的任务,如果是自己则显示申请人是自己的
+					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
+					params.put("state", 1);
+					params.put("userId", user.getId());
+				}else if(user.getRoleNames().indexOf("总经理") >= 0){
+					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
+					params.put("userId", user.getId());
+					params.put("state", 2);
+				}else if(user.getRoleNames().indexOf("出纳") >= 0){
+					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
+					params.put("userId", user.getId());
+					params.put("state", 3);
+				}
 			}
-			
+
 			if (process != null) {
 				if (process.getState() != null) {
 					hql += " and t.process.state = :state";
 					params.put("state", process.getState());
 				}
 
-				if (process.getApplyUserId() != null && process.getApplyUserId() > 0) {
+				if (process.getApplyUserId() != null
+						&& process.getApplyUserId() > 0) {
 					hql += " and t.process.applyUser.id = :userId";
 					params.put("userId", process.getApplyUserId());
 				}
-				
-				if(!StringUtils.isEmpty(process.getApplyUserName())){
+
+				if (!StringUtils.isEmpty(process.getApplyUserName())) {
 					hql += " and t.process.applyUser.name like :username";
-					params.put("username", "%%"+process.getApplyUserName()+"%%");
+					params.put("username", "%%" + process.getApplyUserName()
+							+ "%%");
 				}
 			}
 

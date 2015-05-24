@@ -206,7 +206,7 @@
 
 	function addFun() {
 		parent.$.modalDialog({
-			title : '投标保证金缴纳申请登记',
+			title : '投标保证金退还申请登记',
 			width : '815',
 			height : '535',
 			resizable : true,
@@ -236,6 +236,16 @@
 			parent.$.messager.alert('警告', '至少选中一条记录!');
 			return;
 		}
+		
+		var rows = dataGrid.datagrid('getSelections');
+		for(var i=0;i<rows.length;i++){
+			var state = rows[i].state;
+			if(state == 1){
+				parent.$.messager.alert('警告', '存在已经确认的记录，不能删除!');
+				return;
+			}
+		}
+		
 		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
 			if (b) {
 				progressLoad();
@@ -279,7 +289,7 @@
 		}
 		
 		parent.$.modalDialog({
-			title : '投标保证金缴纳申请修改',
+			title : '投标保证金退还申请修改',
 			width : '830',
 			height : '600',
 			href : '${ctx}/bidBond/editPage?id=' + id,
@@ -323,7 +333,7 @@
 			return;
 		}
 		parent.$.modalDialog({
-			title : '投标保证金缴纳确认',
+			title : '投标保证金退还确认',
 			width : '830',
 			height : '600',
 			href : '${ctx}/bidBond/handlerPage?id=' + id,
@@ -367,7 +377,7 @@
 		}
 		id = rows[0].id;
 		parent.$.modalDialog({
-			title : '投标保证金缴纳申请详情',
+			title : '投标保证金退还申请详情',
 			width : '820',
 			height : '600',
 			href : '${ctx}/bidBond/detailPage?id=' + id,
@@ -459,7 +469,7 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/bidBond/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>缴 号:</span> <input type="text" id="idNumber" /><span>项目名称:</span>
+				<span>退 号:</span> <input type="text" id="idNumber" /><span>项目名称:</span>
 				<input type="text" id="projectName" /> <a onclick="searchFun();"
 					href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a

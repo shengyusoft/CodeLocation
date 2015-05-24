@@ -95,11 +95,41 @@ function parseISO8601(dateStringInRange) {
 function showDate(format) {
 	if (isEmpty(format)) {
 		WdatePicker({
-			dateFmt : 'yyyy/MM/dd HH:mm:ss'
+			dateFmt : 'yyyy-MM-dd HH:mm:ss'
 		});
 	} else {
 		WdatePicker({
 			dateFmt : format
+		});
+	}
+}
+
+function showStart(format) {
+	if (isEmpty(format)) {
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			maxDate :'#F{$dp.$D(\'endDT\')||\'%y-%M-%d\'}'
+		});
+	} else {
+		WdatePicker({
+			dateFmt : format,
+			maxDate :'#F{$dp.$D(\'endDT\')||\'%y-%M-%d\'}'
+		});
+	}
+}
+
+function showEnd(format) {
+	if (isEmpty(format)) {
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			minDate : '#F{$dp.$D(\'startDT\')}',
+			maxDate : '%y-%M-%d'
+		});
+	} else {
+		WdatePicker({
+			dateFmt : format,
+			minDate : '#F{$dp.$D(\'startDT\')}',
+			maxDate : '%y-%M-%d'
 		});
 	}
 }

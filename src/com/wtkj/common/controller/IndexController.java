@@ -27,7 +27,6 @@ import com.wtkj.common.SessionInfo;
 import com.wtkj.common.model.Role;
 import com.wtkj.common.model.ShotcutInfoVo;
 import com.wtkj.common.model.SystemLogVo;
-import com.wtkj.common.model.Tuser;
 import com.wtkj.common.model.User;
 import com.wtkj.common.service.ResourceServiceI;
 import com.wtkj.common.service.RoleServiceI;
@@ -127,6 +126,12 @@ public class IndexController extends BaseController {
 		}
 		int state = getStateByCurrentUser(roleService, user);
 
+		if (state == 0) {
+			grid.setRows(null);
+			grid.setTotal(0l);
+			return grid;
+		}
+
 		List<Process> ps = new ArrayList<Process>();
 		List<ProcessVo> pvs = new ArrayList<ProcessVo>();
 
@@ -216,22 +221,22 @@ public class IndexController extends BaseController {
 			User user, HttpSession session, String vercode, boolean rememberPwd) {
 		Json j = new Json();
 		// validate login
-		// String vcode = session.getAttribute("randCode").toString();
-		//
-		// if (vcode == null) {
-		// j.setSuccess(false);
-		// j.setMsg("验证码过期");
-		// return j;
-		// }
-		// if (vercode == null || vercode.equals("")) {
-		// j.setSuccess(false);
-		// j.setMsg("验证码不能为空");
-		// return j;
-		// } else if (!vercode.equals(vcode)) {
-		// j.setSuccess(false);
-		// j.setMsg("验证码输入错误");
-		// return j;
-		// }
+		String vcode = session.getAttribute("randCode").toString();
+
+		if (vcode == null) {
+			j.setSuccess(false);
+			j.setMsg("验证码过期");
+			return j;
+		}
+		if (vercode == null || vercode.equals("")) {
+			j.setSuccess(false);
+			j.setMsg("验证码不能为空");
+			return j;
+		} else if (!vercode.equals(vcode)) {
+			j.setSuccess(false);
+			j.setMsg("验证码输入错误");
+			return j;
+		}
 
 		User sysuser = userService.login(user);
 		if (sysuser != null) {

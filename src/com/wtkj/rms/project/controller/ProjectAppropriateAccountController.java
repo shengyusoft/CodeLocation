@@ -122,8 +122,8 @@ public class ProjectAppropriateAccountController extends BaseController {
 		Json j = new Json();
 		try {
 			vo.setState(2);
-			if (vo.getActualDT() == null) {
-				vo.setActualDT(new Date());
+			if (vo.getToAccountDT() == null) {
+				vo.setToAccountDT(new Date());
 			}
 			projectAppropriateAccountService.edit(vo, request);
 			j.setSuccess(true);

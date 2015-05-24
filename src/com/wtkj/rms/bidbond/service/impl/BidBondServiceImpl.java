@@ -171,6 +171,7 @@ public class BidBondServiceImpl implements BidBondServiceI {
 			Tuser applier = userDao.get(Tuser.class, po.getApplier().getId());
 			vo.setApplierId(applier.getId());
 			vo.setApplierName(applier.getName());
+			vo.setApplierPhone(applier.getMobilePhone());
 		}
 
 		if (po.getHandler() != null) {

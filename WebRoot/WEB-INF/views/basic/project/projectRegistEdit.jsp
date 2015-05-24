@@ -133,7 +133,8 @@
 		    panelHeight:'auto',
 		    required:true,
 		    editable:true,//不可编辑，只能选择
-		    value:'--请选择--',
+		    defaultValue:'--请选择--',
+		    value:'${projectRegist.city.id}',
 		    onChange:function(city){
 		    	$('#county').combobox({
 			    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
@@ -142,7 +143,8 @@
 				    panelHeight:'auto',
 				    required:true,
 				    editable:true,//不可编辑，只能选择
-				    value:'--请选择--'
+				    defaultValue:'--请选择--',
+				    value:'${projectRegist.county.id}'
 				});
 	 		}
 	    	
@@ -150,8 +152,10 @@
 	   }
 	});
 	
+	var provice = $('#provice').combobox('getValue');
 	$('#city').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+provice,
+    	parentField : 'pid',
 	    valueField:'id', //值字段
 	    textField:'name', //显示的字段
 	    panelHeight:'auto',
@@ -161,8 +165,10 @@
 	    value:'${projectRegist.city.id}'
 	});
 	
+	var city = $('#city').combobox('getValue');
 	$('#county').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
+    	parentField : 'pid',
 	    valueField:'id', //值字段
 	    textField:'name', //显示的字段
 	    panelHeight:'auto',
@@ -182,6 +188,7 @@
 					<th>公司名称 &nbsp;</th>
 					<td>
 					<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input>
+					<input type="hidden" name="type" id="type" value="${projectRegist.type}"></input>
 					<select id="company" name="company.id" 
 						class="easyui-validatebox span2" style="width: 100%;">
 					</select></td>

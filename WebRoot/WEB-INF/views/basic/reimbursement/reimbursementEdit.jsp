@@ -85,41 +85,44 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="reimbursementEditForm" method="post" >
+		<form id="reimbursementEditForm" method="post">
 			<table class="grid">
 				<tr>
-					<th>时间范围 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input type="hidden" name="option" id="option" value="" />
-						<input type="hidden" name="id" value="${reimbursement.id}" />
-						<input type="hidden" name="process.id" value="${reimbursement.process_vo.id}" />
-						<input class="Wdate" data-options="required:true" type="text" name="startDT" value="${reimbursement.startDT}" id="startDT" style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
+					<th>时间范围 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input type="hidden" name="option" id="option" value="2" />
+						<input type="hidden" name="id" value="${reimbursement.id}" /> <input
+						type="hidden" name="process.id"
+						value="${reimbursement.process_vo.id}" /> 
+						<input class="Wdate"
+						data-options="required:true" type="text" name="startDT"
+						value="${reimbursement.startDT}" id="startDT"
+						style="width: 68%; height: 100%;" onfocus="showStart('yyyy-MM-dd')" />
 					</td>
-					<td>
-						<input class="Wdate" data-options="required:true" type="text" name="endDT" value="${reimbursement.endDT}" id="endDT"style="width: 98%; height: 100%;"onfocus="showDate('yyyy-MM-dd')" />
+					<td><input class="Wdate" data-options="required:true"
+						type="text" name="endDT" value="${reimbursement.endDT}" id="endDT"
+						style="width: 68%; height: 100%;" onfocus="showEnd('yyyy-MM-dd')" />
 					</td>
 				</tr>
 				<tr>
-					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<select id="province" name="province" class="easyui-validatebox span2" style="width: 140px;">
-					</select>
-					</td>
-					<td>
-						<select id="city" name="city" class="easyui-validatebox span2" style="width: 140px;">
-					</select>
-					</td>
-					<td>
-						<select id="place" name="place.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 140px;">
-					</select>
-					</td>
+					<th>地点 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="province" name="province"
+						class="easyui-validatebox span2" style="width: 140px;">
+					</select></td>
+					<td><select id="city" name="city"
+						class="easyui-validatebox span2" style="width: 140px;">
+					</select></td>
+					<td><select id="place" name="place.id"
+						data-options="required:true" class="easyui-validatebox span2"
+						validType="selectValueRequired" style="width: 140px;">
+					</select></td>
 				</tr>
 				<tr>
 					<th>工作事情&nbsp;</th>
-					<td colspan="4">
-						<textarea style="width: 100%" rows="5"name="workDetail" id="workDetail"> ${reimbursement.workDetail}
-						</textarea>
-					</td>
+					<td colspan="4"><textarea style="width: 100%" rows="5"
+							name="workDetail" id="workDetail"> ${reimbursement.workDetail}
+						</textarea></td>
 				</tr>
 				<tr>
 					<th>费用明细&nbsp;</th>
@@ -129,47 +132,55 @@
 				<tr>
 					<th>费用小计&nbsp;</th>
 					<td colspan="3">
-						<table title="费用小计" width="800" >
+						<table title="费用小计" width="800">
 							<tr>
 								<th width="80">交通费&nbsp;</th>
-								<td>
-									<input name="trafficFee" value="${reimbursement.trafficFee}" type="number" id="trafficFee" data-options="required:true"  style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="trafficFee"
+									value="${reimbursement.trafficFee}" type="number"
+									id="trafficFee" data-options="required:true" min="0"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">就餐费&nbsp;</th>
-								<td>
-									<input name="mealFee" value="${reimbursement.mealFee}" type="number" id="mealFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="mealFee" value="${reimbursement.mealFee}"
+									type="number" min="0" id="mealFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">办公费&nbsp;</th>
-								<td>
-									<input name="officeFee" value="${reimbursement.officeFee}" type="number" id="officeFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="officeFee"
+									value="${reimbursement.officeFee}" type="number" id="officeFee"
+									style="width: 100%; height: 100%" min="0"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">招待费&nbsp;</th>
-								<td>
-									<input name="receiveFee" value="${reimbursement.receiveFee}" type="number" id="receiveFee" style="width: 100%; height: 100%" class="easyui-validatebox span2"/>
-								</td>
+								<td><input name="receiveFee" min="0"
+									value="${reimbursement.receiveFee}" type="number"
+									id="receiveFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 							</tr>
 							<tr>
 								<th width="80">证章费&nbsp;</th>
-								<td>
-									<input name="badgeFee" value="${reimbursement.badgeFee}" type="number" id="badgeFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="badgeFee" min="0"
+									value="${reimbursement.badgeFee}" type="number" id="badgeFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">通讯费&nbsp;</th>
-								<td>
-									<input name="communicationFee" value="${reimbursement.communicationFee}" type="number" id="communicationFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="communicationFee" min="0"
+									value="${reimbursement.communicationFee}" type="number"
+									id="communicationFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">培训费&nbsp;</th>
-								<td>
-									<input name="trainFee" value="${reimbursement.trainFee}" type="number" id="trainFee" style="width: 100%; height: 100%" class="easyui-validatebox span2"/>
-								</td>
+								<td><input name="trainFee" min="0"
+									value="${reimbursement.trainFee}" type="number" id="trainFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">其它&nbsp;</th>
-								<td>
-									<input name="otherFee" value="${reimbursement.otherFee}" type="number" id="otherFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="otherFee" min="0"
+									value="${reimbursement.otherFee}" type="number" id="otherFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 							</tr>
-					</table>
+						</table>
 					</td>
 				</tr>
-				
+
 			</table>
 		</form>
 	</div>

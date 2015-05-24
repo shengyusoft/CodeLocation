@@ -47,20 +47,20 @@ public class ReimbursementController extends BaseController {
 	@Autowired
 	private DictionarytypeServiceI dictionarytypeService;
 
-	//根据不同的用户显示不同的页面
+	// 根据不同的用户显示不同的页面
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request) {
 		String reStr = "";
 		Long userId = getSessionInfo(request).getId();
 		User user = userService.get(userId);
-		if(user == null){
-			reStr= "/error";
+		if (user == null) {
+			reStr = "/error";
 		}
-		if(!StringUtils.isEmpty(user.getRoleNames())){
-			if(user.getRoleNames().indexOf("普通员工") >= 0){
-				reStr= "/basic/reimbursement/reimbursement";
-			}else{
-				reStr= "/basic/reimbursement/reimbursementAudit";
+		if (!StringUtils.isEmpty(user.getRoleNames())) {
+			if (user.getRoleNames().indexOf("普通员工") >= 0) {
+				reStr = "/basic/reimbursement/reimbursement";
+			} else {
+				reStr = "/basic/reimbursement/reimbursementAudit";
 			}
 		}
 		return reStr;
@@ -99,36 +99,24 @@ public class ReimbursementController extends BaseController {
 		return vo;
 	}
 
-	/*
-	 * private Reimbursement convert2Po(ReimbursementVo vo) { Reimbursement po =
-	 * new Reimbursement(); BeanUtils.copyProperties(vo, po); if
-	 * (vo.getProcess_vo() != null && vo.getProcess_vo().getId() != null) {
-	 * po.setProcess(processService.get(vo.getProcess_vo().getId())); }
-	 * 
-	 * if (vo.getProcess_vo().getApplyUserId() > 0) { User u =
-	 * userService.get(vo.getProcess_vo().getApplyUserId());
-	 * 
-	 * } return po; }
-	 */
-
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(HttpServletRequest request,ReimbursementVo vo, PageFilter ph) {
+	public Grid dataGrid(HttpServletRequest request, ReimbursementVo vo,
+			PageFilter ph) {
 		Grid grid = new Grid();
 		Long userId = getSessionInfo(request).getId();
 		User user = userService.get(userId);
-		
-		if(!StringUtils.isEmpty(user.getRoleNames())){
-			if(user.getRoleNames().indexOf("普通员工") >= 0){
-				grid.setRows(convert2Vos(reimbursementService.dataGrid(user,vo, ph)));
-				grid.setTotal(reimbursementService.count(user,vo, ph));
-				return grid;
-			}
+
+		if (!StringUtils.isEmpty(user.getRoleNames())) {
+			grid.setRows(convert2Vos(reimbursementService.dataGrid(user,
+					vo, ph)));
+			grid.setTotal(reimbursementService.count(user, vo, ph));
+			return grid;
 		}
-		
-		grid.setRows(convert2Vos(reimbursementService.dataGrid(null,vo, ph)));
-		grid.setTotal(reimbursementService.count(null,vo, ph));
-		
+
+		grid.setRows(convert2Vos(reimbursementService.dataGrid(null, vo, ph)));
+		grid.setTotal(reimbursementService.count(null, vo, ph));
+
 		return grid;
 	}
 
@@ -150,8 +138,10 @@ public class ReimbursementController extends BaseController {
 
 		if (reimbursement.getOption() == 0) {
 			return add(reimbursement, request);
-		} else {
+		} else if (reimbursement.getOption() == 1) {
 			return commit(reimbursement, request);
+		} else {
+			return edit(reimbursement, request);
 		}
 	}
 
@@ -230,10 +220,10 @@ public class ReimbursementController extends BaseController {
 				reimbursementService.edit(reimbursement, request);
 				// 审批不通过重新申请的情况
 				Process process = reimbursement.getProcess();
-				if(process.getId() != null){
+				if (process.getId() != null) {
 					process = processService.get(process.getId());
 				}
-				//process.setApplyUser(tuser);
+				// process.setApplyUser(tuser);
 				process.setArriveDT(new Date());
 				process.setState(ProcessStateConstant.BX_APPLYED);
 				processService.edit(process, request);
@@ -313,26 +303,27 @@ public class ReimbursementController extends BaseController {
 	@ResponseBody
 	public Json delete(String ids) {
 		Json j = new Json();
-		
+
 		if (StringUtils.isEmpty(ids)) {
 			j.setMsg("没有记录!");
 			j.setSuccess(true);
 			return j;
 		}
-		
+
 		String[] idArray = ids.split(",");
 		for (String id : idArray) {
 			Reimbursement rt = reimbursementService.get(Long.valueOf(id));
-			if(rt == null || rt.getProcess() == null || rt.getProcess().getState() == null){
+			if (rt == null || rt.getProcess() == null
+					|| rt.getProcess().getState() == null) {
 				continue;
 			}
-			if(rt.getProcess().getState() > 0){
+			if (rt.getProcess().getState() > 0) {
 				j.setMsg("选择记录中存在记录已经提交的，不可以删除！");
 				j.setSuccess(false);
 				return j;
 			}
 		}
-		
+
 		try {
 			// 级联删除流程信息
 			processService.deleteByDocIds(ids);
@@ -376,7 +367,7 @@ public class ReimbursementController extends BaseController {
 		return j;
 	}
 
-	//查看那流程详情
+	// 查看那流程详情
 	@RequestMapping("/detailPage")
 	public String detailPage(HttpServletRequest request, Long id) {
 		Reimbursement reimbursement = reimbursementService.get(id);
@@ -385,8 +376,8 @@ public class ReimbursementController extends BaseController {
 		}
 		return "/basic/reimbursement/reimbursementDetail";
 	}
-	
-	//查看申请详情
+
+	// 查看申请详情
 	@RequestMapping("/detailPage2")
 	public String detailPage2(HttpServletRequest request, Long id) {
 		Reimbursement reimbursement = reimbursementService.get(id);
@@ -505,6 +496,9 @@ public class ReimbursementController extends BaseController {
 		Long userId = getSessionInfo(request).getId();
 		user = userService.get(userId);
 		Process po = processService.get(vo.getId());
+		if (!StringUtils.isEmpty(vo.getRemark())) {
+			po.setRemark(vo.getRemark());
+		}
 
 		if (user == null) {
 			j.setMsg("办理人为空,请重新登录!");
@@ -546,11 +540,10 @@ public class ReimbursementController extends BaseController {
 			j.setSuccess(true);
 			j.setMsg("审批成功！");
 		} catch (Exception e) {
+			j.setSuccess(false);
 			j.setMsg(e.getMessage());
 		}
 
-		j.setSuccess(false);
-		j.setMsg("审批失败！");
 		return j;
 	}
 

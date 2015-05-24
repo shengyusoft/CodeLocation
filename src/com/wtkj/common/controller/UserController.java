@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -97,6 +98,13 @@ public class UserController extends BaseController {
 			j.setMsg("用户名已存在!");
 		}else{
 			try {
+				if(!StringUtils.isEmpty(user.getMobilePhone())){
+					user.setLoginname(user.getMobilePhone());
+				}else{
+					j.setSuccess(false);
+					j.setMsg("手机号码不能为空!");
+					return j;
+				}
 				userService.add(user);
 				j.setSuccess(true);
 				j.setMsg("添加成功！");
@@ -141,6 +149,13 @@ public class UserController extends BaseController {
 	public Json edit(User user) {
 		Json j = new Json();
 		try {
+			if(!StringUtils.isEmpty(user.getMobilePhone())){
+				user.setLoginname(user.getMobilePhone());
+			}else{
+				j.setSuccess(false);
+				j.setMsg("手机号码不能为空!");
+				return j;
+			}
 			userService.edit(user);
 			j.setSuccess(true);
 			j.setMsg("编辑成功！");

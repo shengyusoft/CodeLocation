@@ -134,6 +134,11 @@
 				title : '其他费',
 				align : 'center',
 				field : 'otherFee'
+			}, {
+				width : '80',
+				title : '合计',
+				align : 'center',
+				field : 'total',
 			} ] ],
 
 			toolbar : '#toolbar'
@@ -145,7 +150,6 @@
 		//获取Datagride的列  
 		var rows = $('#dataGrid').datagrid('getRows');
 		var dop = $("#dataGrid").datagrid("options");
-		debugger;
 		
 		var frozenColumns = dop.frozenColumns[0];
 		var columns = dop.columns;
@@ -279,7 +283,7 @@
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('提示', '没有可编辑对象!');
+			parent.$.messager.alert('提示', '没有可编辑对象111!');
 			return;
 		}
 
@@ -305,13 +309,14 @@
 					href : '${ctx}/reimbursement/editPage?id=' + id,
 					buttons : [
 							{
-								text : '编辑',
+								text : '编辑1',
 								handler : function() {
 									//传入后台区分是保存还是申请
+									debugger;
 									parent.$.modalDialog.openner_dataGrid = dataGrid;
+									debugger;
 									parent.$.modalDialog.handler
-											.find('#option').val(0);
-									parent.$.modalDialog.type = 0;
+											.find('#option').val(2);
 									var f = parent.$.modalDialog.handler
 											.find('#reimbursementEditForm');
 									f.submit();
@@ -325,7 +330,6 @@
 											.find('#option').val(1);
 									var f = parent.$.modalDialog.handler
 											.find('#reimbursementEditForm');
-									parent.$.modalDialog.type = 1;
 									f.submit();
 								}
 							},
@@ -425,7 +429,7 @@
 				test="${fn:contains(sessionInfo.resourceList, '/reimbursement/edit')}">
 				<a onclick="editFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_edit'">编辑</a>
+					data-options="plain:true,iconCls:'icon_toolbar_edit'">编辑1</a>
 			</c:when>
 			<c:otherwise>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
@@ -475,11 +479,9 @@
 			</c:otherwise>
 		</c:choose>
 		
-		
-		
-		<a onclick="ExporterExcel();" href="javascript:void(0);"
+		<!-- <a onclick="ExporterExcel();" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出excel</a>
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出excel</a> -->
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
 			<div id="searchbar" class="search-toolbar">

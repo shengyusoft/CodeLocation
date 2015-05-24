@@ -163,7 +163,7 @@
 			title : '项目登记',
 			width : 750,
 			height : 490,
-			href : '${ctx}/projectRegist/addPage',
+			href : '${ctx}/projectRegist/addPage?type=0',
 			buttons : [ {
 				text : '添加',
 				handler : function() {

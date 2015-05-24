@@ -34,6 +34,7 @@ public class ReimbursementVo implements Serializable {
 	private Double trainFee;// 培训费
 	private Double otherFee;// 其他费
 	private ProcessVo process_vo;
+	private Double total;
 
 	public Long getId() {
 		return id;
@@ -161,6 +162,21 @@ public class ReimbursementVo implements Serializable {
 
 	public void setOtherFee(Double otherFee) {
 		this.otherFee = otherFee;
+	}
+
+	public Double getTotal() {
+		return parseValue(this.trafficFee) + parseValue(this.mealFee)
+				+ parseValue(this.officeFee) + parseValue(this.receiveFee)
+				+ parseValue(this.badgeFee) + parseValue(this.communicationFee)
+				+ parseValue(this.trafficFee) + parseValue(this.otherFee);
+	}
+
+	private Double parseValue(Double fee) {
+		return fee == null ? 0 : fee;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 }

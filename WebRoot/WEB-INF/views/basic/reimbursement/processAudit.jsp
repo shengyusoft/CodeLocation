@@ -18,6 +18,8 @@
 				result = $.parseJSON(result);
 				if (result.success) {
 					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
+					parent.$.messager.alert('提示',result.msg,'success');
+					debugger;
 					var grid = parent.$.modalDialog.openner_dataGrid;
 					if(!isEmpty(grid)){
 						grid.datagrid('reload');

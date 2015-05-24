@@ -143,7 +143,12 @@
 				title : '其他费',
 				align : 'center',
 				field : 'otherFee'
-			} ] ],
+			}, {
+				width : '80',
+				title : '合计',
+				align : 'center',
+				field : 'total',
+			}  ] ],
 
 			toolbar : '#toolbar'
 		});
@@ -277,8 +282,7 @@
 									//传入后台区分是保存还是申请
 									parent.$.modalDialog.openner_dataGrid = dataGrid;
 									parent.$.modalDialog.handler
-											.find('#option').val(0);
-									parent.$.modalDialog.type = 0;
+											.find('#option').val(2);
 									var f = parent.$.modalDialog.handler
 											.find('#reimbursementEditForm');
 									f.submit();

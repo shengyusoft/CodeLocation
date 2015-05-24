@@ -85,87 +85,90 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="reimbursementAddForm" method="post" >
+		<form id="reimbursementAddForm" method="post">
 			<table class="grid">
 				<tr>
-					<th>时间范围 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input type="hidden" name="option" id="option" value="" />
-						<input class="easyui-datebox" dateFormat="yyyy-MM-dd" data-options="required:true" name="startDT" id="startDT" />
-					</td>
-					<td>
-						<input class="easyui-datebox" dateFormat="yyyy-MM-dd" data-options="required:true" type="text" name="endDT" id="endDT" />
-					</td>
+					<th>时间范围 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input type="hidden" name="option" id="option" value="" />
+						<input class="Wdate" type="text" name="startDT" id="startDT"
+						style="width: 68%; height: 100%;" data-options="required:true"
+						onfocus="showStart('yyyy-MM-dd')" /></td>
+					<td><input class="Wdate" type="text" name="endDT" id="endDT"
+						style="width: 68%; height: 100%;" data-options="required:true"
+						onfocus="showEnd('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
-					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<select id="province" data-options="required:true" name="province" class="easyui-validatebox span2" style="width: 140px;">
-					</select>
-					</td>
-					<td>
-						<select id="city" name="city" class="easyui-validatebox span2" style="width: 140px;">
-					</select>
-					</td>
-					<td>
-						<select id="place" name="place.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 140px;">
-					</select>
-					</td>
+					<th>地点 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="province" data-options="required:true"
+						name="province" class="easyui-validatebox span2"
+						style="width: 140px;">
+					</select></td>
+					<td><select id="city" name="city"
+						class="easyui-validatebox span2" style="width: 140px;">
+					</select></td>
+					<td><select id="place" name="place.id"
+						data-options="required:true" class="easyui-validatebox span2"
+						validType="selectValueRequired" style="width: 140px;">
+					</select></td>
 				</tr>
 				<tr>
 					<th>工作事情&nbsp;</th>
-					<td colspan="4"><textarea  class="easyui-validatebox" style="width: 100%" rows="5"
-							name="workDetail" data-options="required:true" id="workDetail"></textarea></td>
+					<td colspan="4"><textarea class="easyui-validatebox"
+							style="width: 100%" rows="5" name="workDetail"
+							data-options="required:true" id="workDetail"></textarea></td>
 				</tr>
 				<tr>
 					<th>费用明细&nbsp;</th>
-					<td colspan="4"><textarea  class="easyui-validatebox" style="width: 100%" rows="5"
-							name="costDetail" data-options="required:true" id="costDetail"></textarea></td>
+					<td colspan="4"><textarea class="easyui-validatebox"
+							style="width: 100%" rows="5" name="costDetail"
+							data-options="required:true" id="costDetail"></textarea></td>
 				</tr>
 				<tr>
 					<th>费用小计&nbsp;</th>
 					<td colspan="3">
-						<table title="费用小计" width="800" >
+						<table title="费用小计" width="800">
 							<tr>
 								<th width="80">交通费&nbsp;</th>
-								<td>
-									<input name="trafficFee" type="number" id="trafficFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="trafficFee" min="0" value="0" type="number" id="trafficFee"
+									style="width: 100%; height: 100%" min="0" value="0"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">就餐费&nbsp;</th>
-								<td>
-									<input name="mealFee" type="number" id="mealFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="mealFee"min="0" value="0" type="number" id="mealFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">办公费&nbsp;</th>
-								<td>
-									<input name="officeFee" type="number" id="officeFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="officeFee" min="0" value="0" type="number" id="officeFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">招待费&nbsp;</th>
-								<td>
-									<input name="receiveFee" type="number" id="receiveFee" style="width: 100%; height: 100%" class="easyui-validatebox span2"/>
-								</td>
+								<td><input name="receiveFee" min="0" value="0" type="number" id="receiveFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 							</tr>
 							<tr>
 								<th width="80">证章费&nbsp;</th>
-								<td>
-									<input name="badgeFee" type="number" id="badgeFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="badgeFee" min="0" value="0" type="number" id="badgeFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">通讯费&nbsp;</th>
-								<td>
-									<input name="communicationFee" type="number" id="communicationFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="communicationFee" min="0" value="0" type="number"
+									id="communicationFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">培训费&nbsp;</th>
-								<td>
-									<input name="trainFee" type="number" id="trainFee" style="width: 100%; height: 100%" class="easyui-validatebox span2"/>
-								</td>
+								<td><input name="trainFee" min="0" value="0" type="number" id="trainFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 								<th width="80">其它&nbsp;</th>
-								<td>
-									<input name="otherFee" type="number" id="otherFee" style="width: 100%; height: 100%" class="easyui-validatebox span2" />
-								</td>
+								<td><input name="otherFee" min="0" value="0" type="number" id="otherFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 							</tr>
-					</table>
+						</table>
 					</td>
 				</tr>
-				
+
 			</table>
 		</form>
 	</div>

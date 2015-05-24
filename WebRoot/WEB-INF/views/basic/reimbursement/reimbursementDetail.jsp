@@ -56,10 +56,13 @@
 			striped : true,
 			fitColumns : true,
 			rownumbers : true,
+			pagination : true,
 			nowrap : true,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
+			pageSize : 5,
+			pageList : [ 10, 15 ],
 			queryParams : {
 				'process.id' : processId
 			},
@@ -90,20 +93,25 @@
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',fit:true,collapsed:false"
-		style="overflow:hidden; border: none">
-		<div style="position: relative; padding: 0px; margin: 0px">
+		style="overflow: hidden; border: none">
+		<div title="流程图"
+			style="position: relative; padding: 0px; margin: 0px; border-bottom: 1px">
 			<img src="${ctx}/style/images/flow/flow_bx.png" />
 			<div id='process' style="position: absolute; border: 2px solid red;"></div>
 		</div>
-		<div style="color: green;size: 18px;font-size: 18px;">历史记录</div>
-		<table id="dataGrid" data-options="fit:true,border:false,scroll:true" style="overflow-y: scroll;">
-			<tr>
-				<td><input type="hidden" name="processId" id="processId"
-					value="${reimbursement.process_vo.id}">
-					<input type="hidden" name="state" id="state"
-					value="${reimbursement.process_vo.state}"></td>
-			</tr>
-		</table>
+		<div style="color: green; size: 18px; font-size: 18px;">历史记录</div>
+		<div data-options="fit:true,border:true"
+			style="overflow: auto; height: 180px">
+			<table id="dataGrid" data-options="fit:true,border:false">
+				<tr>
+					<td><input type="hidden" name="processId" id="processId"
+						value="${reimbursement.process_vo.id}"> <input
+						type="hidden" name="state" id="state"
+						value="${reimbursement.process_vo.state}"></td>
+				</tr>
+			</table>
+		</div>
+
 	</div>
 
 </div>

@@ -302,33 +302,6 @@
 			}
 		});
 	}
-	
-	function confirmFun() {
-		var selected = getSelected();
-		if (isEmpty(selected)) {
-			parent.$.messager.alert('警告', '至少选中一条记录!');
-			return;
-		}
-		parent.$.messager.confirm('询问', '对选择的工程款拨付加以确认？', function(b) {
-			if (b) {
-				progressLoad();
-				$.post('${ctx}/projectAppropriateReg/confirm', {
-					ids : selected
-				}, function(result) {
-					if (result.success) {
-						parent.$.messager.alert('提示', result.msg, 'info');
-						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
-						removeSelectedRow(dataGrid);
-						dataGrid.datagrid('reload');
-					} else {
-						parent.$.messager.alert('警告', result.msg, 'warning');
-					}
-					progressClose();
-				}, 'JSON');
-			}
-		});
-	}
-	
 
 	function handlerFun() {
 		var id = null;
@@ -349,15 +322,7 @@
 			height : 550,
 			//height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/handlerPage?id=' + id,
-			buttons : [ /* {
-				text : '编辑',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
-							.find('#projectAppropriateRegEditForm');
-					f.submit();
-				}
-			}, */ {
+			buttons : [ {
 				text : '退出',
 				handler : function() {
 					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好

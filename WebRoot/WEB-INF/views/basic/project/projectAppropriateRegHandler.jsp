@@ -114,8 +114,8 @@
 
 		parent.$.modalDialogTwo({
 			title : '工程款到帐及拨付详情',
-			width : document.body.clientWidth*0.75,
-			height : 400,
+			width : 700,
+			height : 450,
 			href : '${ctx}/projectAppropriateAccount/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -131,37 +131,31 @@
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可编辑对象!');
+			parent.$.messager.alert('警告', '没有可处理对象!');
 			return;
 		}
 
 		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			parent.$.messager.alert('警告', '只能对一条记录处理!');
 			return;
 		}
 
 		id = rows[0].id;
 
 		parent.$.modalDialogTwo({
-			title : '会计确认',
-			width : document.body.clientWidth*0.75,
-			height : 400,
+			title : '工程款到帐及拨付处理',
+			width : 700,
+			height : 450,
 			href : '${ctx}/projectAppropriateAccount/handlerPage?id=' + id,
 			buttons : [ {
-				text : '确认',
+				text : '编辑',
 				handler : function() {
 					parent.$.modalDialogTwo.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
 					var f = parent.$.modalDialogTwo.handler
-							.find('#projectAppropriateAccountEditForm');
+							.find('#projectAppropriateAccountHandlerForm');
 					f.submit();
 				}
-			}, {
-				text : '退出',
-				handler : function() {
-					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialogTwo.handler.dialog('close');
-				}
-			}]
+			} ]
 		});
 	}
 	

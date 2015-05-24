@@ -267,6 +267,15 @@
 			parent.$.messager.alert('警告', '至少选中一条记录!');
 			return;
 		}
+		
+		var rows = dataGrid.datagrid('getSelections');
+		for(var i=0;i<rows.length;i++){
+			var state = rows[i].state;
+			if(state == 1){
+				parent.$.messager.alert('警告', '存在已经确认的记录，不能删除!');
+				return;
+			}
+		}
 		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
 			if (b) {
 				progressLoad();

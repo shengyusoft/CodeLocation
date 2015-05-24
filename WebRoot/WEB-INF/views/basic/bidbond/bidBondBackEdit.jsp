@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(function() {
-		$('#bidBondPayEditForm').form({
+		$('#bidBondBackEditForm').form({
 			url : '${pageContext.request.contextPath}/bidBond/edit',
 			onSubmit : function() {
 				progressLoad();
@@ -30,7 +30,7 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="bidBondPayEditForm" method="post"
+		<form id="bidBondBackEditForm" method="post"
 			style="width: 800px; height: 330px;">
 			<table class="grid">
 				<tr>
