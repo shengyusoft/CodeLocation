@@ -61,7 +61,7 @@
 				field : 'registName'
 			}, {
 				width : '120',
-				title : '预定费用',
+				title : '预定费用（元）',
 				sortable : true,
 				align : 'center',
 				field : 'bookFee'
