@@ -99,14 +99,14 @@
 				field : 'bidPrice'
 			}, {
 				width : '120',
-				title : '管理费比例',
+				title : '管理费比例(%)',
 				rowspan : 2,
 				sortable : true,
 				align : 'center',
 				field : 'managerFeeRate'
 			}, {
 				width : '120',
-				title : '管理费数额',
+				title : '管理费数额(元)',
 				rowspan : 2,
 				sortable : true,
 				align : 'center',
@@ -120,7 +120,7 @@
 				field : 'bidDT'
 			}, {
 				width : '90',
-				title : '合同工期',
+				title : '合同工期(天)',
 				rowspan : 2,
 				align : 'center',
 				field : 'contractDuration'
