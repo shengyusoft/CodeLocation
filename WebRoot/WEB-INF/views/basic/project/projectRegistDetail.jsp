@@ -128,7 +128,7 @@
 	    required:true,
 	    editable:true,//不可编辑，只能选择
 	    defaultValue:'--请选择--',
-	    value:'${projectRegist.city.id}'
+	    value:'${projectRegist.city.name}'
 	});
 	
 	var city = $('#city').combobox('getValue');
@@ -141,9 +141,10 @@
 	    required:true,
 	    editable:true,//不可编辑，只能选择
 	    defaultValue:'--请选择--',
-	    value:'${projectRegist.county.id}'
+	    value:'${projectRegist.county.name}'
 	});
-	
+	//document.getElementById('city').innerHtml='ss';
+	//alert();
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""

@@ -177,7 +177,8 @@
 	    defaultValue:'--请选择--',
 	    value:'${projectRegist.county.id}'
 	});
-	
+	//alert('${projectRegist.city.id}');
+	//document.getElementById('city').value=;
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""

@@ -24,7 +24,7 @@
 			nowrap : true,
 			idField : 'id',
 			sortName : 'id',
-			sortOrder : 'asc',
+			sortOrder : 'desc',
 			pageSize : 10,
 			view: detailview,   
 		    detailFormatter:function(index,row){   
