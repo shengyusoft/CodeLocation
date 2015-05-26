@@ -48,7 +48,7 @@
 			</tr>
 			<tr>
 				<th>地点 &nbsp;</th>
-				<td><input name="processName" value="${reimbursement.placeName}"
+				<td><input name="processName" value="${reimbursement.place}"
 					type="text" id="processName" style="width: 100%; height: 100%"
 					class="easyui-validatebox span2" readonly="readonly" /></td>
 			</tr>

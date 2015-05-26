@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserServiceI {
 		t.setRoles(new HashSet<Trole>(roles));
 		t.setSex(user.getSex());
 		t.setUsertype(user.getUsertype());
-		if (user.getPassword() != null && !"".equals(user.getPassword())) {
+		if (!StringUtils.isEmpty(user.getPassword()) && !"********".equals(user.getPassword())) {
 			t.setPassword(MD5Util.md5(user.getPassword()));
 		}
 		userDao.update(t);

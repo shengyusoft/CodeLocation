@@ -123,7 +123,6 @@
 	}
 	
 	function searchFun() {
-		debugger;
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
 		queryParams.st = "";
@@ -163,7 +162,7 @@
 	
 	function addFun() {
 		parent.$.modalDialog({
-			title : '项目登记登记',
+			title : '项目开标登记',
 			width : 750,
 			height : 490,
 			href : '${ctx}/projectRegist/addPage?type=1',
@@ -221,7 +220,7 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '项目登记编辑',
+			title : '项目开标登记编辑',
 			width : 750,
 			height : 490,
 			href : '${ctx}/projectRegist/editPage?id=' + id,
@@ -253,7 +252,7 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '项目登记详情',
+			title : '项目开标登记详情',
 			width : '815',
 			height : '500',
 			href : '${ctx}/projectRegist/detailPage?id=' + id,
@@ -332,7 +331,7 @@
 			<table>
 				<tr>
 					
-					<th>项目名称名称:</th>
+					<th>项目名称:</th>
 					<td><input type="text" id="projectName"> </td>
 					<th>时间段:</th>
 					<td>
