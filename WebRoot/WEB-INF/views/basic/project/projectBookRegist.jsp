@@ -58,7 +58,7 @@
 				title : '登记人',
 				sortable : true,
 				align : 'center',
-				field : 'registName'
+				field : 'registerName'
 			}, {
 				width : '120',
 				title : '预定费用（元）',

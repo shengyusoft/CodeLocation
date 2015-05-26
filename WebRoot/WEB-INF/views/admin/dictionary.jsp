@@ -134,11 +134,16 @@
 	});
 	
 	function addFun() {
-		parent.$.modalDialog({
+		var selectedId = '';
+		var selectedTree = dictionarytypeTree.tree('getSelected');
+		if(!isEmpty(selectedTree)/*  && !isEmpty(selectedTree.pid) */){
+			selectedId = dictionarytypeTree.tree('getSelected').id;
+		}
+		this.$.modalDialog({
 			title : '添加',
 			width : 500,
 			height : 300,
-			href : '${ctx}/dictionary/addPage',
+			href : '${ctx}/dictionary/addPage?id='+selectedId,
 			buttons : [ {
 				text : '添加',
 				handler : function() {
@@ -148,6 +153,9 @@
 				}
 			} ]
 		});
+		
+		
+		
 	}
 	function addType() {
 		parent.$.modalDialog({
@@ -249,7 +257,7 @@
 	<div data-options="region:'center',fit:true,border:false" title="字典列表">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
-	<div data-options="region:'west',border:false,split:true" title="字典类别" style="width:200px;overflow: hidden; ">
+	<div data-options="region:'west',border:false,split:true" title="字典类别" style="width:200px;overflow: auto; ">
 		<a onclick="addType();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon_add'">添加</a>
 		<a onclick="editType();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon_edit'">编辑</a>
 		<table id="dictionarytypeTree" style="width:180px;margin: 10px 10px 10px 10px"></table>

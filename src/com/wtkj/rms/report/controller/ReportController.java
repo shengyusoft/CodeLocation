@@ -1,6 +1,8 @@
 package com.wtkj.rms.report.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,8 +56,7 @@ public class ReportController extends BaseController {
 	public String manager(HttpServletRequest request) {
 		return "/basic/report/taskRecord";
 	}
-	
-	
+
 	@RequestMapping("/order")
 	public ModelAndView order(HttpServletRequest request, Long orderId,
 			String title) throws IOException {
@@ -92,7 +93,6 @@ public class ReportController extends BaseController {
 		return new ModelAndView("orderReport", parameterMap);
 	}
 
-
 	/**
 	 * 投标保证金缴纳
 	 * 
@@ -101,17 +101,18 @@ public class ReportController extends BaseController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/bidBondPay")
-	public ModelAndView bidBondPay(long id,int type,HttpServletRequest request) throws IOException {
+	public ModelAndView bidBondPay(long id, int type, HttpServletRequest request)
+			throws IOException {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		if(type == 0){
+		if (type == 0) {
 			parameterMap.put("format", "pdf");
-		}else{
+		} else {
 			parameterMap.put("format", "xls");
 		}
 		parameterMap.put("id", id);
 		return new ModelAndView("bidBondPay", parameterMap);
 	}
-	
+
 	/**
 	 * 投标保证金退还
 	 * 
@@ -120,11 +121,12 @@ public class ReportController extends BaseController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/bidBondBack")
-	public ModelAndView bidBondBack(long id,int type,HttpServletRequest request) throws IOException {
+	public ModelAndView bidBondBack(long id, int type,
+			HttpServletRequest request) throws IOException {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		if(type == 0){
+		if (type == 0) {
 			parameterMap.put("format", "pdf");
-		}else{
+		} else {
 			parameterMap.put("format", "xls");
 		}
 		parameterMap.put("id", id);
@@ -132,16 +134,38 @@ public class ReportController extends BaseController {
 	}
 
 	/**
-	 * 销售报表
+	 * 员工报销报表
 	 * 
 	 * @param request
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping("/sale")
-	public ModelAndView sale(HttpServletRequest request) throws IOException {
+	@RequestMapping("/reimbursement")
+	public ModelAndView reimbursement(int type, Date startDT, Date endDT,
+			String applier, String place, HttpServletRequest request)
+			throws IOException {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		parameterMap.put("format", "pdf");
-		return new ModelAndView("saleReport", parameterMap);
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+
+		try {
+			parameterMap.put(
+					"startDT",
+					startDT == null ? DateUtil
+							.convertStringToDate("1900-01-01") : startDT);
+			parameterMap.put("endDT",
+					endDT == null ? DateUtil.convertStringToDate("5000-01-01")
+							: endDT);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		parameterMap.put("applyer", applier + "%%");
+		parameterMap.put("place", place + "%%");
+		return new ModelAndView("reimbursement", parameterMap);
 	}
+
 }

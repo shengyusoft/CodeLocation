@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -57,7 +58,11 @@ public class DictionaryController extends BaseController {
 	}
 	
 	@RequestMapping("/addPage")
-	public String addPage(HttpServletRequest request) {
+	public String addPage(HttpServletRequest request,String id) {
+		if(!StringUtils.isEmpty(id)){
+			request.setAttribute("typeId", id);
+		}
+		
 		request.setAttribute("stateList", GlobalConstant.statelist);
 		return "/admin/dictionaryAdd";
 	}

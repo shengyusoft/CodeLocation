@@ -157,8 +157,13 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 			}
 
 			if (r.getStartDT() != null) {
-				hql += " and t.startDT > :startDT";
+				hql += " and t.startDT >= :startDT";
 				params.put("startDT", r.getStartDT());
+			}
+			
+			if (r.getEndDT() != null) {
+				hql += " and t.endDT <= :endDT";
+				params.put("endDT", r.getEndDT());
 			}
 		}
 

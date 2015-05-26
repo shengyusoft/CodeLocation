@@ -158,9 +158,13 @@
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.place = "";
+		queryParams.startDT = "";
+		queryParams.endDT = "";
 		queryParams['process_vo.applyUserName'] = "";
 
 		var name = $('#place').val();
+		var startDT = $('#startDT').val();
+		var endDT = $('#endDT').val();
 		if (!isEmpty(name)) {
 			queryParams.place = name;
 		}
@@ -169,6 +173,18 @@
 		if (!isEmpty(applyUserName)) {
 			queryParams['process_vo.applyUserName'] = applyUserName;
 		}
+		
+		if(isEmpty(startDT)){
+			startDT = '1900-01-01';
+		}
+		
+		if(isEmpty(endDT)){
+			endDT = '5000-01-01';
+		}
+		
+		queryParams.startDT = startDT;
+		queryParams.endDT = endDT;
+		
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
@@ -419,6 +435,30 @@
 			} ]
 		});
 	}
+	
+	function printFun(type) {
+		var startDT = $('#startDT').val();
+		var endDT = $('#endDT').val();
+		var applier = $('#applyUserName').val();
+		var place = $('#place').val();
+		var url = ctxPath + "/report/reimbursement?type="+type+"&&startDT="+startDT+"&&endDT="+endDT+"&&applier="+applier+"&&place="+place;
+		if(type == 0){
+			var iWidth = 1000; //弹出窗口的宽度;
+			var iHeight = 800; //弹出窗口的高度;
+			//获得窗口的垂直位置
+			var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+			//获得窗口的水平位置
+			var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+			/* var tmp = window.open(url, "_blank", "width=1000,height=800,top=" + iTop
+					+ ",left=" + iLeft); */
+			
+			var tmp = window.open (url,'newwindow','width='+(window.screen.availWidth-10)+',height='+(window.screen.availHeight-30)+ ',top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+			tmp.focus();
+		}else{
+			var tmp = window.open(url);
+			tmp.focus();
+		}
+	}
 </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
@@ -466,7 +506,7 @@
 					color="gray">删除</font> </a>
 			</c:otherwise>
 		</c:choose>
-		
+
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/reimbursement/detail2')}">
@@ -494,7 +534,7 @@
 					color="gray">查看流程</font> </a>
 			</c:otherwise>
 		</c:choose>
-		
+
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/reimbursement/handlerPage')}">
@@ -509,18 +549,36 @@
 			</c:otherwise>
 		</c:choose>
 
-		<c:if
-			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
-			<div id="searchbar" class="search-toolbar">
-				<span>地点:</span> <input type="text" id="place">
-				<span>申请人:</span> <input type="text" id="applyUserName">
-				 <a onclick="searchFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-			</div>
+		<a onclick="printFun(0);" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览</a> <a
+			onclick="printFun(1);" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
+
+		<c:if test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
+			<table>
+				<tr>
+					<th>地点:</th>
+					<td><input type="text" id="place"></td>
+					<th>申请人:</th>
+					<td><input type="text" id="applyUserName"></td>
+					<td><input class="Wdate" data-options="required:true"
+						type="text" name="startDT" id="startDT"
+						style="width: 150px;"
+						onfocus="showStart('yyyy-MM-dd')" /> <input class="Wdate"
+						data-options="required:true" type="text" name="endDT" id="endDT"
+						style="width: 150px;" onfocus="showEnd('yyyy-MM-dd')" />
+					</td>
+					<th>时间范围:</th>
+					<td><a onclick="searchFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+						onclick="clearFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
+				</tr>
+			</table>
 		</c:if>
 	</div>
 </body>

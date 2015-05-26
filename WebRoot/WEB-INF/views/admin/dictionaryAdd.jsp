@@ -10,7 +10,9 @@
 			lines : true,
 			autoScroll : true,
 			required : true,
-			panelHeight : 500
+			panelHeight : 500,
+			value : '${typeId}',
+			defaultValue : '--请选择--'
 		});
 
 		$('#dictionaryAddForm').form({

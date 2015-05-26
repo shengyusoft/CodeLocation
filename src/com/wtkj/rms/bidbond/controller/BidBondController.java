@@ -117,7 +117,7 @@ public class BidBondController extends BaseController {
 	private String generateIdNum(int type) {
 		long number = bidBondService.countAll(type);// 获取缴纳申请总数
 		String dateStr = DateUtil.convertDateToString(new Date(), "yyyyMMdd");
-		String nstr = String.format("%04d", number);// 4位数补零
+		String nstr = String.format("%04d", number+1);// 4位数补零
 		return dateStr + nstr;
 	}
 

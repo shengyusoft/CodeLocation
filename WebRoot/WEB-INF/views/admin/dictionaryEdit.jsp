@@ -4,6 +4,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
 	$(function() {
+		
 		$('#pid').combotree({
 			url : '${ctx}/dictionarytype/tree',
 			parentField : 'pid',

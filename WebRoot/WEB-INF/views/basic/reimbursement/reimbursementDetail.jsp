@@ -57,7 +57,7 @@
 			fitColumns : true,
 			rownumbers : true,
 			pagination : true,
-			nowrap : true,
+			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
