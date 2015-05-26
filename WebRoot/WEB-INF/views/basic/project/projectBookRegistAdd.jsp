@@ -26,6 +26,10 @@
 			}
 		});
 	});
+	
+	var d = new Date();
+	d = d.format('yyyy-MM-dd hh:mm:ss');
+	$('#registDT').val(d);	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -56,9 +60,20 @@
 						class="easyui-validatebox span2" /></td>
 				</tr>
 				<tr>
+					<th>登记人&nbsp;</th>
+					<td><input name="bidder"
+						value="${sessionInfo.name}" type="text" disabled 
+						id="registerName" style="width: 100%; height: 100%"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
+					<th>登记时间 &nbsp;</th>
+					<td><input class="Wdate" type="text" name="registDT" id="registDT" 
+							style="width: 100%;height:100%" disabled
+							onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
+				</tr>
+				<tr>
 					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><textarea style="width: 100%" rows="5"
+					<td colspan="3"><textarea style="width: 100%" rows="4"
 							name="qualifyRequirement"></textarea></td>
 				</tr>
 				<tr>
@@ -66,6 +81,7 @@
 					<td colspan="3"><textarea style="width: 100%" rows="5"
 							name="remark"></textarea></td>
 				</tr>
+				
 			</table>
 		</form>
 	</div>

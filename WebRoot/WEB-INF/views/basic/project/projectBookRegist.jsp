@@ -11,7 +11,7 @@
 	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-groupview.js"
 	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
-<title>项目开标登记</title>
+<title>项目预定登记</title>
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
@@ -201,7 +201,7 @@
 		id = rows[0].id;
 
 		parent.$.modalDialog({
-			title : '项目预订登记详情',
+			title : '项目预订详情',
 			width : 750,
 			height : 400,
 			href : '${ctx}/projectBookRegist/detailPage?id=' + id,
