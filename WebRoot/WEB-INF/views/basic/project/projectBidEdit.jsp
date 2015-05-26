@@ -189,7 +189,7 @@
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th>管理费&nbsp;<label
+					<th>管理费(%)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="manage_cost" style="width: 100%; height: 100%" value="${projectBid.manage_cost}"
 						type="text" id="manage_cost" class="easyui-validatebox span2" 

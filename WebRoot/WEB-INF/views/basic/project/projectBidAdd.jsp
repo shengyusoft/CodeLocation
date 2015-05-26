@@ -174,7 +174,7 @@
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th>管理费&nbsp;<label
+					<th>管理费(%)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="manage_cost" style="width: 100%; height: 100%"
 						type="text" id="manage_cost" class="easyui-validatebox span2"
@@ -215,11 +215,15 @@
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th colspan="2">施工负责人身份证&nbsp;<label
+					<th >施工负责人身份证&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="2"><input name="headmanIdCard" type="text" id="headmanIdCard"
+					<td ><input name="headmanIdCard" type="text" id="headmanIdCard"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2" value="${projectBid.headmanIdCard}"
 						data-options="required:true" /></td>
+						<th>联系方式 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="tel" style="width: 100%; height: 100%" data-options="required:true"
+						type="text" id="tel" class="easyui-validatebox span2"/></td>
 				</tr>
 				<tr>
 					<th>登记人&nbsp;<label
@@ -227,10 +231,7 @@
 					<td><input name="recordman" type="text" readonly id="recordman" value="${sessionInfo.name}"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-					<th>联系方式 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="tel" style="width: 100%; height: 100%" data-options="required:true"
-						type="text" id="tel" class="easyui-validatebox span2"/></td>
+					
 				</tr>
 				
 				<tr>
