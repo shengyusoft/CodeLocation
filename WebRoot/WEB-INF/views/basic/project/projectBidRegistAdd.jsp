@@ -108,56 +108,55 @@
 	});
 	
 	$('#provice').combobox({
-		url : "${pageContext.request.contextPath}/dictionarytype/combox?pid=14",
+		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
 		parentField : 'pid',
 		valueField : 'id',
-		textField : 'name',
-		panelHeight : 'auto',
+		textField : 'text',
+		panelHeight : 300,
 		required:true,
-		editable:true,//不可编辑，只能选择
+		editable:false,//不可编辑，只能选择
 		value:'--请选择--',
 		onChange:function(provice){
 	    	$('#city').combobox({
-	    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+provice,
+	    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
 		    valueField:'id', //值字段
-		    textField:'name', //显示的字段
+		    textField:'text', //显示的字段
 		    panelHeight:'auto',
 		    required:true,
-		    editable:true,//不可编辑，只能选择
+		    editable:false,//不可编辑，只能选择
 		    value:'--请选择--',
-		    onChange:function(city){
+		    onChange:function(city,n){
 		    	$('#county').combobox({
-			    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
+			    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
 				    valueField:'id', //值字段
-				    textField:'name', //显示的字段
+				    textField:'text', //显示的字段
 				    panelHeight:'auto',
 				    required:true,
-				    editable:true,//不可编辑，只能选择
+				    editable:false,//不可编辑，只能选择
 				    value:'--请选择--'
 				});
 	 		}
-	    	
 	    });
 	   }
 	});
 	
 	$('#city').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
+	    editable:false,//不可编辑，只能选择
 	    value:'--请选择--'
 	});
 	
 	$('#county').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
+	    editable:false,//不可编辑，只能选择
 	    value:'--请选择--'
 	});
 	

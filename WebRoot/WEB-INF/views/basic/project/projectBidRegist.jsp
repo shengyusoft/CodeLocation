@@ -56,7 +56,7 @@
 				align : 'center',
 				field : 'provice',
 				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.name;
+					return isEmpty(value)?'':value.text;
 				}
 			}, {
 				width : '120',
@@ -65,7 +65,7 @@
 				align : 'center',
 				field : 'city',
 				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.name;
+					return isEmpty(value)?'':value.text;
 				}
 			}, {
 				width : '120',
@@ -74,7 +74,7 @@
 				align : 'center',
 				field : 'county',
 				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.name;
+					return isEmpty(value)?'':value.text;
 				}
 			}, {
 				width : '120',

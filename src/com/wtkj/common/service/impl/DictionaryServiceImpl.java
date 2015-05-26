@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.PageFilter;
@@ -201,7 +202,7 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 		List<Dictionary> ld = new ArrayList<Dictionary>();
 		String hql = " from Tdictionary t where t.dictionarytype.code='"
 				+ codeType + "' and t.code like '" + code + "%'";
-		System.out.println("================>>"+hql);
+		System.out.println("================>>" + hql);
 		List<Tdictionary> lt = dictionaryDao.find(hql);
 		if (lt != null && lt.size() > 0) {
 			for (int i = 0; i < lt.size(); i++) {
@@ -210,6 +211,67 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 				d.setDescription(lt.get(i).getDescription());
 				d.setText(lt.get(i).getText());
 				ld.add(d);
+			}
+		}
+		return ld;
+	}
+
+	// 行政区划
+	@Override
+	public List<Dictionary> findByViewCode(String viewcode, int lvs) {
+		List<Dictionary> ld = new ArrayList<Dictionary>();
+		String hql = "";
+		if (!StringUtils.isEmpty(viewcode)) {
+			hql = "from Tdictionary t where t.dictionarytype.id=14 and t.code like '"
+					+ viewcode + "%%' and t.lvs=" + lvs;
+		} else {
+			hql = "from Tdictionary t where t.dictionarytype.id=14 and t.lvs="
+					+ lvs;
+		}
+
+		List<Tdictionary> lt = dictionaryDao.find(hql);
+		if (lt != null && lt.size() > 0) {
+			for (int i = 0; i < lt.size(); i++) {
+				if (lt.get(i).getState() == 0) {
+					Dictionary d = new Dictionary();
+					d.setId(lt.get(i).getId());
+					d.setCode(lt.get(i).getCode());
+					d.setText(lt.get(i).getText());
+					ld.add(d);
+				}
+			}
+		}
+		return ld;
+	}
+
+	@Override
+	public List<Dictionary> xzqhCombox(Long pid, int lvs) {
+		List<Dictionary> ld = new ArrayList<Dictionary>();
+		String hql = "";
+		if (pid != null) {
+			Tdictionary dic = dictionaryDao.get(Tdictionary.class, pid);
+			if (dic != null && !StringUtils.isEmpty(dic.getCode())) {
+				// FIXME hard code 数据字典类型为行政区划,根据上级编码和当前编码等级确定（市县级别）
+				hql = "from Tdictionary t where t.dictionarytype.id=14 and t.code like '"
+						+ dic.getCode() + "%%' and t.lvs=" + lvs;
+			}
+
+		} else {
+			// FIXME hard code 数据字典类型为行政区划,根据当前编码等级确定第一级（省）
+			hql = "from Tdictionary t where t.dictionarytype.id=14 and t.lvs="
+					+ lvs;
+		}
+
+		List<Tdictionary> lt = dictionaryDao.find(hql);
+		if (lt != null && lt.size() > 0) {
+			for (int i = 0; i < lt.size(); i++) {
+				if (lt.get(i).getState() == 0) {
+					Dictionary d = new Dictionary();
+					d.setId(lt.get(i).getId());
+					d.setCode(lt.get(i).getCode());
+					d.setText(lt.get(i).getText());
+					ld.add(d);
+				}
 			}
 		}
 		return ld;

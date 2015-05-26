@@ -15,7 +15,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.wtkj.common.model.IdEntity;
 import com.wtkj.common.model.Tdictionary;
-import com.wtkj.common.model.Tdictionarytype;
 
 /**
  * 项目登记管理
@@ -34,9 +33,9 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private String projectName;// 项目名称
 
 	// 省市县区划
-	private Tdictionarytype provice;
-	private Tdictionarytype city;
-	private Tdictionarytype county;
+	private Tdictionary provice;
+	private Tdictionary city;
+	private Tdictionary county;
 
 	private Tdictionary bd;// 标段
 	private String qualifyRequirement;// 资质要求
@@ -93,33 +92,33 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "province_id")
-	public Tdictionarytype getProvice() {
+	public Tdictionary getProvice() {
 		return provice;
 	}
 
-	public void setProvice(Tdictionarytype provice) {
+	public void setProvice(Tdictionary provice) {
 		this.provice = provice;
 	}
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "city_id")
-	public Tdictionarytype getCity() {
+	public Tdictionary getCity() {
 		return city;
 	}
 
-	public void setCity(Tdictionarytype city) {
+	public void setCity(Tdictionary city) {
 		this.city = city;
 	}
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "county_id")
-	public Tdictionarytype getCounty() {
+	public Tdictionary getCounty() {
 		return county;
 	}
 
-	public void setCounty(Tdictionarytype county) {
+	public void setCounty(Tdictionary county) {
 		this.county = county;
 	}
 

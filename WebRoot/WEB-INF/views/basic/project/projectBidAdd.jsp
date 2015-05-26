@@ -54,6 +54,7 @@
 	$('#projectMgr').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
 		parentField : 'dictionaryId',
+		//multiple:true,
 		valueField : 'id',
 		textField : 'text',
 		panelHeight : 'auto'				
@@ -76,56 +77,55 @@
 	});
 	
 	$('#provice').combobox({
-		url : "${pageContext.request.contextPath}/dictionarytype/combox?pid=14",
+		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
 		parentField : 'pid',
 		valueField : 'id',
-		textField : 'name',
-		panelHeight : 'auto',
+		textField : 'text',
+		panelHeight : 300,
 		required:true,
-		editable:true,//不可编辑，只能选择
+		editable:false,//不可编辑，只能选择
 		value:'--请选择--',
 		onChange:function(provice){
 	    	$('#city').combobox({
-	    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+provice,
+	    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
 		    valueField:'id', //值字段
-		    textField:'name', //显示的字段
+		    textField:'text', //显示的字段
 		    panelHeight:'auto',
 		    required:true,
-		    editable:true,//不可编辑，只能选择
+		    editable:false,//不可编辑，只能选择
 		    value:'--请选择--',
-		    onChange:function(city){
+		    onChange:function(city,n){
 		    	$('#county').combobox({
-			    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
+			    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
 				    valueField:'id', //值字段
-				    textField:'name', //显示的字段
+				    textField:'text', //显示的字段
 				    panelHeight:'auto',
 				    required:true,
-				    editable:true,//不可编辑，只能选择
+				    editable:false,//不可编辑，只能选择
 				    value:'--请选择--'
 				});
 	 		}
-	    	
 	    });
 	   }
 	});
 	
 	$('#city').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
+	    editable:false,//不可编辑，只能选择
 	    value:'--请选择--'
 	});
 	
 	$('#county').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
+	    editable:false,//不可编辑，只能选择
 	    value:'--请选择--'
 	});
 	
@@ -150,7 +150,7 @@
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="3">
-						省：<select id="provice" data-options="editable:false,required:true" name="provice.id" class="easyui-validatebox span2" style="width: 100px;">
+						省：<select id="provice" data-options="editable:false,required:true" name="provice.id" class="easyui-validatebox span2" style="width: 150px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 100px;">

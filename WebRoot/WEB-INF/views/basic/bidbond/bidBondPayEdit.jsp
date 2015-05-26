@@ -79,7 +79,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="4"><input name="payeeAccountNum" value="${bidBond.payeeAccountNum}" type="text"
 						id="payeeAccountNum" style="width: 100%; height: 100%"
-						class="easyui-numberbox" data-options="required:true" /></td>
+						class="easyui-validatebox span2" data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>附 言</th>

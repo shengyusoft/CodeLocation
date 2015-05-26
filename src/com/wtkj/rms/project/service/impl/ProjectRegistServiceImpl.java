@@ -36,8 +36,6 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 	@Override
 	public void add(ProjectRegist p, HttpServletRequest request) {
-		// p.setRegistDT(new Date());
-		System.out.println("==================" + p.getCertificateA());
 		p.setProjectMgr(dictionaryDao.get(Tdictionary.class, p.getProjectMgr()
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
@@ -45,12 +43,10 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
 				.getId()));
 
-		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p
-				.getProvice().getId()));
-		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity()
+		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
-		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty()
-				.getId()));
+		p.setCity(dictionaryDao.get(Tdictionary.class, p.getCity().getId()));
+		p.setCounty(dictionaryDao.get(Tdictionary.class, p.getCounty().getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
@@ -97,12 +93,10 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
 				.getId()));
 
-		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p
-				.getProvice().getId()));
-		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity()
+		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
-		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty()
-				.getId()));
+		p.setCity(dictionaryDao.get(Tdictionary.class, p.getCity().getId()));
+		p.setCounty(dictionaryDao.get(Tdictionary.class, p.getCounty().getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
@@ -151,12 +145,12 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		String hql = "";
 		if (p != null) {
 			hql += " where 1=1 ";
-			
-			if(p.getType() >= 0 ){
+
+			if (p.getType() >= 0) {
 				hql += " and t.type = :type";
 				params.put("type", p.getType());
 			}
-			
+
 			if (p.getCompany() != null) {
 				hql += " and t.company.name like :name and t.company.dictionarytype.code=:type";
 				params.put("name", "%%" + p.getCompany().getText() + "%%");

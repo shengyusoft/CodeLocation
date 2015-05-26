@@ -27,13 +27,6 @@
 		});
 	});
 	
-/* 	$('#typeId').combobox({
-		url : "${pageContext.request.contextPath}/dictionary/combox?code=goodstype",
-		parentField : 'dictionaryId',
-		valueField : 'id',
-		textField : 'text',
-		panelHeight : 'auto'				
-	}); */
 	$('#company').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
 		parentField : 'dictionaryId',
@@ -116,66 +109,75 @@
 	});
 	
 	$('#provice').combobox({
-		url : "${pageContext.request.contextPath}/dictionarytype/combox?pid=14",
+		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
 		parentField : 'pid',
 		valueField : 'id',
-		textField : 'name',
-		panelHeight : 'auto',
+		textField : 'text',
+		panelHeight : 300,
 		required:true,
-		editable:true,//不可编辑，只能选择
+		editable:false,//不可编辑，只能选择
 		defaultValue:'--请选择--',
 		value:'${projectRegist.provice.id}',
 		onChange:function(provice){
 	    	$('#city').combobox({
-	    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+provice,
+	    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
 		    valueField:'id', //值字段
-		    textField:'name', //显示的字段
+		    textField:'text', //显示的字段
 		    panelHeight:'auto',
 		    required:true,
-		    editable:true,//不可编辑，只能选择
+		    editable:false,//不可编辑，只能选择
 		    value:'--请选择--',
-		    onChange:function(city){
+		    onChange:function(city,n){
 		    	$('#county').combobox({
-			    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
+			    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
 				    valueField:'id', //值字段
-				    textField:'name', //显示的字段
+				    textField:'text', //显示的字段
 				    panelHeight:'auto',
 				    required:true,
-				    editable:true,//不可编辑，只能选择
+				    editable:false,//不可编辑，只能选择
 				    value:'--请选择--'
 				});
 	 		}
-	    	
 	    });
 	   }
 	});
 	
 	var provice = $('#provice').combobox('getValue');
 	$('#city').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+provice,
+    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
     	parentField : 'pid',
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
+	    editable:false,//不可编辑，只能选择
 	    defaultValue:'--请选择--',
-	    value:'${projectRegist.city.id}'
+	    value:'${projectRegist.city.id}',
+	    onChange:function(city,n){
+	    	$('#county').combobox({
+		    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
+			    valueField:'id', //值字段
+			    textField:'text', //显示的字段
+			    panelHeight:'auto',
+			    required:true,
+			    editable:false,//不可编辑，只能选择
+			    value:'--请选择--'
+			});
+ 		}
 	});
 	
 	var city = $('#city').combobox('getValue');
 	$('#county').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
+    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
     	parentField : 'pid',
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
+	    editable:false,//不可编辑，只能选择
 	    defaultValue:'--请选择--',
 	    value:'${projectRegist.county.id}'
 	});
-	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""

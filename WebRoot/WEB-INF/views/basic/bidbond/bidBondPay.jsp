@@ -48,7 +48,7 @@
 		                {field:'outAccountFee',title:'转出金额',width:120},
 		                {field:'outAccountDT',title:'转出时间',width:120,formatter:Common.formatter},
 		                {field:'handlerName',title:'办理人',width:120},
-		                {field:'handlerDT',title:'办理时间',width:120,formatter:Common.formatter}
+		                {field:'handlerDT',title:'办理时间',width:120,formatter:Common.formatterTime}
 		            ]], 
 		            onResize:function(){ 
 		                $('#dataGrid').datagrid('fixDetailRowHeight',index); 

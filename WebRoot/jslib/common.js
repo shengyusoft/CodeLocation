@@ -108,12 +108,12 @@ function showStart(format) {
 	if (isEmpty(format)) {
 		WdatePicker({
 			dateFmt : 'yyyy-MM-dd',
-			maxDate :'#F{$dp.$D(\'endDT\')||\'%y-%M-%d\'}'
+			maxDate : '#F{$dp.$D(\'endDT\')||\'%y-%M-%d\'}'
 		});
 	} else {
 		WdatePicker({
 			dateFmt : format,
-			maxDate :'#F{$dp.$D(\'endDT\')||\'%y-%M-%d\'}'
+			maxDate : '#F{$dp.$D(\'endDT\')||\'%y-%M-%d\'}'
 		});
 	}
 }
@@ -226,6 +226,14 @@ var Common = {
 		if (!isEmpty(value)) {
 			var date = new Date(value);
 			return date.format('yyyy-MM-dd');
+		}
+		return '';
+	},
+
+	formatterTime : function(value, row, index) {
+		if (!isEmpty(value)) {
+			var date = new Date(value);
+			return date.format('yyyy-MM-dd hh:mm');
 		}
 		return '';
 	}

@@ -19,10 +19,20 @@ public class ReimbursementVo implements Serializable {
 	private Date startDT;// 开始时间
 	private Date endDT;// 结束时间
 
-	private Long placeId;// 何地
-	private String placeName;
+	// 省市县区划
+	private Long proviceId;
+	private String proviceName;
+
+	private Long cityId;
+	private String cityName;
+
+	private Long countyId;
+	private String countyName;
+
 	private String workDetail;// 办何事
 	private String costDetail;// 费用明细
+
+	private String place;
 
 	// 费用小计
 	private Double trafficFee;// 交通费
@@ -60,20 +70,60 @@ public class ReimbursementVo implements Serializable {
 		this.endDT = endDT;
 	}
 
-	public Long getPlaceId() {
-		return placeId;
+	public Long getProviceId() {
+		return proviceId;
 	}
 
-	public void setPlaceId(Long placeId) {
-		this.placeId = placeId;
+	public void setProviceId(Long proviceId) {
+		this.proviceId = proviceId;
 	}
 
-	public String getPlaceName() {
-		return placeName;
+	public String getProviceName() {
+		return proviceName;
 	}
 
-	public void setPlaceName(String placeName) {
-		this.placeName = placeName;
+	public void setProviceName(String proviceName) {
+		this.proviceName = proviceName;
+	}
+
+	public Long getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public Long getCountyId() {
+		return countyId;
+	}
+
+	public void setCountyId(Long countyId) {
+		this.countyId = countyId;
+	}
+
+	public String getCountyName() {
+		return countyName;
+	}
+
+	public void setCountyName(String countyName) {
+		this.countyName = countyName;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
 	}
 
 	public ProcessVo getProcess_vo() {

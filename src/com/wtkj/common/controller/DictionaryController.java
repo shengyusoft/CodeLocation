@@ -13,9 +13,7 @@ import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
-import com.wtkj.common.Tree;
 import com.wtkj.common.model.Dictionary;
-import com.wtkj.common.model.Dictionarytype;
 import com.wtkj.common.service.DictionaryServiceI;
 
 @Controller
@@ -34,6 +32,19 @@ public class DictionaryController extends BaseController {
 	@ResponseBody
 	public List<Dictionary> combox(String code) {
 		return dictionaryService.combox(code);
+	}
+	
+	@RequestMapping("/findByViewCode")
+	@ResponseBody
+	public List<Dictionary> findByViewCode(String viewcode,int lvs) {
+		return dictionaryService.findByViewCode(viewcode,lvs);
+	}
+	
+	//行政区划选择
+	@RequestMapping("/xzqhCombox")
+	@ResponseBody
+	public List<Dictionary> xzqhCombox(Long pid,int lvs) {
+		return dictionaryService.xzqhCombox(pid,lvs);
 	}
 
 	@RequestMapping("/dataGrid")

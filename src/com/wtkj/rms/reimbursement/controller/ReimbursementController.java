@@ -18,7 +18,6 @@ import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.ProcessStateConstant;
 import com.wtkj.common.controller.BaseController;
-import com.wtkj.common.model.Dictionarytype;
 import com.wtkj.common.model.Tuser;
 import com.wtkj.common.model.User;
 import com.wtkj.common.service.DictionarytypeServiceI;
@@ -90,12 +89,22 @@ public class ReimbursementController extends BaseController {
 					.getProcess().getId())));
 		}
 
-		if (reimbursement.getPlace() != null) {
-			Dictionarytype dt = dictionarytypeService.get(reimbursement
-					.getPlace().getId());
-			vo.setPlaceId(dt.getId());
-			vo.setPlaceName(dt.getDescription());
+		if (reimbursement.getProvice() != null) {
+			vo.setProviceId(reimbursement.getProvice().getId());
+			vo.setProviceName(reimbursement.getProvice().getText());
 		}
+
+		if (reimbursement.getCity() != null) {
+			vo.setCityId(reimbursement.getCity().getId());
+			vo.setCityName(reimbursement.getCity().getText());
+		}
+
+		if (reimbursement.getCounty() != null) {
+			vo.setCountyId(reimbursement.getCounty().getId());
+			vo.setCountyName(reimbursement.getCounty().getText());
+			vo.setPlace(reimbursement.getCounty().getDescription());
+		}
+
 		return vo;
 	}
 
@@ -108,8 +117,8 @@ public class ReimbursementController extends BaseController {
 		User user = userService.get(userId);
 
 		if (!StringUtils.isEmpty(user.getRoleNames())) {
-			grid.setRows(convert2Vos(reimbursementService.dataGrid(user,
-					vo, ph)));
+			grid.setRows(convert2Vos(reimbursementService
+					.dataGrid(user, vo, ph)));
 			grid.setTotal(reimbursementService.count(user, vo, ph));
 			return grid;
 		}

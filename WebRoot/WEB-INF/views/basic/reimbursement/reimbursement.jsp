@@ -20,7 +20,7 @@
 			striped : true,
 			rownumbers : true,
 			pagination : true,
-			nowrap : true,
+			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
@@ -46,11 +46,11 @@
 					return st + "--" + et;
 				}
 			}, {
-				width : '140',
+				width : '190',
 				title : '地点',
 				rowspan : 2,
 				align : 'center',
-				field : 'placeName'
+				field : 'place'
 			}, {
 				width : '130',
 				title : '工作',
@@ -194,18 +194,18 @@
 
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
-		queryParams.placeName = "";
+		queryParams.place = "";
 
-		var name = $('#placeName').val();
+		var name = $('#place').val();
 		if (!isEmpty(name)) {
-			queryParams.placeName = name;
+			queryParams.place = name;
 		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
 
 	function clearFun() {
-		$('#placeName').val('');
+		$('#place').val('');
 	}
 
 	function addFun() {
@@ -485,7 +485,7 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>地点:</span> <input type="text" id="placeName"> <a
+				<span>地点:</span> <input type="text" id="place"> <a
 					onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a

@@ -27,59 +27,76 @@
 		});
 	});
 	
-	$('#province').combobox({
-		url : "${pageContext.request.contextPath}/dictionarytype/combox?pid=14",
+	$('#provice').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
 		parentField : 'pid',
 		valueField : 'id',
-		textField : 'name',
-		panelHeight : 'auto',
+		textField : 'text',
+		panelHeight : 300,
 		required:true,
-		editable:true,//不可编辑，只能选择
-		value:'--请选择--',
-		onChange:function(province){
+		editable:false,//不可编辑，只能选择
+		defaultValue:'--请选择--',
+		value:'${reimbursement.proviceId}',
+		onChange:function(provice){
 	    	$('#city').combobox({
-	    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+province,
+	    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
 		    valueField:'id', //值字段
-		    textField:'name', //显示的字段
+		    textField:'text', //显示的字段
 		    panelHeight:'auto',
 		    required:true,
-		    editable:true,//不可编辑，只能选择
+		    editable:false,//不可编辑，只能选择
 		    value:'--请选择--',
-		    onChange:function(city){
-		    	$('#place').combobox({
-			    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid="+city,
+		    onChange:function(city,n){
+		    	$('#county').combobox({
+			    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
 				    valueField:'id', //值字段
-				    textField:'name', //显示的字段
+				    textField:'text', //显示的字段
 				    panelHeight:'auto',
 				    required:true,
-				    editable:true,//不可编辑，只能选择
+				    editable:false,//不可编辑，只能选择
 				    value:'--请选择--'
 				});
 	 		}
-	    	
 	    });
 	   }
 	});
 	
+	
+	var provice = $('#provice').combobox('getValue');
 	$('#city').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox",
+    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
+    	parentField : 'pid',
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true,//不可编辑，只能选择
-	    value:'--请选择--'
+	    editable:false,//不可编辑，只能选择
+	    defaultValue:'--请选择--',
+	    value:'${reimbursement.cityId}',
+	    onChange:function(city,n){
+	    	$('#county').combobox({
+		    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
+			    valueField:'id', //值字段
+			    textField:'text', //显示的字段
+			    panelHeight:'auto',
+			    required:true,
+			    editable:false,//不可编辑，只能选择
+			    value:'--请选择--'
+			});
+ 		}
 	});
 	
-	$('#place').combobox({
-    	url : "${pageContext.request.contextPath}/dictionarytype/combox?pid=27",
+	var city = $('#city').combobox('getValue');
+	$('#county').combobox({
+    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
+    	parentField : 'pid',
 	    valueField:'id', //值字段
-	    textField:'name', //显示的字段
-	    value : '${reimbursement.placeId}',
-	    defaultValue : '--请选择--',
+	    textField:'text', //显示的字段
 	    panelHeight:'auto',
 	    required:true,
-	    editable:true//不可编辑，只能选择
+	    editable:false,//不可编辑，只能选择
+	    defaultValue:'--请选择--',
+	    value:'${reimbursement.countyId}'
 	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -93,12 +110,11 @@
 					<td><input type="hidden" name="option" id="option" value="2" />
 						<input type="hidden" name="id" value="${reimbursement.id}" /> <input
 						type="hidden" name="process.id"
-						value="${reimbursement.process_vo.id}" /> 
-						<input class="Wdate"
+						value="${reimbursement.process_vo.id}" /> <input class="Wdate"
 						data-options="required:true" type="text" name="startDT"
 						value="${reimbursement.startDT}" id="startDT"
-						style="width: 68%; height: 100%;" onfocus="showStart('yyyy-MM-dd')" />
-					</td>
+						style="width: 68%; height: 100%;"
+						onfocus="showStart('yyyy-MM-dd')" /></td>
 					<td><input class="Wdate" data-options="required:true"
 						type="text" name="endDT" value="${reimbursement.endDT}" id="endDT"
 						style="width: 68%; height: 100%;" onfocus="showEnd('yyyy-MM-dd')" />
@@ -107,16 +123,18 @@
 				<tr>
 					<th>地点 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="province" name="province"
-						class="easyui-validatebox span2" style="width: 140px;">
-					</select></td>
-					<td><select id="city" name="city"
-						class="easyui-validatebox span2" style="width: 140px;">
-					</select></td>
-					<td><select id="place" name="place.id"
-						data-options="required:true" class="easyui-validatebox span2"
-						validType="selectValueRequired" style="width: 140px;">
-					</select></td>
+					<td colspan="2">省：<select id="provice"
+						data-options="editable:false,required:true" name="provice.id"
+						class="easyui-validatebox span2" style="width: 150px;">
+					</select> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 市：<select id="city"
+						name="city.id" class="easyui-validatebox span2"
+						style="width: 150px;">
+					</select> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 县(区)：<select id="county"
+						name="county.id" data-options="editable:false,required:true"
+						class="easyui-validatebox span2" validType="selectValueRequired"
+						style="width: 150px;">
+					</select>
+					</td>
 				</tr>
 				<tr>
 					<th>工作事情&nbsp;</th>
@@ -142,7 +160,8 @@
 									class="easyui-validatebox span2" /></td>
 								<th width="80">就餐费&nbsp;</th>
 								<td><input name="mealFee" value="${reimbursement.mealFee}"
-									type="number" min="0" id="mealFee" style="width: 100%; height: 100%"
+									type="number" min="0" id="mealFee"
+									style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
 								<th width="80">办公费&nbsp;</th>
 								<td><input name="officeFee"

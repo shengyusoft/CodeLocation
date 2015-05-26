@@ -20,7 +20,7 @@
 			striped : true,
 			rownumbers : true,
 			pagination : true,
-			nowrap : true,
+			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
@@ -59,7 +59,7 @@
 				title : '地点',
 				rowspan : 2,
 				align : 'center',
-				field : 'placeName'
+				field : 'place'
 			}, {
 				width : '130',
 				title : '工作',
@@ -157,12 +157,12 @@
 
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
-		queryParams.placeName = "";
+		queryParams.place = "";
 		queryParams['process_vo.applyUserName'] = "";
 
-		var name = $('#placeName').val();
+		var name = $('#place').val();
 		if (!isEmpty(name)) {
-			queryParams.placeName = name;
+			queryParams.place = name;
 		}
 		
 		var applyUserName = $('#applyUserName').val();
@@ -174,7 +174,7 @@
 	}
 
 	function clearFun() {
-		$('#placeName').val('');
+		$('#place').val('');
 		$('#applyUserName').val('');
 	}
 
@@ -512,7 +512,7 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursement/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>地点:</span> <input type="text" id="placeName">
+				<span>地点:</span> <input type="text" id="place">
 				<span>申请人:</span> <input type="text" id="applyUserName">
 				 <a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"

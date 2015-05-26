@@ -29,28 +29,23 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 	@Autowired
 	private BaseDaoI<Tdictionarytype> dictionarytypeDao;
 
-
 	@Override
 	public void add(ProjectBid p, HttpServletRequest request) {
 		// p.setRegistDT(new Date());
-		
+
 		p.setProjectMgr(dictionaryDao.get(Tdictionary.class, p.getProjectMgr()
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
 				.getTechniqueMgr().getId()));
-		p.setAqy(dictionaryDao.get(Tdictionary.class, p.getAqy()
-				.getId()));
+		p.setAqy(dictionaryDao.get(Tdictionary.class, p.getAqy().getId()));
 
-		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p
-				.getProvice().getId()));
-		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity()
+		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
-		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty()
-				.getId()));
+		p.setCity(dictionaryDao.get(Tdictionary.class, p.getCity().getId()));
+		p.setCounty(dictionaryDao.get(Tdictionary.class, p.getCounty().getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
-		
 
 		projectBidDao.save(p);
 	}
@@ -76,24 +71,21 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 
 	@Override
 	public void edit(ProjectBid p, HttpServletRequest request) {
-		
+
 		p.setProjectMgr(dictionaryDao.get(Tdictionary.class, p.getProjectMgr()
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
 				.getTechniqueMgr().getId()));
-		p.setAqy(dictionaryDao.get(Tdictionary.class, p.getAqy()
-				.getId()));
+		p.setAqy(dictionaryDao.get(Tdictionary.class, p.getAqy().getId()));
 
-		p.setProvice(dictionarytypeDao.get(Tdictionarytype.class, p
-				.getProvice().getId()));
-		p.setCity(dictionarytypeDao.get(Tdictionarytype.class, p.getCity()
+		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
-		p.setCounty(dictionarytypeDao.get(Tdictionarytype.class, p.getCounty()
-				.getId()));
+		p.setCity(dictionaryDao.get(Tdictionary.class, p.getCity().getId()));
+		p.setCounty(dictionaryDao.get(Tdictionary.class, p.getCounty().getId()));
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
-		
+
 		projectBidDao.update(p);
 	}
 
@@ -130,9 +122,7 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 		String hql = "";
 		if (p != null) {
 			hql += " where 1=1 ";
-			
-			
-			
+
 			if (p.getCompany() != null) {
 				hql += " and t.company.name like :name and t.company.dictionarytype.code=:type";
 				params.put("name", "%%" + p.getCompany().getText() + "%%");

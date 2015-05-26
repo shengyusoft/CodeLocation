@@ -93,7 +93,7 @@
 					<td><input type="text" class="easyui-validatebox" name="mobilePhone" style="width: 140px;" data-options="required:true"/></td>
 				</tr>
 				<tr>
-					<th>传值号码</th>
+					<th>传真号码</th>
 					<td><input type="text" name="fax" style="width: 134px;" /></td>
 					<th>电子邮件</th>
 					<td><input name="email" style="width: 140px;" data-options="validType:'email'" /></td>

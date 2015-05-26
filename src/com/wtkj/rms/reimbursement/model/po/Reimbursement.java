@@ -15,7 +15,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.wtkj.common.model.IdEntity;
-import com.wtkj.common.model.Tdictionarytype;
+import com.wtkj.common.model.Tdictionary;
 import com.wtkj.rms.process.model.Process;
 
 /**
@@ -34,8 +34,12 @@ public class Reimbursement extends IdEntity implements Serializable {
 
 	private Date startDT;// 开始时间
 	private Date endDT;// 结束时间
- 
-	private Tdictionarytype place;// 何地
+
+	// 省市县区划
+	private Tdictionary provice;
+	private Tdictionary city;
+	private Tdictionary county;
+
 	private String workDetail;// 办何事
 	private String costDetail;// 费用明细
 
@@ -51,7 +55,7 @@ public class Reimbursement extends IdEntity implements Serializable {
 	private Process process;
 	private int option;
 
-//	@NotNull
+	// @NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "process_id")
 	public Process getProcess() {
@@ -80,13 +84,35 @@ public class Reimbursement extends IdEntity implements Serializable {
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "place_id")
-	public Tdictionarytype getPlace() {
-		return place;
+	@JoinColumn(name = "provice_id")
+	public Tdictionary getProvice() {
+		return provice;
 	}
 
-	public void setPlace(Tdictionarytype place) {
-		this.place = place;
+	public void setProvice(Tdictionary provice) {
+		this.provice = provice;
+	}
+
+	@NotNull
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "city_id")
+	public Tdictionary getCity() {
+		return city;
+	}
+
+	public void setCity(Tdictionary city) {
+		this.city = city;
+	}
+
+	@NotNull
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "county_id")
+	public Tdictionary getCounty() {
+		return county;
+	}
+
+	public void setCounty(Tdictionary county) {
+		this.county = county;
 	}
 
 	public String getWorkDetail() {
@@ -177,7 +203,5 @@ public class Reimbursement extends IdEntity implements Serializable {
 	public void setOption(int option) {
 		this.option = option;
 	}
-	
-	
 
 }

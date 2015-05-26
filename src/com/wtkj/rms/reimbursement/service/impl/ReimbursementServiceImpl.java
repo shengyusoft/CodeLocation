@@ -115,16 +115,16 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 				if (user.getRoleNames().indexOf("普通员工") >= 0) {
 					hql += " and t.process.applyUser.id = :userId";
 					params.put("userId", user.getId());
-				}else if(user.getRoleNames().indexOf("会计") >= 0){
+				} else if (user.getRoleNames().indexOf("会计") >= 0) {
 					// 如果申请人是别人则审批人查看已到到达自己的任务,如果是自己则显示申请人是自己的
 					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
 					params.put("state", 1);
 					params.put("userId", user.getId());
-				}else if(user.getRoleNames().indexOf("总经理") >= 0){
+				} else if (user.getRoleNames().indexOf("总经理") >= 0) {
 					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
 					params.put("userId", user.getId());
 					params.put("state", 2);
-				}else if(user.getRoleNames().indexOf("出纳") >= 0){
+				} else if (user.getRoleNames().indexOf("出纳") >= 0) {
 					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
 					params.put("userId", user.getId());
 					params.put("state", 3);
@@ -150,9 +150,9 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 				}
 			}
 
-			if (!StringUtils.isEmpty(r.getPlaceName())) {
-				hql += " and t.place.description like :place";
-				params.put("place", "%%" + r.getPlaceName() + "%%");
+			if (!StringUtils.isEmpty(r.getPlace())) {
+				hql += " and t.county.description like :place";
+				params.put("place", "%%" + r.getPlace() + "%%");
 
 			}
 
