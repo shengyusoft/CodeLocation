@@ -88,7 +88,7 @@
 				field : 'bid_cost'
 			}, {
 				width : '140',
-				title : '管理费',
+				title : '管理费(%)',
 				align : 'center',
 				field : 'manage_cost'
 			}, {
