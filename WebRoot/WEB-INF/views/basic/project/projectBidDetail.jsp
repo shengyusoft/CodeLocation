@@ -146,13 +146,13 @@
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="3">
-						省：<select id="provice" data-options="required:true" name="provice.id" class="easyui-validatebox span2" style="width: 150px;">
+						省：<select id="provice" data-options="required:true" name="provice.id" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 150px;">
+						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						县(区)：<select id="county" name="county.id" data-options="required:true" class="easyui-validatebox span2" style="width: 150px;">
+						县(区)：<select id="county" name="county.id" data-options="required:true" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
 					</td>
 				</tr>
