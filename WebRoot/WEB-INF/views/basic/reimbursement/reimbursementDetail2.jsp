@@ -66,45 +66,45 @@
 					<td colspan="3">
 						<table title="费用小计" width="800">
 							<tr>
-								<th width="80">交通费&nbsp;</th>
+								<th width="80">交通费（元）&nbsp;</th>
 								<td><input name="trafficFee" readonly="readonly"
 									value="${reimbursement.trafficFee}" type="number"
 									id="trafficFee" data-options="required:true"
 									style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">就餐费&nbsp;</th>
+								<th width="80">就餐费（元）&nbsp;</th>
 								<td><input name="mealFee" readonly="readonly"
 									value="${reimbursement.mealFee}" type="number" id="mealFee"
 									style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">办公费&nbsp;</th>
+								<th width="80">办公费（元）&nbsp;</th>
 								<td><input name="officeFee" readonly="readonly"
 									value="${reimbursement.officeFee}" type="number" id="officeFee"
 									style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">招待费&nbsp;</th>
+								<th width="80">招待费（元）&nbsp;</th>
 								<td><input name="receiveFee" readonly="readonly"
 									value="${reimbursement.receiveFee}" type="number"
 									id="receiveFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
 							</tr>
 							<tr>
-								<th width="80">证章费&nbsp;</th>
+								<th width="80">证章费（元）&nbsp;</th>
 								<td><input name="badgeFee" readonly="readonly"
 									value="${reimbursement.badgeFee}" type="number" id="badgeFee"
 									style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">通讯费&nbsp;</th>
+								<th width="80">通讯费（元）&nbsp;</th>
 								<td><input name="communicationFee" readonly="readonly"
 									value="${reimbursement.communicationFee}" type="number"
 									id="communicationFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">培训费&nbsp;</th>
+								<th width="80">培训费（元）&nbsp;</th>
 								<td><input name="trainFee" readonly="readonly"
 									value="${reimbursement.trainFee}" type="number" id="trainFee"
 									style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">其它&nbsp;</th>
+								<th width="80">其它费（元）&nbsp;</th>
 								<td><input name="otherFee" readonly="readonly"
 									value="${reimbursement.otherFee}" type="number" id="otherFee"
 									style="width: 100%; height: 100%"

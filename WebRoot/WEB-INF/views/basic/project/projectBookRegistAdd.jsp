@@ -26,10 +26,19 @@
 			}
 		});
 	});
-	
+
+	$('#qualifyRequirement').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		multiple : true,
+		textField : 'text',
+		panelHeight : 'auto'
+	});
+
 	var d = new Date();
 	d = d.format('yyyy-MM-dd hh:mm:ss');
-	$('#registDT').val(d);	
+	$('#registDT').val(d);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -61,27 +70,28 @@
 				</tr>
 				<tr>
 					<th>登记人&nbsp;</th>
-					<td><input name="bidder"
-						value="${sessionInfo.name}" type="text" disabled 
-						id="registerName" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" readonly="readonly" /></td>
+					<td><input name="bidder" value="${sessionInfo.name}"
+						type="text" disabled id="registerName"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						readonly="readonly" /></td>
 					<th>登记时间 &nbsp;</th>
-					<td><input class="Wdate" type="text" name="registDT" id="registDT" 
-							style="width: 100%;height:100%" disabled
-							onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
+					<td><input class="Wdate" type="text" name="registDT"
+						id="registDT" style="width: 100%; height: 100%" disabled
+						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
 				</tr>
 				<tr>
 					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><textarea style="width: 100%" rows="4"
-							name="qualifyRequirement"></textarea></td>
+					<td colspan="3"><select id="qualifyRequirement" name="qualifyRequirement"
+						class="easyui-validatebox span2" style="width: 550px;"
+						data-options="editable:false,required:true"></select></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
 					<td colspan="3"><textarea style="width: 100%" rows="5"
 							name="remark"></textarea></td>
 				</tr>
-				
+
 			</table>
 		</form>
 	</div>

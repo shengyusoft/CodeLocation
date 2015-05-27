@@ -22,7 +22,7 @@
 			rownumbers : true,
 			pagination : true,
 			//fitColumns : true,
-			nowrap : true,
+			nowrap : false,
 			queryParams : {
 				type : 1
 			},
@@ -77,18 +77,15 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '120',
+				width : '150',
 				title : '标段',
 				align : 'center',
-				field : 'bd',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
+				field : 'bdNames'
 			}, {
-				width : '140',
+				width : '150',
 				title : '资质要求',
 				align : 'center',
-				field : 'qualifyRequirement'
+				field : 'qualifyRequirementNames'
 			}, {
 				width : '120',
 				title : '项目经理',
@@ -103,7 +100,8 @@
 				title : '开标时间',
 				sortable : true,
 				align : 'center',
-				field : 'registDT'
+				field : 'registDT',
+				formatter : Common.formatter
 			} ] ],
 
 			toolbar : '#toolbar'
@@ -164,7 +162,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记',
 			width : 750,
-			height : 490,
+			height : 520,
 			href : '${ctx}/projectRegist/addPage?type=1',
 			buttons : [ {
 				text : '添加',
@@ -222,7 +220,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记编辑',
 			width : 750,
-			height : 490,
+			height : 520,
 			href : '${ctx}/projectRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -253,8 +251,8 @@
 
 		parent.$.modalDialog({
 			title : '项目开标登记详情',
-			width : '815',
-			height : '500',
+			width : 750,
+			height : 520,
 			href : '${ctx}/projectRegist/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',

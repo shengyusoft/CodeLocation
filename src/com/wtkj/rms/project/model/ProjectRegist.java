@@ -37,8 +37,12 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private Tdictionary city;
 	private Tdictionary county;
 
-	private Tdictionary bd;// 标段
-	private String qualifyRequirement;// 资质要求
+	private String bds;// 标段多选(ids)
+	private String bdNames;// 标段多选显示用(ids)
+
+	private String qualifyRequirement;// 资质要求多选(ids)
+	private String qualifyRequirementNames;// 资质要求多选显示(ids)
+
 	private Tdictionary projectMgr;// 项目经理
 	private Tdictionary techniqueMgr;// 技术负责人
 
@@ -47,7 +51,9 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private Certificate certificateB;// 技术负责人
 	private Certificate certificateC;// 技术负责人
 
-	private Certificate member5Card;// 五大员证
+	private String member5Cards; // 五大员证多选(ids)
+	private String member5CardNames; // 五大员证多选显示用(ids)
+
 	private Tdictionary delegator;// 委托人
 
 	private Date registDT;// 报名时间
@@ -122,17 +128,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.county = county;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bd_id")
-	public Tdictionary getBd() {
-		return bd;
-	}
-
-	public void setBd(Tdictionary bd) {
-		this.bd = bd;
-	}
-
 	public String getQualifyRequirement() {
 		return qualifyRequirement;
 	}
@@ -196,15 +191,12 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.certificateC = certificateC;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "m5_id")
-	public Certificate getMember5Card() {
-		return member5Card;
+	public String getMember5Cards() {
+		return member5Cards;
 	}
 
-	public void setMember5Card(Certificate member5Card) {
-		this.member5Card = member5Card;
+	public void setMember5Cards(String member5Cards) {
+		this.member5Cards = member5Cards;
 	}
 
 	@NotNull
@@ -274,6 +266,41 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	public void setEt(Date et) {
 		this.et = et;
+	}
+
+	public String getBds() {
+		return bds;
+	}
+
+	public void setBds(String bds) {
+		this.bds = bds;
+	}
+
+	@Transient
+	public String getBdNames() {
+		return bdNames;
+	}
+
+	public void setBdNames(String bdNames) {
+		this.bdNames = bdNames;
+	}
+
+	@Transient
+	public String getQualifyRequirementNames() {
+		return qualifyRequirementNames;
+	}
+
+	public void setQualifyRequirementNames(String qualifyRequirementNames) {
+		this.qualifyRequirementNames = qualifyRequirementNames;
+	}
+
+	@Transient
+	public String getMember5CardNames() {
+		return member5CardNames;
+	}
+
+	public void setMember5CardNames(String member5CardNames) {
+		this.member5CardNames = member5CardNames;
 	}
 
 }

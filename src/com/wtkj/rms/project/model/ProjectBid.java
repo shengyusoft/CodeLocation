@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -36,7 +37,8 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	private Tdictionary city;
 	private Tdictionary county;
 
-	private Tdictionary bd;// 标段
+	private String bds;// 标段
+	private String bdNames;// display
 
 	private Float bid_cost;
 	private Float manage_cost;
@@ -104,15 +106,21 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 		this.county = county;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bd_id")
-	public Tdictionary getBd() {
-		return bd;
+	public String getBds() {
+		return bds;
 	}
 
-	public void setBd(Tdictionary bd) {
-		this.bd = bd;
+	public void setBds(String bds) {
+		this.bds = bds;
+	}
+
+	@Transient
+	public String getBdNames() {
+		return bdNames;
+	}
+
+	public void setBdNames(String bdNames) {
+		this.bdNames = bdNames;
 	}
 
 	@NotNull

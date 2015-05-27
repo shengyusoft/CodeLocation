@@ -50,8 +50,6 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
-		p.setMember5Card(certificateDao.get(Certificate.class, p
-				.getMember5Card().getId()));
 
 		p.setCertificateA(certificateDao.get(Certificate.class, p
 				.getCertificateA().getId()));
@@ -100,8 +98,6 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
-		p.setMember5Card(certificateDao.get(Certificate.class, p
-				.getMember5Card().getId()));
 
 		p.setCertificateA(certificateDao.get(Certificate.class, p
 				.getCertificateA().getId()));
@@ -124,13 +120,39 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 	@Override
 	public List<ProjectRegist> dataGrid(ProjectRegist p, PageFilter ph) {
-		// List<ProjectRegist> pl = new ArrayList<ProjectRegist>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from ProjectRegist t ";
 		List<ProjectRegist> l = projectRegistDao.find(hql + whereHql(p, params)
 				+ orderHql(ph), params, ph.getPage(), ph.getRows());
 
+		for (ProjectRegist prst : l) {
+			if (!StringUtils.isEmpty(prst.getBds())) {
+				prst.setBdNames(getDicTexts(prst.getBds()));
+			}
+			if (!StringUtils.isEmpty(prst.getMember5Cards())) {
+				prst.setMember5CardNames(getDicTexts(prst.getMember5Cards()));
+			}
+			if (!StringUtils.isEmpty(prst.getQualifyRequirement())) {
+				prst.setQualifyRequirementNames(getDicTexts(prst
+						.getQualifyRequirement()));
+			}
+		}
+
 		return l;
+	}
+
+	private String getDicTexts(String dicIds) {
+		StringBuilder texts = new StringBuilder();
+		List<Tdictionary> ds = dictionaryDao.findBySql(
+				"select * from sys_dictionary where id in(" + dicIds + ")",
+				Tdictionary.class);
+		for (Tdictionary t : ds) {
+			texts.append(t.getText() + ",");
+		}
+		if (texts.length() == 0) {
+			return "";
+		}
+		return texts.substring(0, texts.length() - 1);
 	}
 
 	@Override

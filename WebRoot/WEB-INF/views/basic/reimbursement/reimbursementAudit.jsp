@@ -104,48 +104,48 @@
 				title : '费用小计',
 				colspan : 8
 			}],[ {
-				width : '80',
-				title : '交通费',
+				width : '100',
+				title : '交通费（元）',
 				align : 'center',
 				field : 'trafficFee'
 			}, {
-				width : '80',
-				title : '就餐费',
+				width : '100',
+				title : '就餐费（元）',
 				align : 'center',
 				field : 'mealFee'
 			}, {
-				width : '80',
-				title : '办公费',
+				width : '100',
+				title : '办公费（元）',
 				align : 'center',
 				field : 'officeFee'
 			}, {
-				width : '80',
-				title : '招待费',
+				width : '100',
+				title : '招待费（元）',
 				align : 'center',
 				field : 'receiveFee'
 			}, {
-				width : '80',
-				title : '证章费',
+				width : '100',
+				title : '证章费（元）',
 				align : 'center',
 				field : 'badgeFee'
 			}, {
-				width : '80',
-				title : '通讯费',
+				width : '100',
+				title : '通讯费（元）',
 				align : 'center',
 				field : 'communicationFee'
 			}, {
-				width : '80',
-				title : '培训费',
+				width : '100',
+				title : '培训费（元）',
 				align : 'center',
 				field : 'trainFee'
 			}, {
-				width : '80',
-				title : '其他费',
+				width : '100',
+				title : '其他费（元）',
 				align : 'center',
 				field : 'otherFee'
 			}, {
-				width : '80',
-				title : '合计',
+				width : '100',
+				title : '合计（元）',
 				align : 'center',
 				field : 'total',
 			}  ] ],

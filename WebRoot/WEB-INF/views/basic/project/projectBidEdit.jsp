@@ -36,14 +36,20 @@
 		panelHeight : 'auto'				
 	});
 	
+	//标段
 	$('#bd').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=bd",
 		parentField : 'dictionaryId',
 		valueField : 'id',
-		value:'${projectBid.bd.id}',
+		multiple:true,
 		textField : 'text',
 		panelHeight : 'auto'				
 	});
+	
+	var selectedBds=[];
+	var bss = '${projectBid.bds}';
+	selectedBds = bss.split(',');
+	$('#bd').combobox('setValues',selectedBds); 
 	
 	$('#projectMgr').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
@@ -87,7 +93,7 @@
 	    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
 		    valueField:'id', //值字段
 		    textField:'text', //显示的字段
-		    panelHeight:'auto',
+		    panelHeight : 300,
 		    required:true,
 		    editable:false,//不可编辑，只能选择
 		    value:'--请选择--',
@@ -112,7 +118,7 @@
     	parentField : 'pid',
 	    valueField:'id', //值字段
 	    textField:'text', //显示的字段
-	    panelHeight:'auto',
+	    panelHeight : 300,
 	    required:true,
 	    editable:false,//不可编辑，只能选择
 	    defaultValue:'--请选择--',
@@ -154,7 +160,7 @@
 					<td>
 					<input type="hidden" name="id" id="id" value="${projectBid.id}"></input>
 					<select id="company" name="company.id" 
-						class="easyui-validatebox span2" style="width: 100%;">
+						class="easyui-validatebox span2" style="width: 180px;">
 					</select></td>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -165,31 +171,33 @@
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="3">
-						省：<select id="provice" data-options="required:true" name="provice.id" class="easyui-validatebox span2" style="width: 100px;">
+						省：<select id="provice" data-options="required:true" name="provice.id" class="easyui-validatebox span2" style="width: 150px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 100px;">
+						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 150px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						县(区)：<select id="county" name="county.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 100px;">
+						县(区)：<select id="county" name="county.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 150px;">
 					</select>
 					</td>
 				</tr>
 				<tr>
 					<th>标段 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="bd" name="bd.id" 
-						class="easyui-validatebox span2" style="width: 100%;"
+					<td colspan="3"><select id="bd" name="bds" 
+						class="easyui-validatebox span2" style="width: 550px;"
 						data-options="required:true">
 					</select></td>
+				</tr>
+				<tr>
 					<th>中标价（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bid_cost" style="width: 100%; height: 100%"
+					<td colspan="3"><input name="bid_cost" style="width: 100%; height: 100%"
 						type="text" id="bid_cost" value="${projectBid.bid_cost}" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th>管理费(%)&nbsp;<label
+					<th>管理费（%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="manage_cost" style="width: 100%; height: 100%" value="${projectBid.manage_cost}"
 						type="text" id="manage_cost" class="easyui-validatebox span2" 
@@ -205,13 +213,13 @@
 					<th>项目经理&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="projectMgr" name="projectMgr.id"
-						class="easyui-validatebox span2" style="width: 100%;"
+						class="easyui-validatebox span2" style="width: 180px;"
 						data-options="required:true">
 					</select></td>
 					<th>技术负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="techniqueMgr" name="techniqueMgr.id"
-						class="easyui-validatebox span2" style="width: 100%;"
+						class="easyui-validatebox span2" style="width: 180px;"
 						data-options="required:true">
 					</select></td>
 				</tr>
@@ -219,7 +227,7 @@
 					<th>专职安全员&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="aqy" name="aqy.id"
-						class="easyui-validatebox span2" style="width: 100%;"
+						class="easyui-validatebox span2" style="width: 180px;"
 						data-options="required:true">
 					</select></td>
 					<th>施工负责人&nbsp;<label
@@ -250,7 +258,7 @@
 				<tr>
 					<th>备注&nbsp;</th>
 					<td colspan="3"><textarea style="width: 100%" rows="5"
-							name="remark">${projectRegist.remark}</textarea></td>
+							name="remark">${projectBid.remark}</textarea></td>
 				</tr>
 			</table>
 		</form>

@@ -20,7 +20,6 @@ import com.wtkj.common.service.UserServiceI;
 import com.wtkj.rms.project.model.ProjectBookRegistVo;
 import com.wtkj.rms.project.service.ProjectBookRegistServiceI;
 
-//缴纳退回申请
 @Controller
 @RequestMapping("/projectBookRegist")
 public class ProjectBookRegistController extends BaseController {

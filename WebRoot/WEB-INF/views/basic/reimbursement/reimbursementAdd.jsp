@@ -127,38 +127,38 @@
 					<td colspan="3">
 						<table title="费用小计" width="800">
 							<tr>
-								<th width="80">交通费&nbsp;</th>
+								<th width="80">交通费（元）&nbsp;</th>
 								<td><input name="trafficFee" min="0" value="0"
 									type="number" id="trafficFee" style="width: 100%; height: 100%"
 									min="0" value="0" class="easyui-validatebox span2" /></td>
-								<th width="80">就餐费&nbsp;</th>
+								<th width="80">就餐费（元）&nbsp;</th>
 								<td><input name="mealFee" min="0" value="0" type="number"
 									id="mealFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">办公费&nbsp;</th>
+								<th width="80">办公费（元）&nbsp;</th>
 								<td><input name="officeFee" min="0" value="0" type="number"
 									id="officeFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">招待费&nbsp;</th>
+								<th width="80">招待费（元）&nbsp;</th>
 								<td><input name="receiveFee" min="0" value="0"
 									type="number" id="receiveFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
 							</tr>
 							<tr>
-								<th width="80">证章费&nbsp;</th>
+								<th width="80">证章费（元）&nbsp;</th>
 								<td><input name="badgeFee" min="0" value="0" type="number"
 									id="badgeFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">通讯费&nbsp;</th>
+								<th width="80">通讯费（元）&nbsp;</th>
 								<td><input name="communicationFee" min="0" value="0"
 									type="number" id="communicationFee"
 									style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">培训费&nbsp;</th>
+								<th width="80">培训费（元）&nbsp;</th>
 								<td><input name="trainFee" min="0" value="0" type="number"
 									id="trainFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>
-								<th width="80">其它&nbsp;</th>
+								<th width="80">其它（元）&nbsp;</th>
 								<td><input name="otherFee" min="0" value="0" type="number"
 									id="otherFee" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" /></td>

@@ -53,7 +53,7 @@
 				field : 'managerFeeRate'
 			}, {
 				width : '120',
-				title : '管理费数额',
+				title : '管理费数额（元）',
 				rowspan : 2,
 				sortable : true,
 				align : 'center',

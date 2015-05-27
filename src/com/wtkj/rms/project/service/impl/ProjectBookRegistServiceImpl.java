@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
+import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tuser;
 import com.wtkj.rms.project.model.ProjectBookRegist;
 import com.wtkj.rms.project.model.ProjectBookRegistVo;
@@ -24,6 +25,9 @@ public class ProjectBookRegistServiceImpl implements ProjectBookRegistServiceI {
 
 	@Autowired
 	private BaseDaoI<ProjectBookRegist> projectBookRegistDao;
+
+	@Autowired
+	private BaseDaoI<Tdictionary> dictionaryDao;
 
 	@Autowired
 	private BaseDaoI<Tuser> userDao;
@@ -162,7 +166,27 @@ public class ProjectBookRegistServiceImpl implements ProjectBookRegistServiceI {
 				vo.setRegisterName(user.getName());
 			}
 		}
+		
+		if (!StringUtils.isEmpty(po.getQualifyRequirement())) {
+			vo.setQualifyRequirementNames(getDicTexts(po
+					.getQualifyRequirement()));
+		}
+		
 		return vo;
+	}
+
+	private String getDicTexts(String dicIds) {
+		StringBuilder texts = new StringBuilder();
+		List<Tdictionary> ds = dictionaryDao.findBySql(
+				"select * from sys_dictionary where id in(" + dicIds + ")",
+				Tdictionary.class);
+		for (Tdictionary t : ds) {
+			texts.append(t.getText() + ",");
+		}
+		if (texts.length() == 0) {
+			return "";
+		}
+		return texts.substring(0, texts.length() - 1);
 	}
 
 }

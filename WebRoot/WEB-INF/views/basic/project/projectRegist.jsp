@@ -22,7 +22,7 @@
 			rownumbers : true,
 			pagination : true,
 			//fitColumns : true,
-			nowrap : true,
+			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
@@ -77,15 +77,12 @@
 				width : '120',
 				title : '标段',
 				align : 'center',
-				field : 'bd',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
+				field : 'bdNames'
 			}, {
 				width : '140',
 				title : '资质要求',
 				align : 'center',
-				field : 'qualifyRequirement'
+				field : 'qualifyRequirementNames'
 			}, {
 				width : '120',
 				title : '项目经理',
@@ -161,7 +158,7 @@
 		parent.$.modalDialog({
 			title : '项目报名登记',
 			width : 750,
-			height : 490,
+			height : 520,
 			href : '${ctx}/projectRegist/addPage?type=0',
 			buttons : [ {
 				text : '添加',
@@ -219,7 +216,7 @@
 		parent.$.modalDialog({
 			title : '项目报名登记编辑',
 			width : 750,
-			height : 490,
+			height : 520,
 			href : '${ctx}/projectRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',

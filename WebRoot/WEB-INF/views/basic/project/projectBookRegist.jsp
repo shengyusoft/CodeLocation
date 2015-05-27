@@ -40,7 +40,7 @@
 				width : '140',
 				title : '资质要求',
 				align : 'center',
-				field : 'qualifyRequirement'
+				field : 'qualifyRequirementNames'
 			}, {
 				width : '120',
 				title : '投标人',

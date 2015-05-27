@@ -14,6 +14,7 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 	private Long id;
 	private String projectName;// 项目名称
 	private String qualifyRequirement;// 资质要求
+	private String qualifyRequirementNames;// 资质要求显示
 	private String bidder;// 投标人姓名
 	private String contract;// 联系方式
 
@@ -104,6 +105,14 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 
 	public void setRegisterName(String registerName) {
 		this.registerName = registerName;
+	}
+
+	public String getQualifyRequirementNames() {
+		return qualifyRequirementNames;
+	}
+
+	public void setQualifyRequirementNames(String qualifyRequirementNames) {
+		this.qualifyRequirementNames = qualifyRequirementNames;
 	}
 
 }

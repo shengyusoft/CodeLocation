@@ -22,7 +22,7 @@
 			rownumbers : true,
 			pagination : true,
 			//fitColumns : true,
-			nowrap : true,
+			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
@@ -77,10 +77,7 @@
 				width : '120',
 				title : '标段',
 				align : 'center',
-				field : 'bd',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
+				field : 'bdNames'
 			}, {
 				width : '140',
 				title : '中标价（元）',
@@ -88,7 +85,7 @@
 				field : 'bid_cost'
 			}, {
 				width : '140',
-				title : '管理费(%)',
+				title : '管理费（%）',
 				align : 'center',
 				field : 'manage_cost'
 			}, {

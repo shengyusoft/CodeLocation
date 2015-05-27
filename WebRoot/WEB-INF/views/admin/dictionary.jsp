@@ -139,7 +139,7 @@
 		if(!isEmpty(selectedTree)/*  && !isEmpty(selectedTree.pid) */){
 			selectedId = dictionarytypeTree.tree('getSelected').id;
 		}
-		this.$.modalDialog({
+		parent.$.modalDialog({
 			title : '添加',
 			width : 500,
 			height : 300,
@@ -153,8 +153,6 @@
 				}
 			} ]
 		});
-		
-		
 		
 	}
 	function addType() {

@@ -26,6 +26,20 @@
 			}
 		});
 	});
+	
+	//资质要求
+	$('#qualifyRequirement').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		multiple:true,
+		textField : 'text',
+		panelHeight : 'auto'				
+	});
+	var selectedQFs=[];
+	var qfs = '${projectBookRegist.qualifyRequirement}';
+	selectedQFs = qfs.split(',');
+	$('#qualifyRequirement').combobox('setValues',selectedQFs); 
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -65,8 +79,10 @@
 				<tr>
 					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><textarea style="width: 100%" rows="5"
-							name="qualifyRequirement">${projectBookRegist.qualifyRequirement}</textarea></td>
+					<td colspan="3"><select id="qualifyRequirement" name="qualifyRequirement"
+						class="easyui-validatebox span2" style="width: 550px;"
+						data-options="required:true">
+					</select></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>

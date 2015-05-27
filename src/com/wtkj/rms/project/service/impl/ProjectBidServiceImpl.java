@@ -107,6 +107,12 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 		List<ProjectBid> l = projectBidDao.find(hql + whereHql(p, params)
 				+ orderHql(ph), params, ph.getPage(), ph.getRows());
 
+		for (ProjectBid prst : l) {
+			if (!StringUtils.isEmpty(prst.getBds())) {
+				prst.setBdNames(getDicTexts(prst.getBds()));
+			}
+		}
+
 		return l;
 	}
 
@@ -144,5 +150,19 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 			orderString = " order by t." + ph.getSort() + " " + ph.getOrder();
 		}
 		return orderString;
+	}
+
+	private String getDicTexts(String dicIds) {
+		StringBuilder texts = new StringBuilder();
+		List<Tdictionary> ds = dictionaryDao.findBySql(
+				"select * from sys_dictionary where id in(" + dicIds + ")",
+				Tdictionary.class);
+		for (Tdictionary t : ds) {
+			texts.append(t.getText() + ",");
+		}
+		if (texts.length() == 0) {
+			return "";
+		}
+		return texts.substring(0, texts.length() - 1);
 	}
 }
