@@ -44,12 +44,12 @@
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
-		style="overflow: hidden; padding: 3px;">
+		style="overflow: auto; padding: 3px;">
 		<form id="bidBondBackEditForm" method="post"
-			style="width: 800px; height: 330px;">
+			>
 			<table class="grid">
 				<tr>
-					<th width="100px">项目名称 &nbsp;<label
+					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="type" type="hidden"
 						value="${bidBond.type}"></input> <input name="idNumber"
@@ -79,7 +79,7 @@
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th rowspan="5">收 款 人（客户）<br />详细信息 &nbsp;
+					<th rowspan="6">收 款 人（客户）<br />详细信息 &nbsp;
 					</th>
 					<th>户 名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -124,17 +124,19 @@
 					<td><input name="customerName" value="${bidBond.customerName}" type="text" id="customerName"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-					<th>客户联系方式&nbsp;<label
+					<th width="100px" colspan="2">客户联系方式&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="payerPhone" value="${bidBond.payerPhone}"
 						type="text" id="payerPhone" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
-					<th width="100px">转款人姓名&nbsp;<label
+				</tr>
+				
+				<tr>
+					<th>付款人（招标代理公司或公共资源交易中心）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="payer" value="${bidBond.payer}"
-						type="text" id="payer" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
-					
+					<td colspan="5"><input name="payer" value="${bidBond.payer}" type="text" id="payer"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
 				</tr>
 
 				<tr>
@@ -156,7 +158,7 @@
 				</tr>
 
 				<tr>
-					<th colspan="6"><font color="blue" size="10px">（说明：以下财务填写）</font></th>
+					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>
 
 				<tr>

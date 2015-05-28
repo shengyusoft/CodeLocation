@@ -54,7 +54,7 @@
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th rowspan="5">收 款 人<br />详细信息 &nbsp;
+					<th rowspan="5">收 款 人（客户）<br />详细信息 &nbsp;
 					</th>
 					<th>户 名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -131,7 +131,7 @@
 				</tr>
 
 				<tr>
-					<th colspan="6"><font color="blue" size="10px">（说明：以下财务填写）</font></th>
+					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>
 
 				<tr>

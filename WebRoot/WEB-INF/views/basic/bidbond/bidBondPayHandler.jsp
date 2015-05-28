@@ -157,7 +157,7 @@
 				</tr>
 
 				<tr>
-					<th colspan="6"><font color="blue" size="10px">（说明：以下财务填写）</font></th>
+					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>
 
 				<tr>
@@ -190,8 +190,9 @@
 					<td><input name="handlerName" value="${bidBond.handlerName}"
 						type="text" id="handlerName" readonly="readonly" /></td>
 					<th>办理时间</th>
-					<td colspan="3"><input name="handlerDT" readonly="readonly"
-						value="${bidBond.handlerDT}" type="text" id="handlerDT" /></td>
+					<td colspan="3"><input name="handlerDT"
+						value="${bidBond.handlerDT}" type="text" id="handlerDT"
+						class="easyui-datebox" data-options="required:true" /></td>
 				</tr>
 			</table>
 		</form>

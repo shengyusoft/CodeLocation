@@ -123,7 +123,7 @@
 				</tr>
 				
 				<tr>
-					<th colspan="6"><font color="blue" size="10px">（说明：以下财务填写）</font></th>
+					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>
 				
 				<tr>

@@ -208,7 +208,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金退还申请登记',
 			width : '815',
-			height : '565',
+			height : '660',
 			resizable : true,
 			href : '${ctx}/bidBond/addPage?type=1',
 			buttons : [
@@ -291,7 +291,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金退还申请修改',
 			width : '830',
-			height : '635',
+			height : '660',
 			href : '${ctx}/bidBond/editPage?id=' + id,
 			buttons : [
 					{
@@ -335,7 +335,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金退还确认',
 			width : '830',
-			height : '600',
+			height : '660',
 			href : '${ctx}/bidBond/handlerPage?id=' + id,
 			buttons : [
 					{

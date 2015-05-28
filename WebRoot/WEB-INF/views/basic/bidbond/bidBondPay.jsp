@@ -366,7 +366,7 @@
 				.modalDialog({
 					title : '投标保证金缴纳确认',
 					width : '830',
-					height : '600',
+					height : '635',
 					href : '${ctx}/bidBond/handlerPage?id=' + id,
 					buttons : [
 							{
