@@ -178,7 +178,11 @@ public class BidBondController extends BaseController {
 	public String detailPage(HttpServletRequest request, Long id) {
 		BidBondVo bidBond = bidBondService.get(id);
 		request.setAttribute("bidBond", bidBond);
-		return "/basic/bidbond/bidBondDetail";
+		if (bidBond.getType() == 0) {
+			return "/basic/bidbond/bidBondPayDetail";// 缴纳
+		} else {
+			return "/basic/bidbond/bidBondBackDetail";// 退款
+		}
 	}
 
 	/**

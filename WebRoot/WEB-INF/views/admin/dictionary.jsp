@@ -252,7 +252,7 @@
 	</script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'center',fit:true,border:false" title="字典列表">
+	<div data-options="region:'center',border:false" title="字典列表" style="overflow: auto; ">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div data-options="region:'west',border:false,split:true" title="字典类别" style="width:200px;overflow: auto; ">

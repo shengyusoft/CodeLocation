@@ -77,6 +77,8 @@ public class BidBond extends IdEntity implements Serializable {
 	// 0普通人员提交 1财务提交，财务提交后不可更改
 	private int state;
 
+	private String remark;// 备注
+
 	public String getIdNumber() {
 		return idNumber;
 	}
@@ -288,6 +290,14 @@ public class BidBond extends IdEntity implements Serializable {
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

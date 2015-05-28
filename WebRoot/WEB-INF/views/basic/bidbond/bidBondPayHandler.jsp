@@ -72,7 +72,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>保证金数额 &nbsp;<label
+					<th>保证金数额<br/>（元）【.00】&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
 						value="${bidBond.bondFee}" style="width: 100%;"
@@ -193,6 +193,11 @@
 					<td colspan="3"><input name="handlerDT"
 						value="${bidBond.handlerDT}" type="text" id="handlerDT"
 						class="easyui-datebox" data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<th>备注&nbsp;</th>
+					<td colspan="5"><textarea style="width: 100%" rows="2"
+							name="remark">${bidBond.remark}</textarea></td>
 				</tr>
 			</table>
 		</form>

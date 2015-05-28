@@ -71,7 +71,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>保证金数额 &nbsp;<label
+					<th>保证金数额<br/>（元）【.00】 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
 						value="${bidBond.bondFee}" style="width: 100%;"

@@ -334,7 +334,7 @@
 		}
 		parent.$.modalDialog({
 			title : '投标保证金退还确认',
-			width : '830',
+			width : '840',
 			height : '660',
 			href : '${ctx}/bidBond/handlerPage?id=' + id,
 			buttons : [
