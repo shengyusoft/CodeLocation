@@ -20,7 +20,7 @@
 			striped : true,
 			rownumbers : true,
 			pagination : true,
-			nowrap : true,
+			nowrap : false,
 			queryParams : {
 				type : 0
 			},
@@ -87,7 +87,7 @@
 				rowspan : 2,
 				title : '标段',
 				align : 'center',
-				field : 'bidSection'
+				field : 'bdNames'
 			}, {
 				width : '120',
 				rowspan : 2,
@@ -239,7 +239,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请登记',
 			width : '815',
-			height : '535',
+			height : '565',
 			resizable : true,
 			href : '${ctx}/bidBond/addPage?type=0',
 			buttons : [
@@ -321,7 +321,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请修改',
 			width : '830',
-			height : '600',
+			height : '635',
 			href : '${ctx}/bidBond/editPage?id=' + id,
 			buttons : [
 					{
@@ -416,7 +416,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请详情',
 			width : '820',
-			height : '600',
+			height : '635',
 			href : '${ctx}/bidBond/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',

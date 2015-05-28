@@ -26,6 +26,15 @@
 			}
 		});
 	});
+	
+	$('#bidSection').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=bd",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		multiple:true,
+		textField : 'text',
+		panelHeight : 'auto'				
+	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -36,21 +45,24 @@
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3">
+					<td colspan="5">
 					<input name="type" type="hidden" value="1"></input>
 					<input name="projectName"
 						style="width: 100%; height: 100%" type="text" id="projectName"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
+				</tr>
+				<tr>
 					<th>标段 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bidSection" style="width: 100%; height: 100%"
-						type="text" id="bidSection" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td colspan="5"><select id="bidSection" name="bidSection"
+						class="easyui-validatebox span2" style="width: 550px;"
+						data-options="editable:false,required:true">
+					</select></td>
 				</tr>
 				<tr>
 					<th>保证金数额 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="5"><input name="bondFee"
+					<td colspan="5"><input name="bondFee" precision="2"
 						style="width: 100%; height: 100%" type="number" id="bondFee"
 						class="easyui-numberbox" data-options="required:true" /></td>
 				</tr>
@@ -92,16 +104,22 @@
 				</tr>
 
 				<tr>
-					<th>付款人&nbsp;<label
+					<th>客户姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="2"><input name="payer" type="text" id="payer"
+					<td><input name="customerName" type="text" id="customerName"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-					<th colspan="2">联系方式&nbsp;<label
+					<th>客户联系方式&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="payerPhone" type="text" id="payerPhone"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
+					<th>转款人姓名&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="payer" type="text" id="payer"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+					
 				</tr>
 				
 				<tr>

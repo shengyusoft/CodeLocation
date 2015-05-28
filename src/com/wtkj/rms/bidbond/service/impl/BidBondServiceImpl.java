@@ -14,16 +14,21 @@ import org.springframework.util.StringUtils;
 
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
+import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tuser;
 import com.wtkj.rms.bidbond.model.BidBond;
 import com.wtkj.rms.bidbond.model.BidBondVo;
 import com.wtkj.rms.bidbond.service.BidBondServiceI;
+import com.wtkj.rms.project.model.ProjectBid;
 
 @Service
 public class BidBondServiceImpl implements BidBondServiceI {
 
 	@Autowired
 	private BaseDaoI<BidBond> bidBondDao;
+
+	@Autowired
+	private BaseDaoI<Tdictionary> dictionaryDao;
 
 	@Autowired
 	private BaseDaoI<Tuser> userDao;
@@ -180,6 +185,10 @@ public class BidBondServiceImpl implements BidBondServiceI {
 			vo.setHandlerName(handler.getName());
 		}
 
+		if (!StringUtils.isEmpty(po.getBidSection())) {
+			vo.setBdNames(getDicTexts(po.getBidSection()));
+		}
+
 		return vo;
 	}
 
@@ -196,6 +205,20 @@ public class BidBondServiceImpl implements BidBondServiceI {
 	public Long countByState(int state) {
 		return bidBondDao.count("select count(*) from BidBond t where t.state="
 				+ state);
+	}
+
+	private String getDicTexts(String dicIds) {
+		StringBuilder texts = new StringBuilder();
+		List<Tdictionary> ds = dictionaryDao.findBySql(
+				"select * from sys_dictionary where id in(" + dicIds + ")",
+				Tdictionary.class);
+		for (Tdictionary t : ds) {
+			texts.append(t.getText() + ",");
+		}
+		if (texts.length() == 0) {
+			return "";
+		}
+		return texts.substring(0, texts.length() - 1);
 	}
 
 }

@@ -18,6 +18,7 @@ public class BidBondVo implements Serializable {
 	private String idNumber;
 	private String projectName;// 项目名称
 	private String bidSection;// 标段
+	private String bdNames;
 	private Double bondFee;// 保证金数额
 	private String bondFeeCH;// 保证金数额(中文大写)
 
@@ -29,6 +30,7 @@ public class BidBondVo implements Serializable {
 	private Date payeeHandleDT;// 办理时间
 
 	// payer付款人信息
+	private String customerName;// 客服姓名
 	private String payer;
 	private String payerPhone;
 
@@ -285,6 +287,22 @@ public class BidBondVo implements Serializable {
 
 	public void setHandlerDT(Date handlerDT) {
 		this.handlerDT = handlerDT;
+	}
+
+	public String getBdNames() {
+		return bdNames;
+	}
+
+	public void setBdNames(String bdNames) {
+		this.bdNames = bdNames;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 }
