@@ -132,6 +132,30 @@ public class ReportController extends BaseController {
 		parameterMap.put("id", id);
 		return new ModelAndView("bidBondBack", parameterMap);
 	}
+	
+	/**
+	 * 工程款拨付登记
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/projectAReg")
+	public ModelAndView projectAReg(long id, int type,
+			HttpServletRequest request) throws IOException {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+		
+		 String reportPath = request.getSession().getServletContext()
+	                .getRealPath("/WEB-INF/reports/");
+		parameterMap.put("SUBREPORT_DIR", reportPath+"/");
+		parameterMap.put("pro_id", id);
+		return new ModelAndView("projectAReg", parameterMap);
+	}
 
 	/**
 	 * 员工报销报表

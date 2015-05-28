@@ -34,4 +34,9 @@
 		<property name="url" value="/WEB-INF/reports/bidBondBack.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
+	<!--招投标公司工程款拨付登记表-->
+	<bean id="projectAReg" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/pro_ee.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
 </beans>
