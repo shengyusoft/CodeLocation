@@ -6,14 +6,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.wtkj.common.PageFilter;
 import com.wtkj.rms.project.model.ProjectRegist;
+import com.wtkj.rms.project.model.ProjectRegistVo;
 
 public interface ProjectRegistServiceI {
 
-	public List<ProjectRegist> dataGrid(ProjectRegist p, PageFilter ph);
+	public List<ProjectRegistVo> dataGrid(ProjectRegist p, PageFilter ph);
 
 	public Long count(ProjectRegist p, PageFilter ph);
 
-	public ProjectRegist get(String id);
+	public ProjectRegistVo get(Long id);
 
 	public void add(ProjectRegist p, HttpServletRequest request);
 

@@ -60,9 +60,8 @@
 				</tr>
 				<tr>
 					<th>密码</th>
-					<td><input name="password" type="password"
-						style="width: 134px;" class="easyui-validatebox"
-						data-options="required:true"></td>
+					<td><input name="password" type="text" readonly="readonly" disabled="disabled"
+						style="width: 134px;" class="easyui-validatebox" value="默认为手机号码"></td>
 					<th>性别</th>
 					<td><select name="sex" class="easyui-combobox"
 						data-options="width:140,editable:false,panelHeight:'auto'">

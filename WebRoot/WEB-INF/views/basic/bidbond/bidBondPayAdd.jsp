@@ -43,7 +43,7 @@
 			style="width: 800px; height: 330px;">
 			<table class="grid">
 				<tr>
-					<th>项目名称 &nbsp;<label
+					<th width="100px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5">
 					<input name="type" type="hidden" value="0"></input>
@@ -67,12 +67,17 @@
 						class="easyui-numberbox" precision="2" data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th rowspan="5">收 款 人（客户）<br />详细信息 &nbsp;
+					<th rowspan="5">收款人（公共资源交易中心或招标代理机构）详细信息 &nbsp;
 					</th>
 					<th>户 名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="4"><input name="payeeAccountName" type="text"
+					<td colspan="2"><input name="payeeAccountName" type="text"
 						id="payeeAccountName" style="width: 100%; height: 100%"
+						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<th>收款人姓名&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="payeeName" type="text"
+						id="payeeName" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
 				</tr>
 				<tr>

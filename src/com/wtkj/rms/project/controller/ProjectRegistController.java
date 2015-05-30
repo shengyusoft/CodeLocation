@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
+import com.wtkj.common.SessionInfo;
 import com.wtkj.common.controller.BaseController;
+import com.wtkj.common.model.User;
 import com.wtkj.common.service.DictionaryServiceI;
+import com.wtkj.common.service.UserServiceI;
 import com.wtkj.rms.project.model.ProjectRegist;
+import com.wtkj.rms.project.model.ProjectRegistVo;
 import com.wtkj.rms.project.service.ProjectRegistServiceI;
 
 @Controller
@@ -22,6 +26,9 @@ public class ProjectRegistController extends BaseController {
 
 	@Autowired
 	private ProjectRegistServiceI projectRegistService;
+	
+	@Autowired
+	private UserServiceI userService;
 
 	@Autowired
 	private DictionaryServiceI dictionaryService;
@@ -46,6 +53,14 @@ public class ProjectRegistController extends BaseController {
 
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request, int type) {
+		
+		SessionInfo sessionInfo = getSessionInfo(request);
+		User user = null;
+		if (sessionInfo != null && sessionInfo.getId() != null) {
+			user = userService.get(sessionInfo.getId());
+		}
+		request.setAttribute("cuser", user);
+		
 		if (type == 0) {
 			return "/basic/project/projectRegistAdd";
 		} else {
@@ -61,7 +76,7 @@ public class ProjectRegistController extends BaseController {
 			projectRegistService.add(vo, request);
 			j.setSuccess(true);
 			j.setMsg("添加成功！");
-			j.setObj(vo);
+			//j.setObj(vo);
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
 		}
@@ -90,13 +105,13 @@ public class ProjectRegistController extends BaseController {
 
 	@RequestMapping("/get")
 	@ResponseBody
-	public ProjectRegist get(String id) {
+	public ProjectRegistVo get(Long id) {
 		return projectRegistService.get(id);
 	}
 
 	@RequestMapping("/editPage")
-	public String editPage(HttpServletRequest request, String id) {
-		ProjectRegist vo = projectRegistService.get(id);
+	public String editPage(HttpServletRequest request, Long id) {
+		ProjectRegistVo vo = projectRegistService.get(id);
 		request.setAttribute("projectRegist", vo);
 		if (vo.getType() == 0) {
 			return "/basic/project/projectRegistEdit";// 缴纳
@@ -120,8 +135,8 @@ public class ProjectRegistController extends BaseController {
 	}
 
 	@RequestMapping("/detailPage")
-	public String detailPage(HttpServletRequest request, String id) {
-		ProjectRegist vo = projectRegistService.get(id);
+	public String detailPage(HttpServletRequest request, Long id) {
+		ProjectRegistVo vo = projectRegistService.get(id);
 		request.setAttribute("projectRegist", vo);
 		if (vo.getType() == 0) {
 			return "/basic/project/projectRegistDetail";

@@ -32,7 +32,7 @@
 		valueField : 'id',
 		value:'${projectBid.projectMgr.id}',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#techniqueMgr').combobox({
@@ -41,7 +41,7 @@
 		value:'${projectBid.techniqueMgr.id}',
 		valueField : 'id',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#aqy').combobox({

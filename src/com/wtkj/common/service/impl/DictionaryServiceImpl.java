@@ -139,7 +139,7 @@ public class DictionaryServiceImpl implements DictionaryServiceI {
 		List<Dictionary> ld = new ArrayList<Dictionary>();
 		List<Tdictionary> lt = dictionaryDao
 				.find("from Tdictionary t where t.state=0 and t.dictionarytype.code='"
-						+ code + "'");
+						+ code + "' order by t.seq");
 		if (lt != null && lt.size() > 0) {
 			for (int i = 0; i < lt.size(); i++) {
 				if (lt.get(i).getState() == 0) {

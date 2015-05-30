@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserServiceI {
 	@Override
 	public void edit(User user) {
 		Tuser t = userDao.get(Tuser.class, user.getId());
+		String oldPassword = t.getPassword();
 		BeanUtils.copyProperties(user, t);
 		t.setAge(user.getAge());
 		t.setLoginname(user.getLoginname());
@@ -88,12 +89,18 @@ public class UserServiceImpl implements UserServiceI {
 				roles.add(roleDao.get(Trole.class, Long.valueOf(roleId)));
 			}
 		}
+
+		if (!StringUtils.isEmpty(user.getPassword()) && !"********".equals(user.getPassword())) {
+			t.setPassword(MD5Util.md5(user.getPassword()));
+		} else {
+			t.setPassword(StringUtils.isEmpty(oldPassword) ? t.getMobilePhone()
+					: oldPassword);
+		}
+
 		t.setRoles(new HashSet<Trole>(roles));
 		t.setSex(user.getSex());
 		t.setUsertype(user.getUsertype());
-		if (!StringUtils.isEmpty(user.getPassword()) && !"********".equals(user.getPassword())) {
-			t.setPassword(MD5Util.md5(user.getPassword()));
-		}
+
 		userDao.update(t);
 	}
 

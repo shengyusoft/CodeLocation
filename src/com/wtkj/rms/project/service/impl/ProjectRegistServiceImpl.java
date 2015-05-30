@@ -1,5 +1,6 @@
 package com.wtkj.rms.project.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -15,8 +17,10 @@ import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tdictionarytype;
+import com.wtkj.common.model.Tuser;
 import com.wtkj.rms.project.model.Certificate;
 import com.wtkj.rms.project.model.ProjectRegist;
+import com.wtkj.rms.project.model.ProjectRegistVo;
 import com.wtkj.rms.project.service.ProjectRegistServiceI;
 
 @Service
@@ -27,6 +31,9 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 	@Autowired
 	private BaseDaoI<Tdictionary> dictionaryDao;
+
+	@Autowired
+	private BaseDaoI<Tuser> userDao;
 
 	@Autowired
 	private BaseDaoI<Tdictionarytype> dictionarytypeDao;
@@ -40,8 +47,7 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
 				.getTechniqueMgr().getId()));
-		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
-				.getId()));
+		p.setDelegator(userDao.get(Tuser.class, p.getDelegatorId()));
 
 		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
@@ -88,8 +94,8 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
 				.getTechniqueMgr().getId()));
-		p.setDelegator(dictionaryDao.get(Tdictionary.class, p.getDelegator()
-				.getId()));
+
+		p.setDelegator(userDao.get(Tuser.class, p.getDelegator().getId()));
 
 		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
@@ -109,36 +115,53 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 	}
 
 	@Override
-	public ProjectRegist get(String id) {
+	public ProjectRegistVo get(Long id) {
 		ProjectRegist p = null;
+		ProjectRegistVo vo = new ProjectRegistVo();
 		if (!StringUtils.isEmpty(id)) {
 			p = projectRegistDao.get(ProjectRegist.class, Long.valueOf(id));
+			BeanUtils.copyProperties(p, vo);
+			if (p.getDelegator() != null) {
+				Tuser user = userDao.get(Tuser.class, p.getDelegator().getId());
+				vo.setDelegatorId(user.getId());
+				vo.setDelegatorName(user.getName());
+			}
 		}
-		return p;
+		return vo;
 
 	}
 
 	@Override
-	public List<ProjectRegist> dataGrid(ProjectRegist p, PageFilter ph) {
+	public List<ProjectRegistVo> dataGrid(ProjectRegist p, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from ProjectRegist t ";
 		List<ProjectRegist> l = projectRegistDao.find(hql + whereHql(p, params)
 				+ orderHql(ph), params, ph.getPage(), ph.getRows());
+		List<ProjectRegistVo> vos = new ArrayList<ProjectRegistVo>();
 
 		for (ProjectRegist prst : l) {
+			ProjectRegistVo vo = new ProjectRegistVo();
+			BeanUtils.copyProperties(prst, vo);
+
 			if (!StringUtils.isEmpty(prst.getBds())) {
-				prst.setBdNames(getDicTexts(prst.getBds()));
+				vo.setBdNames(getDicTexts(prst.getBds()));
 			}
 			if (!StringUtils.isEmpty(prst.getMember5Cards())) {
-				prst.setMember5CardNames(getDicTexts(prst.getMember5Cards()));
+				vo.setMember5CardNames(getDicTexts(prst.getMember5Cards()));
 			}
 			if (!StringUtils.isEmpty(prst.getQualifyRequirement())) {
-				prst.setQualifyRequirementNames(getDicTexts(prst
+				vo.setQualifyRequirementNames(getDicTexts(prst
 						.getQualifyRequirement()));
 			}
+			if (p.getDelegator() != null) {
+				Tuser user = userDao.get(Tuser.class, p.getDelegator().getId());
+				vo.setDelegatorId(user.getId());
+				vo.setDelegatorName(user.getName());
+			}
+			vos.add(vo);
 		}
 
-		return l;
+		return vos;
 	}
 
 	private String getDicTexts(String dicIds) {

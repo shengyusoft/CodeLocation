@@ -42,6 +42,12 @@
 	var bss = '${bidBond.bidSection}';
 	selectedBds = bss.split(',');
 	$('#bidSection').combobox('setValues', selectedBds);
+
+	var applyDT = '${bidBond.applyDT}';
+	if (!isEmpty(applyDT)) {
+		applyDT = new Date(applyDT);
+		$('#applyDT').val(applyDT.format());
+	}
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -72,7 +78,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>保证金数额<br/>（元）【.00】&nbsp;<label
+					<th>保证金数额<br />（元）【.00】&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
 						value="${bidBond.bondFee}" style="width: 100%;" type="number"
@@ -153,9 +159,9 @@
 						readonly="readonly" disabled="disabled" /></td>
 					<th>申请时间&nbsp;</th>
 					<td><input name="applyDT" value="${bidBond.applyDT}"
-						type="text" id="applyDT" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" readonly="readonly"
-						disabled="disabled" /></td>
+						type="text" id="applyDT"
+						style="width: 100%; height: 100%; background-color: rgb(235, 235, 228);"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
 				</tr>
 
 				<tr>
@@ -164,7 +170,7 @@
 
 				<tr>
 					<th>到帐金额</th>
-					<td colspan="5"><input name="toAccountFee"
+					<td colspan="5"><input name="toAccountFee" precision="2"
 						value="${bidBond.toAccountFee}" type="text" id="toAccountFee"
 						style="width: 100%; height: 100%" class="easyui-numberbox"
 						data-options="required:true" /></td>
@@ -173,7 +179,9 @@
 					<th>到帐时间</th>
 					<td colspan="5"><input name="toAccountDT"
 						value="${bidBond.toAccountDT}" type="text" id="toAccountDT"
-						class="easyui-datebox" data-options="required:true" /></td>
+						class="easyui-validatebox Wdate"
+						onfocus="showDate('yyyy-MM-dd HH:mm:ss')"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>转出金额</th>
@@ -183,9 +191,9 @@
 				</tr>
 				<tr>
 					<th>转出时间</th>
-					<td colspan="5"><input name="outAccountDT"
-						value="${bidBond.outAccountDT}" type="text" id="toAccountDT"
-						class="easyui-datebox" data-options="required:true" /></td>
+					<td colspan="5"><input name="outAccountDT" type="text"
+						id="toAccountDT" readonly="readonly"
+						disabled="disabled" /><font color="rgb(235, 235, 228)">&nbsp;&nbsp;（提示:提交后系统自动生成）</font></td>
 				</tr>
 				<tr>
 					<th>办理人</th>

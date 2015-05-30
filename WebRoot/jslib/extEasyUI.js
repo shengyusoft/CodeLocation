@@ -13,7 +13,7 @@ $.fn.datagrid.defaults.loadMsg = '加载中....';
  * panel关闭时回收内存，主要用于layout使用iframe嵌入网页时的内存泄漏问题
  */
 
-//二次弹窗
+// 二次弹窗
 $.modalDialogTwo = function(options) {
 	if ($.modalDialogTwo.handler == undefined) {// 避免重复弹出
 		var opts = $.extend({
@@ -259,12 +259,12 @@ $.extend($.fn.validatebox.defaults.rules, {
 		message : '密码不一致！'
 	},
 
-	num: {// 验证整数或小数
-        validator: function (value) {
-            return /^\d+(\.\d+)?$/i.test(value);
-        },
-        message: '请输入数字，并确保格式正确'
-    },
+	num : {// 验证整数或小数
+		validator : function(value) {
+			return /^\d+(\.\d+)?$/i.test(value);
+		},
+		message : '请输入数字，并确保格式正确'
+	},
 });
 
 $.extend($.fn.validatebox.defaults.rules, {
@@ -275,56 +275,58 @@ $.extend($.fn.validatebox.defaults.rules, {
 		message : '密码不一致！'
 	},
 
-	num: {// 验证整数或小数
-        validator: function (value) {
-            return /^\d+(\.\d+)?$/i.test(value);
-        },
-        message: '请输入数字，并确保格式正确'
-    },
+	num : {// 验证整数或小数
+		validator : function(value) {
+			return /^\d+(\.\d+)?$/i.test(value);
+		},
+		message : '请输入数字，并确保格式正确'
+	},
 });
 
-Date.prototype.format = function (format) {
-    /*
-    * eg:format="yyyy-MM-dd hh:mm:ss";
-    */
-    if (!format) {
-        format = "yyyy-MM-dd hh:mm:ss";
-    }
-    var o = {
-        "M+": this.getMonth() + 1, // month
-        "d+": this.getDate(), // day
-        "h+": this.getHours(), // hour
-        "m+": this.getMinutes(), // minute
-        "s+": this.getSeconds(), // second
-        "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
-        "S": this.getMilliseconds()
-        // millisecond
-    };
+Date.prototype.format = function(format) {
+	/*
+	 * eg:format="yyyy-MM-dd hh:mm:ss";
+	 */
+	if (!format) {
+		format = "yyyy-MM-dd hh:mm:ss";
+	}
+	var o = {
+		"M+" : this.getMonth() + 1, // month
+		"d+" : this.getDate(), // day
+		"h+" : this.getHours(), // hour
+		"m+" : this.getMinutes(), // minute
+		"s+" : this.getSeconds(), // second
+		"q+" : Math.floor((this.getMonth() + 3) / 3), // quarter
+		"S" : this.getMilliseconds()
+	// millisecond
+	};
 
-    if (/(y+)/.test(format)) {
-        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    }
+	if (/(y+)/.test(format)) {
+		format = format.replace(RegExp.$1, (this.getFullYear() + "")
+				.substr(4 - RegExp.$1.length));
+	}
 
-    for (var k in o) {
-        if (new RegExp("(" + k + ")").test(format)) {
-            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
-        }
-    }
-    return format;
+	for ( var k in o) {
+		if (new RegExp("(" + k + ")").test(format)) {
+			format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
+					: ("00" + o[k]).substr(("" + o[k]).length));
+		}
+	}
+	return format;
 };
 
-$.extend($.fn.validatebox.defaults.rules, { 
-	selectValueRequired: { 
-		validator: function(value,param){ 			
-			 if (value == "" || value.indexOf('请选择') >= 0) { 
-			 	return false;
-			 }else {
-			 	return true;
-			 }  
-		}, 
-		message: '该下拉框为必选项' 
-	} 
-}); 
+$.extend($.fn.validatebox.defaults.rules, {
+	selectValueRequired : {
+		validator : function(value, param) {
+			if (value == "" || value.indexOf('请选择') >= 0) {
+				return false;
+			} else {
+				return true;
+			}
+		},
+		message : '该下拉框为必选项'
+	}
+});
 
 // 扩展tree，使其可以获取实心节点
 $.extend($.fn.tree.methods, {
@@ -458,3 +460,53 @@ $.modalDialog_1 = function(options) {
 	opts.modal = true;// 强制此dialog为模式化，无视传递过来的modal参数
 	return $.modalDialog.handler = $('<div/>').dialog(opts);
 };
+
+// $.extend($.fn.combobox.methods, {
+// filter: function (q, row) {
+// var opts = $(this).combobox('options');
+// return row[opts.textField].indexOf(q) == 0;
+// }
+// });
+
+$.extend($.fn.combobox.defaults, {
+	filter : filterComboboxData,
+	onHidePanel : onComboboxHidePanel
+});
+
+function filterComboboxData(q, row) {
+	var opts = $(this).combobox('options');
+	return row[opts.textField].indexOf(q) == 0;
+}
+
+function onComboboxHidePanel() {
+	var el = $(this);
+	el.combobox('textbox').focus();
+	// 检查录入内容是否在数据里
+	var opts = el.combobox("options");
+	var data = el.combobox("getData");
+	var value = el.combobox("getValue");
+
+	// 有高亮选中的项目, 则不进一步处理
+	var panel = el.combobox("panel");
+	var items = panel.find(".combobox-item-selected");
+	if (items.length > 0) {
+		var values = el.combobox("getValues");
+		el.combobox("setValues", values);
+		return;
+	}
+
+	var allowInput = opts.allowInput;
+	if (allowInput) {
+		// 允许录入, 并且当前下拉没内容(过滤掉了), 则加入下拉列表里
+		var idx = data.length;
+
+		data[idx] = [];
+		data[idx][opts.textField] = value;
+		data[idx][opts.valueField] = value;
+
+		el.combobox("loadData", data);
+	} else {
+		// 不允许录入任意项, 则清空
+		el.combobox("clear");
+	}
+}

@@ -41,6 +41,7 @@ public class BidBond extends IdEntity implements Serializable {
 	private String bondFeeCH;// 保证金数额(中文大写)
 
 	// 收 款 人信息
+	private String payeeName;// 收 款 人姓名
 	private String payeeAccountName;
 	private String payeeBank;// 开户行
 	private String payeeAccountNum;// 帐 号
@@ -125,6 +126,14 @@ public class BidBond extends IdEntity implements Serializable {
 
 	public void setBondFee(Double bondFee) {
 		this.bondFee = bondFee;
+	}
+
+	public String getPayeeName() {
+		return payeeName;
+	}
+
+	public void setPayeeName(String payeeName) {
+		this.payeeName = payeeName;
 	}
 
 	public String getPayeeAccountName() {

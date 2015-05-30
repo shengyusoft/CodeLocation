@@ -101,15 +101,6 @@
 		panelHeight : 'auto'				
 	});
 	
-	$('#delegator').combobox({
-		url : "${pageContext.request.contextPath}/dictionary/combox?code=wtr",
-		parentField : 'dictionaryId',
-		valueField : 'id',
-		value:'${projectRegist.delegator.id}',
-		textField : 'text',
-		panelHeight : 'auto'				
-	});
-	
 	$('#provice').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
 		parentField : 'pid',
@@ -277,10 +268,10 @@
 				<tr>
 					<th>委托人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="delegator" name="delegator.id"
-						class="easyui-validatebox span2" style="width: 150px;"
-						data-options="required:true">
-					</select></td>
+					<td><input id="delegator" name="delegator.name"
+						value="${projectRegist.delegatorName}" class="easyui-validatebox span2"
+						style="width: 150px;" data-options="required:true"></input> <input
+						type="hidden" name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
 					<th>报名时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT" value="${projectRegist.registDT}"

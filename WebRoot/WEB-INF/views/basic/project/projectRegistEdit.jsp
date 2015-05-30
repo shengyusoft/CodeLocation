@@ -87,7 +87,7 @@
 		valueField : 'id',
 		value:'${projectRegist.projectMgr.id}',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#techniqueMgr').combobox({
@@ -96,7 +96,7 @@
 		value:'${projectRegist.techniqueMgr.id}',
 		valueField : 'id',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#certificateA').combobox({
@@ -123,15 +123,6 @@
 		valueField : 'id',
 		value:'${projectRegist.certificateC.id}',
 		textField : 'card_name',
-		panelHeight : 'auto'				
-	});
-	
-	$('#delegator').combobox({
-		url : "${pageContext.request.contextPath}/dictionary/combox?code=wtr",
-		parentField : 'dictionaryId',
-		valueField : 'id',
-		value:'${projectRegist.delegator.id}',
-		textField : 'text',
 		panelHeight : 'auto'				
 	});
 	
@@ -302,10 +293,10 @@
 				<tr>
 					<th>委托人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="delegator" name="delegator.id"
-						class="easyui-validatebox span2" style="width: 150px;"
-						data-options="required:true">
-					</select></td>
+					<td><input id="delegator" name="delegator.name" readonly="readonly"
+						value="${projectRegist.delegatorName}" class="easyui-validatebox span2"
+						style="width: 150px;" data-options="required:true"></input> <input
+						type="hidden" name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
 					<th>报名时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT" value="${projectRegist.registDT}"

@@ -65,7 +65,7 @@
 				</tr>
 				<tr>
 					<th>密码</th>
-					<td><input type="text" name="password" style="width: 134px;" value="********"/></td>
+					<td><input type="password" name="password" value="********" style="width: 134px;"/></td>
 					<th>性别</th>
 					<td><select name="sex" class="easyui-combobox" data-options="width:140,editable:false,panelHeight:'auto'">
 						<c:forEach items="${sexList}" var="sexList">

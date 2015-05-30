@@ -56,7 +56,7 @@
 					style="width: 160px;"></select></td>
 				<td>排序</td>
 				<td><input name="seq" value="0" class="easyui-numberspinner"
-					style="width: 140px;" data-options="editable:false,required:true"></td>
+					style="width: 140px;" data-options="required:true"></td>
 			</tr>
 			<tr>
 				<td>状态</td>

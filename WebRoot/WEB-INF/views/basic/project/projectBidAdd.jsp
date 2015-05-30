@@ -58,7 +58,7 @@
 		//multiple:true,
 		valueField : 'id',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#techniqueMgr').combobox({
@@ -66,7 +66,7 @@
 		parentField : 'dictionaryId',
 		valueField : 'id',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#aqy').combobox({
@@ -194,13 +194,13 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="projectMgr" name="projectMgr.id"
 						class="easyui-validatebox span2" style="width: 180px;"
-						data-options="editable:false,required:true">
+						data-options="required:true">
 					</select></td>
 					<th>技术负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="techniqueMgr" name="techniqueMgr.id"
 						class="easyui-validatebox span2" style="width: 180px;"
-						data-options="editable:false,required:true">
+						data-options="required:true">
 					</select></td>
 				</tr>
 				

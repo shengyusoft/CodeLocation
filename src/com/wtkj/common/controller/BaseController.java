@@ -1,18 +1,15 @@
 package com.wtkj.common.controller;
 
-import java.text.SimpleDateFormat;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.propertyeditors.CustomBooleanEditor;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wtkj.common.CustomTimestampEditor;
+import com.wtkj.common.DateEditor;
 import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.SessionInfo;
 
@@ -44,18 +41,20 @@ public class BaseController {
 		// CustomNumberEditor(Double.class, true));
 		// binder.registerCustomEditor(Long.class, new
 		// CustomNumberEditor(Integer.class, true));
+		/*
+		 * SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		 * dateFormat.setLenient(false);
+		 * 
+		 * SimpleDateFormat datetimeFormat = new SimpleDateFormat(
+		 * "yyyy-MM-dd HH:mm:ss"); datetimeFormat.setLenient(false);
+		 * 
+		 * binder.registerCustomEditor(java.util.Date.class, new
+		 * CustomDateEditor( dateFormat, true));
+		 * binder.registerCustomEditor(java.sql.Timestamp.class, new
+		 * CustomTimestampEditor(datetimeFormat, true));
+		 */
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		dateFormat.setLenient(false);
-
-		SimpleDateFormat datetimeFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
-		datetimeFormat.setLenient(false);
-
-		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(
-				dateFormat, true));
-		binder.registerCustomEditor(java.sql.Timestamp.class,
-				new CustomTimestampEditor(datetimeFormat, true));
+		binder.registerCustomEditor(java.util.Date.class, new DateEditor());
 
 		/**
 		 * 防止XSS攻击

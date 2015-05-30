@@ -56,7 +56,7 @@
 				<td>排序</td>
 				<td><input name="seq" value="${dictionary.seq}"
 					class="easyui-numberspinner" style="width: 140px;"
-					data-options="editable:false,required:true"></td>
+					data-options="required:true"></td>
 			</tr>
 			<tr>
 				<td>状态</td>

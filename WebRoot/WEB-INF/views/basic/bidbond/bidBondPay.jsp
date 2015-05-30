@@ -43,12 +43,31 @@
 		            loadMsg:'加载中...', 
 		            height:'auto', 
 		            columns:[[ 
-		                {field:'toAccountFee',title:'到帐金额（元）',width:120}, 
-		                {field:'toAccountDT',title:'到帐时间',width:120,formatter:Common.formatter}, 
+		                {field:'toAccountFee',title:'到帐金额（元）',width:120,formatter:Common.formatterDecimal2}, 
+		                {field:'toAccountDT',title:'到帐时间',width:120,formatter:function(value){
+	                		if (!isEmpty(value)) {
+	                			var date = new Date(value);
+	                			return date.format('yyyy-MM-dd hh:mm');
+	                		}
+	                		return '';
+	                	}},
 		                {field:'outAccountFee',title:'转出金额',width:120},
-		                {field:'outAccountDT',title:'转出时间',width:120,formatter:Common.formatter},
+		                {field:'outAccountDT',title:'转出时间',width:120,formatter:function(value){
+	                		if (!isEmpty(value)) {
+	                			var date = new Date(value);
+	                			return date.format('yyyy-MM-dd hh:mm');
+	                		}
+	                		return '';
+	                	}},
 		                {field:'handlerName',title:'办理人',width:120},
-		                {field:'handlerDT',title:'办理时间',width:120,formatter:Common.formatterTime}
+		                {field:'handlerDT',title:'办理时间',width:120,
+		                	formatter:function(value){
+		                		if (!isEmpty(value)) {
+		                			var date = new Date(value);
+		                			return date.format('yyyy-MM-dd hh:mm');
+		                		}
+		                		return '';
+		                	}}
 		            ]], 
 		            onResize:function(){ 
 		                $('#dataGrid').datagrid('fixDetailRowHeight',index); 

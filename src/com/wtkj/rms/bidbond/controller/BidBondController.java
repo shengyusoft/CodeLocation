@@ -248,7 +248,14 @@ public class BidBondController extends BaseController {
 			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
 				vo.setHandlerId(sessionInfo.getId());
 			}
-			vo.setHandlerDT(new Date());
+			
+			if(vo.getHandlerDT() == null){
+				vo.setHandlerDT(new Date());
+			}
+			
+			if(vo.getOutAccountDT() == null){
+				vo.setOutAccountDT(new Date());
+			}
 
 			// 转出金额转大写
 			if (vo.getOutAccountFee() != null && vo.getOutAccountFee() > 0) {

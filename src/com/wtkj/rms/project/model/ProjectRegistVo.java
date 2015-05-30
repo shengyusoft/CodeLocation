@@ -2,20 +2,7 @@ package com.wtkj.rms.project.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import com.wtkj.common.model.IdEntity;
 import com.wtkj.common.model.Tdictionary;
-import com.wtkj.common.model.Tuser;
 
 /**
  * 项目报名登记管理(项目开标登记)
@@ -24,12 +11,9 @@ import com.wtkj.common.model.Tuser;
  * 
  */
 
-@Entity
-@Table(name = "ProjectRegist", schema = "")
-@DynamicInsert(true)
-@DynamicUpdate(true)
-public class ProjectRegist extends IdEntity implements java.io.Serializable {
+public class ProjectRegistVo implements java.io.Serializable {
 	private static final long serialVersionUID = 6625249529038114020L;
+	private Long id;
 	private Tdictionary company;// 公司名称
 	private String projectName;// 项目名称
 
@@ -55,10 +39,8 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private String member5Cards; // 五大员证多选(ids)
 	private String member5CardNames; // 五大员证多选显示用(ids)
 
-	private Tuser delegator;// 委托人
-	
 	private Long delegatorId;
-	
+
 	private String delegatorName;
 
 	private Date registDT;// 报名时间
@@ -73,9 +55,14 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private Date st;
 	private Date et;
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "company_id")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Tdictionary getCompany() {
 		return company;
 	}
@@ -100,9 +87,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.projectName = projectName;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "province_id")
 	public Tdictionary getProvice() {
 		return provice;
 	}
@@ -111,9 +95,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.provice = provice;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "city_id")
 	public Tdictionary getCity() {
 		return city;
 	}
@@ -122,9 +103,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.city = city;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "county_id")
 	public Tdictionary getCounty() {
 		return county;
 	}
@@ -141,9 +119,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.qualifyRequirement = qualifyRequirement;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "pmgr_id")
 	public Tdictionary getProjectMgr() {
 		return projectMgr;
 	}
@@ -152,9 +127,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.projectMgr = projectMgr;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "tec_id")
 	public Tdictionary getTechniqueMgr() {
 		return techniqueMgr;
 	}
@@ -163,9 +135,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.techniqueMgr = techniqueMgr;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "A_id")
 	public Certificate getCertificateA() {
 		return certificateA;
 	}
@@ -174,9 +143,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.certificateA = certificateA;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "B_id")
 	public Certificate getCertificateB() {
 		return certificateB;
 	}
@@ -185,9 +151,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.certificateB = certificateB;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "C_id")
 	public Certificate getCertificateC() {
 		return certificateC;
 	}
@@ -204,18 +167,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.member5Cards = member5Cards;
 	}
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "delegate_id")
-	public Tuser getDelegator() {
-		return delegator;
-	}
-
-	public void setDelegator(Tuser delegator) {
-		this.delegator = delegator;
-	}
-	
-	@Transient
 	public Long getDelegatorId() {
 		return delegatorId;
 	}
@@ -224,7 +175,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.delegatorId = delegatorId;
 	}
 
-	@Transient
 	public String getDelegatorName() {
 		return delegatorName;
 	}
@@ -273,7 +223,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	@Transient
 	public Date getSt() {
 		return st;
 	}
@@ -282,7 +231,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.st = st;
 	}
 
-	@Transient
 	public Date getEt() {
 		return et;
 	}
@@ -299,7 +247,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.bds = bds;
 	}
 
-	@Transient
 	public String getBdNames() {
 		return bdNames;
 	}
@@ -308,7 +255,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.bdNames = bdNames;
 	}
 
-	@Transient
 	public String getQualifyRequirementNames() {
 		return qualifyRequirementNames;
 	}
@@ -317,7 +263,6 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 		this.qualifyRequirementNames = qualifyRequirementNames;
 	}
 
-	@Transient
 	public String getMember5CardNames() {
 		return member5CardNames;
 	}
