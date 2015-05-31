@@ -161,8 +161,8 @@
 	function addFun() {
 		parent.$.modalDialog({
 			title : '项目开标登记',
-			width : 750,
-			height : 520,
+			width : 850,
+			height : 535,
 			href : '${ctx}/projectRegist/addPage?type=1',
 			buttons : [ {
 				text : '添加',
@@ -219,8 +219,8 @@
 
 		parent.$.modalDialog({
 			title : '项目开标登记编辑',
-			width : 750,
-			height : 520,
+			width : 850,
+			height : 535,
 			href : '${ctx}/projectRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -251,8 +251,8 @@
 
 		parent.$.modalDialog({
 			title : '项目开标登记详情',
-			width : 750,
-			height : 520,
+			width : 850,
+			height : 535,
 			href : '${ctx}/projectRegist/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',

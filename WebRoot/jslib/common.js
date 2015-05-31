@@ -224,7 +224,8 @@ function getTextByTaskState(state) {
 var Common = {
 	formatter : function(value, row, index) {
 		if (!isEmpty(value)) {
-			var date = new Date(value);
+			// var date = new Date(value);
+			var date = newDate(value);
 			return date.format('yyyy-MM-dd');
 		}
 		return '';
@@ -232,31 +233,58 @@ var Common = {
 
 	formatterTime : function(value, row, index) {
 		if (!isEmpty(value)) {
-			var date = new Date(value);
+			var date = newDate(value);
 			return date.format('yyyy-MM-dd hh:mm');
 		}
 		return '';
 	},
-	
-	//强制保留两位小数
+
+	// 强制保留两位小数
 	formatterDecimal2 : function(x) {
-		var f = parseFloat(x);    
-        if (isNaN(f)) {    
-            return false;    
-        }    
-        var f = Math.round(x*100)/100;    
-        var s = f.toString();    
-        var rs = s.indexOf('.');    
-        if (rs < 0) {    
-            rs = s.length;    
-            s += '.';    
-        }    
-        while (s.length <= rs + 2) {    
-            s += '0';    
-        }    
-        return s;    
+		var f = parseFloat(x);
+		if (isNaN(f)) {
+			return false;
+		}
+		var f = Math.round(x * 100) / 100;
+		var s = f.toString();
+		var rs = s.indexOf('.');
+		if (rs < 0) {
+			rs = s.length;
+			s += '.';
+		}
+		while (s.length <= rs + 2) {
+			s += '0';
+		}
+		return s;
 	}
 };
+
+//支持IE的日期处理
+function newDate(dateStr) {
+	if(!isEmpty(dateStr)){
+		var date = new Date();
+		if(dateStr.indexOf(':') >= 0){
+			var ds = dateStr.split(" ")[0].split("-");
+			var ts = dateStr.split(" ")[1].split(":");
+			date.setFullYear(ds[0], ds[1] - 1, ds[2]);
+			date.setHours(ts[0], ts[1], ts[2], 0);
+		}else{
+			var ds2 = dateStr.split("-");
+			date.setUTCFullYear(ds2[0], ds2[1] - 1, ds2[2]);
+			date.setUTCHours(0, 0, 0, 0);
+		}
+		return date;
+	}
+}
+
+function newDateAndTime(dateStr) {
+	var ds = dateStr.split(" ")[0].split("-");
+	var ts = dateStr.split(" ")[1].split(":");
+	var r = new Date();
+	r.setFullYear(ds[0], ds[1] - 1, ds[2]);
+	r.setHours(ts[0], ts[1], ts[2], 0);
+	return r;
+}
 
 // html编辑器,fix bug,第二次进入编辑器时,必须全屏然后才可以获取焦点
 function initKingEditor(editor) {

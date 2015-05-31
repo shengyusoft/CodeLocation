@@ -157,8 +157,8 @@
 	function addFun() {
 		parent.$.modalDialog({
 			title : '项目报名登记',
-			width : 750,
-			height : 520,
+			width : 850,
+			height : 535,
 			href : '${ctx}/projectRegist/addPage?type=0',
 			buttons : [ {
 				text : '添加',
@@ -215,8 +215,8 @@
 
 		parent.$.modalDialog({
 			title : '项目报名登记编辑',
-			width : 750,
-			height : 520,
+			width : 850,
+			height : 535,
 			href : '${ctx}/projectRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -247,8 +247,8 @@
 
 		parent.$.modalDialog({
 			title : '项目报名登记详情',
-			width : '815',
-			height : '500',
+			width : 850,
+			height : 535,
 			href : '${ctx}/projectRegist/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',

@@ -62,7 +62,7 @@
 		valueField : 'id',
 		value:'${projectRegist.projectMgr.id}',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#techniqueMgr').combobox({
@@ -71,7 +71,7 @@
 		value:'${projectRegist.techniqueMgr.id}',
 		valueField : 'id',
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '300'				
 	});
 	
 	$('#certificateA').combobox({
@@ -178,7 +178,7 @@
 		<form id="projectRegistEditForm" method="post" >
 			<table class="grid">
 				<tr>
-					<th>公司名称 &nbsp;<label
+					<th width="90px">公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
 					<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input>
@@ -186,7 +186,7 @@
 					<select id="company" name="company.id" data-options="required:true"
 						class="easyui-validatebox span2" style="width: 100%;">
 					</select></td>
-					<th>项目名称 &nbsp;<label
+					<th width="100px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="projectName" value="${projectRegist.projectName}" style="width: 150px;"
 						type="text" id="projectName" class="easyui-validatebox span2"
@@ -206,19 +206,16 @@
 					</td>
 				</tr>
 				<tr>
-					<th>标段 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="bd" name="bds"
-						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="required:true">
-					</select></td>
-				</tr>
-				<tr>
 					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="qualifyRequirement" name="qualifyRequirement"
-						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="required:true">
+					<td><select id="qualifyRequirement"
+						name="qualifyRequirement" class="easyui-validatebox span2"
+						style="width: 350px;" data-options="editable:false,required:true"></select></td>
+					<th>标段 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="bd" name="bds"
+						class="easyui-validatebox span2" style="width: 250px;"
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
@@ -228,7 +225,7 @@
 						class="easyui-validatebox span2" style="width: 150px;"
 						data-options="required:true">
 					</select></td>
-					<th>技术负责人&nbsp;<label
+					<th width="90px">技术负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="techniqueMgr" name="techniqueMgr.id"
 						class="easyui-validatebox span2" style="width: 150px;"
@@ -236,33 +233,23 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>A证 &nbsp;<label
+					<th rowspan="2" width="90px">证书要求 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="certificateA" name="certificateA.id"
-						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
-					</select></td>
-					<th>B证&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="certificateB" name="certificateB.id"
-						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
-					</select></td>
-				</tr>
-				<tr>
-					<th>C证&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="certificateC" name="certificateC.id"
-						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
+					<td colspan="3">A证:&nbsp;<select id="certificateA" name="certificateA.id"
+						class="easyui-validatebox span2" style="width: 150px;"
+						data-options="editable:false,required:true">
+					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B证:&nbsp;<select id="certificateB" name="certificateB.id"
+						class="easyui-validatebox span2" style="width: 150px;"
+						data-options="editable:false,required:true">
+					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;C证:&nbsp;<select id="certificateC"
+						name="certificateC.id" class="easyui-validatebox span2"
+						style="width: 150px;" data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
-					<th>五大员证 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="member5Cards" name="member5Cards"
+					<td colspan="4">五大员证 :&nbsp;<select id="member5Cards" name="member5Cards"
 						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
@@ -272,7 +259,7 @@
 						value="${projectRegist.delegatorName}" class="easyui-validatebox span2"
 						style="width: 150px;" data-options="required:true"></input> <input
 						type="hidden" name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
-					<th>开标时间 &nbsp;<label
+					<th>报名时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT" value="${projectRegist.registDT}"
 						id="registDT" style="width: 98%; height: 100%;"
@@ -290,16 +277,92 @@
 						type="text" id="contract" class="easyui-validatebox span2"/></td>
 				</tr>
 				<tr>
-					<th>投标费用（元）&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bidCost" value="${projectRegist.bidCost}" type="text" id="bidCost"
-						style="width: 100%; height: 100%" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-					
+					<td colspan="4">
+						<table class="grid2">
+							<tr>
+								<th colspan="13">费用明细</th>
+							</tr>
+							<tr>
+								<th colspan="4">路费</th>
+								<th rowspan="2">资质费</th>
+								<th rowspan="2">标书费</th>
+								<th rowspan="2">预算费</th>
+								<th colspan="4">人员出场费</th>
+								<th rowspan="2">其他费用</th>
+								<th rowspan="2">合计</th>
+							</tr>
+							<tr>
+								<th>报名</th>
+								<th>开标</th>
+								<td><input name="head1" value="${projectRegist.head1}"
+									type="text" id="head1" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head2" value="${projectRegist.head2}"
+									type="text" id="head2" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+
+								<th>项目经理</th>
+								<th>法人</th>
+								<td><input name="head3" value="${projectRegist.head3}"
+									type="text" id="head3" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head4" value="${projectRegist.head4}"
+									type="text" id="head4" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+							</tr>
+							<tr>
+								<td><input name="bmFee" value="${projectRegist.bmFee}"
+									type="number" id="bmFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="kbFee" value="${projectRegist.kbFee}"
+									type="number" id="kbFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head1Fee"
+									value="${projectRegist.head1Fee}" type="number" id="head1Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head2Fee"
+									value="${projectRegist.head2Fee}" type="number" id="head2Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="zzFee" value="${projectRegist.zzFee}"
+									type="number" id="zzFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="bsFee" value="${projectRegist.bsFee}"
+									type="number" id="bsFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="ysFee" value="${projectRegist.ysFee}"
+									type="number" id="ysFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="xmjlFee" value="${projectRegist.xmjlFee}"
+									type="number" id="xmjlFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="frFee" value="${projectRegist.frFee}"
+									type="number" id="frFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head3Fee"
+									value="${projectRegist.head3Fee}" type="number" id="head3Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head4Fee"
+									value="${projectRegist.head4Fee}" type="number" id="head4Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="otherFee"
+									value="${projectRegist.otherFee}" type="number" id="otherFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="totalFee"
+									value="${projectRegist.totalFee}" type="number" id="totalFee"
+									style="width: 100%; height: 100%" readonly="readonly" disabled="disabled"
+									class="easyui-validatebox span2" /></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="3"><textarea style="width: 100%" rows="2"
+					<td colspan="3"><textarea style="width: 100%" rows="4"
 							name="remark">${projectRegist.remark}</textarea></td>
 				</tr>
 			</table>

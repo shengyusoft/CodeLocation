@@ -26,18 +26,16 @@
 			}
 		});
 	});
-
-	$('#company')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						value : '${projectRegist.company.id}',
-						required : true,
-						textField : 'text',
-						panelHeight : 'auto'
-					});
+	
+	$('#company').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		value:'${projectRegist.company.id}',
+		required:true,
+		textField : 'text',
+		panelHeight : 'auto'				
+	});
 
 	//多选列表
 	//标段
@@ -45,239 +43,204 @@
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=bd",
 		parentField : 'dictionaryId',
 		valueField : 'id',
-		multiple : true,
+		multiple:true,
 		textField : 'text',
-		panelHeight : 'auto'
+		panelHeight : 'auto'				
 	});
-
-	var selectedBds = [];
+	
+	var selectedBds=[];
 	var bss = '${projectRegist.bds}';
 	selectedBds = bss.split(',');
-	$('#bd').combobox('setValues', selectedBds);
-
+	$('#bd').combobox('setValues',selectedBds); 
+	
 	//资质要求
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
 		parentField : 'dictionaryId',
 		valueField : 'id',
-		multiple : true,
+		multiple:true,
 		textField : 'text',
-		panelHeight : 'auto'
+		panelHeight : 'auto'				
 	});
-	var selectedQFs = [];
+	var selectedQFs=[];
 	var qfs = '${projectRegist.qualifyRequirement}';
 	selectedQFs = qfs.split(',');
-	$('#qualifyRequirement').combobox('setValues', selectedQFs);
-
+	$('#qualifyRequirement').combobox('setValues',selectedQFs); 
+	
 	//五大员证
-	$('#member5Cards')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=D",
-						parentField : 'card_code',
-						valueField : 'id',
-						multiple : true,
-						textField : 'card_name',
-						panelHeight : 'auto'
-					});
-	var selectedM5ds = [];
+	$('#member5Cards').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=D",
+		parentField : 'card_code',
+		valueField : 'id',
+		multiple:true,
+		textField : 'card_name',
+		panelHeight : 'auto'				
+	});
+	var selectedM5ds=[];
 	var md5s = '${projectRegist.member5Cards}';
 	selectedM5ds = md5s.split(',');
-	$('#member5Cards').combobox('setValues', selectedM5ds);
-
-	$('#projectMgr')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						value : '${projectRegist.projectMgr.id}',
-						textField : 'text',
-						panelHeight : '300'
-					});
-
+	$('#member5Cards').combobox('setValues',selectedM5ds); 
+	
+	$('#projectMgr').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		value:'${projectRegist.projectMgr.id}',
+		textField : 'text',
+		panelHeight : '300'				
+	});
+	
 	$('#techniqueMgr').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=jsjl",
 		parentField : 'dictionaryId',
-		value : '${projectRegist.techniqueMgr.id}',
+		value:'${projectRegist.techniqueMgr.id}',
 		valueField : 'id',
 		textField : 'text',
-		panelHeight : '300'
+		panelHeight : '300'				
 	});
-
-	$('#certificateA')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=A",
-						parentField : 'card_code',
-						valueField : 'id',
-						value : '${projectRegist.certificateA.id}',
-						textField : 'card_name',
-						panelHeight : 'auto'
-					});
-
-	$('#certificateB')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
-						parentField : 'card_code',
-						valueField : 'id',
-						value : '${projectRegist.certificateB.id}',
-						textField : 'card_name',
-						panelHeight : 'auto'
-					});
-
-	$('#certificateC')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
-						parentField : 'card_code',
-						valueField : 'id',
-						value : '${projectRegist.certificateC.id}',
-						textField : 'card_name',
-						panelHeight : 'auto'
-					});
-
-	$('#provice')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs=" + 2,
-						parentField : 'pid',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : 300,
-						required : true,
-						editable : false,//不可编辑，只能选择
-						defaultValue : '--请选择--',
-						value : '${projectRegist.provice.id}',
-						onChange : function(provice) {
-							$('#city')
-									.combobox(
-											{
-												url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-														+ provice + "&&lvs=3",
-												valueField : 'id', //值字段
-												textField : 'text', //显示的字段
-												panelHeight : 'auto',
-												required : true,
-												editable : false,//不可编辑，只能选择
-												value : '--请选择--',
-												onChange : function(city, n) {
-													$('#county')
-															.combobox(
-																	{
-																		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-																				+ city
-																				+ "&&lvs=4",
-																		valueField : 'id', //值字段
-																		textField : 'text', //显示的字段
-																		panelHeight : 'auto',
-																		required : true,
-																		editable : false,//不可编辑，只能选择
-																		value : '--请选择--'
-																	});
-												}
-											});
-						}
-					});
-
+	
+	$('#certificateA').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=A",
+		parentField : 'card_code',
+		valueField : 'id',
+		value:'${projectRegist.certificateA.id}',
+		textField : 'card_name',
+		panelHeight : 'auto'				
+	});
+	
+	$('#certificateB').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
+		parentField : 'card_code',
+		valueField : 'id',
+		value:'${projectRegist.certificateB.id}',
+		textField : 'card_name',
+		panelHeight : 'auto'				
+	});
+	
+	$('#certificateC').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
+		parentField : 'card_code',
+		valueField : 'id',
+		value:'${projectRegist.certificateC.id}',
+		textField : 'card_name',
+		panelHeight : 'auto'				
+	});
+	
+	$('#provice').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
+		parentField : 'pid',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : 300,
+		required:true,
+		editable:false,//不可编辑，只能选择
+		defaultValue:'--请选择--',
+		value:'${projectRegist.provice.id}',
+		onChange:function(provice){
+	    	$('#city').combobox({
+	    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
+		    valueField:'id', //值字段
+		    textField:'text', //显示的字段
+		    panelHeight:'auto',
+		    required:true,
+		    editable:false,//不可编辑，只能选择
+		    value:'--请选择--',
+		    onChange:function(city,n){
+		    	$('#county').combobox({
+			    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
+				    valueField:'id', //值字段
+				    textField:'text', //显示的字段
+				    panelHeight:'auto',
+				    required:true,
+				    editable:false,//不可编辑，只能选择
+				    value:'--请选择--'
+				});
+	 		}
+	    });
+	   }
+	});
+	
 	var provice = $('#provice').combobox('getValue');
-	$('#city')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-								+ provice + "&&lvs=3",
-						parentField : 'pid',
-						valueField : 'id', //值字段
-						textField : 'text', //显示的字段
-						panelHeight : 'auto',
-						required : true,
-						editable : false,//不可编辑，只能选择
-						defaultValue : '--请选择--',
-						value : '${projectRegist.city.id}',
-						onChange : function(city, n) {
-							$('#county')
-									.combobox(
-											{
-												url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-														+ city + "&&lvs=4",
-												valueField : 'id', //值字段
-												textField : 'text', //显示的字段
-												panelHeight : 'auto',
-												required : true,
-												editable : false,//不可编辑，只能选择
-												value : '--请选择--'
-											});
-						}
-					});
-
+	$('#city').combobox({
+    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
+    	parentField : 'pid',
+	    valueField:'id', //值字段
+	    textField:'text', //显示的字段
+	    panelHeight:'auto',
+	    required:true,
+	    editable:false,//不可编辑，只能选择
+	    defaultValue:'--请选择--',
+	    value:'${projectRegist.city.id}',
+	    onChange:function(city,n){
+	    	$('#county').combobox({
+		    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
+			    valueField:'id', //值字段
+			    textField:'text', //显示的字段
+			    panelHeight:'auto',
+			    required:true,
+			    editable:false,//不可编辑，只能选择
+			    value:'--请选择--'
+			});
+ 		}
+	});
+	
 	var city = $('#city').combobox('getValue');
-	$('#county')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-								+ city + "&&lvs=4",
-						parentField : 'pid',
-						valueField : 'id', //值字段
-						textField : 'text', //显示的字段
-						panelHeight : 'auto',
-						required : true,
-						editable : false,//不可编辑，只能选择
-						defaultValue : '--请选择--',
-						value : '${projectRegist.county.id}'
-					});
+	$('#county').combobox({
+    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
+    	parentField : 'pid',
+	    valueField:'id', //值字段
+	    textField:'text', //显示的字段
+	    panelHeight:'auto',
+	    required:true,
+	    editable:false,//不可编辑，只能选择
+	    defaultValue:'--请选择--',
+	    value:'${projectRegist.county.id}'
+	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="projectBidRegistEditForm" method="post">
+		<form id="projectBidRegistEditForm" method="post" >
 			<table class="grid">
 				<tr>
-					<th>公司名称 &nbsp;<label
+					<th width="90px">公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input type="hidden" name="id" id="id"
-						value="${projectRegist.id}"></input> <input type="hidden"
-						name="type" id="type" value="${projectRegist.type}"></input> <select
-						id="company" name="company.id" data-options="required:true"
+					<td>
+					<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input>
+					<input type="hidden" name="type" id="type" value="${projectRegist.type}"></input>
+					<select id="company" name="company.id" data-options="required:true"
 						class="easyui-validatebox span2" style="width: 100%;">
 					</select></td>
-					<th>项目名称 &nbsp;<label
+					<th width="100px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName"
-						value="${projectRegist.projectName}" style="width: 150px;"
+					<td><input name="projectName" value="${projectRegist.projectName}" style="width: 150px;"
 						type="text" id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th>地点 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3">省：<select id="provice"
-						data-options="required:true" name="provice.id"
-						class="easyui-validatebox span2" style="width: 140px;">
-					</select> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 市：<select id="city"
-						name="city.id" class="easyui-validatebox span2"
-						style="width: 140px;">
-					</select> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 县(区)：<select id="county"
-						name="county.id" data-options="required:true"
-						class="easyui-validatebox span2" validType="selectValueRequired"
-						style="width: 140px;">
+					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td colspan="3">
+						省：<select id="provice" data-options="required:true" name="provice.id" class="easyui-validatebox span2" style="width: 140px;">
+					</select>
+					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 140px;">
+					</select>
+					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						县(区)：<select id="county" name="county.id" data-options="required:true" class="easyui-validatebox span2" validType="selectValueRequired" style="width: 140px;">
 					</select>
 					</td>
 				</tr>
 				<tr>
-					<th>标段 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="bd" name="bds"
-						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="required:true">
-					</select></td>
-				</tr>
-				<tr>
 					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="qualifyRequirement"
+					<td><select id="qualifyRequirement"
 						name="qualifyRequirement" class="easyui-validatebox span2"
-						style="width: 550px;" data-options="required:true">
+						style="width: 350px;" data-options="editable:false,required:true"></select></td>
+					<th>标段 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="bd" name="bds"
+						class="easyui-validatebox span2" style="width: 250px;"
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
@@ -287,7 +250,7 @@
 						class="easyui-validatebox span2" style="width: 150px;"
 						data-options="required:true">
 					</select></td>
-					<th>技术负责人&nbsp;<label
+					<th width="90px">技术负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="techniqueMgr" name="techniqueMgr.id"
 						class="easyui-validatebox span2" style="width: 150px;"
@@ -295,73 +258,136 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>A证 &nbsp;<label
+					<th rowspan="2" width="90px">证书要求 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="certificateA" name="certificateA.id"
-						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
-					</select></td>
-					<th>B证&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="certificateB" name="certificateB.id"
-						class="easyui-validatebox span2" style="width: 100%;"
-						data-options="required:true">
-					</select></td>
-				</tr>
-				<tr>
-					<th>C证&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="certificateC"
+					<td colspan="3">A证:&nbsp;<select id="certificateA" name="certificateA.id"
+						class="easyui-validatebox span2" style="width: 150px;"
+						data-options="editable:false,required:true">
+					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B证:&nbsp;<select id="certificateB" name="certificateB.id"
+						class="easyui-validatebox span2" style="width: 150px;"
+						data-options="editable:false,required:true">
+					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;C证:&nbsp;<select id="certificateC"
 						name="certificateC.id" class="easyui-validatebox span2"
-						style="width: 100%;" data-options="required:true">
+						style="width: 150px;" data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
-					<th>五大员证 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="member5Cards" name="member5Cards"
+					<td colspan="4">五大员证 :&nbsp;<select id="member5Cards" name="member5Cards"
 						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="required:true">
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
 					<th>委托人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input id="delegator" name="delegator.name"
-						readonly="readonly" value="${projectRegist.delegatorName}"
-						class="easyui-validatebox span2" style="width: 150px;"
-						data-options="required:true"></input> <input type="hidden"
-						name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
-					<th>开标时间 &nbsp;<label
+					<td><input id="delegator" name="delegator.name" readonly="readonly"
+						value="${projectRegist.delegatorName}" class="easyui-validatebox span2"
+						style="width: 150px;" data-options="required:true"></input> <input
+						type="hidden" name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
+					<th>报名时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="registDT"
-						value="${projectRegist.registDT}" id="registDT"
-						style="width: 98%; height: 100%;" data-options="required:true"
-						onfocus="showDate('yyyy-MM-dd')" /></td>
+					<td><input class="Wdate" type="text" name="registDT" value="${projectRegist.registDT}"
+						id="registDT" style="width: 98%; height: 100%;"
+						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bidder" value="${projectRegist.bidder}"
-						type="text" id="bidder" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<td><input name="bidder" value="${projectRegist.bidder}" type="text" id="bidder"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
 					<th>联系方式 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contract" value="${projectRegist.contract}"
-						style="width: 100%; height: 100%" data-options="required:true"
-						type="text" id="contract" class="easyui-validatebox span2" /></td>
+					<td><input name="contract" value="${projectRegist.contract}" style="width: 100%; height: 100%" data-options="required:true"
+						type="text" id="contract" class="easyui-validatebox span2"/></td>
 				</tr>
 				<tr>
-					<th>投标费用（元）&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bidCost" value="${projectRegist.bidCost}"
-						type="text" id="bidCost" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<td colspan="4">
+						<table class="grid2">
+							<tr>
+								<th colspan="13">费用明细</th>
+							</tr>
+							<tr>
+								<th colspan="4">路费</th>
+								<th rowspan="2">资质费</th>
+								<th rowspan="2">标书费</th>
+								<th rowspan="2">预算费</th>
+								<th colspan="4">人员出场费</th>
+								<th rowspan="2">其他费用</th>
+								<th rowspan="2">合计</th>
+							</tr>
+							<tr>
+								<th>报名</th>
+								<th>开标</th>
+								<td><input name="head1" value="${projectRegist.head1}"
+									type="text" id="head1" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head2" value="${projectRegist.head2}"
+									type="text" id="head2" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
 
+								<th>项目经理</th>
+								<th>法人</th>
+								<td><input name="head3" value="${projectRegist.head3}"
+									type="text" id="head3" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head4" value="${projectRegist.head4}"
+									type="text" id="head4" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+							</tr>
+							<tr>
+								<td><input name="bmFee" value="${projectRegist.bmFee}"
+									type="number" id="bmFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="kbFee" value="${projectRegist.kbFee}"
+									type="number" id="kbFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head1Fee"
+									value="${projectRegist.head1Fee}" type="number" id="head1Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head2Fee"
+									value="${projectRegist.head2Fee}" type="number" id="head2Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="zzFee" value="${projectRegist.zzFee}"
+									type="number" id="zzFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="bsFee" value="${projectRegist.bsFee}"
+									type="number" id="bsFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="ysFee" value="${projectRegist.ysFee}"
+									type="number" id="ysFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="xmjlFee" value="${projectRegist.xmjlFee}"
+									type="number" id="xmjlFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="frFee" value="${projectRegist.frFee}"
+									type="number" id="frFee" style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head3Fee"
+									value="${projectRegist.head3Fee}" type="number" id="head3Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="head4Fee"
+									value="${projectRegist.head4Fee}" type="number" id="head4Fee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="otherFee"
+									value="${projectRegist.otherFee}" type="number" id="otherFee"
+									style="width: 100%; height: 100%"
+									class="easyui-validatebox span2" /></td>
+								<td><input name="totalFee"
+									value="${projectRegist.totalFee}" type="number" id="totalFee"
+									style="width: 100%; height: 100%" readonly="readonly" disabled="disabled"
+									class="easyui-validatebox span2" /></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="3"><textarea style="width: 100%" rows="2"
+					<td colspan="3"><textarea style="width: 100%" rows="4"
 							name="remark">${projectRegist.remark}</textarea></td>
 				</tr>
 			</table>

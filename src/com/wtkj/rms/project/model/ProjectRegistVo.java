@@ -46,7 +46,33 @@ public class ProjectRegistVo implements java.io.Serializable {
 	private Date registDT;// 报名时间
 	private String bidder;// 投标人姓名
 	private String contract;// 联系方式
-	private String bidCost;// 投标费用
+	/**
+	 * 费用明细
+	 */
+	// 路费（报名，开标,两个自定义）
+	private Double bmFee;
+	private Double kbFee;
+	private String head1;
+	private String head2;
+	private Double head1Fee;
+	private Double head2Fee;
+
+	// 资质费,标书费,预算费
+	private Double zzFee;
+	private Double bsFee;
+	private Double ysFee;
+
+	// 人员出场费（项目经理，法人,两个自定义）
+	private Double xmjlFee;
+	private Double frFee;
+	private String head3;
+	private String head4;
+	private Double head3Fee;
+	private Double head4Fee;
+	private Double otherFee;
+
+	private Double totalFee;
+
 	private String remark;
 
 	// 0项目登记 1项目开标登记
@@ -207,12 +233,132 @@ public class ProjectRegistVo implements java.io.Serializable {
 		this.contract = contract;
 	}
 
-	public String getBidCost() {
-		return bidCost;
+	public Double getBmFee() {
+		return bmFee;
 	}
 
-	public void setBidCost(String bidCost) {
-		this.bidCost = bidCost;
+	public void setBmFee(Double bmFee) {
+		this.bmFee = bmFee;
+	}
+
+	public Double getKbFee() {
+		return kbFee;
+	}
+
+	public void setKbFee(Double kbFee) {
+		this.kbFee = kbFee;
+	}
+
+	public String getHead1() {
+		return head1;
+	}
+
+	public void setHead1(String head1) {
+		this.head1 = head1;
+	}
+
+	public String getHead2() {
+		return head2;
+	}
+
+	public void setHead2(String head2) {
+		this.head2 = head2;
+	}
+
+	public Double getHead1Fee() {
+		return head1Fee;
+	}
+
+	public void setHead1Fee(Double head1Fee) {
+		this.head1Fee = head1Fee;
+	}
+
+	public Double getHead2Fee() {
+		return head2Fee;
+	}
+
+	public void setHead2Fee(Double head2Fee) {
+		this.head2Fee = head2Fee;
+	}
+
+	public Double getZzFee() {
+		return zzFee;
+	}
+
+	public void setZzFee(Double zzFee) {
+		this.zzFee = zzFee;
+	}
+
+	public Double getBsFee() {
+		return bsFee;
+	}
+
+	public void setBsFee(Double bsFee) {
+		this.bsFee = bsFee;
+	}
+
+	public Double getYsFee() {
+		return ysFee;
+	}
+
+	public void setYsFee(Double ysFee) {
+		this.ysFee = ysFee;
+	}
+
+	public Double getXmjlFee() {
+		return xmjlFee;
+	}
+
+	public void setXmjlFee(Double xmjlFee) {
+		this.xmjlFee = xmjlFee;
+	}
+
+	public Double getFrFee() {
+		return frFee;
+	}
+
+	public void setFrFee(Double frFee) {
+		this.frFee = frFee;
+	}
+
+	public String getHead3() {
+		return head3;
+	}
+
+	public void setHead3(String head3) {
+		this.head3 = head3;
+	}
+
+	public String getHead4() {
+		return head4;
+	}
+
+	public void setHead4(String head4) {
+		this.head4 = head4;
+	}
+
+	public Double getHead3Fee() {
+		return head3Fee;
+	}
+
+	public void setHead3Fee(Double head3Fee) {
+		this.head3Fee = head3Fee;
+	}
+
+	public Double getHead4Fee() {
+		return head4Fee;
+	}
+
+	public void setHead4Fee(Double head4Fee) {
+		this.head4Fee = head4Fee;
+	}
+
+	public Double getTotalFee() {
+		return totalFee;
+	}
+
+	public void setTotalFee(Double totalFee) {
+		this.totalFee = totalFee;
 	}
 
 	public String getRemark() {
@@ -269,6 +415,14 @@ public class ProjectRegistVo implements java.io.Serializable {
 
 	public void setMember5CardNames(String member5CardNames) {
 		this.member5CardNames = member5CardNames;
+	}
+
+	public Double getOtherFee() {
+		return otherFee;
+	}
+
+	public void setOtherFee(Double otherFee) {
+		this.otherFee = otherFee;
 	}
 
 }

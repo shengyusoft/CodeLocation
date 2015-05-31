@@ -64,7 +64,8 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		p.setCertificateC(certificateDao.get(Certificate.class, p
 				.getCertificateC().getId()));
 
-		//
+		p.setTotalFee(calTotal(p));
+
 		projectRegistDao.save(p);
 	}
 
@@ -111,6 +112,8 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				.getCertificateB().getId()));
 		p.setCertificateC(certificateDao.get(Certificate.class, p
 				.getCertificateC().getId()));
+		// 投标费用明细
+		p.setTotalFee(calTotal(p));
 		projectRegistDao.update(p);
 	}
 
@@ -231,5 +234,25 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 			orderString = " order by t." + ph.getSort() + " " + ph.getOrder();
 		}
 		return orderString;
+	}
+
+	private double calTotal(ProjectRegist p) {
+		double total = p.getBmFee() + p.getKbFee() + p.getZzFee()
+				+ p.getBsFee() + p.getYsFee() + p.getXmjlFee() + p.getFrFee()
+				+ p.getOtherFee();
+
+		if (!StringUtils.isEmpty(p.getHead1())) {
+			total += p.getHead1Fee();
+		}
+		if (!StringUtils.isEmpty(p.getHead2())) {
+			total += p.getHead2Fee();
+		}
+		if (!StringUtils.isEmpty(p.getHead3())) {
+			total += p.getHead3Fee();
+		}
+		if (!StringUtils.isEmpty(p.getHead4())) {
+			total += p.getHead4Fee();
+		}
+		return total;
 	}
 }
