@@ -197,7 +197,7 @@
 					<td colspan="2"><input name="bid_cost"
 						style="width: 100%; height: 100%" type="text" id="bid_cost"
 						value="${projectBid.bid_cost}" class="easyui-numberbox"
-						data-options="required:true" min="0" /></td>
+						data-options="required:true" min="0" precision="2" /></td>
 					<th>工期 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="2"><input class="Wdate" type="text"

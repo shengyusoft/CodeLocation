@@ -187,7 +187,7 @@
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
-					<th>合同工期（年） &nbsp;<label
+					<th>合同工期（天） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="name" style="width: 100%; height: 100%"
 						type="number" id="name" readonly="readonly"

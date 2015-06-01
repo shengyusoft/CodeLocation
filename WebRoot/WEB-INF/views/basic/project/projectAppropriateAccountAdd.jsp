@@ -54,9 +54,9 @@
 						style="width: 100%; height: 100%" type="number" id="toAccountFee"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
 					<th>到帐时间 &nbsp;</th>
-					<td><input name="toAccountDT" value="自动生成"
-						style="width: 100%; height: 100%" type="number" id="toAccountDT"
-						readonly="readonly" disabled="disabled" class="easyui-validatebox span2" /></td>
+					<td><input class="Wdate" type="text" name="toAccountDT"
+						id="toAccountDT" style="width: 98%; height: 100%;"
+						data-options="required:true" onfocus="showDate('yyyy-MM-dd hh:mm:ss')" /></td>
 
 				</tr>
 				<tr>

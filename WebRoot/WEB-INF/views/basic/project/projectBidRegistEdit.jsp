@@ -337,50 +337,50 @@
 							</tr>
 							<tr>
 								<td><input name="bmFee" value="${projectRegist.bmFee}"
-									type="number" id="bmFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									type="text" id="bmFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="kbFee" value="${projectRegist.kbFee}"
-									type="number" id="kbFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									type="text" id="kbFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="head1Fee"
-									value="${projectRegist.head1Fee}" type="number" id="head1Fee"
+									value="${projectRegist.head1Fee}" type="text" id="head1Fee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="head2Fee"
-									value="${projectRegist.head2Fee}" type="number" id="head2Fee"
+									value="${projectRegist.head2Fee}" type="text" id="head2Fee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="zzFee" value="${projectRegist.zzFee}"
-									type="number" id="zzFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									type="text" id="zzFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="bsFee" value="${projectRegist.bsFee}"
-									type="number" id="bsFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									type="text" id="bsFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="ysFee" value="${projectRegist.ysFee}"
-									type="number" id="ysFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									type="text" id="ysFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="xmjlFee" value="${projectRegist.xmjlFee}"
-									type="number" id="xmjlFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									type="text" id="xmjlFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="frFee" value="${projectRegist.frFee}"
-									type="number" id="frFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									type="text" id="frFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="head3Fee"
-									value="${projectRegist.head3Fee}" type="number" id="head3Fee"
+									value="${projectRegist.head3Fee}" type="text" id="head3Fee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="head4Fee"
-									value="${projectRegist.head4Fee}" type="number" id="head4Fee"
+									value="${projectRegist.head4Fee}" type="text" id="head4Fee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="otherFee"
-									value="${projectRegist.otherFee}" type="number" id="otherFee"
+									value="${projectRegist.otherFee}" type="text" id="otherFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="totalFee"
-									value="${projectRegist.totalFee}" type="number" id="totalFee"
+									value="${projectRegist.totalFee}" type="text" id="totalFee"
 									style="width: 100%; height: 100%" readonly="readonly" disabled="disabled"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 							</tr>
 						</table>
 					</td>

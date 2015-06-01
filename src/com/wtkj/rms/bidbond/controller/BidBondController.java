@@ -88,7 +88,7 @@ public class BidBondController extends BaseController {
 		Json j = new Json();
 		try {
 			// 缴号自动生成，编号规则为年份+月份+编号
-			vo.setIdNumber(generateIdNum(0));
+			vo.setIdNumber(generateIdNum(vo.getType()));
 
 			// 申请人和申请时间
 			SessionInfo sessionInfo = getSessionInfo(request);

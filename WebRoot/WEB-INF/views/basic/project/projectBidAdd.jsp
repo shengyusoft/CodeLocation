@@ -171,7 +171,7 @@
 					<th>中标价（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="2"><input name="bid_cost" style="width: 100%; height: 100%"
-						type="text" id="bid_cost" class="easyui-numberbox" min="0"
+						type="text" id="bid_cost" class="easyui-numberbox" precision="2" min="0"
 						data-options="required:true" /></td>
 						
 					<th>工期 &nbsp;<label

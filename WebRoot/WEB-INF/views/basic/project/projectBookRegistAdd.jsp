@@ -52,8 +52,8 @@
 						id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 					<th>预订费用（元）&nbsp;</th>
-					<td><input name="bookFee" type="text" id="bookFee"
-						style="width: 100%; height: 100%" class="easyui-validatebox span2" /></td>
+					<td><input name="bookFee" type="text" class="easyui-numberbox" precision="2" min="0" id="bookFee"
+						style="width: 100%; height: 100%"/></td>
 
 				</tr>
 				<tr>

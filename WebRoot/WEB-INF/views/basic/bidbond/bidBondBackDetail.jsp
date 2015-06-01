@@ -63,15 +63,15 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>保证金数额<br />（元）【.00】 &nbsp;<label
+					<th>保证金数额（元）【.00】 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
-						value="${bidBond.bondFee}" style="width: 100%;" type="number"
+						value="${bidBond.bondFee}" style="width: 50%;" type="number"
 						id="bondFee" class="easyui-numberbox" precision="2"
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th rowspan="6">收 款 人（客户）<br />详细信息 &nbsp;
+					<th rowspan="6">收 款 人（客户）详细信息 &nbsp;
 					</th>
 					<th>户 名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -98,12 +98,11 @@
 				</tr>
 				<tr>
 					<th>附 言</th>
-					<td colspan="4"><input name="payeeComments"
-						value="${bidBond.payeeComments}" type="text" id="payeeComments"
-						style="width: 100%; height: 100%" class="easyui-validatebox span2" /></td>
+					<td colspan="4"><textarea style="width: 100%" rows="3"
+							name="payeeComments" id="payeeComments">${bidBond.payeeComments}</textarea></td>
 				</tr>
 				<tr>
-					<th>办理时间&nbsp;<label
+					<th>填表时间&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="4"><input name="payeeHandleDT"
 						value="${bidBond.payeeHandleDT}" type="text" id="payeeHandleDT"
@@ -124,7 +123,7 @@
 				</tr>
 
 				<tr>
-					<th>付款人（招标代理公司或<br />公共资源交易中心）&nbsp;<label
+					<th>付款人（<font color="blue">招标代理公司或<br/>公共资源交易中心等</font>）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="payer" value="${bidBond.payer}"
 						type="text" id="payer" style="width: 100%; height: 100%"

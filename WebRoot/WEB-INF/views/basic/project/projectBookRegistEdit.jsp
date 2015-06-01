@@ -60,7 +60,7 @@
 					<th>预订费用（元）&nbsp;</th>
 					<td><input name="bookFee" value="${projectBookRegist.bookFee}"
 						type="text" id="bookFee" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" /></td>
+						class="easyui-numberbox" precision="2" min="0" /></td>
 
 				</tr>
 				<tr>

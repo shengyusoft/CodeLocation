@@ -327,46 +327,46 @@
 									class="easyui-validatebox span2" /></td>
 							</tr>
 							<tr>
-								<td><input name="bmFee" type="number" value='0' id="bmFee"
+								<td><input name="bmFee" type="text" value='0' id="bmFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="kbFee" type="number" value='0' id="kbFee"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="kbFee" type="text" value='0' id="kbFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="head1Fee" type="number" value='0'
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="head1Fee" type="text" value='0'
 									id="head1Fee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="head2Fee" type="number" value='0'
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="head2Fee" type="text" value='0'
 									id="head2Fee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="zzFee" type="number" value='0' id="zzFee"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="zzFee" type="text" value='0' id="zzFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="bsFee" type="number" value='0' id="bsFee"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="bsFee" type="text" value='0' id="bsFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="ysFee" type="number" value='0' id="ysFee"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="ysFee" type="text" value='0' id="ysFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="xmjlFee" type="number" value='0'
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="xmjlFee" type="text" value='0'
 									id="xmjlFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="frFee" type="number" value='0' id="frFee"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="frFee" type="text" value='0' id="frFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="head3Fee" type="number" value='0'
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="head3Fee" type="text" value='0'
 									id="head3Fee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="head4Fee" type="number" value='0'
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="head4Fee" type="text" value='0'
 									id="head4Fee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="otherFee" type="number" value='0'
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="otherFee" type="text" value='0'
 									id="otherFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<td><input name="totalFee" type="number" value='0'
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<td><input name="totalFee" type="text" value='0'
 									id="totalFee" style="width: 100%; height: 100%" value="自动统计"
 									readonly="readonly" disabled="disabled"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 							</tr>
 						</table>
 					</td>

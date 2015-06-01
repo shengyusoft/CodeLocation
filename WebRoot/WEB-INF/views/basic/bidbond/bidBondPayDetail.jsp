@@ -38,11 +38,10 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="bidBondPayEditForm" method="post"
-			style="width: 800px; height: 330px;">
+		<form id="bidBondPayEditForm" method="post">
 			<table class="grid">
 				<tr>
-					<th width="100px">项目名称 &nbsp;<label
+					<th width="160px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="type" type="hidden"
 						value="${bidBond.type}"></input> <input name="idNumber"
@@ -56,7 +55,7 @@
 				</tr>
 
 				<tr>
-					<th>标段 &nbsp;<label
+					<th width="160px">标段 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><select id="bidSection" name="bidSection"
 						class="easyui-validatebox span2" style="width: 550px;"
@@ -64,7 +63,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>保证金数额<br />（元）【.00】 &nbsp;<label
+					<th width="160px">保证金数额（元）【.00】 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
 						value="${bidBond.bondFee}" style="width: 100%;" type="number"
@@ -72,18 +71,13 @@
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th rowspan="5">收款人（公共资源交易中心或招标代理机构）详细信息 &nbsp;</th>
+					<th width="160px" rowspan="5">收款人（<font color="blue">公共资源交易中心或招标代理机构等</font>）详细信息 &nbsp;</th>
 					<th>户 名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="2"><input name="payeeAccountName"
+					<td colspan="4"><input name="payeeAccountName"
 						value="${bidBond.payeeAccountName}" type="text"
 						id="payeeAccountName" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
-					<th>收款人姓名&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="payeeName" value="${bidBond.payeeName}"  type="text"
-						id="payeeName" style="width: 100%; height: 100%"
-						class="easyui-validatebox span2" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<th>开户行&nbsp;<label
@@ -103,12 +97,11 @@
 				</tr>
 				<tr>
 					<th>附 言</th>
-					<td colspan="4"><input name="payeeComments"
-						value="${bidBond.payeeComments}" type="text" id="payeeComments"
-						style="width: 100%; height: 100%" class="easyui-validatebox span2" /></td>
+					<td colspan="4"><textarea style="width: 100%" rows="3"
+							name="payeeComments" id="payeeComments">${bidBond.payeeComments}</textarea></td>
 				</tr>
 				<tr>
-					<th>办理时间&nbsp;<label
+					<th>填表时间&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="4"><input name="payeeHandleDT"
 						value="${bidBond.payeeHandleDT}" type="text" id="payeeHandleDT"
@@ -116,12 +109,12 @@
 				</tr>
 
 				<tr>
-					<th>客户姓名&nbsp;<label
+					<th width="160px">客户姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="customerName" value="${bidBond.customerName}"
 						type="text" id="customerName" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
-					<th>客户联系方式&nbsp;<label
+					<th width="100px">客户联系方式&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="payerPhone" value="${bidBond.payerPhone}"
 						type="text" id="payerPhone" style="width: 100%; height: 100%"
