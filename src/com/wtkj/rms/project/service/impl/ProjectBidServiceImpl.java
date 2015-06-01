@@ -14,6 +14,7 @@ import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tdictionarytype;
+import com.wtkj.rms.project.model.Certificate;
 import com.wtkj.rms.project.model.ProjectBid;
 import com.wtkj.rms.project.service.ProjectBidServiceI;
 
@@ -27,6 +28,9 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 	private BaseDaoI<Tdictionary> dictionaryDao;
 
 	@Autowired
+	private BaseDaoI<Certificate> certificateDao;
+
+	@Autowired
 	private BaseDaoI<Tdictionarytype> dictionarytypeDao;
 
 	@Override
@@ -37,7 +41,7 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
 				.getTechniqueMgr().getId()));
-		p.setAqy(dictionaryDao.get(Tdictionary.class, p.getAqy().getId()));
+		p.setAqy(certificateDao.get(Certificate.class, p.getAqy().getId()));
 
 		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
@@ -46,6 +50,8 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
+
+		p.setManageFee(calMangerFee(p));
 
 		projectBidDao.save(p);
 	}
@@ -76,7 +82,7 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
 				.getTechniqueMgr().getId()));
-		p.setAqy(dictionaryDao.get(Tdictionary.class, p.getAqy().getId()));
+		p.setAqy(certificateDao.get(Certificate.class, p.getAqy().getId()));
 
 		p.setProvice(dictionaryDao.get(Tdictionary.class, p.getProvice()
 				.getId()));
@@ -85,6 +91,8 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 
 		p.setCompany(dictionaryDao.get(Tdictionary.class, p.getCompany()
 				.getId()));
+
+		p.setManageFee(calMangerFee(p));
 
 		projectBidDao.update(p);
 	}
@@ -164,5 +172,15 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 			return "";
 		}
 		return texts.substring(0, texts.length() - 1);
+	}
+
+	private float calMangerFee(ProjectBid p) {
+		float fee = 0f;
+		if (p.getBid_cost() != null) {
+			float rate = p.getManageFeeRate() == null ? 0f : p
+					.getManageFeeRate();
+			fee = p.getBid_cost() * (rate / 100);
+		}
+		return fee;
 	}
 }

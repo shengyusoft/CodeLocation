@@ -197,8 +197,8 @@
 	function addFun() {
 		parent.$.modalDialog({
 			title : '项目中标登记',
-			width : 750,
-			height : 490,
+			width : 960,
+			height : 410,
 			href : '${ctx}/projectBid/addPage',
 			buttons : [ {
 				text : '添加',
@@ -255,8 +255,8 @@
 
 		parent.$.modalDialog({
 			title : '项目中标登记编辑',
-			width : 750,
-			height : 490,
+			width : 960,
+			height : 410,
 			href : '${ctx}/projectBid/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -287,8 +287,8 @@
 
 		parent.$.modalDialog({
 			title : '项目中标登记详情',
-			width : '815',
-			height : '500',
+			width : 960,
+			height : 410,
 			href : '${ctx}/projectBid/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',

@@ -39,19 +39,27 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	private String bds;// 标段
 	private String bdNames;// display
-
 	private Float bid_cost;
-	private Float manage_cost;
-	private Date duration;
+
+	// 管理费比例（%）
+	// private Float manage_cost;
+	private Float manageFee;// 管理费=中标价×比例
+
+	private Float manageFeeRate;// 管理费比例（%）
+
+	private Date duration;// 工期
 
 	private Tdictionary projectMgr;// 项目经理
 	private Tdictionary techniqueMgr;// 技术负责人
-	private Tdictionary aqy;// 委托人
+	private Certificate aqy;// 专职安全员
 
-	private String headman;
-	private String headmanIdCard;
-	private String tel;
-	private String recordman;
+	// 施工负责人信息
+	private String headman;// 姓名
+	private String headmanIdCard;// 身份证
+	private String tel;// 联系方式
+
+	private String recordman;// 登记人
+
 	private String remark;
 
 	@NotNull
@@ -148,11 +156,11 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "aqy_id")
-	public Tdictionary getAqy() {
+	public Certificate getAqy() {
 		return aqy;
 	}
 
-	public void setAqy(Tdictionary aqy) {
+	public void setAqy(Certificate aqy) {
 		this.aqy = aqy;
 	}
 
@@ -172,12 +180,20 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 		this.bid_cost = bid_cost;
 	}
 
-	public Float getManage_cost() {
-		return manage_cost;
+	public Float getManageFee() {
+		return manageFee;
 	}
 
-	public void setManage_cost(Float manage_cost) {
-		this.manage_cost = manage_cost;
+	public void setManageFee(Float manageFee) {
+		this.manageFee = manageFee;
+	}
+
+	public Float getManageFeeRate() {
+		return manageFeeRate;
+	}
+
+	public void setManageFeeRate(Float manageFeeRate) {
+		this.manageFeeRate = manageFeeRate;
 	}
 
 	public Date getDuration() {

@@ -70,11 +70,11 @@
 	});
 	
 	$('#aqy').combobox({
-		url : "${pageContext.request.contextPath}/dictionary/combox?code=aqy",
-		parentField : 'dictionaryId',
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
+		parentField : 'card_code',
 		valueField : 'id',
-		textField : 'text',
-		panelHeight : 'auto'				
+		textField : 'card_name',
+		panelHeight : 'auto'
 	});
 	
 	$('#provice').combobox({
@@ -137,20 +137,26 @@
 		<form id="projectBidAddForm" method="post" >
 			<table class="grid">
 				<tr>
-					<th>公司名称 &nbsp;<label
+					<th width="150px">公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="company" name="company.id" 
 						class="easyui-validatebox span2" data-options="editable:false,required:true" style="width: 180px;">
 					</select></td>
-					<th>项目名称 &nbsp;<label
+					<th width="150px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="projectName" style="width: 180px;"
 						type="text" id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
+					<th width="120px">标段 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="bd" name="bds"
+						class="easyui-validatebox span2" style="width: 150px;"
+						data-options="editable:false,required:true">
+					</select></td>
 				</tr>
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3">
+					<td colspan="5">
 						省：<select id="provice" data-options="editable:false,required:true" name="provice.id" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -162,32 +168,30 @@
 					</td>
 				</tr>
 				<tr>
-					<th>标段 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="bd" name="bds"
-						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="editable:false,required:true">
-					</select></td>
-				</tr>
-				<tr>
 					<th>中标价（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><input name="bid_cost" style="width: 100%; height: 100%"
-						type="text" id="bid_cost" class="easyui-validatebox span2"
+					<td colspan="2"><input name="bid_cost" style="width: 100%; height: 100%"
+						type="text" id="bid_cost" class="easyui-numberbox" min="0"
 						data-options="required:true" /></td>
-				</tr>
-				<tr>
-					<th>管理费（%）&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="manage_cost" style="width: 100%; height: 100%"
-						type="text" id="manage_cost" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
-					
+						
 					<th>工期 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="duration"
+					<td colspan="2"><input class="Wdate" type="text" name="duration"
 						id="duration" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+				</tr>
+				<tr>
+					<th>管理费比例（%）&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="manageFeeRate"
+						style="width: 100%; height: 100%" max="100" min="0"
+						type="text" id="manageFeeRate"
+						class="easyui-numberbox" data-options="required:true" /></td>
+						
+					<th width="120px">管理费数额（元）&nbsp;</th>
+					<td colspan="3"><input name="manageFee" style="width: 100%; height: 100%"
+						type="text" id="manageFee" class="easyui-validatebox span2"
+						disabled="disabled" /></td>
 				</tr>
 				<tr>
 					<th>项目经理&nbsp;<label
@@ -202,43 +206,42 @@
 						class="easyui-validatebox span2" style="width: 180px;"
 						data-options="required:true">
 					</select></td>
-				</tr>
-				
-				<tr>
 					<th>专职安全员&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="aqy" name="aqy.id"
 						class="easyui-validatebox span2" style="width: 180px;"
 						data-options="editable:false,required:true">
 					</select></td>
+				</tr>
+				
+				<tr>
+					
 					<th>施工负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="headman" type="text" id="headman"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-				</tr>
-				<tr>
-					<th >施工负责人身份证&nbsp;<label
+					<th>联系方式 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="tel" style="width: 100%; height: 100%" data-options="required:true"
+						type="text" id="tel" class="easyui-validatebox span2"/></td>
+					<th >身份证号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td ><input name="headmanIdCard" type="text" id="headmanIdCard"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2" value="${projectBid.headmanIdCard}"
 						data-options="required:true" /></td>
-						<th>联系方式 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="tel" style="width: 100%; height: 100%" data-options="required:true"
-						type="text" id="tel" class="easyui-validatebox span2"/></td>
 				</tr>
 				<tr>
 					<th>登记人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="recordman" type="text" readonly id="recordman" value="${sessionInfo.name}"
+					<td colspan="5"><input name="recordman" type="text" readonly id="recordman" value="${sessionInfo.name}"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 				</tr>
 				
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="3"><textarea style="width: 100%" rows="5"
+					<td colspan="5"><textarea style="width: 100%" rows="6"
 							name="remark"></textarea></td>
 				</tr>
 			</table>
