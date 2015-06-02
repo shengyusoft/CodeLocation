@@ -57,7 +57,13 @@ public class UserServiceImpl implements UserServiceI {
 		}
 		t.setRoles(new HashSet<Trole>(roles));
 
-		t.setPassword(MD5Util.md5(u.getPassword()));
+		if(!StringUtils.isEmpty(u.getMobilePhone())){
+			t.setPassword(MD5Util.md5(u.getMobilePhone()));
+		}else{
+			//防止出问题的时候 默认为1
+			t.setPassword(MD5Util.md5("1"));
+		}
+		
 		t.setState(GlobalConstant.ENABLE);
 		t.setCreatedatetime(new Date());
 		userDao.save(t);
