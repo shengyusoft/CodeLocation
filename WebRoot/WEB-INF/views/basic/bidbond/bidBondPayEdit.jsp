@@ -165,37 +165,33 @@
 
 				<tr>
 					<th>到帐金额</th>
-					<td colspan="5"><input name="toAccountFee"
+					<td colspan="2"><input name="toAccountFee"
 						value="${bidBond.toAccountFee}" type="text" id="toAccountFee"
 						style="width: 100%; height: 100%" class="easyui-numberbox"
 						readonly="readonly" disabled="disabled" /></td>
-				</tr>
-				<tr>
-					<th>到帐时间</th>
-					<td colspan="5"><input name="toAccountDT" type="text"
+						<th>到帐时间</th>
+					<td colspan="2"><input name="toAccountDT" type="text"
 						id="toAccountDT" class="easyui-datebox" readonly="readonly"
 						disabled="disabled" /></td>
 				</tr>
 				<tr>
 					<th>转出金额</th>
-					<td colspan="5"><input name="outAccountFee"
+					<td colspan="2"><input name="outAccountFee"
 						value="${bidBond.outAccountFee}" type="number" id="outAccountFee"
 						style="width: 90%; height: 100%" class="easyui-numberbox"
 						readonly="readonly" disabled="disabled" /></td>
-				</tr>
-				<tr>
 					<th>转出时间</th>
-					<td colspan="5"><input name="outAccountDT"
+					<td colspan="2"><input name="outAccountDT"
 						value="${bidBond.outAccountDT}" type="text" id="outAccountDT"
 						class="easyui-datebox" readonly="readonly" disabled="disabled" /></td>
 				</tr>
 				<tr>
 					<th>办理人</th>
-					<td><input name="handlerName" value="${bidBond.handlerName}"
+					<td colspan="2"><input name="handlerName" value="${bidBond.handlerName}"
 						type="text" id="handlerName" class="easyui-datebox"
 						readonly="readonly" disabled="disabled" /></td>
 					<th>办理时间</th>
-					<td colspan="3"><input name="handlerDT"
+					<td colspan="2"><input name="handlerDT"
 						value="${bidBond.handlerDT}" type="text" id="handlerDT"
 						class="easyui-datebox" readonly="readonly" disabled="disabled" /></td>
 				</tr>

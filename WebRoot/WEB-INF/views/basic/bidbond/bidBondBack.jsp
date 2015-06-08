@@ -227,7 +227,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金退还申请登记',
 			width : '815',
-			height : '660',
+			height : '560',
 			resizable : true,
 			href : '${ctx}/bidBond/addPage?type=1',
 			buttons : [

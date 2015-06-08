@@ -26,14 +26,14 @@
 			}
 		});
 	});
-	
+
 	$('#bidSection').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=bd",
 		parentField : 'dictionaryId',
 		valueField : 'id',
-		multiple:true,
+		multiple : true,
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : 'auto'
 	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -45,11 +45,10 @@
 				<tr>
 					<th width="160px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="5">
-					<input name="type" type="hidden" value="0"></input>
-					<input name="projectName"
-						style="width: 100%; height: 100%" type="text" id="projectName"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<td colspan="5"><input name="type" type="hidden" value="0"></input>
+						<input name="projectName" style="width: 100%; height: 100%"
+						type="text" id="projectName" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>标段 &nbsp;<label
@@ -64,10 +63,12 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
 						style="width: 100%; height: 100%" type="number" id="bondFee"
-						class="easyui-numberbox" precision="2" data-options="required:true" /></td>
+						class="easyui-numberbox" precision="2"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<th rowspan="5">收款人（<font color="blue">公共资源交易中心或招标代理机构等</font>）详细信息 &nbsp;
+					<th rowspan="5">收款人（<font color="blue">公共资源交易中心或招标代理机构等</font>）详细信息
+						&nbsp;
 					</th>
 					<th>户 名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -118,36 +119,41 @@
 					<td><input name="payer" type="text" id="payer"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-					
+
 				</tr>
-				
+
 				<tr>
 					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>
-				
+
 				<tr>
 					<th>到帐金额</th>
-					<td colspan="5"><input name="toAccountFee" type="text"
+					<td colspan="2"><input name="toAccountFee" type="text"
 						id="toAccountFee" style="width: 100%; height: 100%"
 						class="easyui-numberbox" readonly="readonly" disabled="disabled" /></td>
-				</tr>
-				<tr>
 					<th>到帐时间</th>
-					<td colspan="5"><input name="toAccountDT" type="text"
-						id="toAccountDT" class="easyui-datebox"
-						readonly="readonly" disabled="disabled" /></td>
+					<td colspan="2"><input name="toAccountDT" type="text"
+						id="toAccountDT" class="easyui-datebox" readonly="readonly"
+						disabled="disabled" /></td>
 				</tr>
 				<tr>
 					<th>转出金额</th>
-					<td colspan="5"><input name="outAccountFee" type="number"
+					<td colspan="2"><input name="outAccountFee" type="number"
 						id="outAccountFee" style="width: 100%; height: 100%"
 						class="easyui-numberbox" readonly="readonly" disabled="disabled" /></td>
+					<th>转出时间</th>
+					<td colspan="2"><input name="outAccountDT" type="text"
+						id="outAccountDT" class="easyui-datebox" readonly="readonly"
+						disabled="disabled" /></td>
 				</tr>
 				<tr>
-					<th>转出时间</th>
-					<td colspan="5"><input name="outAccountDT" type="text"
-						id="outAccountDT" class="easyui-datebox"
-						readonly="readonly" disabled="disabled"/></td>
+					<th>办理人</th>
+					<td colspan="2"><input name="handlerName" type="text" id="handlerName"
+						class="easyui-datebox" readonly="readonly" disabled="disabled" /></td>
+					<th>办理时间</th>
+					<td colspan="2"><input name="handlerDT" type="text"
+						id="handlerDT" class="easyui-datebox" readonly="readonly"
+						disabled="disabled" /></td>
 				</tr>
 			</table>
 		</form>

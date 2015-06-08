@@ -56,7 +56,7 @@
 			style="width: 800px; height: 330px;">
 			<table class="grid">
 				<tr>
-					<th>项目名称 &nbsp;<label
+					<th width="150px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="type" type="hidden"
 						value="${bidBond.type}"></input> <input name="idNumber"
@@ -78,7 +78,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>保证金数额（元）【.00】&nbsp;<label
+					<th>保证金数额（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
 						value="${bidBond.bondFee}" style="width: 100%;" type="number"
@@ -138,7 +138,7 @@
 				</tr>
 
 				<tr>
-					<th>付款人（<font color="blue">招标代理公司或<br/>公共资源交易中心等</font>）&nbsp;<label
+					<th>付款人（<font color="blue">招标代理公司或公共资源交易中心等</font>）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="payer" value="${bidBond.payer}"
 						type="text" id="payer" style="width: 100%; height: 100%"
@@ -164,19 +164,18 @@
 				</tr>
 
 				<tr>
-					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
+					<th style="text-align: center;" colspan="6">
+					<font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>
 
 				<tr>
 					<th>到帐金额</th>
-					<td colspan="5"><input name="toAccountFee" precision="2"
+					<td colspan="2"><input name="toAccountFee" precision="2"
 						value="${bidBond.toAccountFee}" type="text" id="toAccountFee"
 						style="width: 100%; height: 100%" class="easyui-numberbox"
 						data-options="required:true" /></td>
-				</tr>
-				<tr>
-					<th>到帐时间</th>
-					<td colspan="5"><input name="toAccountDT"
+					<th width="100px">到帐时间</th>
+					<td colspan="2"><input name="toAccountDT"
 						value="${bidBond.toAccountDT}" type="text" id="toAccountDT"
 						class="easyui-validatebox Wdate"
 						onfocus="showDate('yyyy-MM-dd HH:mm:ss')"
@@ -184,28 +183,26 @@
 				</tr>
 				<tr>
 					<th>转出金额</th>
-					<td colspan="5"><input name="outAccountFee" precision="2"
+					<td colspan="2"><input name="outAccountFee" precision="2"
 						value="${bidBond.outAccountFee}" type="number" id="outAccountFee"
 						style="width: 80%; height: 100%;" data-options="required:true" /></td>
-				</tr>
-				<tr>
 					<th>转出时间</th>
-					<td colspan="5"><input name="outAccountDT" type="text"
+					<td colspan="2"><input name="outAccountDT" type="text"
 						id="toAccountDT" readonly="readonly"
 						disabled="disabled" /><font color="rgb(235, 235, 228)">&nbsp;&nbsp;（提示:提交后系统自动生成）</font></td>
 				</tr>
 				<tr>
 					<th>办理人</th>
-					<td><input name="handlerName" value="${bidBond.handlerName}"
+					<td colspan="2"><input name="handlerName" value="${bidBond.handlerName}"
 						type="text" id="handlerName" readonly="readonly" /></td>
 					<th>办理时间</th>
-					<td colspan="3"><input name="handlerDT"
+					<td colspan="2"><input name="handlerDT"
 						value="${bidBond.handlerDT}" type="text" id="handlerDT"
 						class="easyui-datebox" data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="2"
+					<td colspan="5"><textarea style="width: 100%" rows="3"
 							name="remark">${bidBond.remark}</textarea></td>
 				</tr>
 			</table>

@@ -166,14 +166,12 @@
 
 				<tr>
 					<th>到帐金额</th>
-					<td colspan="5"><input name="toAccountFee" precision="2"
+					<td colspan="2"><input name="toAccountFee" precision="2"
 						value="${bidBond.toAccountFee}" type="text" id="toAccountFee"
 						style="width: 100%; height: 100%" class="easyui-numberbox"
 						data-options="required:true" /></td>
-				</tr>
-				<tr>
 					<th>到帐时间</th>
-					<td colspan="5"><input name="toAccountDT"
+					<td colspan="2"><input name="toAccountDT"
 						value="${bidBond.toAccountDT}" type="text" id="toAccountDT"
 						class="easyui-validatebox Wdate"
 						onfocus="showDate('yyyy-MM-dd HH:mm:ss')"
@@ -181,28 +179,26 @@
 				</tr>
 				<tr>
 					<th>转出金额</th>
-					<td colspan="5"><input name="outAccountFee"
+					<td colspan="2"><input name="outAccountFee"
 						value="${bidBond.outAccountFee}" type="number" id="outAccountFee"
 						style="width: 80%; height: 100%;" data-options="required:true" /></td>
-				</tr>
-				<tr>
 					<th>转出时间</th>
-					<td colspan="5"><input name="outAccountDT" type="text"
+					<td colspan="2"><input name="outAccountDT" type="text"
 						id="toAccountDT" readonly="readonly"
-						disabled="disabled" /><font color="rgb(235, 235, 228)">&nbsp;&nbsp;（提示:提交后系统自动生成）</font></td>
+						disabled="disabled" /><font color="rgb(235, 235, 228)">（提示:提交后系统自动生成）</font></td>
 				</tr>
 				<tr>
 					<th>办理人</th>
-					<td><input name="handlerName" value="${bidBond.handlerName}"
+					<td colspan="2"><input name="handlerName" value="${bidBond.handlerName}"
 						type="text" id="handlerName" readonly="readonly" /></td>
 					<th>办理时间</th>
-					<td colspan="3"><input name="handlerDT"
+					<td colspan="2"><input name="handlerDT"
 						value="${bidBond.handlerDT}" type="text" id="handlerDT"
 						class="easyui-datebox" data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="2"
+					<td colspan="5"><textarea style="width: 100%" rows="3"
 							name="remark">${bidBond.remark}</textarea></td>
 				</tr>
 			</table>

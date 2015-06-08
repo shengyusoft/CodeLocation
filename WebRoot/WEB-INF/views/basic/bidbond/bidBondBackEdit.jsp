@@ -76,7 +76,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<th>保证金数额（元）【.00】 &nbsp;<label
+					<th>保证金数额（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="5"><input name="bondFee"
 						value="${bidBond.bondFee}" style="width: 50%;" type="number"
@@ -161,42 +161,39 @@
 				</tr>
 
 				<tr>
-					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
+					<th style="text-align: center;" colspan="6">
+					<font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>
 
 				<tr>
 					<th>到帐金额</th>
-					<td colspan="5"><input name="toAccountFee"
+					<td colspan="2"><input name="toAccountFee"
 						value="${bidBond.toAccountFee}" type="text" id="toAccountFee"
 						style="width: 100%; height: 100%" class="easyui-numberbox"
 						readonly="readonly" disabled="disabled" /></td>
-				</tr>
-				<tr>
 					<th>到帐时间</th>
-					<td colspan="5"><input name="toAccountDT"
+					<td colspan="2"><input name="toAccountDT"
 						value="${bidBond.toAccountDT}" type="text" id="toAccountDT"
 						class="easyui-datebox" readonly="readonly" disabled="disabled" /></td>
 				</tr>
 				<tr>
 					<th>转出金额</th>
-					<td colspan="5"><input name="outAccountFee"
+					<td colspan="2"><input name="outAccountFee"
 						value="${bidBond.outAccountFee}" type="number" id="outAccountFee"
 						style="width: 90%; height: 100%" class="easyui-numberbox"
 						readonly="readonly" disabled="disabled" /></td>
-				</tr>
-				<tr>
 					<th>转出时间</th>
-					<td colspan="5"><input name="outAccountDT"
+					<td colspan="2"><input name="outAccountDT"
 						value="${bidBond.outAccountDT}" type="text" id="outAccountDT"
 						class="easyui-datebox" readonly="readonly" disabled="disabled" /></td>
 				</tr>
 				<tr>
 					<th>办理人</th>
-					<td><input name="handlerName" value="${bidBond.handlerName}"
+					<td colspan="2"><input name="handlerName" value="${bidBond.handlerName}"
 						type="text" id="handlerName" class="easyui-datebox"
 						readonly="readonly" disabled="disabled" /></td>
 					<th>办理时间</th>
-					<td colspan="3"><input name="handlerDT"
+					<td colspan="2"><input name="handlerDT"
 						value="${bidBond.handlerDT}" type="text" id="handlerDT"
 						class="easyui-datebox" readonly="readonly" disabled="disabled" /></td>
 				</tr>
