@@ -198,7 +198,7 @@
 						style="width: 100%; height: 100%" type="text" id="bid_cost"
 						value="${projectBid.bid_cost}" class="easyui-numberbox"
 						data-options="required:true" min="0" precision="2" /></td>
-					<th>工期 &nbsp;<label
+					<th>工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="2"><input class="Wdate" type="text"
 						name="duration" value="${projectBid.duration}" id="duration"
@@ -209,7 +209,7 @@
 					<th>管理费比例（%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="manageFeeRate"
-						style="width: 100%; height: 100%" max="100" min="0"
+						style="width: 100%; height: 100%" max="100" min="0" precision="2"
 						value="${projectBid.manageFeeRate}" type="text" id="manageFeeRate"
 						class="easyui-numberbox" data-options="required:true" /></td>
 

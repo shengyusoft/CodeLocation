@@ -61,7 +61,8 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	private String delegatorName;
 
-	private Date registDT;// 报名时间
+	private Date registDT;// 开标时间
+	private Date createDT;// 登记时间
 	private String bidder;// 投标人姓名
 	private String contract;// 联系方式
 	// private String bidCost;// 投标费用
@@ -267,6 +268,14 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	public void setRegistDT(Date registDT) {
 		this.registDT = registDT;
+	}
+
+	public Date getCreateDT() {
+		return createDT;
+	}
+
+	public void setCreateDT(Date createDT) {
+		this.createDT = createDT;
 	}
 
 	public String getBidder() {

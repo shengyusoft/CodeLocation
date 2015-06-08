@@ -13,6 +13,8 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 	private static final long serialVersionUID = 6625249529038114020L;
 	private Long id;
 	private String projectName;// 项目名称
+	private String companyName;// 公司名称
+	private long companyId;// 公司ID
 	private String qualifyRequirement;// 资质要求
 	private String qualifyRequirementNames;// 资质要求显示
 	private String bidder;// 投标人姓名
@@ -26,6 +28,14 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 	private Long registerId;
 
 	private String registerName;
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
 
 	public Long getId() {
 		return id;
@@ -41,6 +51,14 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public String getQualifyRequirement() {

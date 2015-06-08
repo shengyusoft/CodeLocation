@@ -2,18 +2,6 @@ package com.wtkj.rms.project.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import com.wtkj.common.model.IdEntity;
-
 /**
  * 工程款到帐及拨付情况
  * 
@@ -41,9 +29,11 @@ public class ProjectAppropriateAccountVo implements java.io.Serializable {
 	private Date applyDT;// 申请拨付时间
 
 	// 以下会计填写
-	private Double actualFee;// 实际拨付金额（元）
+	private Double actualFee;// 实际到帐金额（元）
 
-	private Date actualDT;// 实际拨付时间
+	private Double actualPayFee;// 实际支付金额（元）
+
+	private Date actualDT;// 实际到帐时间
 
 	private String payee;// 收款人
 
@@ -128,6 +118,14 @@ public class ProjectAppropriateAccountVo implements java.io.Serializable {
 
 	public void setActualFee(Double actualFee) {
 		this.actualFee = actualFee;
+	}
+
+	public Double getActualPayFee() {
+		return actualPayFee;
+	}
+
+	public void setActualPayFee(Double actualPayFee) {
+		this.actualPayFee = actualPayFee;
 	}
 
 	public Date getActualDT() {

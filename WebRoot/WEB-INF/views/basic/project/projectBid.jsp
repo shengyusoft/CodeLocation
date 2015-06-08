@@ -48,51 +48,9 @@
 				field : 'projectName'
 			}, {
 				width : '120',
-				title : '省',
-				sortable : true,
-				align : 'center',
-				field : 'provice',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '120',
-				title : '市',
-				sortable : true,
-				align : 'center',
-				field : 'city',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '120',
-				title : '县',
-				sortable : true,
-				align : 'center',
-				field : 'county',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '120',
 				title : '标段',
 				align : 'center',
 				field : 'bdNames'
-			}, {
-				width : '140',
-				title : '中标价（元）',
-				align : 'center',
-				field : 'bid_cost'
-			}, {
-				width : '140',
-				title : '管理费（%）',
-				align : 'center',
-				field : 'manage_cost'
-			}, {
-				width : '140',
-				title : '工期',
-				align : 'center',
-				field : 'duration'
 			}, {
 				width : '120',
 				title : '项目经理',
@@ -112,14 +70,25 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '120',
-				title : '专职安全员',
-				sortable : true,
+				width : '140',
+				title : '工期结束时间',
 				align : 'center',
-				field : 'aqy',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
+				field : 'duration'
+			}, {
+				width : '140',
+				title : '中标价（元）',
+				align : 'center',
+				field : 'bid_cost'
+			}, {
+				width : '140',
+				title : '管理费比例（%）',
+				align : 'center',
+				field : 'manageFeeRate'
+			}, {
+				width : '140',
+				title : '管理费（元）',
+				align : 'center',
+				field : 'manageFee'
 			}, {
 				width : '120',
 				title : '施工负责人',
@@ -139,7 +108,6 @@
 				align : 'center',
 				field : 'recordman'
 			} ] ],
-
 			toolbar : '#toolbar'
 		});
 

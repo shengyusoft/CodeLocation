@@ -47,29 +47,31 @@
 						style="font-weight: bold; color: rgba(128, 128, 128, 0.47);">（说明：以下工程部填写）</font></td>
 				</tr>
 				<tr>
-					<th>到帐金额（元） &nbsp;<label
+					<th>业主本次拨付金额（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input id="projectAppRegId" type="hidden"
 						name="projectAppRegId"></input> <input name="toAccountFee"
-						style="width: 100%; height: 100%" type="number" id="toAccountFee"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+						style="width: 100%; height: 100%" type="text" precision="2"
+						id="toAccountFee" class="easyui-numberbox"
+						data-options="required:true" /></td>
 					<th>到帐时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="toAccountDT"
 						id="toAccountDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd hh:mm:ss')" /></td>
+						data-options="required:true"
+						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
 
 				</tr>
 				<tr>
-					<th>申请拨付金额 &nbsp;<label
+					<th>本次计划支付金额（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="easyui-validatebox span2" type="number"
-						name="applyFee" id="applyFee" style="width: 98%; height: 100%;"
-						data-options="required:true" /></td>
-					<th>申请拨付时间 &nbsp;<label
+					<td><input class="easyui-numberbox" type="text"
+						precision="2" name="applyFee" id="applyFee"
+						style="width: 98%; height: 100%;" data-options="required:true" /></td>
+					<th>业主本次拨付时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="applyDT"
 						id="applyDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+						data-options="required:true" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
 
 				</tr>
 				<tr>
@@ -82,27 +84,30 @@
 						style="font-weight: bold; color: rgba(128, 128, 128, 0.47);">（说明：以下会计填写）</font></td>
 				</tr>
 				<tr>
-					<th>实际拨付金额（元）&nbsp;</th>
+					<th>实际到帐金额（元）&nbsp;</th>
 					<td><input name="actualFee" style="width: 100%; height: 100%"
-						type="number" id="actualFee" class="easyui-validatebox span2"
-						readonly="readonly" /></td>
-					<th>实际拨付时间&nbsp;</th>
+						type="text" precision="2" id="actualFee"
+						class="easyui-numberbox" readonly="readonly" /></td>
+					<th>实际到帐时间&nbsp;</th>
 					<td><input class="Wdate" type="text" name="actualDT"
 						id="actualDT" style="width: 98%; height: 100%;"
-						readonly="readonly" onfocus="showDate('yyyy-MM-dd')" /></td>
+						readonly="readonly" /></td>
 				</tr>
 				<tr>
+					<th>实际支付金额（元）&nbsp;</th>
+					<td><input name="actualPayFee" style="width: 100%; height: 100%"
+						type="number" id="actualPayFee"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
 					<th>收款人 &nbsp;</th>
 					<td><input name="payee" style="width: 100%; height: 100%"
 						type="text" id="accountNum" class="easyui-validatebox span2"
 						readonly="readonly" /></td>
+				</tr>
+				<tr>
 					<th>开户行&nbsp;</th>
 					<td><input name="bank" style="width: 100%; height: 100%"
 						type="text" id="bank" class="easyui-validatebox span2"
 						readonly="readonly" /></td>
-
-				</tr>
-				<tr>
 					<th>帐号&nbsp;</th>
 					<td><input name="accountNum" style="width: 100%; height: 100%"
 						type="text" id="accountNum" class="easyui-validatebox span2"

@@ -36,7 +36,14 @@
 					<td><input name="bookFee" value="${projectBookRegist.bookFee}"
 						type="text" id="bookFee" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" /></td>
-
+				</tr>
+				<tr>
+					<th>公司名称 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td colspan="3"><input name="companyName"
+						value="${projectBookRegist.companyName}" style="width: 100%;"
+						type="text" id="companyName" class="easyui-validatebox span2"
+						readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

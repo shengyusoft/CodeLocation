@@ -23,44 +23,20 @@
 			pageList : [ 10, 15],
 			columns : [ [ {
 				checkbox : true,
+				rowspan : 2,
 				field : 'id',
 				width : '30',
 			}, {
-				width : '120',
-				title : '到帐金额（元）',
-				align : 'center',
-				field : 'toAccountFee'
+				title : '以下内容工程部经理填写',
+				colspan : 4,
+				align : 'center'
+			}, {
+				title : '以下内容财务部出纳填写',
+				colspan : 4,
+				align : 'center'
 			}, {
 				width : '90',
-				title : '到帐时间',
-				sortable : true,
-				align : 'center',
-				field : 'toAccountDT'
-			}, {
-				width : '120',
-				title : '申请拨付金额',
-				sortable : true,
-				align : 'center',
-				field : 'applyFee'
-			}, {
-				width : '120',
-				title : '申请拨付时间',
-				sortable : true,
-				align : 'center',
-				field : 'applyDT'
-			}, {
-				width : '120',
-				title : '实际拨付金额（元）',
-				sortable : true,
-				align : 'center',
-				field : 'actualFee'
-			}, {
-				width : '90',
-				title : '实际拨付时间',
-				align : 'center',
-				field : 'actualDT'
-			}, {
-				width : '90',
+				rowspan : 2,
 				title : '状态',
 				align : 'center',
 				field : 'state',
@@ -69,27 +45,71 @@
 				}
 			}, {
 				width : '90',
+				title : '到帐时间',
+				rowspan : 2,
+				sortable : true,
+				align : 'center',
+				field : 'toAccountDT'
+			}, {
+				width : '90',
 				title : '收款人',
+				rowspan : 2,
 				align : 'center',
 				field : 'payee'
 			}, {
 				width : '90',
 				title : '开户行',
+				rowspan : 2,
 				align : 'center',
 				field : 'bank'
 			}, {
 				width : '90',
 				title : '帐号',
+				rowspan : 2,
 				align : 'center',
 				field : 'accountNum'
+			} ] , [ {
+				width : 150,
+				title : '业主本次拨付金额（元）',
+				align : 'center',
+				field : 'toAccountFee'
+			}, {
+				width : '120',
+				title : '业主本次拨付时间',
+				sortable : true,
+				align : 'center',
+				field : 'applyDT'
+			}, {
+				width : '120',
+				title : '本次计划支付金额',
+				sortable : true,
+				align : 'center',
+				field : 'applyFee'
 			}, {
 				width : '90',
 				title : '备注1',
 				align : 'center',
 				field : 'remark1'
 			}, {
+				width : '120',
+				title : '实际到帐金额（元）',
+				sortable : true,
+				align : 'center',
+				field : 'actualFee'
+			}, {
 				width : '90',
-				title : '备注2',
+				title : '实际到帐时间',
+				align : 'center',
+				field : 'actualDT'
+			}, {
+				width : 150,
+				title : '本次实际支付金额（元）',
+				sortable : true,
+				align : 'center',
+				field : 'actualPayFee'
+			}, {
+				width : '90',
+				title : '备注',
 				align : 'center',
 				field : 'remark2'
 			} ] ],

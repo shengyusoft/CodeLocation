@@ -51,44 +51,20 @@
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [ {
 				checkbox : true,
+				rowspan : 2,
 				field : 'id',
 				width : '30',
 			}, {
-				width : '120',
-				title : '到帐金额（元）',
-				align : 'center',
-				field : 'toAccountFee'
+				title : '以下内容工程部经理填写',
+				colspan : 4,
+				align : 'center'
+			}, {
+				title : '以下内容财务部出纳填写',
+				colspan : 4,
+				align : 'center'
 			}, {
 				width : '90',
-				title : '到帐时间',
-				sortable : true,
-				align : 'center',
-				field : 'toAccountDT'
-			}, {
-				width : '120',
-				title : '申请拨付金额',
-				sortable : true,
-				align : 'center',
-				field : 'applyFee'
-			}, {
-				width : '120',
-				title : '申请拨付时间',
-				sortable : true,
-				align : 'center',
-				field : 'applyDT'
-			}, {
-				width : '120',
-				title : '实际拨付金额（元）',
-				sortable : true,
-				align : 'center',
-				field : 'actualFee'
-			}, {
-				width : '90',
-				title : '实际拨付时间',
-				align : 'center',
-				field : 'actualDT'
-			}, {
-				width : '90',
+				rowspan : 2,
 				title : '状态',
 				align : 'center',
 				field : 'state',
@@ -97,32 +73,74 @@
 				}
 			}, {
 				width : '90',
+				title : '到帐时间',
+				rowspan : 2,
+				sortable : true,
+				align : 'center',
+				field : 'toAccountDT'
+			}, {
+				width : '90',
 				title : '收款人',
+				rowspan : 2,
 				align : 'center',
 				field : 'payee'
 			}, {
 				width : '90',
 				title : '开户行',
+				rowspan : 2,
 				align : 'center',
 				field : 'bank'
 			}, {
 				width : '90',
 				title : '帐号',
+				rowspan : 2,
 				align : 'center',
 				field : 'accountNum'
+			} ] , [ {
+				width : 150,
+				title : '业主本次拨付金额（元）',
+				align : 'center',
+				field : 'toAccountFee'
+			}, {
+				width : '120',
+				title : '业主本次拨付时间',
+				sortable : true,
+				align : 'center',
+				field : 'applyDT'
+			}, {
+				width : '120',
+				title : '本次计划支付金额',
+				sortable : true,
+				align : 'center',
+				field : 'applyFee'
 			}, {
 				width : '90',
 				title : '备注1',
 				align : 'center',
 				field : 'remark1'
 			}, {
+				width : '120',
+				title : '实际到帐金额（元）',
+				sortable : true,
+				align : 'center',
+				field : 'actualFee'
+			}, {
 				width : '90',
-				title : '备注2',
+				title : '实际到帐时间',
+				align : 'center',
+				field : 'actualDT'
+			}, {
+				width : 150,
+				title : '本次实际支付金额（元）',
+				sortable : true,
+				align : 'center',
+				field : 'actualPayFee'
+			}, {
+				width : '90',
+				title : '备注',
 				align : 'center',
 				field : 'remark2'
-			} ,{field : 'projectAppRegName',hidden:true},
-            {field : 'projectAppRegId',hidden:true},
-            {field : 'times',hidden:true} ] ],
+			} ] ],
 			toolbar : '#toolbar'
 		});
 	});
@@ -282,14 +300,14 @@
 					<th>管理费比例 （%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="managerFeeRate"
-						style="width: 100%; height: 100%" type="number"
-						id="managerFeeRate" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+						style="width: 90%; height: 100%" max="100" min="0"
+						type="text" id="managerFeeRate" precision="2"
+						class="easyui-numberbox" data-options="required:true" /></td>
 					<th>管理费数额（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="managerFee" style="width: 100%; height: 100%"
+					<td><input name="managerFee" style="width: 90%; height: 100%"
 						type="number" id="managerFee" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+						readonly="readonly" disabled="disabled" /></td>
 				</tr>
 				<tr>
 					<td colspan="6">收款人信息</td>

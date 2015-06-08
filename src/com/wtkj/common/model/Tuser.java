@@ -45,14 +45,15 @@ public class Tuser extends IdEntity implements java.io.Serializable {
 	private String fax;// 传真
 	private String email;// 邮箱
 	private String remark;// 备注
+	private int deleteStatus = 0;
 
 	public Tuser() {
 		super();
 	}
 
 	public Tuser(String loginname, String password, String name, Integer sex,
-			Integer age, Date createdatetime, Long usertype,
-			Integer isdefault, Integer state) {
+			Integer age, Date createdatetime, Long usertype, Integer isdefault,
+			Integer state) {
 		super();
 		this.loginname = loginname;
 		this.password = password;
@@ -200,6 +201,14 @@ public class Tuser extends IdEntity implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public int getDeleteStatus() {
+		return deleteStatus;
+	}
+
+	public void setDeleteStatus(int deleteStatus) {
+		this.deleteStatus = deleteStatus;
 	}
 
 }

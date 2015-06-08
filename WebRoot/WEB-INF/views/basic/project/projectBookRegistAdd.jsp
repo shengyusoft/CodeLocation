@@ -26,6 +26,14 @@
 			}
 		});
 	});
+	
+	$('#company').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : 'auto'				
+	});
 
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
@@ -55,6 +63,13 @@
 					<td><input name="bookFee" type="text" class="easyui-numberbox" precision="2" min="0" id="bookFee"
 						style="width: 100%; height: 100%"/></td>
 
+				</tr>
+				<tr>
+					<th>公司名称 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="company" name="companyId" 
+						class="easyui-validatebox span2" data-options="editable:false,required:true" style="width: 180px;">
+					</select></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

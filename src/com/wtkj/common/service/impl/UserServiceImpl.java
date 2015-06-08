@@ -57,13 +57,13 @@ public class UserServiceImpl implements UserServiceI {
 		}
 		t.setRoles(new HashSet<Trole>(roles));
 
-		if(!StringUtils.isEmpty(u.getMobilePhone())){
+		if (!StringUtils.isEmpty(u.getMobilePhone())) {
 			t.setPassword(MD5Util.md5(u.getMobilePhone()));
-		}else{
-			//防止出问题的时候 默认为1
+		} else {
+			// 防止出问题的时候 默认为1
 			t.setPassword(MD5Util.md5("1"));
 		}
-		
+
 		t.setState(GlobalConstant.ENABLE);
 		t.setCreatedatetime(new Date());
 		userDao.save(t);
@@ -76,7 +76,10 @@ public class UserServiceImpl implements UserServiceI {
 	}
 
 	private void del(Tuser t) {
-		userDao.delete(t);
+		// 用户数据逻辑删除
+		t.setDeleteStatus(1);
+		userDao.update(t);
+		// userDao.delete(t);
 	}
 
 	@Override
@@ -96,7 +99,8 @@ public class UserServiceImpl implements UserServiceI {
 			}
 		}
 
-		if (!StringUtils.isEmpty(user.getPassword()) && !"********".equals(user.getPassword())) {
+		if (!StringUtils.isEmpty(user.getPassword())
+				&& !"********".equals(user.getPassword())) {
 			t.setPassword(MD5Util.md5(user.getPassword()));
 		} else {
 			t.setPassword(StringUtils.isEmpty(oldPassword) ? t.getMobilePhone()
@@ -114,9 +118,9 @@ public class UserServiceImpl implements UserServiceI {
 	public User get(Long id) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", id);
-		Tuser t = userDao.get(
-				"from Tuser t  left join fetch t.roles role where t.id = :id",
-				params);
+		Tuser t = userDao
+				.get("from Tuser t left join fetch t.roles role where t.id = :id and t.deleteStatus=0",
+						params);
 		User u = new User();
 		BeanUtils.copyProperties(t, u);
 
@@ -150,9 +154,11 @@ public class UserServiceImpl implements UserServiceI {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("loginname", user.getLoginname());
 		params.put("password", MD5Util.md5(user.getPassword()));
-		Tuser t = userDao
-				.get("from Tuser t left join fetch t.organization organization where t.loginname = :loginname and t.password = :password",
-						params);
+		Tuser t = userDao.get(
+				"from Tuser t left join fetch t.organization organization "
+						+ "where t.loginname = :loginname "
+						+ "and t.password = :password" + " and t.deleteStatus = 0",
+				params);
 		if (t != null) {
 			User u = new User();
 			BeanUtils.copyProperties(t, u);
@@ -296,7 +302,7 @@ public class UserServiceImpl implements UserServiceI {
 	private String whereHql(User user, Map<String, Object> params) {
 		String hql = "";
 		if (user != null) {
-			hql += " where 1=1 ";
+			hql += " where t.deleteStatus=0 ";
 			if (user.getName() != null) {
 				hql += " and t.name like :name";
 				params.put("name", "%%" + user.getName() + "%%");

@@ -274,7 +274,7 @@
 						value="${cuser.name}" class="easyui-validatebox span2"
 						style="width: 150px;" data-options="required:true"></input> <input
 						type="hidden" name="delegatorId" value="${cuser.id}"></input></td>
-					<th>报名时间 &nbsp;<label
+					<th>开标时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT"
 						id="registDT" style="width: 98%; height: 100%;"

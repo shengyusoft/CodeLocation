@@ -27,6 +27,7 @@ public class ProjectAppropriateRegServiceImpl implements
 		if (p == null) {
 			return;
 		}
+		p.setManagerFee(calMangerFee(p));
 		projectAppropriateRegDao.save(p);
 	}
 
@@ -40,18 +41,18 @@ public class ProjectAppropriateRegServiceImpl implements
 			} else {
 				for (int i = 0; i < idArray.length; i++) {
 					String id = idArray[i];
-					if(i == 0){
+					if (i == 0) {
 						sqlids += "'" + id + "'";
-					}else{
+					} else {
 						sqlids += ",'" + id + "'";
 					}
 				}
 			}
 		}
-		if(sqlids.lastIndexOf(",") > 0){
+		if (sqlids.lastIndexOf(",") > 0) {
 			sqlids = sqlids.substring(0, sqlids.lastIndexOf(","));
 		}
-		
+
 		String sql = "delete from ProjectAppropriateReg where id in (" + sqlids
 				+ ")";
 		projectAppropriateRegDao.executeSql(sql);
@@ -62,6 +63,7 @@ public class ProjectAppropriateRegServiceImpl implements
 		if (p == null || p.getId() == null || p.getId() <= 0) {
 			return;
 		}
+		p.setManagerFee(calMangerFee(p));
 		projectAppropriateRegDao.update(p);
 	}
 
@@ -135,5 +137,15 @@ public class ProjectAppropriateRegServiceImpl implements
 				+ " where id in (" + sqlids + ")";
 		projectAppropriateRegDao.executeSql(sql);
 
+	}
+
+	private double calMangerFee(ProjectAppropriateReg p) {
+		double fee = 0d;
+		if (p.getBidPrice() != null) {
+			double rate = p.getManagerFeeRate() == null ? 0f : p
+					.getManagerFeeRate();
+			fee = p.getBidPrice() * (rate / 100);
+		}
+		return fee;
 	}
 }

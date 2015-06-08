@@ -20,7 +20,7 @@
 			striped : true,
 			rownumbers : true,
 			pagination : true,
-			nowrap : true,
+			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
@@ -36,6 +36,12 @@
 				sortable : true,
 				align : 'center',
 				field : 'projectName'
+			}, {
+				width : '120',
+				title : '公司名称',
+				sortable : true,
+				align : 'center',
+				field : 'companyName'
 			}, {
 				width : '140',
 				title : '资质要求',

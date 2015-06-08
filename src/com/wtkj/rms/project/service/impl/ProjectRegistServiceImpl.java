@@ -65,6 +65,8 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				.getCertificateC().getId()));
 
 		p.setTotalFee(calTotal(p));
+		
+		p.setCreateDT(new Date());
 
 		projectRegistDao.save(p);
 	}

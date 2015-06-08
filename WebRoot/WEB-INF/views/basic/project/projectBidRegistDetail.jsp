@@ -259,7 +259,7 @@
 						value="${projectRegist.delegatorName}" class="easyui-validatebox span2"
 						style="width: 150px;" data-options="required:true"></input> <input
 						type="hidden" name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
-					<th>报名时间 &nbsp;<label
+					<th>开标时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT" value="${projectRegist.registDT}"
 						id="registDT" style="width: 98%; height: 100%;"

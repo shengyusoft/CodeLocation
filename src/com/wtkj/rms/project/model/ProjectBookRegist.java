@@ -14,6 +14,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.wtkj.common.model.IdEntity;
+import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tuser;
 
 /**
@@ -30,6 +31,7 @@ import com.wtkj.common.model.Tuser;
 public class ProjectBookRegist extends IdEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 6625249529038114020L;
 	private String projectName;// 项目名称
+	private Tdictionary company;// 公司名称
 	private String qualifyRequirement;// 资质要求
 	private String bidder;// 投标人姓名
 	private String contract;// 联系方式
@@ -49,6 +51,17 @@ public class ProjectBookRegist extends IdEntity implements java.io.Serializable 
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "companyId")
+	public Tdictionary getCompany() {
+		return company;
+	}
+
+	public void setCompany(Tdictionary company) {
+		this.company = company;
 	}
 
 	public String getQualifyRequirement() {

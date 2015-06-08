@@ -40,7 +40,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[招投标公司工程款拨付登记表]]></text>
+				<text><![CDATA[金鹰公司工程款拨付登记表]]></text>
 			</staticText>
 		</band>
 	</title>

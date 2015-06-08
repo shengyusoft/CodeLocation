@@ -174,6 +174,14 @@ public class ReportController extends BaseController {
 		} else {
 			parameterMap.put("format", "xls");
 		}
+		
+		if (startDT != null && endDT != null) {
+			parameterMap.put("startDT", startDT);
+		}else if(startDT != null && endDT == null){
+			parameterMap.put("startDT", startDT);
+		}else if(startDT == null && endDT != null){
+			parameterMap.put("endDT", endDT);
+		}
 
 		try {
 			parameterMap.put(
@@ -187,8 +195,20 @@ public class ReportController extends BaseController {
 			e.printStackTrace();
 		}
 
-		parameterMap.put("applyer", applier + "%%");
-		parameterMap.put("place", place + "%%");
+		if(!StringUtils.isEmpty(applier)){
+			String appiperUTF8 = new String(applier.getBytes("iso-8859-1"), "UTF-8");
+			parameterMap.put("applyer", appiperUTF8 + "%");
+		}else{
+			parameterMap.put("applyer", "%");
+		}
+		
+		if(!StringUtils.isEmpty(place)){
+			String placeUTF8 = new String(place.getBytes("iso-8859-1"), "UTF-8");
+			parameterMap.put("place", placeUTF8 + "%");
+		}else{
+			parameterMap.put("place", "%");
+		}
+		
 		return new ModelAndView("reimbursement", parameterMap);
 	}
 

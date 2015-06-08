@@ -33,18 +33,20 @@ public class ProjectAppropriateAccount extends IdEntity implements
 
 	private int times;// 次数
 
-	private Double toAccountFee;// 到帐金额（元）
+	private Double toAccountFee;// 到帐金额（元）业主本次拨付金额
 
 	private Date toAccountDT;// 到帐时间
 
-	private Double applyFee;// 申请拨付金额
+	private Double applyFee;// 申请拨付金额（本次计划支付金额）
 
-	private Date applyDT;// 申请拨付时间
+	private Date applyDT;// 申请拨付时间（业主本次拨付时间）
 
 	// 以下会计填写
-	private Double actualFee;// 实际拨付金额（元）
+	private Double actualFee;// 实际到帐金额（元）
 
-	private Date actualDT;// 实际拨付时间
+	private Double actualPayFee;// 实际支付金额（元）
+
+	private Date actualDT;// 实际到帐时间
 
 	private String payee;// 收款人
 
@@ -58,7 +60,7 @@ public class ProjectAppropriateAccount extends IdEntity implements
 
 	// 0初始化综合部确认后状态;1工程部提交;会计部确认2
 	private int state;// 状态
-	
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "projectAreg_id")
@@ -117,6 +119,14 @@ public class ProjectAppropriateAccount extends IdEntity implements
 
 	public void setActualFee(Double actualFee) {
 		this.actualFee = actualFee;
+	}
+
+	public Double getActualPayFee() {
+		return actualPayFee;
+	}
+
+	public void setActualPayFee(Double actualPayFee) {
+		this.actualPayFee = actualPayFee;
 	}
 
 	public Date getActualDT() {

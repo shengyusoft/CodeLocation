@@ -2,14 +2,21 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="招投标公司投标保证金退还申请表" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="188"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select b.*,u1.name as applierName,u2.name as handlerName from bidbond as b
+		<![CDATA[select b.*,u1.name as applierName,u2.name as handlerName,bd.bidNames from bidbond as b
 left join sys_user as u1 on b.applierId=u1.id
 left join sys_user as u2 on b.handlerId=u2.id
+left join
+(
+select b.id as uid,GROUP_CONCAT(d.text) as bidNames
+from sys_dictionary d,bidbond b
+WHERE find_in_set(d.id,(select b.bidSection from bidbond b WHERE b.id=$P{id}))
+GROUP by b.id
+) bd ON b.id = bd.uid
 where b.id=$P{id}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
@@ -18,11 +25,13 @@ where b.id=$P{id}]]>
 	<field name="bidSection" class="java.lang.String"/>
 	<field name="bondFee" class="java.lang.Double"/>
 	<field name="bondFeeCH" class="java.lang.String"/>
+	<field name="payeeName" class="java.lang.String"/>
 	<field name="payeeAccountName" class="java.lang.String"/>
 	<field name="payeeBank" class="java.lang.String"/>
 	<field name="payeeAccountNum" class="java.lang.String"/>
 	<field name="payeeComments" class="java.lang.String"/>
 	<field name="payeeHandleDT" class="java.sql.Timestamp"/>
+	<field name="customerName" class="java.lang.String"/>
 	<field name="payer" class="java.lang.String"/>
 	<field name="payerPhone" class="java.lang.String"/>
 	<field name="applierId" class="java.lang.Integer"/>
@@ -38,8 +47,10 @@ where b.id=$P{id}]]>
 	<field name="outAccountDT" class="java.sql.Timestamp"/>
 	<field name="type" class="java.lang.Integer"/>
 	<field name="state" class="java.lang.Integer"/>
+	<field name="remark" class="java.lang.String"/>
 	<field name="applierName" class="java.lang.String"/>
 	<field name="handlerName" class="java.lang.String"/>
+	<field name="bidNames" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -50,7 +61,7 @@ where b.id=$P{id}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[招投标公司投标保证金退还申请表]]></text>
+				<text><![CDATA[金鹰公司投标保证金退还申请表]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="359" y="42" width="78" height="20"/>
@@ -99,7 +110,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[项目名称]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="85" y="0" width="196" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="85" y="0" width="245" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -112,7 +123,7 @@ where b.id=$P{id}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{projectName}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="281" y="0" width="78" height="30"/>
+				<reportElement x="330" y="0" width="29" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -135,7 +146,7 @@ where b.id=$P{id}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{bidSection}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bidNames}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="330" y="30" width="225" height="30"/>

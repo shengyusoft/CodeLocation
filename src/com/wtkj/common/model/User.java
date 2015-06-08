@@ -37,6 +37,8 @@ public class User implements java.io.Serializable {
 	private String email;// 邮箱
 	private String remark;// 备注
 
+	private int deleteStatus = 0;
+
 	// 用户管理中添加电话、手机*、传真、邮箱、备注等，用户可行修改自己的信息
 
 	public User() {
@@ -201,6 +203,14 @@ public class User implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public int getDeleteStatus() {
+		return deleteStatus;
+	}
+
+	public void setDeleteStatus(int deleteStatus) {
+		this.deleteStatus = deleteStatus;
 	}
 
 }

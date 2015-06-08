@@ -31,7 +31,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 
 	@Autowired
 	private BaseDaoI<Tuser> userDao;
-
+	
 	@Autowired
 	private BaseDaoI<Tdictionary> dictionaryDao;
 
@@ -153,15 +153,17 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 			if (!StringUtils.isEmpty(r.getPlace())) {
 				hql += " and t.county.description like :place";
 				params.put("place", "%%" + r.getPlace() + "%%");
-
 			}
 
-			if (r.getStartDT() != null) {
+			if (r.getStartDT() != null && r.getEndDT() != null) {
+				hql += " and t.startDT >= :startDT";
+				hql += " and t.endDT <= :endDT";
+				params.put("startDT", r.getStartDT());
+				params.put("endDT", r.getEndDT());
+			}else if(r.getStartDT() != null && r.getEndDT() == null){
 				hql += " and t.startDT >= :startDT";
 				params.put("startDT", r.getStartDT());
-			}
-			
-			if (r.getEndDT() != null) {
+			}else if(r.getStartDT() == null && r.getEndDT() != null){
 				hql += " and t.endDT <= :endDT";
 				params.put("endDT", r.getEndDT());
 			}

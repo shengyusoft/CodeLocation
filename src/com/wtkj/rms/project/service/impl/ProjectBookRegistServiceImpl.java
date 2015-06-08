@@ -151,6 +151,15 @@ public class ProjectBookRegistServiceImpl implements ProjectBookRegistServiceI {
 				p.setRegister(user);
 			}
 		}
+		
+		if (vo.getCompanyId() != null && vo.getCompanyId() > 0) {
+			Tdictionary company = dictionaryDao.get(Tdictionary.class,
+					vo.getCompanyId());
+			if (company != null) {
+				p.setCompany(company);
+			}
+		}
+
 		return p;
 	}
 
@@ -158,8 +167,6 @@ public class ProjectBookRegistServiceImpl implements ProjectBookRegistServiceI {
 		ProjectBookRegistVo vo = new ProjectBookRegistVo();
 		BeanUtils.copyProperties(po, vo);
 		if (po.getRegister() != null) {
-			System.out.println(po.getRegister().getId());
-			System.out.println(po.getRegister().getName());
 			Tuser user = userDao.get(Tuser.class, po.getRegister().getId());
 			if (user != null) {
 				vo.setRegisterId(user.getId());
@@ -167,11 +174,19 @@ public class ProjectBookRegistServiceImpl implements ProjectBookRegistServiceI {
 			}
 		}
 		
+		if(po.getCompany() != null){
+			Tdictionary company = dictionaryDao.get(Tdictionary.class,po.getCompany().getId());
+			if(company != null){
+				vo.setCompanyId(company.getId());
+				vo.setCompanyName(company.getText());
+			}
+		}
+
 		if (!StringUtils.isEmpty(po.getQualifyRequirement())) {
 			vo.setQualifyRequirementNames(getDicTexts(po
 					.getQualifyRequirement()));
 		}
-		
+
 		return vo;
 	}
 

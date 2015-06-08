@@ -174,16 +174,17 @@
 			queryParams['process_vo.applyUserName'] = applyUserName;
 		}
 		
-		if(isEmpty(startDT)){
-			startDT = '1900-01-01';
+		if(!isEmpty(startDT)){
+			//startDT = '1900-01-01';
+			queryParams.startDT = startDT;
 		}
 		
-		if(isEmpty(endDT)){
-			endDT = '5000-01-01';
+		if(!isEmpty(endDT)){
+			//endDT = '5000-01-01';
+			queryParams.endDT = endDT;
 		}
-		
-		queryParams.startDT = startDT;
-		queryParams.endDT = endDT;
+		//queryParams.startDT = startDT;
+		//queryParams.endDT = endDT;
 		
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -192,6 +193,8 @@
 	function clearFun() {
 		$('#place').val('');
 		$('#applyUserName').val('');
+		$('#startDT').val('');
+		$('#endDT').val('');
 	}
 
 	function addFun() {
@@ -441,6 +444,8 @@
 		var endDT = $('#endDT').val();
 		var applier = $('#applyUserName').val();
 		var place = $('#place').val();
+		console.log(applier);
+		console.log(place);
 		var url = ctxPath + "/report/reimbursement?type="+type+"&&startDT="+startDT+"&&endDT="+endDT+"&&applier="+applier+"&&place="+place;
 		if(type == 0){
 			var iWidth = 1000; //弹出窗口的宽度;

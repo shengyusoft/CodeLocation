@@ -174,7 +174,7 @@
 						type="text" id="bid_cost" class="easyui-numberbox" precision="2" min="0"
 						data-options="required:true" /></td>
 						
-					<th>工期 &nbsp;<label
+					<th>工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td colspan="2"><input class="Wdate" type="text" name="duration"
 						id="duration" style="width: 98%; height: 100%;"
@@ -185,7 +185,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="manageFeeRate"
 						style="width: 100%; height: 100%" max="100" min="0"
-						type="text" id="manageFeeRate"
+						type="text" id="manageFeeRate" precision="2"
 						class="easyui-numberbox" data-options="required:true" /></td>
 						
 					<th width="120px">管理费数额（元）&nbsp;</th>

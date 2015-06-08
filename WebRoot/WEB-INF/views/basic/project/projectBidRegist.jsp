@@ -102,6 +102,13 @@
 				align : 'center',
 				field : 'registDT',
 				formatter : Common.formatter
+			}, {
+				width : '130',
+				title : '登记时间',
+				sortable : true,
+				align : 'center',
+				field : 'createDT',
+				formatter : Common.formatterTime
 			} ] ],
 
 			toolbar : '#toolbar'
