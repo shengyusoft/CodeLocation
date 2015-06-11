@@ -24,7 +24,7 @@
 						type="hidden" name="id" id="id"
 						value="${projectAppropriateAccount.id}"></input> <input
 						name="toAccountFee"
-						value="${projectAppropriateAccount.toAccountFee}"
+						value="${projectAppropriateAccount.toAccountFee}"  precision="2"
 						style="width: 100%; height: 100%" type="text" id="toAccountFee"
 						class="easyui-numberbox" readonly="readonly" /></td>
 					<th>到帐时间 &nbsp;</th>
@@ -36,7 +36,7 @@
 				<tr>
 					<th>本次计划支付金额 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="easyui-numberbox" type="text"
+					<td><input class="easyui-numberbox" type="text" precision="2"
 						name="applyFee" value="${projectAppropriateAccount.applyFee}"
 						id="applyFee" style="width: 98%; height: 100%;"
 						readonly="readonly" /></td>

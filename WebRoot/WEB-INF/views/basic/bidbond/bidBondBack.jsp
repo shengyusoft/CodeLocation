@@ -93,7 +93,7 @@
 			}, {
 				width : '140',
 				rowspan : 2,
-				title : '缴号',
+				title : '退号',
 				align : 'center',
 				field : 'idNumber'
 			}, {

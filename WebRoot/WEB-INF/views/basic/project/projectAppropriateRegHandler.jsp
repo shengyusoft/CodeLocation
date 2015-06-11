@@ -28,7 +28,7 @@
 				width : '30',
 			}, {
 				title : '以下内容工程部经理填写',
-				colspan : 4,
+				colspan : 5,
 				align : 'center'
 			}, {
 				title : '以下内容财务部出纳填写',
@@ -43,13 +43,6 @@
 				formatter : function(value, row, index) {
 					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
 				}
-			}, {
-				width : '90',
-				title : '到帐时间',
-				rowspan : 2,
-				sortable : true,
-				align : 'center',
-				field : 'toAccountDT'
 			}, {
 				width : '90',
 				title : '收款人',
@@ -85,6 +78,12 @@
 				sortable : true,
 				align : 'center',
 				field : 'applyFee'
+			}, {
+				width : '90',
+				title : '到帐时间',
+				sortable : true,
+				align : 'center',
+				field : 'toAccountDT'
 			}, {
 				width : '90',
 				title : '备注1',
