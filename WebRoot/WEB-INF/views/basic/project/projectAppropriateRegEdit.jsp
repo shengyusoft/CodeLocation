@@ -57,7 +57,7 @@
 				width : '30',
 			}, {
 				title : '以下内容工程部经理填写',
-				colspan : 5,
+				colspan : 8,
 				align : 'center'
 			}, {
 				title : '以下内容财务部出纳填写',
@@ -72,25 +72,7 @@
 				formatter : function(value, row, index) {
 					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
 				}
-			}, {
-				width : '90',
-				title : '收款人',
-				rowspan : 2,
-				align : 'center',
-				field : 'payee'
-			}, {
-				width : '90',
-				title : '开户行',
-				rowspan : 2,
-				align : 'center',
-				field : 'bank'
-			}, {
-				width : '90',
-				title : '帐号',
-				rowspan : 2,
-				align : 'center',
-				field : 'accountNum'
-			} ] , [ {
+			}] , [ {
 				width : 150,
 				title : '业主本次拨付金额（元）',
 				align : 'center',
@@ -114,6 +96,24 @@
 				align : 'center',
 				field : 'toAccountDT'
 			}, {
+				width : '90',
+				title : '收款人',
+				
+				align : 'center',
+				field : 'payee'
+			}, {
+				width : '90',
+				title : '开户行',
+				
+				align : 'center',
+				field : 'bank'
+			}, {
+				width : '90',
+				title : '帐号',
+				
+				align : 'center',
+				field : 'accountNum'
+			} ,{
 				width : '90',
 				title : '备注1',
 				align : 'center',
