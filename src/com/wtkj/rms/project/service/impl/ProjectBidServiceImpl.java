@@ -136,19 +136,44 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 		String hql = "";
 		if (p != null) {
 			hql += " where 1=1 ";
-
-			if (p.getCompany() != null) {
-				hql += " and t.company.name like :name and t.company.dictionarytype.code=:type";
-				params.put("name", "%%" + p.getCompany().getText() + "%%");
-				params.put("name", "company");
-			}
 			if (!StringUtils.isEmpty(p.getProjectName())) {
 				hql += " and t.projectName like :projectName";
 				params.put("projectName", "%%" + p.getProjectName() + "%%");
 			}
+			
+			//工期结束时间
+			if (p.getDurationSt() != null) {
+				hql += " and t.duration >= :durationst";
+				params.put("durationst", p.getDurationSt());
+			}
 
+			if (p.getDurationEt() != null) {
+				hql += " and t.duration <= :durationet";
+				params.put("durationet", p.getDurationEt());
+			}
+			
+			//按地区搜索
+			if(p.getProvice() != null && p.getProvice().getId() > 0){
+				hql += " and t.provice.id = :proviceId";
+				params.put("proviceId", p.getProvice().getId());
+			}
+			
+			if(p.getCity() != null && p.getCity().getId() > 0){
+				hql += " and t.city.id = :cityId";
+				params.put("cityId", p.getCity().getId());
+			}
+			
+			if(p.getCounty() != null && p.getCounty().getId() > 0){
+				hql += " and t.county.id = :countyId";
+				params.put("countyId", p.getCounty().getId());
+			}
+			
+			//登记人
+			if (!StringUtils.isEmpty(p.getRecordman())) {
+				hql += " and t.recordman like :recordman";
+				params.put("recordman", "%%" + p.getRecordman() + "%%");
+			}
 		}
-
 		return hql;
 	}
 

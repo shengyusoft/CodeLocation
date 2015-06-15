@@ -20,6 +20,7 @@ import com.wtkj.rms.project.model.ProjectRegist;
 import com.wtkj.rms.project.model.ProjectRegistVo;
 import com.wtkj.rms.project.service.ProjectRegistServiceI;
 
+//项目报名登记,开标登记
 @Controller
 @RequestMapping("/projectRegist")
 public class ProjectRegistController extends BaseController {

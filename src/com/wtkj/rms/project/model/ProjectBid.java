@@ -62,6 +62,11 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	private String remark;
 
+	// for search
+	private Date durationSt;// 工期开始
+
+	private Date durationEt;// 工期结束
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id")
@@ -234,6 +239,24 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	public void setHeadmanIdCard(String headmanIdCard) {
 		this.headmanIdCard = headmanIdCard;
+	}
+
+	@Transient
+	public Date getDurationSt() {
+		return durationSt;
+	}
+
+	public void setDurationSt(Date durationSt) {
+		this.durationSt = durationSt;
+	}
+
+	@Transient
+	public Date getDurationEt() {
+		return durationEt;
+	}
+
+	public void setDurationEt(Date durationEt) {
+		this.durationEt = durationEt;
 	}
 
 }

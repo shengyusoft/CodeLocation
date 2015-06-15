@@ -15,7 +15,7 @@
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
-		//init();
+		init();
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectBid/dataGrid',
 			striped : true,
@@ -48,6 +48,33 @@
 				field : 'projectName'
 			}, {
 				width : '120',
+				title : '省',
+				sortable : true,
+				align : 'center',
+				field : 'provice',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.text;
+				}
+			}, {
+				width : '120',
+				title : '市',
+				sortable : true,
+				align : 'center',
+				field : 'city',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.text;
+				}
+			}, {
+				width : '120',
+				title : '县',
+				sortable : true,
+				align : 'center',
+				field : 'county',
+				formatter : function(value, row, index) {
+					return isEmpty(value)?'':value.text;
+				}
+			}, {
+				width : '120',
 				title : '标段',
 				align : 'center',
 				field : 'bdNames'
@@ -73,7 +100,8 @@
 				width : '140',
 				title : '工期结束时间',
 				align : 'center',
-				field : 'duration'
+				field : 'duration',
+				formatter : Common.formatter
 			}, {
 				width : '140',
 				title : '中标价（元）',
@@ -115,51 +143,89 @@
 	
 	//必要的初始化
 	function init(){
-		$('#delegatorId').combobox({
-			url : "${pageContext.request.contextPath}/dictionary/combox?code=wtr",
-			parentField : 'dictionaryId',
+		$('#provice').combobox({
+			url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
+			parentField : 'pid',
 			valueField : 'id',
 			textField : 'text',
-			panelHeight : 'auto'				
+			panelHeight : 300,
+			editable:false,//不可编辑，只能选择
+			onChange:function(provice){
+		    	$('#city').combobox({
+		    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
+			    valueField:'id', //值字段
+			    textField:'text', //显示的字段
+			    panelHeight : 300,
+			    editable:false,//不可编辑，只能选择
+			    onChange:function(city,n){
+			    	$('#county').combobox({
+				    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
+					    valueField:'id', //值字段
+					    textField:'text', //显示的字段
+					    panelHeight : 300,
+					    editable:false//不可编辑，只能选择
+					});
+		 		}
+		    });
+		   }
+		});
+		
+		$('#city').combobox({
+	    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
+		    valueField:'id', //值字段
+		    textField:'text', //显示的字段
+		    panelHeight : 300,
+		    editable:false//不可编辑，只能选择
+		});
+		
+		$('#county').combobox({
+	    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
+		    valueField:'id', //值字段
+		    textField:'text', //显示的字段
+		    panelHeight:'auto',
+		    editable:false//不可编辑，只能选择
 		});
 	}
 	
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
+		queryParams.recordman = "";
 		queryParams.st = "";
 		queryParams.et = "";
-		//queryParams['delegator.id'] = -1;
-		//queryParams.delegator.id = -1;
+		queryParams['provice.id'] = -1;
+		queryParams['city.id'] = -1;
+		queryParams['county.id'] = -1;
 		
 		var projectName = $('#projectName').val();
+		var recordman = $('#recordman').val();
 		var st = $('#st').val();
 		var et = $('#et').val();
-		//var delegatorId = $('#delegatorId').combobox('getValue');
+		var provice = $('#provice').combobox('getValue');
+		var city = $('#city').combobox('getValue');
+		var county = $('#county').combobox('getValue');
 		
-		if(!isEmpty(projectName)){
-			queryParams.projectName = projectName;
-		}
-		if(!isEmpty(st)){
-			queryParams.st = st;
-		}
-		if(!isEmpty(et)){
-			queryParams.et = et;
-		}
-	/* 	if(!isEmpty(delegatorId)){
-			queryParams['delegator.id'] = delegatorId;
-		}else{
-			queryParams['delegator.id'] = '';
-		} */
+		queryParams.projectName = isEmpty(projectName)?"":projectName;
+		queryParams.recordman = isEmpty(recordman)?"":recordman;
+		queryParams.durationSt = isEmpty(st)?"":st;
+		queryParams.durationEt = isEmpty(et)?"":et;
+		
+		queryParams['provice.id'] = isEmpty(provice)?-1:provice;
+		queryParams['city.id'] = isEmpty(city)?-1:city;
+		queryParams['county.id'] = isEmpty(county)?-1:county;
+		
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
 
 	function clearFun() {
 		$('#projectName').val('');
+		$('#recordman').val('');
 		$('#st').val('');
 		$('#et').val('');
-		//$('#delegatorId').combobox('clear');
+		$('#provice').combobox('clear');
+		$('#city').combobox('clear');
+		$('#county').combobox('clear');
 	}
 	
 	function addFun() {
@@ -332,27 +398,36 @@
 		<c:if test="${fn:contains(sessionInfo.resourceList, '/projectBid/search')}">
 			<table>
 				<tr>
-					
-					<th>项目名称名称:</th>
+					<th>项目名称:</th>
 					<td><input type="text" id="projectName"> </td>
-					<th>时间段:</th>
+					<th>登记人:</th>
+					<td><input type="text" id="recordman"> </td>
+					<th>工期结束时间:</th>
 					<td>
 						<input class="Wdate" type="text" name="st" id="st"
-						style="height: 100%" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> - 
+						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - 
 						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> 
+						onfocus="showDate('yyyy-MM-dd')" /> 
 					</td>
-					<!-- <th>委托人:</th>
-					<td>
-						<select id="delegatorId" name="delegatorId" style="width:120px" 
-						class="easyui-validatebox span2"></select>
-					</td> -->
-					<td>
+					<td rowspan="2">
 						<a onclick="searchFun();" href="javascript:void(0);" class="easyui-linkbutton"
 							data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
 					
 						<a onclick="clearFun();" href="javascript:void(0);"class="easyui-linkbutton"
 							data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
+					</td>
+				</tr>
+				<tr>
+					<th>地点</th>
+					<td colspan="5">
+						省：<select id="provice" data-options="editable:false" name="provice.id" class="easyui-validatebox span2" style="width: 140px;">
+					</select>
+					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 140px;">
+					</select>
+					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						县(区)：<select id="county" name="county.id" data-options="editable:false" class="easyui-validatebox span2" style="width: 140px;">
+					</select>
 					</td>
 				</tr>
 			</table>

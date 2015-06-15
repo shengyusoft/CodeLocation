@@ -16,6 +16,7 @@ import com.wtkj.common.service.DictionaryServiceI;
 import com.wtkj.rms.project.model.ProjectBid;
 import com.wtkj.rms.project.service.ProjectBidServiceI;
 
+//项目中标登记
 @Controller
 @RequestMapping("/projectBid")
 public class ProjectBidController extends BaseController {
@@ -28,9 +29,9 @@ public class ProjectBidController extends BaseController {
 
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request) {
-		
-			return "/basic/project/projectBid";
-		
+
+		return "/basic/project/projectBid";
+
 	}
 
 	@RequestMapping("/dataGrid")
@@ -44,9 +45,9 @@ public class ProjectBidController extends BaseController {
 
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
-		
-			return "/basic/project/projectBidAdd";
-		
+
+		return "/basic/project/projectBidAdd";
+
 	}
 
 	@RequestMapping("/add")
@@ -94,9 +95,9 @@ public class ProjectBidController extends BaseController {
 	public String editPage(HttpServletRequest request, String id) {
 		ProjectBid vo = projectBidService.get(id);
 		request.setAttribute("projectBid", vo);
-		
-			return "/basic/project/projectBidEdit";// 退款
-		
+
+		return "/basic/project/projectBidEdit";// 退款
+
 	}
 
 	@RequestMapping("/edit")
@@ -117,9 +118,9 @@ public class ProjectBidController extends BaseController {
 	public String detailPage(HttpServletRequest request, String id) {
 		ProjectBid vo = projectBidService.get(id);
 		request.setAttribute("projectBid", vo);
-		
-			return "/basic/project/projectBidDetail";
-		
+
+		return "/basic/project/projectBidDetail";
+
 	}
 
 }

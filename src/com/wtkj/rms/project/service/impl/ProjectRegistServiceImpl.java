@@ -65,7 +65,7 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				.getCertificateC().getId()));
 
 		p.setTotalFee(calTotal(p));
-		
+
 		p.setCreateDT(new Date());
 
 		projectRegistDao.save(p);
@@ -158,8 +158,8 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				vo.setQualifyRequirementNames(getDicTexts(prst
 						.getQualifyRequirement()));
 			}
-			if (p.getDelegator() != null) {
-				Tuser user = userDao.get(Tuser.class, p.getDelegator().getId());
+			if (prst.getDelegator() != null && prst.getDelegator().getId() > 0) {
+				Tuser user = userDao.get(Tuser.class, prst.getDelegator().getId());
 				vo.setDelegatorId(user.getId());
 				vo.setDelegatorName(user.getName());
 			}
@@ -201,11 +201,6 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				params.put("type", p.getType());
 			}
 
-			if (p.getCompany() != null) {
-				hql += " and t.company.name like :name and t.company.dictionarytype.code=:type";
-				params.put("name", "%%" + p.getCompany().getText() + "%%");
-				params.put("name", "company");
-			}
 			if (!StringUtils.isEmpty(p.getProjectName())) {
 				hql += " and t.projectName like :projectName";
 				params.put("projectName", "%%" + p.getProjectName() + "%%");
@@ -221,7 +216,24 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 				params.put("registDT2", p.getEt());
 			}
 
-			if (p.getDelegator() != null) {
+			// 按地区搜索
+			if (p.getProvice() != null && p.getProvice().getId() > 0) {
+				hql += " and t.provice.id = :proviceId";
+				params.put("proviceId", p.getProvice().getId());
+			}
+
+			if (p.getCity() != null && p.getCity().getId() > 0) {
+				hql += " and t.city.id = :cityId";
+				params.put("cityId", p.getCity().getId());
+			}
+
+			if (p.getCounty() != null && p.getCounty().getId() > 0) {
+				hql += " and t.county.id = :countyId";
+				params.put("countyId", p.getCounty().getId());
+			}
+
+			// 委托人
+			if (p.getDelegator() != null && p.getDelegator().getId() > 0) {
 				hql += " and t.delegator.id <= :delegatorId";
 				params.put("delegatorId", p.getDelegator().getId());
 			}

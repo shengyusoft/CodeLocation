@@ -238,9 +238,14 @@
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
+		queryParams.payee = "";
 		var projectName = $('#projectName').val();
+		var payee = $('#payee').val();
 		if (!isEmpty(projectName)) {
 			queryParams.projectName = projectName;
+		}
+		if (!isEmpty(payee)) {
+			queryParams.payee = payee;
 		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -248,6 +253,7 @@
 
 	function clearFun() {
 		$('#projectName').val('');
+		$('#payee').val('');
 		//$('#stationId').combobox('clear');
 	}
 
@@ -517,7 +523,8 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>项目名称:</span> <input type="text" id="projectName"> <a
+				<span>项目名称:</span> <input type="text" id="projectName"> 
+				<span>户名:</span> <input type="text" id="payee"><a
 					onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a

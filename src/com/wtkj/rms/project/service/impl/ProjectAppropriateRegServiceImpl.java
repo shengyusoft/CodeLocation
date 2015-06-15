@@ -105,6 +105,11 @@ public class ProjectAppropriateRegServiceImpl implements
 				hql += " and t.projectName like :name ";
 				params.put("name", "%%" + p.getProjectName() + "%%");
 			}
+			
+			if (!StringUtils.isEmpty(p.getPayee())) {
+				hql += " and t.payee like :payee ";
+				params.put("payee", "%%" + p.getPayee() + "%%");
+			}
 		}
 
 		return hql;

@@ -77,7 +77,7 @@
 				sortable : true,
 				align : 'center',
 				field : 'registDT',
-				formatter : Common.formatter
+				formatter : Common.formatterTime
 			}, {
 				width : '120',
 				title : '备注',
@@ -95,17 +95,22 @@
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
 		queryParams.bidder = "";
+		queryParams.registerName = "";
+		queryParams.st = "";
+		queryParams.et = "";
 
 		var projectName = $('#projectName').val();
 		var bidder = $('#bidder').val();
+		var registerName = $('#registerName').val();
+		var st = $('#st').val();
+		var et = $('#et').val();
 
-		if (!isEmpty(projectName)) {
-			queryParams.projectName = projectName;
-		}
-		if (!isEmpty(bidder)) {
-			queryParams.bidder = bidder;
-		}
-
+		queryParams.projectName = isEmpty(projectName)?"":projectName;
+		queryParams.bidder = isEmpty(bidder)?"":bidder;
+		queryParams.registerName = isEmpty(registerName)?"":registerName;
+		queryParams.st = isEmpty(st)?"":st;
+		queryParams.et = isEmpty(et)?"":et;
+		
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
@@ -113,6 +118,9 @@
 	function clearFun() {
 		$('#projectName').val('');
 		$('#bidder').val('');
+		$('#registerName').val('');
+		$('#st').val('');
+		$('#et').val('');
 	}
 
 	function addFun() {
@@ -290,7 +298,16 @@
 					<td><input type="text" id="projectName"></td>
 					<th>投标人:</th>
 					<td><input type="text" id="bidder"></td>
-					<td><a onclick="searchFun();" href="javascript:void(0);"
+					<th>登记人:</th>
+					<td><input type="text" id="registerName"></td>
+					<th>登记时间段:</th>
+					<td>
+						<input class="Wdate" type="text" name="st" id="st"
+						style="height: 100%" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> - 
+						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
+						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> 
+					</td>
+					<td rowspan="2"><a onclick="searchFun();" href="javascript:void(0);"
 						class="easyui-linkbutton"
 						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
 						onclick="clearFun();" href="javascript:void(0);"

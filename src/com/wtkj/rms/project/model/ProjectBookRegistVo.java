@@ -25,6 +25,10 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 	private Date registDT;// 登记时间
 	private String remark;// 备注
 
+	// for search
+	private Date st;// 登记时间
+	private Date et;// 登记时间
+
 	private Long registerId;
 
 	private String registerName;
@@ -131,6 +135,26 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 
 	public void setQualifyRequirementNames(String qualifyRequirementNames) {
 		this.qualifyRequirementNames = qualifyRequirementNames;
+	}
+
+	public Date getSt() {
+		return st;
+	}
+
+	public void setSt(Date st) {
+		this.st = st;
+	}
+
+	public Date getEt() {
+		return et;
+	}
+
+	public void setEt(Date et) {
+		this.et = et;
+	}
+
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
 	}
 
 }

@@ -122,6 +122,23 @@ public class ProjectBookRegistServiceImpl implements ProjectBookRegistServiceI {
 				hql += " and t.projectName like :pname";
 				params.put("pname", "%%" + vo.getProjectName() + "%%");
 			}
+			
+			//登记时间
+			if (vo.getSt() != null) {
+				hql += " and t.registDT >= :registDT1";
+				params.put("registDT1", vo.getSt());
+			}
+
+			if (vo.getEt() != null) {
+				hql += " and t.registDT <= :registDT2";
+				params.put("registDT2", vo.getEt());
+			}
+			
+			//登记人
+			if (!StringUtils.isEmpty(vo.getRegisterName())) {
+				hql += " and t.register.name like :rname";
+				params.put("rname", "%%" + vo.getRegisterName() + "%%");
+			}
 		}
 		return hql;
 	}

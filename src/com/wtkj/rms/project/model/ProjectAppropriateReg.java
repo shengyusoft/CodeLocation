@@ -32,7 +32,7 @@ public class ProjectAppropriateReg extends IdEntity implements
 	private String contactIdCard;
 
 	// 收款人信息
-	private String payee;// 收款人
+	private String payee;// 收款人,户名
 	private String bank;// 开户行
 	private String accountNum;// 帐号
 

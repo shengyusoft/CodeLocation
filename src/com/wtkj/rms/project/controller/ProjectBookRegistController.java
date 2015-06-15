@@ -20,6 +20,7 @@ import com.wtkj.common.service.UserServiceI;
 import com.wtkj.rms.project.model.ProjectBookRegistVo;
 import com.wtkj.rms.project.service.ProjectBookRegistServiceI;
 
+//项目预定登记
 @Controller
 @RequestMapping("/projectBookRegist")
 public class ProjectBookRegistController extends BaseController {
