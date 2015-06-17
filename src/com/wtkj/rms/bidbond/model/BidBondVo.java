@@ -62,6 +62,31 @@ public class BidBondVo implements Serializable {
 
 	private String remark;
 
+	/**
+	 * 应扣保证金费用明细
+	 */
+	private Double luFee;// 路费
+	private Double zsFee;// 住宿费
+	private Double zzFee;// 资质费
+	private Double bsFee;// 标书费
+	private Double ysFee;// 预算费
+
+	// 自定义表头
+	private String head1;
+	private String head2;
+	private String head3;
+	private Double head1Fee;
+	private Double head2Fee;
+	private Double head3Fee;
+
+	// 验证不能超过保证金
+	private Double totalFee;// 应扣保证金合计
+
+	// 应退保证金合计=保证金-应扣保证金合计
+	private Double backFee;
+
+	private String remark2;// 保证金备注
+
 	public String getRemark() {
 		return remark;
 	}
@@ -322,6 +347,122 @@ public class BidBondVo implements Serializable {
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+
+	public Double getLuFee() {
+		return luFee;
+	}
+
+	public void setLuFee(Double luFee) {
+		this.luFee = luFee;
+	}
+
+	public Double getZsFee() {
+		return zsFee;
+	}
+
+	public void setZsFee(Double zsFee) {
+		this.zsFee = zsFee;
+	}
+
+	public Double getZzFee() {
+		return zzFee;
+	}
+
+	public void setZzFee(Double zzFee) {
+		this.zzFee = zzFee;
+	}
+
+	public Double getBsFee() {
+		return bsFee;
+	}
+
+	public void setBsFee(Double bsFee) {
+		this.bsFee = bsFee;
+	}
+
+	public Double getYsFee() {
+		return ysFee;
+	}
+
+	public void setYsFee(Double ysFee) {
+		this.ysFee = ysFee;
+	}
+
+	public String getHead1() {
+		return head1;
+	}
+
+	public void setHead1(String head1) {
+		this.head1 = head1;
+	}
+
+	public String getHead2() {
+		return head2;
+	}
+
+	public void setHead2(String head2) {
+		this.head2 = head2;
+	}
+
+	public String getHead3() {
+		return head3;
+	}
+
+	public void setHead3(String head3) {
+		this.head3 = head3;
+	}
+
+	public Double getHead1Fee() {
+		return head1Fee;
+	}
+
+	public void setHead1Fee(Double head1Fee) {
+		this.head1Fee = head1Fee;
+	}
+
+	public Double getHead2Fee() {
+		return head2Fee;
+	}
+
+	public void setHead2Fee(Double head2Fee) {
+		this.head2Fee = head2Fee;
+	}
+
+	public Double getHead3Fee() {
+		return head3Fee;
+	}
+
+	public void setHead3Fee(Double head3Fee) {
+		this.head3Fee = head3Fee;
+	}
+
+	public Double getTotalFee() {
+		return totalFee;
+	}
+
+	public void setTotalFee(Double totalFee) {
+		this.totalFee = totalFee;
+	}
+
+	public Double getBackFee() {
+		backFee = bondFee == null ? 0 : bondFee;
+		if (totalFee != null) {
+			backFee = backFee - totalFee;
+		}
+		return backFee;
+	}
+
+	public void setBackFee(Double backFee) {
+		this.backFee = backFee;
+	}
+
+	public String getRemark2() {
+		return remark2;
+	}
+
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
 	}
 
 }

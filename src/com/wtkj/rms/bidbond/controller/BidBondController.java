@@ -73,6 +73,19 @@ public class BidBondController extends BaseController {
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request, int type) {
 		// 根据类型返回 缴纳或者退回页面
+		BidBondVo bidBond = new BidBondVo();
+		SessionInfo sessionInfo = getSessionInfo(request);
+		if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
+			User u = userService.get(sessionInfo.getId());
+			if(u != null){
+				bidBond.setApplierName(u.getName());
+				bidBond.setApplierPhone(u.getMobilePhone());
+//				bidBond.setApplyDT(new Date());
+			}
+		}
+		request.setAttribute("bidBond", bidBond);
+		// 申请人和申请时间
+		
 		if (type == 0) {
 			return "/basic/bidbond/bidBondPayAdd";
 		} else {
@@ -117,7 +130,7 @@ public class BidBondController extends BaseController {
 	private String generateIdNum(int type) {
 		long number = bidBondService.countAll(type);// 获取缴纳申请总数
 		String dateStr = DateUtil.convertDateToString(new Date(), "yyyyMMdd");
-		String nstr = String.format("%04d", number+1);// 4位数补零
+		String nstr = String.format("%04d", number + 1);// 4位数补零
 		return dateStr + nstr;
 	}
 
@@ -248,12 +261,12 @@ public class BidBondController extends BaseController {
 			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
 				vo.setHandlerId(sessionInfo.getId());
 			}
-			
-			if(vo.getHandlerDT() == null){
+
+			if (vo.getHandlerDT() == null) {
 				vo.setHandlerDT(new Date());
 			}
-			
-			if(vo.getOutAccountDT() == null){
+
+			if (vo.getOutAccountDT() == null) {
 				vo.setOutAccountDT(new Date());
 			}
 

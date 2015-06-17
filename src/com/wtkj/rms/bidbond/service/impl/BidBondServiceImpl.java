@@ -19,7 +19,6 @@ import com.wtkj.common.model.Tuser;
 import com.wtkj.rms.bidbond.model.BidBond;
 import com.wtkj.rms.bidbond.model.BidBondVo;
 import com.wtkj.rms.bidbond.service.BidBondServiceI;
-import com.wtkj.rms.project.model.ProjectBid;
 
 @Service
 public class BidBondServiceImpl implements BidBondServiceI {
@@ -150,21 +149,19 @@ public class BidBondServiceImpl implements BidBondServiceI {
 	private BidBond toPo(BidBondVo vo) {
 		BidBond po = new BidBond();
 		BeanUtils.copyProperties(vo, po);
-
+		po.setTotalFee(calTotal(po));
 		if (vo.getApplierId() != null && vo.getApplierId() > 0) {
 			Tuser applier = userDao.get(Tuser.class, vo.getApplierId());
 			if (applier != null) {
 				po.setApplier(applier);
 			}
 		}
-
 		if (vo.getHandlerId() != null && vo.getHandlerId() > 0) {
 			Tuser handler = userDao.get(Tuser.class, vo.getHandlerId());
 			if (handler != null) {
 				po.setHandler(handler);
 			}
 		}
-
 		return po;
 	}
 
@@ -205,6 +202,31 @@ public class BidBondServiceImpl implements BidBondServiceI {
 	public Long countByState(int state) {
 		return bidBondDao.count("select count(*) from BidBond t where t.state="
 				+ state);
+	}
+
+	private double calTotal(BidBond p) {
+		double lfee = p.getLuFee() == null ? 0 : p.getLuFee();
+		double zsfee = p.getZsFee() == null ? 0 : p.getZsFee();
+		double zzfee = p.getZzFee() == null ? 0 : p.getZzFee();
+		double bsfee = p.getBsFee() == null ? 0 : p.getBsFee();
+		double ysfee = p.getYsFee() == null ? 0 : p.getYsFee();
+		double h1fee = 0;
+		double h2fee = 0;
+		double h3fee = 0;
+
+		if (!StringUtils.isEmpty(p.getHead1())) {
+			h1fee = p.getHead1Fee() == null ? 0 : p.getHead1Fee();
+		}
+		if (!StringUtils.isEmpty(p.getHead2())) {
+			h2fee = p.getHead2Fee() == null ? 0 : p.getHead2Fee();
+		}
+		if (!StringUtils.isEmpty(p.getHead3())) {
+			h3fee = p.getHead3Fee() == null ? 0 : p.getHead3Fee();
+		}
+		double total = lfee + zsfee + zzfee + bsfee + ysfee + h1fee + h2fee
+				+ h3fee;
+
+		return total;
 	}
 
 	private String getDicTexts(String dicIds) {
