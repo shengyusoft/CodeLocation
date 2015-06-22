@@ -47,6 +47,7 @@
 		            frozenColumns : [ [
 		                   			{
 		                   				field : 'id',
+		                   				hidden : true,
 		                   				width : '30',
 		                   				rowspan : 2
 		                   			}, {
@@ -55,8 +56,12 @@
 		                   				rowspan : 2,
 		                   				sortable : true,
 		                   				align : 'center',
+		                   				id : 'startDT',
 		                   				field : 'startDT',
 		                   				formatter : function(value, row, index) {
+		                   					if(value.indexOf('合计')>=0){
+		                   						return value;
+		                   					}
 		                   					var st = formatDate(row.startDT);
 		                   					var et = formatDate(row.endDT);
 		                   					return st + "--" + et;
@@ -83,52 +88,61 @@
 		                   			columns : [ [{
 		                   				title : '费用小计',
 		                   				colspan : 8
+		                   			}, {
+		                   				width : '100',
+		                   				title : '合计',
+		                   				rowspan : 2,
+		                   				align : 'center',
+		                   				sum : true,
+		                   				field : 'total',
 		                   			}],[ {
 		                   				width : '100',
 		                   				title : '交通费（元）',
+		                   				sum : true,
 		                   				align : 'center',
 		                   				field : 'trafficFee'
 		                   			}, {
 		                   				width : '100',
 		                   				title : '就餐费（元）',
+		                   				sum : true,
 		                   				align : 'center',
 		                   				field : 'mealFee'
 		                   			}, {
 		                   				width : '100',
 		                   				title : '办公费（元）',
+		                   				sum : true,
 		                   				align : 'center',
 		                   				field : 'officeFee'
 		                   			}, {
 		                   				width : '100',
 		                   				title : '招待费（元）',
+		                   				sum : true,
 		                   				align : 'center',
 		                   				field : 'receiveFee'
 		                   			}, {
 		                   				width : '100',
 		                   				title : '证章费（元）',
 		                   				align : 'center',
+		                   				sum : true,
 		                   				field : 'badgeFee'
 		                   			}, {
 		                   				width : '100',
 		                   				title : '通讯费（元）',
+		                   				sum : true,
 		                   				align : 'center',
 		                   				field : 'communicationFee'
 		                   			}, {
 		                   				width : '100',
 		                   				title : '培训费（元）',
+		                   				sum : true,
 		                   				align : 'center',
 		                   				field : 'trainFee'
 		                   			}, {
 		                   				width : '100',
 		                   				title : '其他费（元）',
-		                   				align : 'center',
-		                   				field : 'otherFee'
-		                   			}, {
-		                   				width : '100',
-		                   				title : '合计',
 		                   				sum : true,
 		                   				align : 'center',
-		                   				field : 'total',
+		                   				field : 'otherFee'
 		                   			} ] ],
 		            onResize:function(){ 
 		                $('#dataGrid').datagrid('fixDetailRowHeight',index); 
@@ -150,19 +164,14 @@
 				field : 'id',
 				width : '30'
 			}, {
-				width : '250',
+				width : '350',
 				title : '报销月份',
 				sortable : true,
 				align : 'center',
 				field : 'month',
 				formatter : Common.formatterMonth
 			}, {
-				width : '250',
-				title : '报销总额',
-				align : 'center',
-				field : 'totalFee'
-			}, {
-				width : '250',
+				width : '350',
 				title : '申请时间',
 				align : 'center',
 				field : 'process',
@@ -171,7 +180,7 @@
 					return isEmpty(process)?'':Common.formatter(process.startDT);
 				}
 			}, {
-				width : '250',
+				width : '300',
 				title : '状态',
 				align : 'center',
 				field : 'process_vo',

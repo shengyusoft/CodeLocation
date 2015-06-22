@@ -21,6 +21,9 @@
 			rownumbers : true,
 			pagination : true,
 			nowrap : false,
+			queryParams:{
+	        	type : 0
+	        },
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
@@ -283,7 +286,7 @@
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('提示', '没有可编辑对象111!');
+			parent.$.messager.alert('提示', '没有可编辑对象!');
 			return;
 		}
 
@@ -309,12 +312,10 @@
 					href : '${ctx}/reimbursement/editPage?id=' + id,
 					buttons : [
 							{
-								text : '编辑1',
+								text : '编辑',
 								handler : function() {
 									//传入后台区分是保存还是申请
-									debugger;
 									parent.$.modalDialog.openner_dataGrid = dataGrid;
-									debugger;
 									parent.$.modalDialog.handler
 											.find('#option').val(2);
 									var f = parent.$.modalDialog.handler

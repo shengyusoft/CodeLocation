@@ -75,8 +75,25 @@
 
 				</tr>
 				<tr>
+					<th>收款人 &nbsp;</th>
+					<td><input name="payee" style="width: 100%; height: 100%"
+						type="text" id="accountNum" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+					<th>开户行&nbsp;</th>
+					<td><input name="bank" style="width: 100%; height: 100%"
+						type="text" id="bank" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					
+					<th>帐号&nbsp;</th>
+					<td colspan="3"><input name="accountNum" style="width: 100%; height: 100%"
+						type="text" id="accountNum" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
 					<th>备注1&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="3"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							name="remark1"></textarea></td>
 				</tr>
 				<tr>
@@ -95,27 +112,13 @@
 				</tr>
 				<tr>
 					<th>实际支付金额（元）&nbsp;</th>
-					<td><input name="actualPayFee" style="width: 100%; height: 100%"
+					<td colspan="3"><input name="actualPayFee" style="width: 100%; height: 100%"
 						type="number" id="actualPayFee"
 						class="easyui-validatebox span2" readonly="readonly" /></td>
-					<th>收款人 &nbsp;</th>
-					<td><input name="payee" style="width: 100%; height: 100%"
-						type="text" id="accountNum" class="easyui-validatebox span2"
-						readonly="readonly" /></td>
-				</tr>
-				<tr>
-					<th>开户行&nbsp;</th>
-					<td><input name="bank" style="width: 100%; height: 100%"
-						type="text" id="bank" class="easyui-validatebox span2"
-						readonly="readonly" /></td>
-					<th>帐号&nbsp;</th>
-					<td><input name="accountNum" style="width: 100%; height: 100%"
-						type="text" id="accountNum" class="easyui-validatebox span2"
-						readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<th>备注2&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="3"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							readonly="readonly" name="remark2"></textarea></td>
 				</tr>
 			</table>

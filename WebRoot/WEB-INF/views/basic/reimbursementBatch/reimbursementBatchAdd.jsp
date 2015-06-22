@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
+<script type="text/javascript"
+	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-statistics.js"
+	charset="utf-8"></script>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
@@ -44,6 +47,7 @@
 			rownumbers : true,
 			pagination : true,
 			nowrap : true,
+			showFooter : true,
 			queryParams:{
             	batchId : isEmpty($('#batchId').val())?-1:$('#batchId').val()
             },
@@ -67,6 +71,9 @@
 				align : 'center',
 				field : 'startDT',
 				formatter : function(value, row, index) {
+					if(value.indexOf('合计')>=0){
+   						return value;
+   					}
 					var st = formatDate(row.startDT);
 					var et = formatDate(row.endDT);
 					return st + "--" + et;
@@ -93,51 +100,61 @@
 			columns : [ [{
 				title : '费用小计',
 				colspan : 8
+			}, {
+				width : '100',
+				title : '合计',
+				rowspan : 2,
+				align : 'center',
+				sum : true,
+				field : 'total',
 			}],[ {
 				width : '100',
 				title : '交通费（元）',
 				align : 'center',
+				sum : true,
 				field : 'trafficFee'
 			}, {
 				width : '100',
 				title : '就餐费（元）',
+				sum : true,
 				align : 'center',
 				field : 'mealFee'
 			}, {
 				width : '100',
 				title : '办公费（元）',
+				sum : true,
 				align : 'center',
 				field : 'officeFee'
 			}, {
 				width : '100',
 				title : '招待费（元）',
+				sum : true,
 				align : 'center',
 				field : 'receiveFee'
 			}, {
 				width : '100',
 				title : '证章费（元）',
+				sum : true,
 				align : 'center',
 				field : 'badgeFee'
 			}, {
 				width : '100',
 				title : '通讯费（元）',
+				sum : true,
 				align : 'center',
 				field : 'communicationFee'
 			}, {
 				width : '100',
 				title : '培训费（元）',
+				sum : true,
 				align : 'center',
 				field : 'trainFee'
 			}, {
 				width : '100',
 				title : '其他费（元）',
+				sum : true,
 				align : 'center',
 				field : 'otherFee'
-			}, {
-				width : '100',
-				title : '合计',
-				align : 'center',
-				field : 'total',
 			} ] ],
 
 			toolbar : '#toolbar'
@@ -287,7 +304,7 @@
 						name="batchId"><input type="hidden" name="option" id="option" value="" />
 						<input class="Wdate" type="text" name="month" id="month"
 						style="width: 68%; height: 100%;" data-options="required:true"
-						onfocus="showDate('yyyy-MM-dd')" /></td>
+						onfocus="showMonth()" /></td>
 					<th>报销总额&nbsp;</th>
 					<td colspan="4"><input class="easyui-validatebox"
 						style="width: 100%" name="totalFee" id="totalFee"

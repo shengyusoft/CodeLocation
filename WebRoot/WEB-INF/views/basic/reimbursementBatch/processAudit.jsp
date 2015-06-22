@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<script type="text/javascript"
+	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-statistics.js"
+	charset="utf-8"></script>
 <script type="text/javascript">
 	$(function() {
 		$('#processBatchForm').form({
@@ -31,11 +35,12 @@
 		});
 		
 		detailGridRegist();
+		$('#month').val(Common.formatterMonth('${reimbursementBatch.month}'));
 	});
 	
 	function detailGridRegist(){
 		dataGrid = $('#dataGrid').datagrid({
-			url : '${pageContext.request.contextPath}' + '/reimbursement/dataGrid',
+			url : '${ctx}' + '/reimbursement/dataGrid',
 			striped : true,
 			rownumbers : true,
 			pagination : true,
@@ -47,6 +52,7 @@
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
+			showFooter : true,
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			frozenColumns : [ [
@@ -64,6 +70,9 @@
 				align : 'center',
 				field : 'startDT',
 				formatter : function(value, row, index) {
+					if(value.indexOf('合计')>=0){
+   						return value;
+   					}
 					var st = formatDate(row.startDT);
 					var et = formatDate(row.endDT);
 					return st + "--" + et;
@@ -90,9 +99,17 @@
 			columns : [ [{
 				title : '费用小计',
 				colspan : 8
+			}, {
+				width : '100',
+				title : '合计',
+				rowspan : 2,
+				sum : true,
+				align : 'center',
+				field : 'total',
 			}],[ {
 				width : '100',
 				title : '交通费（元）',
+				sum : true,
 				align : 'center',
 				field : 'trafficFee'
 			}, {
@@ -103,40 +120,47 @@
 			}, {
 				width : '100',
 				title : '办公费（元）',
+				sum : true,
 				align : 'center',
 				field : 'officeFee'
 			}, {
 				width : '100',
 				title : '招待费（元）',
+				sum : true,
 				align : 'center',
 				field : 'receiveFee'
 			}, {
 				width : '100',
 				title : '证章费（元）',
+				sum : true,
 				align : 'center',
 				field : 'badgeFee'
 			}, {
 				width : '100',
 				title : '通讯费（元）',
+				sum : true,
 				align : 'center',
 				field : 'communicationFee'
 			}, {
 				width : '100',
 				title : '培训费（元）',
+				sum : true,
 				align : 'center',
 				field : 'trainFee'
 			}, {
 				width : '100',
 				title : '其他费（元）',
+				sum : true,
 				align : 'center',
 				field : 'otherFee'
-			}, {
-				width : '100',
-				title : '合计',
-				align : 'center',
-				field : 'total',
 			} ] ],
-
+			
+			onLoadSuccess:function(){ 
+                $('#dataGrid').datagrid('statistics');
+                var footers=$('#dataGrid').datagrid('getFooterRows');
+                var sumTotal = footers[0].total;
+                $('#totalFee').val(sumTotal);
+          	},
 			toolbar : '#toolbar'
 		});
 	}

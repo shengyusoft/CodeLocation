@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -54,6 +55,36 @@ public class Reimbursement extends IdEntity implements Serializable {
 	private Double otherFee;// 其他费
 	private Process process;
 	private int option;
+
+	/**
+	 * 0单独报销1批量报销
+	 */
+	private int type = 0;
+
+	/**
+	 * 关联批量报销
+	 */
+	private ReimbursementBatch batch;
+
+	private Long batchId;
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "batchId")
+	public ReimbursementBatch getBatch() {
+		return batch;
+	}
+
+	public void setBatch(ReimbursementBatch batch) {
+		this.batch = batch;
+	}
 
 	// @NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -202,6 +233,15 @@ public class Reimbursement extends IdEntity implements Serializable {
 
 	public void setOption(int option) {
 		this.option = option;
+	}
+
+	@Transient
+	public Long getBatchId() {
+		return batchId;
+	}
+
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
 	}
 
 }

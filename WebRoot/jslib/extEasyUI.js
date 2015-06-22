@@ -473,6 +473,8 @@ $.extend($.fn.combobox.defaults, {
 	onHidePanel : onComboboxHidePanel
 });
 
+
+
 function filterComboboxData(q, row) {
 	var opts = $(this).combobox('options');
 	return row[opts.textField].indexOf(q) == 0;

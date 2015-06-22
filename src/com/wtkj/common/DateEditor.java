@@ -45,8 +45,12 @@ public class DateEditor extends PropertyEditorSupport {
 				else {
 					if (text.contains(":"))
 						setValue(TIMEFORMAT.parse(text));
-					else
+					else if(text.length() <= 7){
+						text +="-01";
 						setValue(DATEFORMAT.parse(text));
+					}else{
+						setValue(DATEFORMAT.parse(text));
+					}
 				}
 			} catch (ParseException ex) {
 				throw new IllegalArgumentException("Could not parse date: "

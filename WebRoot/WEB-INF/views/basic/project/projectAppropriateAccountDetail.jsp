@@ -46,12 +46,31 @@
 						value="${projectAppropriateAccount.applyDT}" id="applyDT"
 						style="width: 98%; height: 100%;" readonly="readonly"
 						onfocus="showDate('yyyy-MM-dd')" /></td>
-
+				</tr>
+				<tr>
+					<th>收款人 &nbsp;</th>
+					<td><input name="payee"
+						value="${projectAppropriateAccount.payee}"
+						style="width: 100%; height: 100%" type="text" id="accountNum"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
+						<th>开户行&nbsp;</th>
+					<td><input name="bank"
+						value="${projectAppropriateAccount.bank}"
+						style="width: 100%; height: 100%" type="text" id="bank"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
+				</tr>
+				<tr>
+				
+					<th>帐号&nbsp;</th>
+					<td colspan="3"><input name="accountNum"
+						value="${projectAppropriateAccount.accountNum}"
+						style="width: 100%; height: 100%" type="text" id="accountNum"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
 				</tr>
 
 				<tr>
 					<th>备注1&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="3"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							name="remark1">${projectAppropriateAccount.remark1}</textarea></td>
 				</tr>
 
@@ -74,33 +93,15 @@
 				</tr>
 				<tr>
 					<th>实际支付金额（元）&nbsp;</th>
-					<td><input name="actualPayFee"
+					<td colspan="3"><input name="actualPayFee"
 						style="width: 100%; height: 100%" type="number" precision="2"
 						id="actualPayFee" class="easyui-validatebox span2"
 						readonly="readonly"
 						value="${projectAppropriateAccount.actualPayFee}" /></td>
-					<th>收款人 &nbsp;</th>
-					<td><input name="payee"
-						value="${projectAppropriateAccount.payee}"
-						style="width: 100%; height: 100%" type="text" id="accountNum"
-						class="easyui-validatebox span2" readonly="readonly" /></td>
-				</tr>
-				<tr>
-
-					<th>开户行&nbsp;</th>
-					<td><input name="bank"
-						value="${projectAppropriateAccount.bank}"
-						style="width: 100%; height: 100%" type="text" id="bank"
-						class="easyui-validatebox span2" readonly="readonly" /></td>
-					<th>帐号&nbsp;</th>
-					<td><input name="accountNum"
-						value="${projectAppropriateAccount.accountNum}"
-						style="width: 100%; height: 100%" type="text" id="accountNum"
-						class="easyui-validatebox span2" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<th>备注2&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="3"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							readonly="readonly" name="remark2">${projectAppropriateAccount.remark2}</textarea></td>
 				</tr>
 			</table>

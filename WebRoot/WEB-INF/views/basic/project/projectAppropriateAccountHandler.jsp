@@ -56,8 +56,7 @@
 					<th>到帐时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="toAccountDT"
 						value="${projectAppropriateAccount.toAccountDT}" id="toAccountDT"
-						style="width: 98%; height: 100%;" readonly="readonly"
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
+						style="width: 98%; height: 100%;" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<th>本次计划支付金额 &nbsp;<label
@@ -70,13 +69,31 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="applyDT"
 						value="${projectAppropriateAccount.applyDT}" id="applyDT"
-						style="width: 98%; height: 100%;" readonly="readonly"
-						onfocus="showDate('yyyy-MM-dd HH:mm')" /></td>
+						style="width: 98%; height: 100%;" readonly="readonly" /></td>
 				</tr>
 
 				<tr>
+					<th>收款人 &nbsp;</th>
+					<td><input name="payee"
+						value="${projectAppropriateAccount.payee}"
+						style="width: 100%; height: 100%" type="text" id="accountNum"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
+					<th>开户行&nbsp;</th>
+					<td><input name="bank"
+						value="${projectAppropriateAccount.bank}"
+						style="width: 100%; height: 100%" type="text" id="bank"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<th>帐号&nbsp;</th>
+					<td colspan="3"><input name="accountNum"
+						value="${projectAppropriateAccount.accountNum}"
+						style="width: 100%; height: 100%" type="text" id="accountNum"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
+				</tr>
+				<tr>
 					<th>备注1&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="3"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							name="remark1" readonly="readonly">${projectAppropriateAccount.remark1}</textarea></td>
 				</tr>
 
@@ -100,33 +117,15 @@
 				</tr>
 				<tr>
 					<th>实际支付金额（元）&nbsp;</th>
-					<td><input name="actualPayFee"
+					<td colspan="3"><input name="actualPayFee"
 						style="width: 100%; height: 100%" type="text" precision="2"
 						id="actualPayFee" class="easyui-numberbox"
 						data-options="required:true"
 						value="${projectAppropriateAccount.actualPayFee}" /></td>
-					<th>收款人 &nbsp;</th>
-					<td><input name="payee"
-						value="${projectAppropriateAccount.payee}"
-						style="width: 100%; height: 100%" type="text" id="accountNum"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
-				</tr>
-				<tr>
-
-					<th>开户行&nbsp;</th>
-					<td><input name="bank"
-						value="${projectAppropriateAccount.bank}"
-						style="width: 100%; height: 100%" type="text" id="bank"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
-					<th>帐号&nbsp;</th>
-					<td><input name="accountNum"
-						value="${projectAppropriateAccount.accountNum}"
-						style="width: 100%; height: 100%" type="text" id="accountNum"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>备注2&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="3"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							name="remark2">${projectAppropriateAccount.remark2}</textarea></td>
 				</tr>
 			</table>

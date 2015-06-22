@@ -25,8 +25,11 @@
 				type : 1
 			},
 			idField : 'id',
-			sortName : 'id',
-			sortOrder : 'asc',
+			sortName : 'applyDT',
+			sortOrder : 'desc',
+			groupFormatter:function(value,rows){
+		       	return value;
+		    },
 			view: detailview,   
 		    detailFormatter:function(index,row){   
 		        return '<div style="padding:10px"><table title="财务反馈信息" id="ddv-' + index + '"></table></div>';   

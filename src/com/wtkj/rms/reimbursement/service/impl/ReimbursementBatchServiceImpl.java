@@ -15,19 +15,19 @@ import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tuser;
 import com.wtkj.common.model.User;
-import com.wtkj.rms.code.model.po.Project;
 import com.wtkj.rms.process.model.Process;
 import com.wtkj.rms.process.model.ProcessHistory;
 import com.wtkj.rms.process.model.ProcessVo;
-import com.wtkj.rms.reimbursement.model.po.Reimbursement;
-import com.wtkj.rms.reimbursement.model.vo.ReimbursementVo;
-import com.wtkj.rms.reimbursement.service.ReimbursementServiceI;
+import com.wtkj.rms.reimbursement.model.po.ReimbursementBatch;
+import com.wtkj.rms.reimbursement.model.vo.ReimbursementBatchVo;
+import com.wtkj.rms.reimbursement.service.ReimbursementBatchServiceI;
 
 @Service
-public class ReimbursementServiceImpl implements ReimbursementServiceI {
+public class ReimbursementBatchServiceImpl implements
+		ReimbursementBatchServiceI {
 
 	@Autowired
-	private BaseDaoI<Reimbursement> reimbursementDao;
+	private BaseDaoI<ReimbursementBatch> reimbursementBatchDao;
 
 	@Autowired
 	private BaseDaoI<Tuser> userDao;
@@ -42,45 +42,47 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 	private BaseDaoI<ProcessHistory> processHistoryDao;
 
 	@Override
-	public Long add(Reimbursement r, HttpServletRequest request) {
+	public Long add(ReimbursementBatch r, HttpServletRequest request) {
 		// 保存或者提交，保存对应的process以及processHistory
-		return (Long) reimbursementDao.save(r);
+		return (Long) reimbursementBatchDao.save(r);
 	}
 
 	@Override
 	public void delete(Long id) {
-		Reimbursement p = reimbursementDao.get(Reimbursement.class, id);
+		ReimbursementBatch p = reimbursementBatchDao.get(
+				ReimbursementBatch.class, id);
 		// 删除对应的流程信息以及流程历史记录信息
-		reimbursementDao.delete(p);
+		reimbursementBatchDao.delete(p);
 	}
 
 	@Override
 	public void delete(String ids) {
-		String sql = "delete from reimbursement where id in (" + ids + ")";
+		String sql = "delete from ReimbursementBatch where id in (" + ids + ")";
 		try {
-			reimbursementDao.executeSql(sql);
+			reimbursementBatchDao.executeSql(sql);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void edit(Reimbursement r, HttpServletRequest request) {
-		reimbursementDao.saveOrUpdate(r);
+	public void edit(ReimbursementBatch r, HttpServletRequest request) {
+		reimbursementBatchDao.saveOrUpdate(r);
 	}
 
 	@Override
-	public Reimbursement get(Long id) {
-		Reimbursement r = reimbursementDao.get(Reimbursement.class, id);
+	public ReimbursementBatch get(Long id) {
+		ReimbursementBatch r = reimbursementBatchDao.get(
+				ReimbursementBatch.class, id);
 		return r;
 	}
 
 	@Override
-	public List<Reimbursement> dataGrid(User user, ReimbursementVo vo,
-			PageFilter ph) {
+	public List<ReimbursementBatch> dataGrid(User user,
+			ReimbursementBatchVo vo, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		String hql = " from Reimbursement t ";
-		List<Reimbursement> l = reimbursementDao.find(
+		String hql = " from ReimbursementBatch t ";
+		List<ReimbursementBatch> l = reimbursementBatchDao.find(
 				hql + whereHql(user, vo, params) + orderHql(ph), params,
 				ph.getPage(), ph.getRows());
 
@@ -88,38 +90,28 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 	}
 
 	@Override
-	public List<Reimbursement> findAll() {
-		String hql = " from Reimbursement t ";
-		List<Reimbursement> l = reimbursementDao.find(hql);
+	public List<ReimbursementBatch> findAll() {
+		String hql = " from ReimbursementBatch t ";
+		List<ReimbursementBatch> l = reimbursementBatchDao.find(hql);
 
 		return l;
 	}
 
 	@Override
-	public Long count(User user, ReimbursementVo vo, PageFilter ph) {
+	public Long count(User user, ReimbursementBatchVo vo, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		String hql = " from Reimbursement t ";
-		return reimbursementDao.count(
+		String hql = " from ReimbursementBatch t ";
+		return reimbursementBatchDao.count(
 				"select count(*) " + hql + whereHql(user, vo, params), params);
 	}
 
-	private String whereHql(User user, ReimbursementVo r,
+	private String whereHql(User user, ReimbursementBatchVo r,
 			Map<String, Object> params) {
 		String hql = "";
 		if (r != null) {
 			hql += " where 1=1 ";
 			ProcessVo process = r.getProcess_vo();
 
-			if (r.getBatchId() != null) {
-				hql += " and t.batch.id = :batchId";
-				params.put("batchId", r.getBatchId());
-			}
-			
-			if (r.getType() >= 0) {
-				hql += " and t.type = :type";
-				params.put("type", r.getType());
-			}
-			
 			if (user != null) {
 				// 申请人查看自己申请的
 				if (user.getRoleNames().indexOf("普通员工") >= 0) {
@@ -159,26 +151,13 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 							+ "%%");
 				}
 			}
-
-			if (!StringUtils.isEmpty(r.getPlace())) {
-				hql += " and t.county.description like :place";
-				params.put("place", "%%" + r.getPlace() + "%%");
-			}
-
-			if (r.getStartDT() != null && r.getEndDT() != null) {
-				hql += " and t.startDT >= :startDT";
-				hql += " and t.endDT <= :endDT";
-				params.put("startDT", r.getStartDT());
-				params.put("endDT", r.getEndDT());
-			} else if (r.getStartDT() != null && r.getEndDT() == null) {
-				hql += " and t.startDT >= :startDT";
-				params.put("startDT", r.getStartDT());
-			} else if (r.getStartDT() == null && r.getEndDT() != null) {
-				hql += " and t.endDT <= :endDT";
-				params.put("endDT", r.getEndDT());
+			
+			//批量查询按月份查
+			if(r.getMonth() != null){
+				hql += " and t.month = :month";
+				params.put("month", r.getMonth());
 			}
 		}
-
 		return hql;
 	}
 
@@ -188,11 +167,6 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 			orderString = " order by t." + ph.getSort() + " " + ph.getOrder();
 		}
 		return orderString;
-	}
-
-	@Override
-	public List<Project> checkRelate(String ids) {
-		return null;
 	}
 
 }

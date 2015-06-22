@@ -25,8 +25,8 @@
 				type : 0
 			},
 			idField : 'id',
-			sortName : 'id',
-			sortOrder : 'asc',
+			sortName : 'projectName,applyDT',
+			sortOrder : 'desc',
 			view: detailview,   
 		    detailFormatter:function(index,row){   
 		        return '<div style="padding:10px"><table title="财务反馈信息" id="ddv-' + index + '"></table></div>';   
@@ -99,6 +99,7 @@
 				width : '140',
 				rowspan : 2,
 				title : '项目名称',
+				sortable : true,
 				align : 'center',
 				field : 'projectName'
 			}, {
@@ -453,7 +454,6 @@
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div id="toolbar" class="mygrid-toolbar" style="inline: true">
-
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/bidBond/add')}">

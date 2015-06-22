@@ -18,8 +18,14 @@
 				result = $.parseJSON(result);
 				if (result.success) {
 					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
-					parent.$.modalDialog.openner_dataGrid.datagrid('reload');
-					parent.$.modalDialog.handler.dialog('close');
+					if(parent.$.modalDialogTwo.openner_dataGrid){
+						parent.$.modalDialogTwo.openner_dataGrid.datagrid('reload');
+						parent.$.modalDialogTwo.handler.dialog('close');
+					}else if(parent.$.modalDialog.openner_dataGrid){
+						parent.$.modalDialog.openner_dataGrid.datagrid('reload');
+						parent.$.modalDialog.handler.dialog('close');
+					}
+					
 				} else {
 					parent.$.messager.alert('错误', result.msg, 'error');
 				}
@@ -86,7 +92,9 @@
 				<tr>
 					<th>时间范围 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input type="hidden" name="option" id="option" value="" />
+					<td>
+					<input type="hidden" name="option" id="option" value="" />
+					<input type="hidden" name="batchId" id="batchId" value="" />
 						<input class="Wdate" type="text" name="startDT" id="startDT"
 						style="width: 68%; height: 100%;" data-options="required:true"
 						onfocus="showStart('yyyy-MM-dd')" /></td>

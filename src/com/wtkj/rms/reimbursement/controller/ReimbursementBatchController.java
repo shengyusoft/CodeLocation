@@ -28,17 +28,13 @@ import com.wtkj.rms.process.model.ProcessHistory;
 import com.wtkj.rms.process.model.ProcessVo;
 import com.wtkj.rms.process.service.ProcessHistoryServiceI;
 import com.wtkj.rms.process.service.ProcessServiceI;
-import com.wtkj.rms.reimbursement.model.po.Reimbursement;
 import com.wtkj.rms.reimbursement.model.po.ReimbursementBatch;
-import com.wtkj.rms.reimbursement.model.vo.ReimbursementVo;
+import com.wtkj.rms.reimbursement.model.vo.ReimbursementBatchVo;
 import com.wtkj.rms.reimbursement.service.ReimbursementBatchServiceI;
-import com.wtkj.rms.reimbursement.service.ReimbursementServiceI;
 
 @Controller
-@RequestMapping("/reimbursement")
-public class ReimbursementController extends BaseController {
-	@Autowired
-	private ReimbursementServiceI reimbursementService;
+@RequestMapping("/reimbursementBatch")
+public class ReimbursementBatchController extends BaseController {
 	@Autowired
 	private ReimbursementBatchServiceI reimbursementBatchService;
 	@Autowired
@@ -61,56 +57,31 @@ public class ReimbursementController extends BaseController {
 		}
 		if (!StringUtils.isEmpty(user.getRoleNames())) {
 			if (user.getRoleNames().indexOf("普通员工") >= 0) {
-				reStr = "/basic/reimbursement/reimbursement";
+				reStr = "/basic/reimbursementBatch/reimbursementBatch";
 			} else {
-				reStr = "/basic/reimbursement/reimbursementAudit";
+				reStr = "/basic/reimbursementBatch/reimbursementBatchAudit";
 			}
 		}
 		return reStr;
 	}
 
-	@RequestMapping("/combox")
-	@ResponseBody
-	public List<ReimbursementVo> findAll() {
-		List<Reimbursement> reimbursements = reimbursementService.findAll();
-		return convert2Vos(reimbursements);
-	}
-
-	private List<ReimbursementVo> convert2Vos(List<Reimbursement> reimbursements) {
-		List<ReimbursementVo> vos = new ArrayList<ReimbursementVo>();
-		for (Reimbursement reimbursement : reimbursements) {
-			vos.add(convert2Vo(reimbursement));
+	private List<ReimbursementBatchVo> convert2Vos(
+			List<ReimbursementBatch> reimbursementBatchs) {
+		List<ReimbursementBatchVo> vos = new ArrayList<ReimbursementBatchVo>();
+		for (ReimbursementBatch ReimbursementBatch : reimbursementBatchs) {
+			vos.add(convert2Vo(ReimbursementBatch));
 		}
 		return vos;
 	}
 
-	private ReimbursementVo convert2Vo(Reimbursement reimbursement) {
-		ReimbursementVo vo = new ReimbursementVo();
-		BeanUtils.copyProperties(reimbursement, vo);
-		if (reimbursement.getProcess() != null
-				&& reimbursement.getProcess().getId() != null) {
-			vo.setProcess_vo(process2Vo(processService.get(reimbursement
+	private ReimbursementBatchVo convert2Vo(
+			ReimbursementBatch reimbursementBatch) {
+		ReimbursementBatchVo vo = new ReimbursementBatchVo();
+		BeanUtils.copyProperties(reimbursementBatch, vo);
+		if (reimbursementBatch.getProcess() != null
+				&& reimbursementBatch.getProcess().getId() != null) {
+			vo.setProcess_vo(process2Vo(processService.get(reimbursementBatch
 					.getProcess().getId())));
-		}
-		
-		if(reimbursement.getBatch() != null){
-			vo.setBatchId(reimbursement.getBatch().getId());
-		}
-
-		if (reimbursement.getProvice() != null) {
-			vo.setProviceId(reimbursement.getProvice().getId());
-			vo.setProviceName(reimbursement.getProvice().getText());
-		}
-
-		if (reimbursement.getCity() != null) {
-			vo.setCityId(reimbursement.getCity().getId());
-			vo.setCityName(reimbursement.getCity().getText());
-		}
-
-		if (reimbursement.getCounty() != null) {
-			vo.setCountyId(reimbursement.getCounty().getId());
-			vo.setCountyName(reimbursement.getCounty().getText());
-			vo.setPlace(reimbursement.getCounty().getDescription());
 		}
 
 		return vo;
@@ -118,85 +89,76 @@ public class ReimbursementController extends BaseController {
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(HttpServletRequest request, ReimbursementVo vo,
+	public Grid dataGrid(HttpServletRequest request, ReimbursementBatchVo vo,
 			PageFilter ph) {
 		Grid grid = new Grid();
 		Long userId = getSessionInfo(request).getId();
 		User user = userService.get(userId);
 
 		if (!StringUtils.isEmpty(user.getRoleNames())) {
-			grid.setRows(convert2Vos(reimbursementService
-					.dataGrid(user, vo, ph)));
-			grid.setTotal(reimbursementService.count(user, vo, ph));
+			grid.setRows(convert2Vos(reimbursementBatchService.dataGrid(user,
+					vo, ph)));
+			grid.setTotal(reimbursementBatchService.count(user, vo, ph));
 			return grid;
 		}
 
-		grid.setRows(convert2Vos(reimbursementService.dataGrid(null, vo, ph)));
-		grid.setTotal(reimbursementService.count(null, vo, ph));
+		grid.setRows(convert2Vos(reimbursementBatchService.dataGrid(null, vo,
+				ph)));
+		grid.setTotal(reimbursementBatchService.count(null, vo, ph));
 
 		return grid;
 	}
 
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
-		return "/basic/reimbursement/reimbursementAdd";
+		return "/basic/reimbursementBatch/reimbursementBatchAdd";
 	}
 
 	// 仅仅是个转发器，根据类型匹配是保存还是提交
 	@RequestMapping("/apply")
 	@ResponseBody
-	public Json apply(Reimbursement reimbursement, HttpServletRequest request) {
-		if (reimbursement == null) {
+	public Json apply(ReimbursementBatch reimbursementBatch,
+			HttpServletRequest request) {
+		if (reimbursementBatch == null) {
 			Json j = new Json();
 			j.setSuccess(false);
 			j.setMsg("空的报销单,提交或保存失败");
 			return j;
 		}
-		if (reimbursement.getOption() == 0) {
-			return add(reimbursement, request);
-		} else if (reimbursement.getOption() == 1) {
-			return commit(reimbursement, request);
+
+		if (reimbursementBatch.getOption() == 0) {
+			return add(reimbursementBatch, request);
+		} else if (reimbursementBatch.getOption() == 1) {
+			return commit(reimbursementBatch, request);
 		} else {
-			return edit(reimbursement, request);
+			return edit(reimbursementBatch, request);
 		}
 	}
 
 	@SuppressWarnings("unused")
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(Reimbursement reimbursement, HttpServletRequest request) {
+	public Json add(ReimbursementBatch reimbursementBatch,
+			HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			boolean isBatch = false;
-			if (reimbursement.getBatchId() != null) {
-				reimbursement.setType(1);// 批量添加
-				ReimbursementBatch batch = reimbursementBatchService
-						.get(reimbursement.getBatchId());
-				if(batch != null){
-					reimbursement.setBatch(batch);
-				}
-				isBatch = true;
-			}
-			Long docId = reimbursementService.add(reimbursement, request);
-
-			// 批量报销的情况下不需要单独走流程
-			if (isBatch) {
-				j.setSuccess(true);
-				j.setMsg("添加报销详情成功！");
-				return j;
-			}
+			Long docId = reimbursementBatchService.add(reimbursementBatch,
+					request);
 
 			// 提交后保存流程以及流程历史操作记录
 			Process process = new Process();
+
 			// 流程名称：格式：用户名-类型-时间
 			String processName = "";
 			Long userId = getSessionInfo(request).getId();
 			User user = userService.get(userId);
 			Tuser tuser = new Tuser();
 			tuser.setId(user.getId());
+
 			if (user == null) {
 				throw new Exception("操作人为空！请重新登录");
 			}
+
 			process.setProcessName(user.getName() + "申请报销");
 			process.setApplyUser(tuser);
 			process.setDocId(docId);
@@ -206,10 +168,10 @@ public class ReimbursementController extends BaseController {
 			Long processId = processService.add(process, request);
 
 			// 更新
-			reimbursement.setId(docId);
+			reimbursementBatch.setId(docId);
 			process.setId(processId);
-			reimbursement.setProcess(process);
-			reimbursementService.edit(reimbursement, request);
+			reimbursementBatch.setProcess(process);
+			reimbursementBatchService.edit(reimbursementBatch, request);
 
 			// 历史记录保存
 			if (processId != null && processId > 0) {
@@ -226,6 +188,7 @@ public class ReimbursementController extends BaseController {
 			}
 
 			j.setSuccess(true);
+			j.setObj(reimbursementBatch);
 			j.setMsg("添加成功！");
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
@@ -237,7 +200,8 @@ public class ReimbursementController extends BaseController {
 	@SuppressWarnings("unused")
 	@RequestMapping("/commit")
 	@ResponseBody
-	public Json commit(Reimbursement reimbursement, HttpServletRequest request) {
+	public Json commit(ReimbursementBatch reimbursementBatch,
+			HttpServletRequest request) {
 		Json j = new Json();
 		try {
 			Long userId = getSessionInfo(request).getId();
@@ -245,11 +209,12 @@ public class ReimbursementController extends BaseController {
 			Tuser tuser = new Tuser();
 			tuser.setId(user.getId());
 
-			if (reimbursement.getId() != null && reimbursement.getId() > 0
-					&& reimbursement.getProcess() != null) {
-				reimbursementService.edit(reimbursement, request);
+			if (reimbursementBatch.getId() != null
+					&& reimbursementBatch.getId() > 0
+					&& reimbursementBatch.getProcess() != null) {
+				reimbursementBatchService.edit(reimbursementBatch, request);
 				// 审批不通过重新申请的情况
-				Process process = reimbursement.getProcess();
+				Process process = reimbursementBatch.getProcess();
 				if (process.getId() != null) {
 					process = processService.get(process.getId());
 				}
@@ -274,7 +239,8 @@ public class ReimbursementController extends BaseController {
 
 			} else {
 				// 第一次申请提交报销单
-				Long docId = reimbursementService.add(reimbursement, request);
+				Long docId = reimbursementBatchService.add(reimbursementBatch,
+						request);
 				// 提交后保存流程以及流程历史操作记录
 				Process process = new Process();
 				if (user == null) {
@@ -290,10 +256,10 @@ public class ReimbursementController extends BaseController {
 				Long processId = processService.add(process, request);
 
 				// 更新
-				reimbursement.setId(docId);
+				reimbursementBatch.setId(docId);
 				process.setId(processId);
-				reimbursement.setProcess(process);
-				reimbursementService.edit(reimbursement, request);
+				reimbursementBatch.setProcess(process);
+				reimbursementBatchService.edit(reimbursementBatch, request);
 
 				// 历史记录保存
 				if (processId != null && processId > 0) {
@@ -311,6 +277,7 @@ public class ReimbursementController extends BaseController {
 				}
 			}
 			j.setSuccess(true);
+			j.setObj(reimbursementBatch);
 			j.setMsg("申请成功！");
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
@@ -342,7 +309,8 @@ public class ReimbursementController extends BaseController {
 
 		String[] idArray = ids.split(",");
 		for (String id : idArray) {
-			Reimbursement rt = reimbursementService.get(Long.valueOf(id));
+			ReimbursementBatch rt = reimbursementBatchService.get(Long
+					.valueOf(id));
 			if (rt == null || rt.getProcess() == null
 					|| rt.getProcess().getState() == null) {
 				continue;
@@ -358,7 +326,7 @@ public class ReimbursementController extends BaseController {
 			// 级联删除流程信息
 			processService.deleteByDocIds(ids);
 			// 历史记录外键关联流程，流程删除时自动删除历史记录
-			reimbursementService.delete(ids);
+			reimbursementBatchService.delete(ids);
 			j.setMsg("删除成功！");
 			j.setSuccess(true);
 		} catch (Exception e) {
@@ -369,40 +337,33 @@ public class ReimbursementController extends BaseController {
 
 	@RequestMapping("/get")
 	@ResponseBody
-	public Reimbursement get(Long id) {
-		return reimbursementService.get(id);
+	public ReimbursementBatch get(Long id) {
+		return reimbursementBatchService.get(id);
 	}
 
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, Long id) {
-		Reimbursement reimbursement = reimbursementService.get(id);
+		ReimbursementBatch ReimbursementBatch = reimbursementBatchService
+				.get(id);
 
-		if (reimbursement != null) {
-			request.setAttribute("reimbursement", convert2Vo(reimbursement));
+		if (ReimbursementBatch != null) {
+			request.setAttribute("reimbursementBatch",
+					convert2Vo(ReimbursementBatch));
 		}
-		return "/basic/reimbursement/reimbursementEdit";
+		return "/basic/reimbursementBatch/reimbursementBatchEdit";
 	}
 
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Json edit(Reimbursement reimbursement, HttpServletRequest request) {
+	public Json edit(ReimbursementBatch reimbursementBatch,
+			HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			if(reimbursement.getBatchId() != null || reimbursement.getType() == 1){
-				//关联必须设置为空不然会报错
-				reimbursement.setProcess(null);
-				reimbursement.setType(1);// 批量添加
-				ReimbursementBatch batch = reimbursementBatchService
-						.get(reimbursement.getBatchId());
-				if(batch != null){
-					reimbursement.setBatch(batch);
-				}
-			}
-			reimbursementService.edit(reimbursement, request);
+			reimbursementBatchService.edit(reimbursementBatch, request);
 			j.setSuccess(true);
+			j.setObj(reimbursementBatch);
 			j.setMsg("编辑成功！");
 		} catch (Exception e) {
-			e.printStackTrace();
 			j.setMsg(e.getMessage());
 		}
 		return j;
@@ -411,21 +372,25 @@ public class ReimbursementController extends BaseController {
 	// 查看那流程详情
 	@RequestMapping("/detailPage")
 	public String detailPage(HttpServletRequest request, Long id) {
-		Reimbursement reimbursement = reimbursementService.get(id);
-		if (reimbursement != null) {
-			request.setAttribute("reimbursement", convert2Vo(reimbursement));
+		ReimbursementBatch ReimbursementBatch = reimbursementBatchService
+				.get(id);
+		if (ReimbursementBatch != null) {
+			request.setAttribute("reimbursementBatch",
+					convert2Vo(ReimbursementBatch));
 		}
-		return "/basic/reimbursement/reimbursementDetail";
+		return "/basic/reimbursementBatch/reimbursementBatchDetail";
 	}
 
 	// 查看申请详情
 	@RequestMapping("/detailPage2")
 	public String detailPage2(HttpServletRequest request, Long id) {
-		Reimbursement reimbursement = reimbursementService.get(id);
-		if (reimbursement != null) {
-			request.setAttribute("reimbursement", convert2Vo(reimbursement));
+		ReimbursementBatch ReimbursementBatch = reimbursementBatchService
+				.get(id);
+		if (ReimbursementBatch != null) {
+			request.setAttribute("reimbursementBatch",
+					convert2Vo(ReimbursementBatch));
 		}
-		return "/basic/reimbursement/reimbursementDetail2";
+		return "/basic/reimbursementBatch/reimbursementBatchDetail2";
 	}
 
 	@RequestMapping("/handlerPage")
@@ -435,10 +400,11 @@ public class ReimbursementController extends BaseController {
 				|| process.getDocId() == null) {
 			return "/error";
 		}
-		Reimbursement po = reimbursementService.get(process.getDocId());
-		ReimbursementVo reimbursement = convert2Vo(po);
-		request.setAttribute("reimbursement", reimbursement);
-		return "/basic/reimbursement/processAudit";
+		ReimbursementBatch po = reimbursementBatchService.get(process
+				.getDocId());
+		ReimbursementBatchVo ReimbursementBatch = convert2Vo(po);
+		request.setAttribute("reimbursementBatch", ReimbursementBatch);
+		return "/basic/reimbursementBatch/processAudit";
 	}
 
 	// 流程审批相关,process docid,remark
@@ -448,7 +414,7 @@ public class ReimbursementController extends BaseController {
 	@ResponseBody
 	public Json complate(ProcessVo vo, HttpServletRequest request) {
 		Json j = new Json();
-		Reimbursement reimbursement = null;
+		ReimbursementBatch ReimbursementBatch = null;
 		if (vo == null || vo.getId() <= 0) {
 			j.setMsg("error!");
 			return j;
@@ -461,8 +427,8 @@ public class ReimbursementController extends BaseController {
 			if (vo.getOption() == 1) {
 				return abort(vo, request);
 			}
-			reimbursement = reimbursementService.get(vo.getDocId());
-			if (reimbursement != null) {
+			ReimbursementBatch = reimbursementBatchService.get(vo.getDocId());
+			if (ReimbursementBatch != null) {
 				Long userId = getSessionInfo(request).getId();
 				if (userId > 0) {
 					User user = userService.get(userId);
@@ -532,7 +498,7 @@ public class ReimbursementController extends BaseController {
 		}
 
 		User user = null;
-		Reimbursement reimbursement = null;
+		ReimbursementBatch ReimbursementBatch = null;
 
 		Long userId = getSessionInfo(request).getId();
 		user = userService.get(userId);
@@ -546,9 +512,9 @@ public class ReimbursementController extends BaseController {
 			return j;
 		}
 
-		reimbursement = reimbursementService.get(vo.getDocId());
+		ReimbursementBatch = reimbursementBatchService.get(vo.getDocId());
 
-		if (reimbursement == null) {
+		if (ReimbursementBatch == null) {
 			j.setMsg("报销单为空,数据异常!");
 			return j;
 		}

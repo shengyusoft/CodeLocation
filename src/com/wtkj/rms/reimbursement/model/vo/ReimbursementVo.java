@@ -46,6 +46,42 @@ public class ReimbursementVo implements Serializable {
 	private ProcessVo process_vo;
 	private Double total;
 
+	private int option;
+
+	/**
+	 * 0单独报销1批量报销
+	 */
+	private int type = 0;
+
+	/**
+	 * 关联批量报销
+	 */
+	private Long batchId;
+
+	public int getOption() {
+		return option;
+	}
+
+	public void setOption(int option) {
+		this.option = option;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public Long getBatchId() {
+		return batchId;
+	}
+
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -104,6 +104,12 @@ function showDate(format) {
 	}
 }
 
+//只选择月份日期
+function showMonth() {  
+    WdatePicker({ dateFmt: 'yyyy-MM', isShowToday: false, isShowClear: false });  
+}  
+
+//日期起止时间控制
 function showStart(format) {
 	if (isEmpty(format)) {
 		WdatePicker({
@@ -238,6 +244,14 @@ var Common = {
 		}
 		return '';
 	},
+	
+	formatterMonth : function(value, row, index) {
+		if (!isEmpty(value)) {
+			var date = newDate(value);
+			return date.format('yyyy-MM');
+		}
+		return '';
+	},
 
 	// 强制保留两位小数
 	formatterDecimal2 : function(x) {
@@ -275,6 +289,38 @@ function newDate(dateStr) {
 		}
 		return date;
 	}
+}
+
+function disableForm(formId,isDisabled) {
+  var attr="disable";
+	if(!isDisabled){
+	   attr="enable";
+	}
+	$("form[id='"+formId+"'] :text").attr("disabled",isDisabled);
+	$("form[id='"+formId+"'] textarea").attr("disabled",isDisabled);
+	$("form[id='"+formId+"'] select").attr("disabled",isDisabled);
+	$("form[id='"+formId+"'] :radio").attr("disabled",isDisabled);
+	$("form[id='"+formId+"'] :checkbox").attr("disabled",isDisabled);
+
+	$("#" + formId + " input[class='combobox-f combo-f']").each(function () {
+		if (this.id) {alert("input"+this.id);
+			$("#" + this.id).combobox(attr);
+		}
+	});
+
+	$("#" + formId + " select[class='combobox-f combo-f']").each(function () {
+		if (this.id) {
+		alert(this.id);
+			$("#" + this.id).combobox(attr);
+		}
+	});
+
+	$("#" + formId + " input[class='datebox-f combo-f']").each(function () {
+		if (this.id) {
+		alert(this.id);
+			$("#" + this.id).datebox(attr);
+		}
+	});
 }
 
 function newDateAndTime(dateStr) {
