@@ -183,7 +183,7 @@
 		queryParams['provice.id'] = -1;
 		queryParams['city.id'] = -1;
 		queryParams['county.id'] = -1;
-		queryParams['delegator.id'] = -1;
+		queryParams.delegatorName = "";
 		
 		var projectName = $('#projectName').val();
 		var st = $('#st').val();
@@ -191,7 +191,7 @@
 		var provice = $('#provice').combobox('getValue');
 		var city = $('#city').combobox('getValue');
 		var county = $('#county').combobox('getValue');
-		var delegatorId = $('#delegatorId').combobox('getValue');
+		var delegatorName = $('#delegatorName').val();
 		
 		queryParams.projectName = isEmpty(projectName)?"":projectName;
 		queryParams.st = isEmpty(st)?"":st;
@@ -199,7 +199,7 @@
 		queryParams['provice.id'] = isEmpty(provice)?-1:provice;
 		queryParams['city.id'] = isEmpty(city)?-1:city;
 		queryParams['county.id'] = isEmpty(county)?-1:county;
-		queryParams['delegator.id'] = isEmpty(delegatorId)?-1:county;
+		queryParams['delegatorName'] = isEmpty(delegatorName) ? "" : delegatorName;;
 		
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -212,7 +212,7 @@
 		$('#provice').combobox('clear');
 		$('#city').combobox('clear');
 		$('#county').combobox('clear');
-		$('#delegatorId').combobox('clear');
+		$('#delegatorName').val('');
 	}
 	
 	function addFun() {
@@ -388,17 +388,16 @@
 					
 					<th>项目名称:</th>
 					<td><input type="text" id="projectName"> </td>
-					<th>时间段:</th>
+					<th>开标时间段:</th>
 					<td>
 						<input class="Wdate" type="text" name="st" id="st"
-						style="height: 100%" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> - 
+						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - 
 						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> 
+						onfocus="showDate('yyyy-MM-dd')" /> 
 					</td>
 					<th>委托人:</th>
 					<td>
-						<select id="delegatorId" name="delegatorId" style="width:120px" 
-						class="easyui-validatebox span2"></select>
+						<input type="text" id="delegatorName">
 					</td>
 					<td rowspan="2">
 						<a onclick="searchFun();" href="javascript:void(0);" class="easyui-linkbutton"

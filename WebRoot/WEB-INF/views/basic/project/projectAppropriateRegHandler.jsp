@@ -279,7 +279,7 @@
 			</table>
 		</form>
 	</div>
-	<span style="font-size: 14px; color: blue">工程款到帐及拨付情况表（工程部收到钱时填写）</span>
+	<span style="font-size: 14px; color: blue">工程款到帐及拨付情况表</span>
 	<div data-options="fit:true,border:false" style="overflow: auto;height: 180px">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>

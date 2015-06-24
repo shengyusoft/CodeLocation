@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script type="text/javascript">
 	$('#company').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
@@ -261,7 +262,10 @@
 						type="hidden" name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
 					<th>报名时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="registDT" value="${projectRegist.registDT}"
+						
+						
+					<td><input class="Wdate" type="text" name="registDT" 
+						value="<fmt:formatDate value="${projectRegist.registDT}" pattern="yyyy-MM-dd"/>"
 						id="registDT" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>

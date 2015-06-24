@@ -233,9 +233,9 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 			}
 
 			// 委托人
-			if (p.getDelegator() != null && p.getDelegator().getId() > 0) {
-				hql += " and t.delegator.id <= :delegatorId";
-				params.put("delegatorId", p.getDelegator().getId());
+			if (!StringUtils.isEmpty(p.getDelegatorName())) {
+				hql += " and t.delegator.name like :delegatorName";
+				params.put("delegatorName", "%%"+p.getDelegatorName()+"%%");
 			}
 		}
 

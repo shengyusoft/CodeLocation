@@ -20,6 +20,7 @@
 			striped : true,
 			rownumbers : true,
 			pagination : true,
+			fitColumns : true,
 			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
@@ -31,7 +32,7 @@
 				field : 'id',
 				width : '30',
 			}, {
-				width : '120',
+				width : '160',
 				title : '项目名称',
 				sortable : true,
 				align : 'center',
@@ -48,19 +49,19 @@
 				align : 'center',
 				field : 'qualifyRequirementNames'
 			}, {
-				width : '120',
+				width : '100',
 				title : '投标人',
 				sortable : true,
 				align : 'center',
 				field : 'bidder'
 			}, {
-				width : '120',
+				width : '100',
 				title : '联系方式',
 				sortable : true,
 				align : 'center',
 				field : 'contract'
 			}, {
-				width : '120',
+				width : '100',
 				title : '登记人',
 				sortable : true,
 				align : 'center',
