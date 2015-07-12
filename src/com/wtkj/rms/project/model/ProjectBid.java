@@ -63,7 +63,7 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	private String remark;
 
-	// for search
+	// for search--改为申请时间
 	private Date durationSt;// 工期开始
 
 	private Date durationEt;// 工期结束

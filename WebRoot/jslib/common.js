@@ -59,7 +59,7 @@ function getSelecteds(dataGrid) {
 }
 
 function isEmpty(param) {
-	if ((param == null || param == '' && param != 0 && param != '0')) {
+	if ((param == null || param == '')) {
 		return true;
 	}
 	return false;

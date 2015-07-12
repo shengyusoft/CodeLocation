@@ -51,12 +51,6 @@ public class ReportController extends BaseController {
 	@Autowired
 	protected PurchasePlanDetailServiceI purchasePlanDetailService;
 
-	// 维护档案报表
-	@RequestMapping("/taskRecordManager")
-	public String manager(HttpServletRequest request) {
-		return "/basic/report/taskRecord";
-	}
-
 	@RequestMapping("/order")
 	public ModelAndView order(HttpServletRequest request, Long orderId,
 			String title) throws IOException {
@@ -91,6 +85,53 @@ public class ReportController extends BaseController {
 		}
 		parameterMap.put("format", "pdf");
 		return new ModelAndView("orderReport", parameterMap);
+	}
+
+	/**
+	 * 项目中标登记报表
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/projectBid")
+	public ModelAndView projectBid(String projectName, String companyName,
+			Date st, Date et, long provice, long city, long county, int type,
+			HttpServletRequest request) throws IOException {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		StringBuilder sb = new StringBuilder(" where 1=1 ");
+		if (!StringUtils.isEmpty(companyName)) {
+			sb.append("and company.text like %" + companyName + "% ");
+		}
+		if (!StringUtils.isEmpty(projectName)) {
+			sb.append("and p.projectName like %" + projectName + "% ");
+		}
+		if (st != null) {
+			sb.append("and p.bidDt >=" + st + " ");
+		}
+		if (et != null) {
+			sb.append("and p.bidDt <=" + et + " ");
+		}
+
+		if (provice > 0) {
+			sb.append("and province.id =" + provice + " ");
+		}
+		if (city > 0) {
+			sb.append("and city.id =" + city + " ");
+		}
+		if (county > 0) {
+			sb.append("and country.id =" + county + " ");
+		}
+
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+
+		parameterMap.put("whereSql", sb.toString());
+
+		return new ModelAndView("projectBid", parameterMap);
 	}
 
 	/**
@@ -132,7 +173,7 @@ public class ReportController extends BaseController {
 		parameterMap.put("id", id);
 		return new ModelAndView("bidBondBack", parameterMap);
 	}
-	
+
 	/**
 	 * 工程款拨付登记
 	 * 
@@ -149,10 +190,10 @@ public class ReportController extends BaseController {
 		} else {
 			parameterMap.put("format", "xls");
 		}
-		
-		 String reportPath = request.getSession().getServletContext()
-	                .getRealPath("/WEB-INF/reports/");
-		parameterMap.put("SUBREPORT_DIR", reportPath+"/");
+
+		String reportPath = request.getSession().getServletContext()
+				.getRealPath("/WEB-INF/reports/");
+		parameterMap.put("SUBREPORT_DIR", reportPath + "/");
 		parameterMap.put("pro_id", id);
 		return new ModelAndView("projectAReg", parameterMap);
 	}
@@ -174,12 +215,12 @@ public class ReportController extends BaseController {
 		} else {
 			parameterMap.put("format", "xls");
 		}
-		
+
 		if (startDT != null && endDT != null) {
 			parameterMap.put("startDT", startDT);
-		}else if(startDT != null && endDT == null){
+		} else if (startDT != null && endDT == null) {
 			parameterMap.put("startDT", startDT);
-		}else if(startDT == null && endDT != null){
+		} else if (startDT == null && endDT != null) {
 			parameterMap.put("endDT", endDT);
 		}
 
@@ -195,20 +236,21 @@ public class ReportController extends BaseController {
 			e.printStackTrace();
 		}
 
-		if(!StringUtils.isEmpty(applier)){
-			String appiperUTF8 = new String(applier.getBytes("iso-8859-1"), "UTF-8");
+		if (!StringUtils.isEmpty(applier)) {
+			String appiperUTF8 = new String(applier.getBytes("iso-8859-1"),
+					"UTF-8");
 			parameterMap.put("applyer", appiperUTF8 + "%");
-		}else{
+		} else {
 			parameterMap.put("applyer", "%");
 		}
-		
-		if(!StringUtils.isEmpty(place)){
+
+		if (!StringUtils.isEmpty(place)) {
 			String placeUTF8 = new String(place.getBytes("iso-8859-1"), "UTF-8");
 			parameterMap.put("place", placeUTF8 + "%");
-		}else{
+		} else {
 			parameterMap.put("place", "%");
 		}
-		
+
 		return new ModelAndView("reimbursement", parameterMap);
 	}
 

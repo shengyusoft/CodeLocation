@@ -446,15 +446,6 @@
 		console.log(place);
 		var url = ctxPath + "/report/reimbursement?type="+type+"&&startDT="+startDT+"&&endDT="+endDT+"&&applier="+applier+"&&place="+place;
 		if(type == 0){
-			var iWidth = 1000; //弹出窗口的宽度;
-			var iHeight = 800; //弹出窗口的高度;
-			//获得窗口的垂直位置
-			var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
-			//获得窗口的水平位置
-			var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
-			/* var tmp = window.open(url, "_blank", "width=1000,height=800,top=" + iTop
-					+ ",left=" + iLeft); */
-			
 			var tmp = window.open (url,'newwindow','width='+(window.screen.availWidth-10)+',height='+(window.screen.availHeight-30)+ ',top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
 			tmp.focus();
 		}else{

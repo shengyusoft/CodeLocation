@@ -18,6 +18,13 @@
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<!--报销-->
+	<bean id="projectBid" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/projectBid.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	
 	<!--报销-->
 	<bean id="reimbursement" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
 		<property name="url" value="/WEB-INF/reports/reimbursement.jasper" />
@@ -29,11 +36,13 @@
 		<property name="url" value="/WEB-INF/reports/bidBondPay.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
+	
 	<!--投标保证金退还-->
 	<bean id="bidBondBack" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
 		<property name="url" value="/WEB-INF/reports/bidBondBack.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
+	
 	<!--招投标公司工程款拨付登记表-->
 	<bean id="projectAReg" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
 		<property name="url" value="/WEB-INF/reports/pro_ee.jasper" />

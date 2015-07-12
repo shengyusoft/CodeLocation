@@ -256,6 +256,35 @@
 		$('#city').combobox('clear');
 		$('#county').combobox('clear');
 	}
+	
+	function printFun(type) {
+		var projectName = $('#projectName').val();
+		var companyName = $('#companyName').val();
+		var st = $('#st').val();
+		var et = $('#et').val();
+		var provice = $('#provice').combobox('getValue');
+		provice = isEmpty(provice)?0:provice;
+		var city = $('#city').combobox('getValue');
+		city = isEmpty(city)?0:city;
+		var county = $('#county').combobox('getValue');
+		county = isEmpty(county)?0:county;
+		var url = ctxPath + "/report/projectBid?projectName="+projectName+"&companyName="+companyName+"&st="+st+"&et="+et+"&provice="+provice+"&city="+city+"&county="+county+"&type="+type;
+		console.log(url);
+		if(type == 0){
+			var tmp = window.open (
+					url,
+					'newwindow',
+					'width='+(window.screen.availWidth-10)+
+					',height='+(window.screen.availHeight-30)+ 
+					',top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no'
+			);
+			
+			tmp.focus();
+		}else{
+			var tmp = window.open(url);
+			tmp.focus();
+		}
+	}
 
 	function addFun() {
 		parent.$.modalDialog({
@@ -423,6 +452,13 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
+		
+		<a onclick="printFun(0);" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览</a> <a
+			onclick="printFun(1);" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 
 		<a onclick="searchFun();" href="javascript:void(0);"
 			class="easyui-linkbutton"
