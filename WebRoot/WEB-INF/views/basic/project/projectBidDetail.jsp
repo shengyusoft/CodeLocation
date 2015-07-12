@@ -172,7 +172,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bid_cost"
 						style="width: 100%; height: 100%" type="text" id="bid_cost"
-						value="${projectBid.bid_cost}" class="easyui-validatebox span2"
+						value="${projectBid.bid_cost}" class="easyui-numberbox" precision="2"
 						data-options="required:true" /></td>
 						
 					<th>中标时间 &nbsp;<label
@@ -201,7 +201,7 @@
 					<th width="120px">管理费数额（元）&nbsp;</th>
 					<td colspan="3"><input name="manageFee"
 						value="${projectBid.manageFee}" style="width: 100%; height: 100%"
-						type="text" id="manageFee" class="easyui-validatebox span2"
+						type="text" id="manageFee" class="easyui-numberbox" precision="2"
 						disabled="disabled" /></td>
 
 				</tr>

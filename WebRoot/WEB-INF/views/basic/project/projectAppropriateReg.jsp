@@ -66,8 +66,7 @@
 		    				align : 'center',
 		    				field : 'state',
 		    				formatter : function(value, row, index) {
-		    					debugger;
-		    					if(isEmpty(value)){
+		    					if(isEmpty(value) && value != 0 && value != '0'){
 		    						return '';
 		    					}
 		    					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';

@@ -150,7 +150,7 @@
 					<th>中标价（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bidPrice" style="width: 100%; height: 100%"
-						type="number" id="bidPrice" readonly="readonly"
+						type="text" id="bidPrice" readonly="readonly" class="easyui-numberbox"
 						data-options="required:true"
 						value="${projectAppropriateReg.bidPrice}" /></td>
 					<th>中标日期 &nbsp;<label
@@ -177,8 +177,8 @@
 					<th>管理费数额（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="managerFee" style="width: 100%; height: 100%"
-						type="number" id="managerFee" readonly="readonly"
-						data-options="required:true"
+						type="text" id="managerFee" readonly="readonly"
+						data-options="required:true" class="easyui-numberbox"
 						value="${projectAppropriateReg.managerFee}" /></td>
 				</tr>
 				<tr>

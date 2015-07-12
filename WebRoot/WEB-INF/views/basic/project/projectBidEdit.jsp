@@ -225,7 +225,7 @@
 					<th width="120px">管理费数额（元）&nbsp;</th>
 					<td colspan="3"><input name="manageFee"
 						value="${projectBid.manageFee}" style="width: 100%; height: 100%"
-						type="text" id="manageFee" class="easyui-validatebox span2"
+						type="text" id="manageFee" class="easyui-numberbox" precision="2"
 						disabled="disabled" /></td>
 
 				</tr>

@@ -212,8 +212,8 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 		return texts.substring(0, texts.length() - 1);
 	}
 
-	private float calMangerFee(ProjectBid p) {
-		float fee = 0f;
+	private Double calMangerFee(ProjectBid p) {
+		Double fee = 0d;
 		if (p.getBid_cost() != null) {
 			float rate = p.getManageFeeRate() == null ? 0f : p
 					.getManageFeeRate();

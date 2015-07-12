@@ -40,11 +40,11 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	private String bds;// 标段
 	private String bdNames;// display
-	private Float bid_cost;
+	private Double bid_cost;
 
 	// 管理费比例（%）
 	// private Float manage_cost;
-	private Float manageFee;// 管理费=中标价×比例
+	private Double manageFee;// 管理费=中标价×比例
 
 	private Float manageFeeRate;// 管理费比例（%）
 
@@ -178,19 +178,19 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	public Float getBid_cost() {
+	public Double getBid_cost() {
 		return bid_cost;
 	}
 
-	public void setBid_cost(Float bid_cost) {
+	public void setBid_cost(Double bid_cost) {
 		this.bid_cost = bid_cost;
 	}
 
-	public Float getManageFee() {
+	public Double getManageFee() {
 		return manageFee;
 	}
 
-	public void setManageFee(Float manageFee) {
+	public void setManageFee(Double manageFee) {
 		this.manageFee = manageFee;
 	}
 
