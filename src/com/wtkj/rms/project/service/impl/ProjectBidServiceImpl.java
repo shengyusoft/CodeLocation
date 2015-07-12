@@ -136,39 +136,52 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 		String hql = "";
 		if (p != null) {
 			hql += " where 1=1 ";
+
+			// 项目名称
 			if (!StringUtils.isEmpty(p.getProjectName())) {
 				hql += " and t.projectName like :projectName";
 				params.put("projectName", "%%" + p.getProjectName() + "%%");
 			}
-			
-			//工期结束时间
+
+			// 公司名称
+			if (p.getCompany() != null
+					&& !StringUtils.isEmpty(p.getCompany().getText())) {
+				hql += " and t.company.text like :companyName";
+				params.put("companyName", "%%" + p.getCompany().getText()
+						+ "%%");
+			}
+
+			// 中标时间
 			if (p.getDurationSt() != null) {
-				hql += " and t.duration >= :durationst";
+				hql += " and t.bidDt >= :durationst";
 				params.put("durationst", p.getDurationSt());
 			}
 
 			if (p.getDurationEt() != null) {
-				hql += " and t.duration <= :durationet";
+				hql += " and t.bidDt <= :durationet";
 				params.put("durationet", p.getDurationEt());
 			}
-			
-			//按地区搜索
-			if(p.getProvice() != null && p.getProvice().getId() > 0){
+
+			// 按地区搜索
+			if (p.getProvice() != null && p.getProvice().getId() != null
+					&& p.getProvice().getId() > 0) {
 				hql += " and t.provice.id = :proviceId";
 				params.put("proviceId", p.getProvice().getId());
 			}
-			
-			if(p.getCity() != null && p.getCity().getId() > 0){
+
+			if (p.getCity() != null && p.getCity().getId() != null
+					&& p.getCity().getId() > 0) {
 				hql += " and t.city.id = :cityId";
 				params.put("cityId", p.getCity().getId());
 			}
-			
-			if(p.getCounty() != null && p.getCounty().getId() > 0){
+
+			if (p.getCounty() != null && p.getCounty().getId() != null
+					&& p.getCounty().getId() > 0) {
 				hql += " and t.county.id = :countyId";
 				params.put("countyId", p.getCounty().getId());
 			}
-			
-			//登记人
+
+			// 登记人
 			if (!StringUtils.isEmpty(p.getRecordman())) {
 				hql += " and t.recordman like :recordman";
 				params.put("recordman", "%%" + p.getRecordman() + "%%");

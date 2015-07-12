@@ -116,19 +116,45 @@ public class BidBondServiceImpl implements BidBondServiceI {
 				params.put("id", vo.getId());
 			}
 
+			//申请人ID查询
 			if (vo.getApplierId() != null && vo.getApplierId() > 0) {
 				hql += " and t.applier.id = :applierId";
 				params.put("applierId", vo.getApplierId());
 			}
 
+			//申请人姓名模糊查询
+			if (!StringUtils.isEmpty(vo.getApplierName())) {
+				hql += " and t.applier.name like :aName";
+				params.put("aName", "%%" + vo.getApplierName() + "%%");
+			}
+			
+			//申请时间范围查询
+			if (vo.getStartDT() != null && vo.getEndDT() != null) {
+				hql += " and t.applyDT >= :startDT";
+				hql += " and t.applyDT <= :endDT";
+				params.put("startDT", vo.getStartDT());
+				params.put("endDT", vo.getEndDT());
+			} else if (vo.getStartDT() != null && vo.getEndDT() == null) {
+				hql += " and t.applyDT >= :startDT";
+				params.put("startDT", vo.getStartDT());
+			} else if (vo.getStartDT() == null && vo.getEndDT() != null) {
+				hql += " and t.applyDT <= :endDT";
+				params.put("endDT", vo.getEndDT());
+			}
+			
+			//缴号，退号
 			if (!StringUtils.isEmpty(vo.getIdNumber())) {
 				hql += " and t.idNumber like :idNumber";
 				params.put("idNumber", "%%" + vo.getIdNumber() + "%%");
 			}
+			
+			//项目名称
 			if (!StringUtils.isEmpty(vo.getProjectName())) {
-				hql += " and t.idNumber like :pname";
+				hql += " and t.projectName like :pname";
 				params.put("pname", "%%" + vo.getProjectName() + "%%");
 			}
+			
+			//类型，批量报销或者单独报销
 			if (vo.getType() >= 0) {
 				hql += " and t.type = :type";
 				params.put("type", vo.getType());

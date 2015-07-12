@@ -45,7 +45,7 @@ public class ProjectAppropriateReg extends IdEntity implements
 	private Double contractDuration;// 合同工期(年)
 
 	// 0初始化(待提交) 1工程部提交(待确认) 2综合部确认(已确认)
-	private int state;
+	private Integer state;
 
 	private String remark;
 
@@ -145,11 +145,11 @@ public class ProjectAppropriateReg extends IdEntity implements
 		this.contractDuration = contractDuration;
 	}
 
-	public int getState() {
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 

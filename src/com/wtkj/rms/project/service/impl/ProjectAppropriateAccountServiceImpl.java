@@ -1,5 +1,6 @@
 package com.wtkj.rms.project.service.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -137,6 +138,20 @@ public class ProjectAppropriateAccountServiceImpl implements
 				+ whereHql(ProjectAppropriateAccountVo, params), params);
 	}
 
+	@Override
+	public BigInteger countByRegId(Long id) {
+		String sql = "select count(*) from projectappropriateaccount t where t.projectAreg_id="
+				+ id;
+		return projectAppropriateAccountDao.countBySql(sql);
+	}
+	
+	@Override
+	public BigInteger countByRegIdAndState(Long id,int state) {
+		String sql = "select count(*) from projectappropriateaccount t where t.state = "+state+" and t.projectAreg_id="
+				+ id;
+		return projectAppropriateAccountDao.countBySql(sql);
+	}
+
 	private String whereHql(ProjectAppropriateAccountVo vo,
 			Map<String, Object> params) {
 		String hql = "";
@@ -185,8 +200,7 @@ public class ProjectAppropriateAccountServiceImpl implements
 
 	@Override
 	public int findMaxTimes() {
-		// TODO Auto-generated method stub
-		String hql = " select max(times) from ProjectAppropriateAccount t ";
+		//String hql = " select max(times) from ProjectAppropriateAccount t ";
 		return 0;
 	}
 

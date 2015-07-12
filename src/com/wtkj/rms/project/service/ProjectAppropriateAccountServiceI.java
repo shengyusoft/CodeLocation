@@ -1,5 +1,6 @@
 package com.wtkj.rms.project.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,5 +32,9 @@ public interface ProjectAppropriateAccountServiceI {
 	public List<ProjectAppropriateAccountVo> findAll(String type);
 
 	public int findMaxTimes();
+
+	public BigInteger countByRegId(Long id);
+
+	BigInteger countByRegIdAndState(Long id, int state);
 
 }

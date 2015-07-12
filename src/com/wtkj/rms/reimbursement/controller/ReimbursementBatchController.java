@@ -55,13 +55,7 @@ public class ReimbursementBatchController extends BaseController {
 		if (user == null) {
 			reStr = "/error";
 		}
-		if (!StringUtils.isEmpty(user.getRoleNames())) {
-			if (user.getRoleNames().indexOf("普通员工") >= 0) {
-				reStr = "/basic/reimbursementBatch/reimbursementBatch";
-			} else {
-				reStr = "/basic/reimbursementBatch/reimbursementBatchAudit";
-			}
-		}
+		reStr = "/basic/reimbursementBatch/reimbursementBatchAudit";
 		return reStr;
 	}
 

@@ -87,7 +87,7 @@ public class Reimbursement extends IdEntity implements Serializable {
 	}
 
 	// @NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "process_id")
 	public Process getProcess() {
 		return process;

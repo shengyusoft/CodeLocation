@@ -31,6 +31,7 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 6625249529038114020L;
 	private Tdictionary company;// 公司名称
 	private String projectName;// 项目名称
+	private Date bidDt;// 中标时间
 
 	// 省市县区划
 	private Tdictionary provice;
@@ -257,6 +258,14 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	public void setDurationEt(Date durationEt) {
 		this.durationEt = durationEt;
+	}
+
+	public Date getBidDt() {
+		return bidDt;
+	}
+
+	public void setBidDt(Date bidDt) {
+		this.bidDt = bidDt;
 	}
 
 }

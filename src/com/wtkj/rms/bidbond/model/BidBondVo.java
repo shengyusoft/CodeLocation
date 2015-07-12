@@ -62,6 +62,11 @@ public class BidBondVo implements Serializable {
 
 	private String remark;
 
+	// 查询使用
+	private Date startDT;// 申请时间
+
+	private Date endDT;// 申请时间
+
 	/**
 	 * 应扣保证金费用明细
 	 */
@@ -463,6 +468,22 @@ public class BidBondVo implements Serializable {
 
 	public void setRemark2(String remark2) {
 		this.remark2 = remark2;
+	}
+
+	public Date getStartDT() {
+		return startDT;
+	}
+
+	public void setStartDT(Date startDT) {
+		this.startDT = startDT;
+	}
+
+	public Date getEndDT() {
+		return endDT;
+	}
+
+	public void setEndDT(Date endDT) {
+		this.endDT = endDT;
 	}
 
 }

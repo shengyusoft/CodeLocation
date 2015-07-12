@@ -1,6 +1,8 @@
 package com.wtkj.rms.project.controller;
 
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,8 +41,26 @@ public class ProjectAppropriateRegController extends BaseController {
 	public Grid dataGrid(ProjectAppropriateReg projectAppropriateReg,
 			PageFilter ph) {
 		Grid grid = new Grid();
-		grid.setRows(projectAppropriateRegService.dataGrid(
-				projectAppropriateReg, ph));
+		List<ProjectAppropriateReg> regs = projectAppropriateRegService
+				.dataGrid(projectAppropriateReg, ph);
+		
+		//根据子状态判断状态值
+		for (ProjectAppropriateReg reg : regs) {
+			BigInteger count = projectAppropriateAccountService.countByRegIdAndState(reg.getId(),0);
+			BigInteger baseCount = projectAppropriateAccountService.countByRegId(reg.getId());
+			
+			if(baseCount.intValue() == 0){
+				reg.setState(-1);
+			}else{
+				if(count.intValue() > 0){
+					//能找到说明还有未拨款的
+					reg.setState(0);
+				}else{
+					reg.setState(1);
+				}
+			}
+		}
+		grid.setRows(regs);
 		grid.setTotal(projectAppropriateRegService.count(projectAppropriateReg,
 				ph));
 		return grid;
@@ -99,14 +119,14 @@ public class ProjectAppropriateRegController extends BaseController {
 		request.setAttribute("projectAppropriateReg", vo);
 		return "/basic/project/projectAppropriateRegEdit";
 	}
-	
-	//会计部处理
-		@RequestMapping("/handlerPage")
-		public String handlerPage(HttpServletRequest request, long id) {
-			ProjectAppropriateReg vo = projectAppropriateRegService.get(id);
-			request.setAttribute("projectAppropriateReg", vo);
-			return "/basic/project/projectAppropriateRegHandler";
-		}
+
+	// 会计部处理
+	@RequestMapping("/handlerPage")
+	public String handlerPage(HttpServletRequest request, long id) {
+		ProjectAppropriateReg vo = projectAppropriateRegService.get(id);
+		request.setAttribute("projectAppropriateReg", vo);
+		return "/basic/project/projectAppropriateRegHandler";
+	}
 
 	@RequestMapping("/edit")
 	@ResponseBody
@@ -142,13 +162,11 @@ public class ProjectAppropriateRegController extends BaseController {
 		try {
 			// 批量确认
 			projectAppropriateRegService.batchUpdateState(ids, 1);
-
 			// 确认的同时产生拨付情况的数据
 			if (!StringUtils.isEmpty(ids) && ids.length() > 0) {
 				String[] idArray = ids.split(",");
 				for (String id : idArray) {
 					ProjectAppropriateAccountVo at = new ProjectAppropriateAccountVo();
-					int maxTimes = projectAppropriateAccountService.findMaxTimes();
 					at.setToAccountDT(new Date());
 					at.setProjectAppRegId(Long.valueOf(id));
 					projectAppropriateAccountService.add(at, null);
