@@ -178,6 +178,11 @@
 						<input class="Wdate" type="text" name="month" id="month" value="${reimbursementBatch.month}"
 						style="width: 68%; height: 100%;" readonly="readonly"
 						onfocus="showDate('yyyy-MM-dd')" /></td>
+					<th>报销人&nbsp;</th>
+					<td colspan="4"><input class="easyui-validatebox"
+						style="width: 100%" name="bxr" id="bxr"
+						value="${reimbursementBatch.process_vo.applyUserName}"
+						readonly="readonly" disabled="disabled"></input></td>
 					<th>报销总额&nbsp;</th>
 					<td colspan="4"><input class="easyui-validatebox"
 						style="width: 100%" name="totalFee" id="totalFee" value="${reimbursementBatch.totalFee}"

@@ -59,7 +59,7 @@ function getSelecteds(dataGrid) {
 }
 
 function isEmpty(param) {
-	if (param == null || param == '') {
+	if ((param == null || param == '' && param != 0 && param != '0')) {
 		return true;
 	}
 	return false;
@@ -257,7 +257,7 @@ var Common = {
 	formatterDecimal2 : function(x) {
 		var f = parseFloat(x);
 		if (isNaN(f)) {
-			return false;
+			return '';
 		}
 		var f = Math.round(x * 100) / 100;
 		var s = f.toString();

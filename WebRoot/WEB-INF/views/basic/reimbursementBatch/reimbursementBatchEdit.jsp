@@ -39,7 +39,6 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/reimbursement/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
 			nowrap : true,
 			queryParams:{
@@ -60,6 +59,19 @@
 				width : '30',
 				rowspan : 2
 			}, {
+				title : '序号',
+				field : 'index',
+				align : 'center',
+				width : '40',
+				rowspan:2,
+				formatter : function(val, row, index) {
+					if(isEmpty(val)){
+						return index + 1;
+					}else{
+						return val;
+					}
+				}
+			}, {
 				width : '150',
 				title : '时间范围',
 				rowspan : 2,
@@ -67,9 +79,6 @@
 				align : 'center',
 				field : 'startDT',
 				formatter : function(value, row, index) {
-					if(value.indexOf('合计')>=0){
-   						return value;
-   					}
 					var st = formatDate(row.startDT);
 					var et = formatDate(row.endDT);
 					return st + "--" + et;
@@ -307,6 +316,10 @@
 						<input class="Wdate" type="text" name="month" id="month"
 						style="width: 68%; height: 100%;" data-options="required:true"
 						onfocus="showMonth()" /></td>
+					<th>报销人&nbsp;</th>
+					<td colspan="4"><input class="easyui-validatebox"
+						style="width: 100%" name="bxr" id="bxr" value="${reimbursementBatch.process_vo.applyUserName}"
+						readonly="readonly" disabled="disabled"></input></td>
 					<th>报销总额&nbsp;</th>
 					<td colspan="4"><input class="easyui-validatebox"
 						style="width: 100%" name="totalFee" id="totalFee" value="${reimbursementBatch.totalFee}"

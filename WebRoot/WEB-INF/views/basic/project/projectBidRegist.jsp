@@ -19,9 +19,7 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectRegist/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
-			//fitColumns : true,
 			nowrap : false,
 			queryParams : {
 				type : 1
@@ -35,8 +33,16 @@
 				checkbox : true,
 				field : 'id',
 				width : '30',
+			},{
+				title : '序号',
+				field : 'index',
+				align : 'center',
+				width : '40',
+				formatter : function(value, row, index) {
+					return index+1;
+				}
 			}, {
-				width : '120',
+				width : '90',
 				title : '公司名称',
 				align : 'center',
 				field : 'company',
@@ -50,7 +56,7 @@
 				align : 'center',
 				field : 'projectName'
 			}, {
-				width : '120',
+				width : '90',
 				title : '省',
 				sortable : true,
 				align : 'center',
@@ -59,7 +65,7 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '120',
+				width : '90',
 				title : '市',
 				sortable : true,
 				align : 'center',
@@ -68,7 +74,7 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '120',
+				width : '90',
 				title : '县',
 				sortable : true,
 				align : 'center',
@@ -77,17 +83,17 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '150',
+				width : '120',
 				title : '标段',
 				align : 'center',
 				field : 'bdNames'
 			}, {
-				width : '150',
+				width : '120',
 				title : '资质要求',
 				align : 'center',
 				field : 'qualifyRequirementNames'
 			}, {
-				width : '120',
+				width : '90',
 				title : '项目经理',
 				sortable : true,
 				align : 'center',
@@ -96,25 +102,25 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '120',
+				width : '90',
 				title : '委托人',
 				sortable : true,
 				align : 'center',
 				field : 'delegatorName'
 			}, {
-				width : '120',
+				width : '90',
 				title : '开标时间',
 				sortable : true,
 				align : 'center',
 				field : 'registDT',
 				formatter : Common.formatter
 			}, {
-				width : '130',
+				width : '90',
 				title : '登记时间',
 				sortable : true,
 				align : 'center',
 				field : 'createDT',
-				formatter : Common.formatterTime
+				formatter : Common.formatter
 			} ] ],
 
 			toolbar : '#toolbar'
@@ -383,12 +389,11 @@
 		</c:choose>
 
 		<c:if test="${fn:contains(sessionInfo.resourceList, '/projectRegist/search')}">
-			<table>
+			<table style="width:1000px;overflow: scroll;">
 				<tr>
-					
 					<th>项目名称:</th>
 					<td><input type="text" id="projectName"> </td>
-					<th>开标时间段:</th>
+					<th>登记时间:</th>
 					<td>
 						<input class="Wdate" type="text" name="st" id="st"
 						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - 

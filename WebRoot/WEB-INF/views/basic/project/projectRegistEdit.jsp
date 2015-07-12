@@ -214,7 +214,7 @@
 					</select></td>
 					<th width="100px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" value="${projectRegist.projectName}" style="width: 150px;"
+					<td><input name="projectName" value="${projectRegist.projectName}" style="width: 100%;"
 						type="text" id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 				</tr>

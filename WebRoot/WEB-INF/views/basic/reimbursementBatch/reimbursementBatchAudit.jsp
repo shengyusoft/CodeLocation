@@ -21,7 +21,6 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/reimbursementBatch/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
 			nowrap : false,
 			idField : 'id',
@@ -40,7 +39,6 @@
 		            },
 		            striped : true,
 		            singleSelect:true, 
-		            rownumbers:true, 
 		            loadMsg:'', 
 		            height:'auto', 
 		            showFooter : true,
@@ -51,6 +49,19 @@
 		                   				width : '30',
 		                   				rowspan : 2
 		                   			}, {
+		                				title : '序号',
+		                				field : 'index',
+		                				align : 'center',
+		                				width : '40',
+		                				rowspan:2,
+		                				formatter : function(val, row, index) {
+		                					if(isEmpty(val)){
+		                						return index + 1;
+		                					}else{
+		                						return val;
+		                					}
+		                				}
+		                			}, {
 		                   				width : '150',
 		                   				title : '时间范围',
 		                   				rowspan : 2,
@@ -59,9 +70,6 @@
 		                   				id : 'startDT',
 		                   				field : 'startDT',
 		                   				formatter : function(value, row, index) {
-		                   					if(value.indexOf('合计')>=0){
-		                   						return value;
-		                   					}
 		                   					var st = formatDate(row.startDT);
 		                   					var et = formatDate(row.endDT);
 		                   					return st + "--" + et;
@@ -164,6 +172,29 @@
 				field : 'id',
 				width : '30'
 			}, {
+				title : '序号',
+				field : 'index',
+				align : 'center',
+				width : '40',
+				rowspan:2,
+				formatter : function(val, row, index) {
+					if(isEmpty(val)){
+						return index + 1;
+					}else{
+						return val;
+					}
+				}
+			}, {
+				width : '90',
+				title : '报销人',
+				sortable : true,
+				align : 'center',
+				field : 'process1',
+				formatter : function(val,row,index){
+					var process = row.process_vo;
+					return isEmpty(process)?'':process.applyUserName;
+				}
+			}, {
 				width : '350',
 				title : '报销月份',
 				sortable : true,
@@ -222,15 +253,18 @@
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.month = "";
+		queryParams['process_vo.applyUserName'] = "";
 		queryParams.month = isEmpty($('#month').val())?'':$('#month').val();
-		//queryParams.createDT = isEmpty(createDT)?null:createDT;
+		if(!isEmpty(('#applyUserName'))){
+			queryParams['process_vo.applyUserName'] = isEmpty($('#applyUserName').val())?'':$('#applyUserName').val();
+		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
 
 	function clearFun() {
 		$('#month').val('');
-		//$('#createDT').val('');
+		$('#applyUserName').val('');
 	}
 
 	function addFun() {
@@ -569,6 +603,9 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/search')}">
 			<div id="searchbar" class="search-toolbar">
+				<c:if test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/handlerPage')}">
+					<span>报销人:</span><input type="text" id="applyUserName">
+				</c:if>
 				<span>月份:</span> <input type="text" id="month" class="Wdate" onfocus="showMonth()"> 
 				<a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"

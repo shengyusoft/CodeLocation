@@ -18,7 +18,6 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/bidBond/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
 			nowrap : true,
 			queryParams : {
@@ -55,7 +54,7 @@
 			                		}
 			                		return '';
 			                	}},
-				                {field:'outAccountFee',title:'转出金额',width:120},
+				                {field:'outAccountFee',title:'转出金额',width:120,formatter:Common.formatterDecimal2},
 				                {field:'outAccountDT',title:'转出时间',width:120,formatter:function(value){
 			                		if (!isEmpty(value)) {
 			                			var date = new Date(value);
@@ -93,6 +92,15 @@
 				field : 'id',
 				rowspan : 2,
 				width : '30'
+			}, {
+				title : '序号',
+				rowspan : 2,
+				field : 'index',
+				align : 'center',
+				width : '40',
+				formatter : function(value, row, index) {
+					return index + 1;
+				}
 			}, {
 				width : '140',
 				rowspan : 2,
@@ -207,15 +215,32 @@
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.idNumber = "";
 		queryParams.projectName = "";
+		queryParams.startDT = "";
+		queryParams.endDT = "";
+		queryParams['applierName'] = "";
 
 		var idNumber = $('#idNumber').val();
 		var projectName = $('#projectName').val();
+		var startDT = $('#startDT').val();
+		var endDT = $('#endDT').val();
+		var applierName = $('#applierName').val();
 
 		if (!isEmpty(idNumber)) {
 			queryParams.idNumber = idNumber;
 		}
 		if (!isEmpty(projectName)) {
 			queryParams.projectName = projectName;
+		}
+		if (!isEmpty(applierName)) {
+			queryParams['applierName'] = applierName;
+		}
+		if(!isEmpty(startDT)){
+			//startDT = '1900-01-01';
+			queryParams.startDT = startDT;
+		}
+		if(!isEmpty(endDT)){
+			//endDT = '5000-01-01';
+			queryParams.endDT = endDT;
 		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -224,6 +249,9 @@
 	function clearFun() {
 		$('#idNumber').val('');
 		$('#projectName').val('');
+		$('#startDT').val('');
+		$('#endDT').val('');
+		$('#applierName').val('');
 	}
 
 	function addFun() {
@@ -526,17 +554,31 @@
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 
-		<c:if
-			test="${fn:contains(sessionInfo.resourceList, '/bidBond/search')}">
-			<div id="searchbar" class="search-toolbar">
-				<span>退 号:</span> <input type="text" id="idNumber" /><span>项目名称:</span>
-				<input type="text" id="projectName" /> <a onclick="searchFun();"
-					href="javascript:void(0);" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-			</div>
+		<c:if test="${fn:contains(sessionInfo.resourceList, '/bidBond/search')}">
+			<table>
+				<tr>
+					<th>退 号:</th>
+					<td><input style="width:100px" type="text" id="idNumber"></td>
+					<th>项目名称:</th>
+					<td><input type="text" id="projectName"></td>
+					<th>申请人:</th>
+					<td><input style="width:100px" type="text" id="applierName"></td>
+					<th>时间范围:</th>
+					<td><input class="Wdate" data-options="required:true"
+						type="text" name="startDT" id="startDT"
+						style="width: 110px;"
+						onfocus="showStart('yyyy-MM-dd')" /> <input class="Wdate"
+						data-options="required:true" type="text" name="endDT" id="endDT"
+						style="width: 110px;" onfocus="showEnd('yyyy-MM-dd')" />
+					</td>
+					<td><a onclick="searchFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+						onclick="clearFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
+				</tr>
+			</table>
 		</c:if>
 	</div>
 </body>

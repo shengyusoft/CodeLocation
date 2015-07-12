@@ -111,12 +111,12 @@
 								<td colspan="3"><input name="payeeAccountNum"
 									value="${bidBond.payeeAccountNum}" type="text"
 									id="payeeAccountNum" style="width: 100%; height: 100%"
-									class="easyui-numberbox" readonly="readonly" /></td>
+									class="easyui-validatebox" readonly="readonly" /></td>
 							</tr>
 							<tr>
 								<th>附 言</th>
 								<td colspan="3"><textarea style="width: 100%" rows="2"
-										readonly="readonly" name="payeeComments" id="payeeComments">${bidBond.payeeAccountNum}</textarea></td>
+										readonly="readonly" name="payeeComments" id="payeeComments">${bidBond.payeeComments}</textarea></td>
 							</tr>
 							<tr>
 								<th>客户姓名&nbsp;<label

@@ -3,35 +3,54 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
+<script type="text/javascript"
+	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-statistics.js"
+	charset="utf-8"></script>
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
 		var projectAppRegId = '${projectAppropriateReg.id}';
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectAppropriateAccount/dataGrid',
-			striped : true,
-			rownumbers : true,
-			pagination : true,
 			queryParams:{
             	projectAppRegId : projectAppRegId
             },
+			striped : true,
+			pagination : true,
+			showFooter : true,
 			nowrap : true,
+			queryParams:{
+            	projectAppRegId : isEmpty(projectAppRegId)?0:projectAppRegId
+            },
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
-			pageSize : 5,
-			pageList : [ 10, 15 ],
+			pageSize : 10,
+			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [ {
 				checkbox : true,
 				rowspan : 2,
 				field : 'id',
 				width : '30',
 			}, {
-				title : '以下内容工程部经理填写',
-				colspan : 8,
+				title : '序号',
+				field : 'index',
+				align : 'center',
+				width : '40',
+				rowspan:2,
+				formatter : function(val, row, index) {
+					if(isEmpty(val)){
+						return index + 1;
+					}else{
+						return val;
+					}
+				}
+			}, {
+				title : '以下内容工程部经理填写（单位：元）',
+				colspan : 6,
 				align : 'center'
 			}, {
-				title : '以下内容财务部出纳填写',
+				title : '以下内容财务部出纳填写（单位：元）',
 				colspan : 4,
 				align : 'center'
 			}, {
@@ -41,19 +60,17 @@
 				align : 'center',
 				field : 'state',
 				formatter : function(value, row, index) {
+					if(isEmpty(value)){
+						return '';
+					}
 					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
 				}
-			}] , [ {
+			} ] , [ {
 				width : 150,
-				title : '业主本次拨付金额（元）',
+				title : '业主本次拨付金额',
 				align : 'center',
-				field : 'toAccountFee'
-			}, {
-				width : '120',
-				title : '业主本次拨付时间',
-				sortable : true,
-				align : 'center',
-				field : 'applyDT'
+				field : 'toAccountFee',
+				sum : true
 			}, {
 				width : '120',
 				title : '本次计划支付金额',
@@ -62,56 +79,56 @@
 				field : 'applyFee'
 			}, {
 				width : '90',
-				title : '到帐时间',
-				sortable : true,
-				align : 'center',
-				field : 'toAccountDT'
-			},{
-				width : '90',
 				title : '收款人',
-				
+				rowspan : 2,
 				align : 'center',
 				field : 'payee'
 			}, {
 				width : '90',
 				title : '开户行',
-				
+				rowspan : 2,
 				align : 'center',
 				field : 'bank'
 			}, {
 				width : '90',
 				title : '帐号',
-				
+				rowspan : 2,
 				align : 'center',
 				field : 'accountNum'
-			} , {
+			},{
 				width : '90',
-				title : '备注1',
+				title : '工程部备注',
 				align : 'center',
 				field : 'remark1'
 			}, {
 				width : '120',
-				title : '实际到帐金额（元）',
+				title : '实际到帐金额',
 				sortable : true,
 				align : 'center',
-				field : 'actualFee'
+				field : 'actualFee',
+				sum : true
 			}, {
 				width : '90',
 				title : '实际到帐时间',
 				align : 'center',
-				field : 'actualDT'
+				field : 'actualDT',
+				formatter:Common.formatter
 			}, {
 				width : 150,
-				title : '本次实际支付金额（元）',
+				title : '本次实际支付金额',
 				sortable : true,
 				align : 'center',
-				field : 'actualPayFee'
+				field : 'actualPayFee',
+				sum : true
 			}, {
 				width : '90',
-				title : '备注',
+				title : '财务部备注',
 				align : 'center',
 				field : 'remark2'
 			} ] ],
+			onLoadSuccess:function(){ 
+	            $('#dataGrid').datagrid('statistics');
+	        },
 			toolbar : '#toolbar'
 		});
 	});
@@ -218,7 +235,7 @@
 		</form>
 	</div>
 	<span style="font-size: 14px; color: blue">工程款到帐及拨付情况表</span>
-	<div data-options="fit:true,border:false" style="overflow: auto;height: 180px">
+	<div data-options="fit:true,border:false" style="overflow: auto;height: 250px">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 </div>

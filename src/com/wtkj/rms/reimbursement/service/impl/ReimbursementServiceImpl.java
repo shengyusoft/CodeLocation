@@ -106,38 +106,38 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 	private String whereHql(User user, ReimbursementVo r,
 			Map<String, Object> params) {
 		String hql = "";
-		if (r != null) {
-			hql += " where 1=1 ";
-			ProcessVo process = r.getProcess_vo();
+		if (r.getType() == 0) {
+			hql = getWhereHql(user, r, params);
+		} else {
+			hql = getBatchWhereHql(user, r, params);
+		}
+		return hql;
+	}
 
-			if (r.getBatchId() != null) {
-				hql += " and t.batch.id = :batchId";
-				params.put("batchId", r.getBatchId());
-			}
-			
-			if (r.getType() >= 0) {
-				hql += " and t.type = :type";
-				params.put("type", r.getType());
-			}
-			
+	private String getWhereHql(User user, ReimbursementVo r,
+			Map<String, Object> params) {
+		String hql = " where t.type=0 ";
+		if (r != null) {
+			ProcessVo process = r.getProcess_vo();
 			if (user != null) {
 				// 申请人查看自己申请的
-				if (user.getRoleNames().indexOf("普通员工") >= 0) {
-					hql += " and t.process.applyUser.id = :userId";
-					params.put("userId", user.getId());
-				} else if (user.getRoleNames().indexOf("会计") >= 0) {
+				if (user.getRoleNames().indexOf("会计") >= 0) {
 					// 如果申请人是别人则审批人查看已到到达自己的任务,如果是自己则显示申请人是自己的
-					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
+					hql += " and (t.process.state = :state or t.process.applyUser.id = :userId)";
 					params.put("state", 1);
 					params.put("userId", user.getId());
 				} else if (user.getRoleNames().indexOf("总经理") >= 0) {
-					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
-					params.put("userId", user.getId());
+					hql += " and (t.process.state = :state or t.process.applyUser.id = :userId)";
 					params.put("state", 2);
-				} else if (user.getRoleNames().indexOf("出纳") >= 0) {
-					hql += " and t.process.state = :state or (t.process.applyUser.id = :userId)";
 					params.put("userId", user.getId());
+				} else if (user.getRoleNames().indexOf("出纳") >= 0) {
+					hql += " and (t.process.state = :state or t.process.applyUser.id = :userId)";
 					params.put("state", 3);
+					params.put("userId", user.getId());
+				} else {
+					// 其他的都视为普通员工
+					hql += " and t.process.applyUser.id = :userId";
+					params.put("userId", user.getId());
 				}
 			}
 
@@ -176,6 +176,19 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 			} else if (r.getStartDT() == null && r.getEndDT() != null) {
 				hql += " and t.endDT <= :endDT";
 				params.put("endDT", r.getEndDT());
+			}
+		}
+
+		return hql;
+	}
+
+	private String getBatchWhereHql(User user, ReimbursementVo r,
+			Map<String, Object> params) {
+		String hql = " where t.type = 1 ";
+		if (r != null) {
+			if (r.getBatchId() != null) {
+				hql += " and t.batch.id = :batchId";
+				params.put("batchId", r.getBatchId());
 			}
 		}
 

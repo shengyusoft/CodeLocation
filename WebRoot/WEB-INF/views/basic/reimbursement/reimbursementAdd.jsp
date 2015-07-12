@@ -19,7 +19,11 @@
 				if (result.success) {
 					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
 					if(parent.$.modalDialogTwo.openner_dataGrid){
-						parent.$.modalDialogTwo.openner_dataGrid.datagrid('reload');
+						var dataGrid = parent.$.modalDialogTwo.openner_dataGrid;
+						var batchId = parent.$.modalDialogTwo.handler.find('#batchId').val();
+						var queryParams = dataGrid.datagrid('options').queryParams;
+						queryParams.batchId = batchId;
+						dataGrid.datagrid('reload');
 						parent.$.modalDialogTwo.handler.dialog('close');
 					}else if(parent.$.modalDialog.openner_dataGrid){
 						parent.$.modalDialog.openner_dataGrid.datagrid('reload');

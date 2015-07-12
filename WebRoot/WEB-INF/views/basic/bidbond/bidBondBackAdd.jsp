@@ -94,7 +94,7 @@
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 								<td colspan="3"><input name="payeeAccountNum" type="text"
 									id="payeeAccountNum" style="width: 100%; height: 100%"
-									class="easyui-numberbox" data-options="required:true" /></td>
+									class="easyui-validatebox" data-options="required:true" /></td>
 							</tr>
 							<tr>
 								<th>附 言</th>

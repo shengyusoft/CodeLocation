@@ -47,16 +47,16 @@ $.extend($.fn.datagrid.methods, {
 			var obj = eval('(' + tmp + ')');
 			if(obj[opt[0].field] == undefined){
 				if(opt[0].field == 'id'){
-					footer['sum'] += '"' + opt[1].field + '":"<b>当页合计:</b>"';
+					footer['sum'] += '"' + opt[1].field + '":"<b>合计:</b>"';
 				}else{
-					footer['sum'] += '"' + opt[0].field + '":"<b>当页合计:</b>"';
+					footer['sum'] += '"' + opt[0].field + '":"<b>合计:</b>"';
 				}
 				obj = eval('({' + footer['sum'] + '})');
 			}else{
 				if(opt[0].field == 'id'){
-					obj[opt[1].field] = "<b>当页合计:</b>" + obj[opt[0].field];
+					obj[opt[1].field] = "<b>合计:</b>" + obj[opt[0].field];
 				}else{
-					obj[opt[0].field] = "<b>当页合计:</b>" + obj[opt[0].field];
+					obj[opt[0].field] = "<b>合计:</b>" + obj[opt[0].field];
 				}
 				
 			}
@@ -112,7 +112,9 @@ $.extend($.fn.datagrid.methods, {
 		function sum(filed){
 			var sumNum = 0;
 			for(var i=0;i<rows.length;i++){
-				sumNum += Number(rows[i][filed]);
+				if(!isEmpty(rows[i][filed])){
+					sumNum += Number(rows[i][filed]);
+				}
 			}
 			return '"' + filed + '":"' + sumNum.toFixed(2) +'"';
 		};

@@ -16,218 +16,247 @@
 	var dataGrid;
 	$(function() {
 		init();
-		dataGrid = $('#dataGrid').datagrid({
-			url : '${ctx}' + '/projectBid/dataGrid',
-			striped : true,
-			rownumbers : true,
-			pagination : true,
-			//fitColumns : true,
-			nowrap : false,
-			idField : 'id',
-			sortName : 'id',
-			sortOrder : 'desc',
-			pageSize : 10,
-			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
-			columns : [ [ {
-				checkbox : true,
-				field : 'id',
-				width : '30',
-			}, {
-				width : '120',
-				title : '公司名称',
-				align : 'center',
-				field : 'company',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text ;
-				}
-			}, {
-				width : '120',
-				title : '项目名称',
-				sortable : true,
-				align : 'center',
-				field : 'projectName'
-			}, {
-				width : '120',
-				title : '省',
-				sortable : true,
-				align : 'center',
-				field : 'provice',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '120',
-				title : '市',
-				sortable : true,
-				align : 'center',
-				field : 'city',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '120',
-				title : '县',
-				sortable : true,
-				align : 'center',
-				field : 'county',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '120',
-				title : '标段',
-				align : 'center',
-				field : 'bdNames'
-			}, {
-				width : '120',
-				title : '项目经理',
-				sortable : true,
-				align : 'center',
-				field : 'projectMgr',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '120',
-				title : '技术负责人',
-				sortable : true,
-				align : 'center',
-				field : 'techniqueMgr',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '140',
-				title : '工期结束时间',
-				align : 'center',
-				field : 'duration',
-				formatter : Common.formatter
-			}, {
-				width : '140',
-				title : '中标价（元）',
-				align : 'center',
-				field : 'bid_cost'
-			}, {
-				width : '140',
-				title : '管理费比例（%）',
-				align : 'center',
-				field : 'manageFeeRate'
-			}, {
-				width : '140',
-				title : '管理费（元）',
-				align : 'center',
-				field : 'manageFee'
-			}, {
-				width : '120',
-				title : '施工负责人',
-				sortable : true,
-				align : 'center',
-				field : 'headman'
-			}, {
-				width : '120',
-				title : '联系电话',
-				sortable : true,
-				align : 'center',
-				field : 'tel'
-			}, {
-				width : '120',
-				title : '登记人',
-				sortable : true,
-				align : 'center',
-				field : 'recordman'
-			} ] ],
-			toolbar : '#toolbar'
-		});
+		dataGrid = $('#dataGrid')
+				.datagrid(
+						{
+							url : '${ctx}' + '/projectBid/dataGrid',
+							striped : true,
+							pagination : true,
+							nowrap : true,
+							idField : 'id',
+							sortName : 'id',
+							sortOrder : 'desc',
+							pageSize : 10,
+							pageList : [ 10, 20, 30, 40, 50, 100, 200, 300,
+									400, 500 ],
+							columns : [ [
+									{
+										checkbox : true,
+										field : 'id',
+										width : '30',
+									},
+									{
+										title : '序号',
+										field : 'index',
+										align : 'center',
+										width : '40',
+										formatter : function(value, row, index) {
+											return index + 1;
+										}
+									},
+									{
+										width : '90',
+										title : '公司名称',
+										align : 'center',
+										field : 'company',
+										formatter : function(value, row, index) {
+											return isEmpty(value) ? ''
+													: value.text;
+										}
+									},
+									{
+										width : '120',
+										title : '项目名称',
+										sortable : true,
+										align : 'center',
+										field : 'projectName'
+									},
+									{
+										width : '120',
+										title : '项目地点',
+										sortable : true,
+										align : 'center',
+										field : 'county',
+										formatter : function(value, row, index) {
+											var place = '';
+											if (!isEmpty(row.county)
+													&& !isEmpty(row.county.description)) {
+												place = row.county.description;
+											} else {
+												place = row.provice + row.city
+														+ row.county;
+											}
+											return place;
+										}
+									},
+									{
+										width : '120',
+										title : '标段',
+										align : 'center',
+										field : 'bdNames'
+									},
+									{
+										width : '80',
+										title : '项目经理',
+										sortable : true,
+										align : 'center',
+										field : 'projectMgr',
+										formatter : function(value, row, index) {
+											return isEmpty(value) ? ''
+													: value.text;
+										}
+									},
+									{
+										width : '90',
+										title : '技术负责人',
+										sortable : true,
+										align : 'center',
+										field : 'techniqueMgr',
+										formatter : function(value, row, index) {
+											return isEmpty(value) ? ''
+													: value.text;
+										}
+									}, {
+										width : '95',
+										title : '工期结束时间',
+										align : 'center',
+										field : 'duration',
+										formatter : Common.formatter
+									}, {
+										width : '85',
+										title : '中标时间',
+										align : 'center',
+										field : 'bidDt',
+										formatter : Common.formatter
+									}, {
+										width : '90',
+										title : '中标价（元）',
+										align : 'center',
+										field : 'bid_cost'
+									}, {
+										width : '105',
+										title : '管理费比例（%）',
+										align : 'center',
+										field : 'manageFeeRate'
+									}, {
+										width : '90',
+										title : '管理费（元）',
+										align : 'center',
+										field : 'manageFee'
+									}, {
+										width : '90',
+										title : '施工负责人',
+										sortable : true,
+										align : 'center',
+										field : 'headman'
+									}, {
+										width : '95',
+										title : '联系电话',
+										sortable : true,
+										align : 'center',
+										field : 'tel'
+									}, {
+										width : '80',
+										title : '登记人',
+										sortable : true,
+										align : 'center',
+										field : 'recordman'
+									} ] ],
+							toolbar : '#toolbar'
+						});
 
 	});
-	
+
 	//必要的初始化
-	function init(){
-		$('#provice').combobox({
-			url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs="+2,
-			parentField : 'pid',
-			valueField : 'id',
-			textField : 'text',
-			panelHeight : 300,
-			editable:false,//不可编辑，只能选择
-			onChange:function(provice){
-		    	$('#city').combobox({
-		    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
-			    valueField:'id', //值字段
-			    textField:'text', //显示的字段
-			    panelHeight : 300,
-			    editable:false,//不可编辑，只能选择
-			    onChange:function(city,n){
-			    	$('#county').combobox({
-				    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
-					    valueField:'id', //值字段
-					    textField:'text', //显示的字段
-					    panelHeight : 300,
-					    editable:false//不可编辑，只能选择
-					});
-		 		}
-		    });
-		   }
-		});
-		
+	function init() {
+		$('#provice')
+				.combobox(
+						{
+							url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs=" + 2,
+							parentField : 'pid',
+							valueField : 'id',
+							textField : 'text',
+							panelHeight : 300,
+							editable : false,//不可编辑，只能选择
+							onChange : function(provice) {
+								$('#city')
+										.combobox(
+												{
+													url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
+															+ provice
+															+ "&&lvs=3",
+													valueField : 'id', //值字段
+													textField : 'text', //显示的字段
+													panelHeight : 300,
+													editable : false,//不可编辑，只能选择
+													onChange : function(city, n) {
+														$('#county')
+																.combobox(
+																		{
+																			url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
+																					+ city
+																					+ "&&lvs=4",
+																			valueField : 'id', //值字段
+																			textField : 'text', //显示的字段
+																			panelHeight : 300,
+																			editable : false
+																		//不可编辑，只能选择
+																		});
+													}
+												});
+							}
+						});
+
 		$('#city').combobox({
-	    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
-		    valueField:'id', //值字段
-		    textField:'text', //显示的字段
-		    panelHeight : 300,
-		    editable:false//不可编辑，只能选择
+			//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
+			valueField : 'id', //值字段
+			textField : 'text', //显示的字段
+			panelHeight : 300,
+			editable : false
+		//不可编辑，只能选择
 		});
-		
+
 		$('#county').combobox({
-	    	//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
-		    valueField:'id', //值字段
-		    textField:'text', //显示的字段
-		    panelHeight:'auto',
-		    editable:false//不可编辑，只能选择
+			//url : "${pageContext.request.contextPath}/dictionary/xzqhCombox",
+			valueField : 'id', //值字段
+			textField : 'text', //显示的字段
+			panelHeight : 'auto',
+			editable : false
+		//不可编辑，只能选择
 		});
 	}
-	
+
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
-		queryParams.recordman = "";
+		queryParams.companyName = "";
 		queryParams.st = "";
 		queryParams.et = "";
 		queryParams['provice.id'] = -1;
 		queryParams['city.id'] = -1;
 		queryParams['county.id'] = -1;
-		
+
 		var projectName = $('#projectName').val();
-		var recordman = $('#recordman').val();
+		var companyName = $('#companyName').val();
 		var st = $('#st').val();
 		var et = $('#et').val();
 		var provice = $('#provice').combobox('getValue');
 		var city = $('#city').combobox('getValue');
 		var county = $('#county').combobox('getValue');
-		
-		queryParams.projectName = isEmpty(projectName)?"":projectName;
-		queryParams.recordman = isEmpty(recordman)?"":recordman;
-		queryParams.durationSt = isEmpty(st)?"":st;
-		queryParams.durationEt = isEmpty(et)?"":et;
-		
-		queryParams['provice.id'] = isEmpty(provice)?-1:provice;
-		queryParams['city.id'] = isEmpty(city)?-1:city;
-		queryParams['county.id'] = isEmpty(county)?-1:county;
-		
+
+		queryParams.projectName = isEmpty(projectName) ? "" : projectName;
+		queryParams['company.text'] = isEmpty(companyName) ? "" : companyName;
+		queryParams.durationSt = isEmpty(st) ? "" : st;
+		queryParams.durationEt = isEmpty(et) ? "" : et;
+
+		queryParams['provice.id'] = isEmpty(provice) ? -1 : provice;
+		queryParams['city.id'] = isEmpty(city) ? -1 : city;
+		queryParams['county.id'] = isEmpty(county) ? -1 : county;
+
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
 
 	function clearFun() {
 		$('#projectName').val('');
-		$('#recordman').val('');
+		$('#companyName').val('');
 		$('#st').val('');
 		$('#et').val('');
 		$('#provice').combobox('clear');
 		$('#city').combobox('clear');
 		$('#county').combobox('clear');
 	}
-	
+
 	function addFun() {
 		parent.$.modalDialog({
 			title : '项目中标登记',
@@ -243,7 +272,7 @@
 					f.submit();
 				}
 			} ]
-		}); 
+		});
 	}
 
 	function deleteFun() {
@@ -263,13 +292,13 @@
 						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
 						removeSelectedRow(dataGrid);
 						dataGrid.datagrid('reload');
-					}else{
+					} else {
 						parent.$.messager.alert('警告', result.msg, 'warning');
 					}
 					progressClose();
 				}, 'JSON');
 			}
-		}); 
+		});
 	}
 
 	function editFun() {
@@ -284,7 +313,7 @@
 			parent.$.messager.alert('警告', '只能对一条记录编辑!');
 			return;
 		}
-		
+
 		id = rows[0].id;
 
 		parent.$.modalDialog({
@@ -301,11 +330,11 @@
 					f.submit();
 				}
 			} ]
-		}); 
+		});
 	}
 
 	function detailFun() {
-	 	var id = null;
+		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
 			parent.$.messager.alert('警告', '没有可查看对象!');
@@ -331,7 +360,7 @@
 					parent.$.modalDialog.handler.dialog('close');
 				}
 			} ]
-		}); 
+		});
 	}
 </script>
 </head>
@@ -395,38 +424,36 @@
 			</c:otherwise>
 		</c:choose>
 
+		<a onclick="searchFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
+		<a onclick="clearFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
+
 		<c:if test="${fn:contains(sessionInfo.resourceList, '/projectBid/search')}">
 			<table>
 				<tr>
 					<th>项目名称:</th>
-					<td><input type="text" id="projectName"> </td>
-					<th>登记人:</th>
-					<td><input type="text" id="recordman"> </td>
-					<th>工期结束时间:</th>
-					<td>
-						<input class="Wdate" type="text" name="st" id="st"
-						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - 
-						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
-						onfocus="showDate('yyyy-MM-dd')" /> 
-					</td>
-					<td rowspan="2">
-						<a onclick="searchFun();" href="javascript:void(0);" class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
-					
-						<a onclick="clearFun();" href="javascript:void(0);"class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-					</td>
+					<td><input type="text" id="projectName"></td>
+					<th>中标时间:</th>
+					<td><input class="Wdate" type="text" name="st" id="st"
+						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - <input
+						class="Wdate" type="text" name="et" id="et" style="height: 100%"
+						onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
-					<th>地点</th>
-					<td colspan="5">
-						省：<select id="provice" data-options="editable:false" name="provice.id" class="easyui-validatebox span2" style="width: 140px;">
-					</select>
-					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						市：<select id="city" name="city.id" class="easyui-validatebox span2" style="width: 140px;">
-					</select>
-					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						县(区)：<select id="county" name="county.id" data-options="editable:false" class="easyui-validatebox span2" style="width: 140px;">
+					<th>公司名称:</th>
+					<td><input type="text" id="companyName"></td>
+					<th>地点:</th>
+					<td>省<select id="provice" data-options="editable:false"
+						name="provice.id" class="easyui-validatebox span2"
+						style="width: 120px;">
+					</select> 市<select id="city" name="city.id" class="easyui-validatebox span2"
+						style="width: 120px;">
+					</select> 县(区)<select id="county" name="county.id"
+						data-options="editable:false" class="easyui-validatebox span2"
+						style="width: 120px;">
 					</select>
 					</td>
 				</tr>

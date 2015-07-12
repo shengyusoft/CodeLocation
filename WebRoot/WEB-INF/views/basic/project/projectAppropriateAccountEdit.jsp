@@ -55,25 +55,12 @@
 						style="width: 100%; height: 100%" type="text" precision="2"
 						id="toAccountFee" class="easyui-numberbox"
 						data-options="required:true" /></td>
-					<th>到帐时间 &nbsp;</th>
-					<td><input class="Wdate" type="text" name="toAccountDT"
-						value="${projectAppropriateAccount.toAccountDT}" id="toAccountDT"
-						style="width: 98%; height: 100%;" data-options="required:true"
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
-				</tr>
-				<tr>
-					<th>本次计划支付金额 &nbsp;<label
+					<th>本次计划支付金额（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="easyui-numberbox" type="text" precision="2"
 						name="applyFee" value="${projectAppropriateAccount.applyFee}"
 						id="applyFee" style="width: 98%; height: 100%;"
 						data-options="required:true" /></td>
-					<th>业主本次拨付时间 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="applyDT"
-						value="${projectAppropriateAccount.applyDT}" id="applyDT"
-						style="width: 98%; height: 100%;" data-options="required:true"
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
 				</tr>
 				<tr>
 					<th>收款人 &nbsp;</th>

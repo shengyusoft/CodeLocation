@@ -18,9 +18,7 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectBookRegist/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
-			fitColumns : true,
 			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
@@ -31,6 +29,14 @@
 				checkbox : true,
 				field : 'id',
 				width : '30',
+			},{
+				title : '序号',
+				field : 'index',
+				align : 'center',
+				width : '40',
+				formatter : function(value, row, index) {
+					return index+1;
+				}
 			}, {
 				width : '160',
 				title : '项目名称',
@@ -78,7 +84,7 @@
 				sortable : true,
 				align : 'center',
 				field : 'registDT',
-				formatter : Common.formatterTime
+				formatter : Common.formatter
 			}, {
 				width : '120',
 				title : '备注',
@@ -293,10 +299,10 @@
 
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/search')}">
-			<table>
+			<table style="width:900px;overflow: scroll;">
 				<tr>
-					<th>项目名称:</th>
-					<td><input type="text" id="projectName"></td>
+					<!-- <th>项目名称:</th>
+					<td><input type="text" id="projectName"></td> -->
 					<th>投标人:</th>
 					<td><input type="text" id="bidder"></td>
 					<th>登记人:</th>
@@ -304,9 +310,9 @@
 					<th>登记时间段:</th>
 					<td>
 						<input class="Wdate" type="text" name="st" id="st"
-						style="height: 100%" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> - 
+						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - 
 						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /> 
+						onfocus="showDate('yyyy-MM-dd')" /> 
 					</td>
 					<td rowspan="2"><a onclick="searchFun();" href="javascript:void(0);"
 						class="easyui-linkbutton"

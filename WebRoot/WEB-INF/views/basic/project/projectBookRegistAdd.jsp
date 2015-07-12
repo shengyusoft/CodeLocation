@@ -26,14 +26,16 @@
 			}
 		});
 	});
-	
-	$('#company').combobox({
-		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
-		parentField : 'dictionaryId',
-		valueField : 'id',
-		textField : 'text',
-		panelHeight : 'auto'				
-	});
+
+	$('#company')
+			.combobox(
+					{
+						url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
+						parentField : 'dictionaryId',
+						valueField : 'id',
+						textField : 'text',
+						panelHeight : 'auto'
+					});
 
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
@@ -45,7 +47,8 @@
 	});
 
 	var d = new Date();
-	d = d.format('yyyy-MM-dd hh:mm:ss');
+	d = d.format('yyyy-MM-dd');
+	debugger;
 	$('#registDT').val(d);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -60,15 +63,17 @@
 						id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 					<th>预订费用（元）&nbsp;</th>
-					<td><input name="bookFee" type="text" class="easyui-numberbox" precision="2" min="0" id="bookFee"
-						style="width: 100%; height: 100%"/></td>
+					<td><input name="bookFee" type="text" class="easyui-numberbox"
+						precision="2" min="0" id="bookFee"
+						style="width: 100%; height: 100%" /></td>
 
 				</tr>
 				<tr>
 					<th>公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="company" name="companyId" 
-						class="easyui-validatebox span2" data-options="editable:false,required:true" style="width: 180px;">
+					<td><select id="company" name="companyId"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
 					</select></td>
 				</tr>
 				<tr>
@@ -84,22 +89,22 @@
 						class="easyui-validatebox span2" /></td>
 				</tr>
 				<tr>
+					<th>资质要求&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td colspan="3"><select id="qualifyRequirement"
+						name="qualifyRequirement" class="easyui-validatebox span2"
+						style="width: 550px;" data-options="editable:false,required:true"></select></td>
+				</tr>
+				<tr>
 					<th>登记人&nbsp;</th>
-					<td><input name="bidder" value="${sessionInfo.name}"
+					<td><input name="register" value="${sessionInfo.name}"
 						type="text" disabled id="registerName"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						readonly="readonly" /></td>
 					<th>登记时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="registDT"
 						id="registDT" style="width: 100%; height: 100%" disabled
-						onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
-				</tr>
-				<tr>
-					<th>资质要求&nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><select id="qualifyRequirement" name="qualifyRequirement"
-						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="editable:false,required:true"></select></td>
+						onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>

@@ -11,6 +11,9 @@
 <script type="text/javascript"
 	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-detailview.js"
 	charset="utf-8"></script>
+<script type="text/javascript"
+	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-statistics.js"
+	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
 <title>工程款拨付登记管理</title>
 <script type="text/javascript">
@@ -19,7 +22,6 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectAppropriateReg/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
 			nowrap : true,
 			idField : 'id',
@@ -38,30 +40,43 @@
 		            },
 		            striped : true,
 		            singleSelect:true, 
-		            rownumbers:true, 
 		            loadMsg:'', 
 		            height:'auto', 
+		            showFooter : true,
 		            columns:[[ 
-		                {field:'toAccountFee',title:'到帐金额（元）',width:100}, 
-		                {field:'toAccountDT',title:'到帐时间',width:150}, 
-		                {field:'applyFee',title:'申请拨付金额',width:120},
-		                {field:'applyDT',title:'申请拨付时间',width:100},
-		                {field:'actualFee',title:'实际拨付金额（元）',width:150},
-		                {field:'actualDT',title:'实际拨付时间',width:100},
-		                {field:'payee',title:'收款人',width:100},
+						{title : '序号',field : 'index',align : 'center',width : '60',
+							formatter : function(val, row, index) {
+								if(isEmpty(val)){
+									return index + 1;
+								}else{
+									return val;
+								}
+							}
+						},
+		                {field:'toAccountFee',title:'到帐金额（元）',width:100,align:'center',sum : true,}, 
+		                {field:'toAccountDT',title:'到帐时间',width:150,align:'center'}, 
+		                {field:'applyFee',title:'申请拨付金额',width:120,align:'center',sum : true,},
+		                {field:'applyDT',title:'申请拨付时间',width:100,align:'center'},
+		                {field:'actualFee',title:'实际拨付金额（元）',width:150,align:'center',sum : true,},
+		                {field:'actualDT',title:'实际拨付时间',width:100,align:'center'},
+		                {field:'payee',title:'收款人',width:100,align:'center'},
 		                {
 		    				width : '120',
 		    				title : '状态',
 		    				align : 'center',
 		    				field : 'state',
 		    				formatter : function(value, row, index) {
+		    					debugger;
+		    					if(isEmpty(value)){
+		    						return '';
+		    					}
 		    					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
 		    				}
 		    			},
-		                {field:'bank',title:'开户行',width:120},
-		                {field:'accountNum',title:'帐号',width:150},
-		                {field:'remark1',title:'备注1',width:200},
-		                {field:'remark2',title:'备注2',width:200},
+		                {field:'bank',title:'开户行',width:120,align:'center'},
+		                {field:'accountNum',title:'帐号',width:150,align:'center'},
+		                {field:'remark1',title:'备注1',width:200,align:'center'},
+		                {field:'remark2',title:'备注2',width:200,align:'center'},
 		                {field : 'id',hidden:true},
 		                {field : 'projectAppRegName',hidden:true},
 		                {field : 'projectAppRegId',hidden:true},
@@ -74,6 +89,7 @@
 		                setTimeout(function(){ 
 		                    $('#dataGrid').datagrid('fixDetailRowHeight',index); 
 		                },0); 
+		                $('#ddv-'+index).datagrid('statistics');
 		            } 
 		        }); 
 		        $('#dataGrid').datagrid('fixDetailRowHeight',index); 
@@ -84,6 +100,15 @@
 				field : 'id',
 				rowspan : 2,
 				width : '30',
+			}, {
+				title : '序号',
+				rowspan : 2,
+				field : 'index',
+				align : 'center',
+				width : '40',
+				formatter : function(value, row, index) {
+					return index + 1;
+				}
 			}, {
 				width : '120',
 				title : '项目名称',
@@ -112,18 +137,34 @@
 				align : 'center',
 				field : 'managerFee'
 			}, {
-				width : '120',
+				width : '100',
 				title : '中标日期',
 				rowspan : 2,
 				sortable : true,
 				align : 'center',
-				field : 'bidDT'
+				field : 'bidDT',
+				formatter : Common.formatter
 			}, {
 				width : '90',
 				title : '合同工期(天)',
 				rowspan : 2,
 				align : 'center',
 				field : 'contractDuration'
+			}, {
+				width : '90',
+				title : '状态',
+				rowspan : 2,
+				align : 'center',
+				field : 'state',
+				formatter : function(value, row, index) {
+					if(value == '-1' || value == -1){
+						return '未申请拨款';
+					}else if(value == 0){
+						return '<font color="red">待拨款</font>';
+					}else{
+						return '<font color="green">已拨付</font>';
+					}
+				}
 			}, {
 				title : '联系人信息',
 				colspan : 3,
@@ -156,7 +197,7 @@
 				align : 'center',
 				field : 'contactIdCard'
 			},{
-				width : '100',
+				width : '90',
 				title : '户名',
 				sortable : true,
 				align : 'center',
@@ -239,13 +280,18 @@
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
 		queryParams.payee = "";
+		queryParams.contactName = "";
 		var projectName = $('#projectName').val();
 		var payee = $('#payee').val();
+		var contactName = $('#contactName').val();
 		if (!isEmpty(projectName)) {
 			queryParams.projectName = projectName;
 		}
 		if (!isEmpty(payee)) {
 			queryParams.payee = payee;
+		}
+		if (!isEmpty(contactName)) {
+			queryParams.contactName = contactName;
 		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -254,14 +300,15 @@
 	function clearFun() {
 		$('#projectName').val('');
 		$('#payee').val('');
-		//$('#stationId').combobox('clear');
+		$('#contactName').val('');
+		$('#state').combobox('clear');
 	}
 
 	function addFun() {
 		parent.$.modalDialog({
 			title : '工程款拨付登记',
 			width : document.body.clientWidth*0.9,
-			height : 550,
+			height : 600,
 			//height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/addPage',
 			buttons : [ {
@@ -325,7 +372,7 @@
 		parent.$.modalDialog({
 			title : '工程款拨付处理',
 			width : document.body.clientWidth*0.9,
-			height : 550,
+			height : 600,
 			//height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/handlerPage?id=' + id,
 			buttons : [ {
@@ -357,7 +404,7 @@
 			title : '工程款拨付修改',
 			width : document.body.clientWidth*0.9,
 			//height : document.body.clientHeight*0.9,
-			height : 550,
+			height : 600,
 			href : '${ctx}/projectAppropriateReg/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -396,7 +443,7 @@
 		parent.$.modalDialog({
 			title : '工程款拨付详情',
 			width : document.body.clientWidth*0.9,
-			height : 550,
+			height : 600,
 			//height : document.body.clientHeight*0.9,
 			href : '${ctx}/projectAppropriateReg/detailPage?id=' + id,
 			buttons : [ {
@@ -519,20 +566,24 @@
 			onclick="printFun(1);" href="javascript:void(0);"
 			class="easyui-linkbutton"
 			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
-
-		<c:if
-			test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/search')}">
-			<div id="searchbar" class="search-toolbar">
-				<span>项目名称:</span> <input type="text" id="projectName"> 
-				<span>户名:</span> <input type="text" id="payee"><a
-					onclick="searchFun();" href="javascript:void(0);"
+		<table>
+			<tr>
+				<th>项目名称:</th>
+				<td><input style="width:150px" type="text" id="projectName"></td>
+				<th>收款人:</th>
+				<td><input style="width:100px" type="text" id="payee"></td>
+				<th>联系人:</th>
+				<td><input style="width:100px" type="text" id="contactName"></td>
+				<td>
+					<a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
+					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
+					<a onclick="clearFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-			</div>
-		</c:if>
+				</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

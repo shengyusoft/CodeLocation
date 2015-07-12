@@ -168,27 +168,22 @@
 		var name = $('#place').val();
 		var startDT = $('#startDT').val();
 		var endDT = $('#endDT').val();
+		var applyUserName = $('#applyUserName').val();
+		
 		if (!isEmpty(name)) {
 			queryParams.place = name;
 		}
-		
-		var applyUserName = $('#applyUserName').val();
 		if (!isEmpty(applyUserName)) {
 			queryParams['process_vo.applyUserName'] = applyUserName;
 		}
 		
 		if(!isEmpty(startDT)){
-			//startDT = '1900-01-01';
 			queryParams.startDT = startDT;
 		}
 		
 		if(!isEmpty(endDT)){
-			//endDT = '5000-01-01';
 			queryParams.endDT = endDT;
 		}
-		//queryParams.startDT = startDT;
-		//queryParams.endDT = endDT;
-		
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
@@ -571,6 +566,7 @@
 					<td><input type="text" id="place"></td>
 					<th>申请人:</th>
 					<td><input type="text" id="applyUserName"></td>
+					<th>时间范围:</th>
 					<td><input class="Wdate" data-options="required:true"
 						type="text" name="startDT" id="startDT"
 						style="width: 150px;"
@@ -578,7 +574,6 @@
 						data-options="required:true" type="text" name="endDT" id="endDT"
 						style="width: 150px;" onfocus="showEnd('yyyy-MM-dd')" />
 					</td>
-					<th>时间范围:</th>
 					<td><a onclick="searchFun();" href="javascript:void(0);"
 						class="easyui-linkbutton"
 						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a

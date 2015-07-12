@@ -18,14 +18,13 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/bidBond/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
-			nowrap : false,
+			nowrap : true,
 			queryParams : {
 				type : 0
 			},
 			idField : 'id',
-			sortName : 'projectName,applyDT',
+			sortName : 'applyDT',
 			sortOrder : 'desc',
 			view: detailview,   
 		    detailFormatter:function(index,row){   
@@ -51,7 +50,7 @@
 	                		}
 	                		return '';
 	                	}},
-		                {field:'outAccountFee',title:'转出金额',width:120},
+		                {field:'outAccountFee',title:'转出金额',width:120,formatter:Common.formatterDecimal2},
 		                {field:'outAccountDT',title:'转出时间',width:120,formatter:function(value){
 	                		if (!isEmpty(value)) {
 	                			var date = new Date(value);
@@ -89,6 +88,15 @@
 				field : 'id',
 				rowspan : 2,
 				width : '30'
+			}, {
+				title : '序号',
+				field : 'index',
+				align : 'center',
+				rowspan : 2,
+				width : '40',
+				formatter : function(value, row, index) {
+					return index + 1;
+				}
 			}, {
 				width : '140',
 				rowspan : 2,
@@ -204,9 +212,15 @@
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.idNumber = "";
 		queryParams.projectName = "";
+		queryParams.startDT = "";
+		queryParams.endDT = "";
+		queryParams['applierName'] = "";
 
 		var idNumber = $('#idNumber').val();
 		var projectName = $('#projectName').val();
+		var startDT = $('#startDT').val();
+		var endDT = $('#endDT').val();
+		var applierName = $('#applierName').val();
 
 		if (!isEmpty(idNumber)) {
 			queryParams.idNumber = idNumber;
@@ -214,11 +228,28 @@
 		if (!isEmpty(projectName)) {
 			queryParams.projectName = projectName;
 		}
+		if (!isEmpty(applierName)) {
+			queryParams['applierName'] = applierName;
+		}
+		if(!isEmpty(startDT)){
+			//startDT = '1900-01-01';
+			queryParams.startDT = startDT;
+		}
+		if(!isEmpty(endDT)){
+			//endDT = '5000-01-01';
+			queryParams.endDT = endDT;
+		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
 	}
 	
-	
+	function clearFun() {
+		$('#idNumber').val('');
+		$('#projectName').val('');
+		$('#startDT').val('');
+		$('#endDT').val('');
+		$('#applierName').val('');
+	}
 	
 	function printFun(type) {
 		var id = null;
@@ -250,16 +281,11 @@
 		}
 	}
 
-	function clearFun() {
-		$('#idNumber').val('');
-		$('#projectName').val('');
-	}
-
 	function addFun() {
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请登记',
 			width : '815',
-			height : '565',
+			height : '580',
 			resizable : true,
 			href : '${ctx}/bidBond/addPage?type=0',
 			buttons : [
@@ -341,7 +367,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请修改',
 			width : '830',
-			height : '635',
+			height : '600',
 			href : '${ctx}/bidBond/editPage?id=' + id,
 			buttons : [
 					{
@@ -386,7 +412,7 @@
 				.modalDialog({
 					title : '投标保证金缴纳确认',
 					width : '830',
-					height : '655',
+					height : '670',
 					href : '${ctx}/bidBond/handlerPage?id=' + id,
 					buttons : [
 							{
@@ -436,7 +462,7 @@
 		parent.$.modalDialog({
 			title : '投标保证金缴纳申请详情',
 			width : '820',
-			height : '655',
+			height : '670',
 			href : '${ctx}/bidBond/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -532,15 +558,31 @@
 
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/bidBond/search')}">
-			<div id="searchbar" class="search-toolbar">
-				<span>缴 号:</span> <input type="text" id="idNumber" /><span>项目名称:</span>
-				<input type="text" id="projectName" /> <a onclick="searchFun();"
-					href="javascript:void(0);" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-			</div>
+			
+			<table>
+				<tr>
+					<th>缴 号:</th>
+					<td><input style="width:100px" type="text" id="idNumber"></td>
+					<th>项目名称:</th>
+					<td><input type="text" id="projectName"></td>
+					<th>申请人:</th>
+					<td><input style="width:100px" type="text" id="applierName"></td>
+					<th>时间范围:</th>
+					<td><input class="Wdate" data-options="required:true"
+						type="text" name="startDT" id="startDT"
+						style="width: 110px;"
+						onfocus="showStart('yyyy-MM-dd')" /> <input class="Wdate"
+						data-options="required:true" type="text" name="endDT" id="endDT"
+						style="width: 110px;" onfocus="showEnd('yyyy-MM-dd')" />
+					</td>
+					<td><a onclick="searchFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+						onclick="clearFun();" href="javascript:void(0);"
+						class="easyui-linkbutton"
+						data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
+				</tr>
+			</table>
 		</c:if>
 	</div>
 </body>

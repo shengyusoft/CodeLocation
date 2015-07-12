@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 	$('#company').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
@@ -169,14 +170,23 @@
 				<tr>
 					<th>中标价（元）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="2"><input name="bid_cost"
+					<td><input name="bid_cost"
 						style="width: 100%; height: 100%" type="text" id="bid_cost"
 						value="${projectBid.bid_cost}" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
+						
+					<th>中标时间 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input class="Wdate" type="text" name="bidDt"
+						value="<fmt:formatDate value="${projectBid.bidDt}" pattern="yyyy-MM-dd"/>"
+						id="bidDt" style="width: 98%; height: 100%;"
+						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+						
 					<th>工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="2"><input class="Wdate" type="text"
-						name="duration" value="${projectBid.duration}" id="duration"
+					<td><input class="Wdate" type="text"
+						value="<fmt:formatDate value="${projectBid.duration}" pattern="yyyy-MM-dd"/>"
+						name="duration" id="duration"
 						style="width: 98%; height: 100%;" data-options="required:true"
 						onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>

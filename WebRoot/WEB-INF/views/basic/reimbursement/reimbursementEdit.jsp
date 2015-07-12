@@ -17,14 +17,14 @@
 				progressClose();
 				result = $.parseJSON(result);
 				if (result.success) {
+					debugger;
 					//批量报销和单独报销两种情况
-					if(parent.$.modalDialog.openner_dataGrid){
-						parent.$.modalDialog.openner_dataGrid.datagrid('reload');
-						parent.$.modalDialog.handler.dialog('close');
-					}else if(parent.$.modalDialogTwo.openner_dataGrid){
-						debugger;
+					if(parent.$.modalDialogTwo.openner_dataGrid){
 						parent.$.modalDialogTwo.openner_dataGrid.datagrid('reload');
 						parent.$.modalDialogTwo.handler.dialog('close');
+					}else if(parent.$.modalDialog.openner_dataGrid){
+						parent.$.modalDialog.openner_dataGrid.datagrid('reload');
+						parent.$.modalDialog.handler.dialog('close');
 					}
 				} else {
 					parent.$.messager.alert('错误', result.msg, 'error');

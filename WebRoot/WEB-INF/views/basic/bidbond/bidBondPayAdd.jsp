@@ -119,9 +119,12 @@
 					<td><input name="payer" type="text" id="payer"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
-
 				</tr>
-
+				<tr>
+					<th>备注&nbsp;</th>
+					<td colspan="5"><textarea style="width: 100%" rows="2"
+							name="remark2">${bidBond.remark2}</textarea></td>
+				</tr>
 				<tr>
 					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
 				</tr>

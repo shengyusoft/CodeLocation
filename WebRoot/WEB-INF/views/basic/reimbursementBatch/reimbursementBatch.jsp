@@ -8,7 +8,10 @@
 <head>
 <jsp:include page="../../inc.jsp"></jsp:include>
 <script type="text/javascript"
-	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-groupview.js"
+	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-detailview.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-statistics.js"
 	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
 <title>批量报销管理</title>
@@ -18,12 +21,149 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/reimbursementBatch/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
 			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
+			view: detailview,   
+		    detailFormatter:function(index,row){   
+		        return '<div style="padding:2px"><table id="ddv-' + index + '"></table></div>';   
+		    },
+		    onExpandRow: function(index,row){ 
+		        $('#ddv-'+index).datagrid({ 
+		            url:'${ctx}' + '/reimbursement/dataGrid', 
+		            queryParams:{
+		            	batchId : row.id,
+		            	type : 1
+		            },
+		            striped : true,
+		            singleSelect:true, 
+		            loadMsg:'', 
+		            height:'auto', 
+		            showFooter : true,
+		            frozenColumns : [ [
+		                   			{
+		                   				field : 'id',
+		                   				hidden : true,
+		                   				width : '30',
+		                   				rowspan : 2
+		                   			}, {
+		                				title : '序号',
+		                				field : 'index',
+		                				align : 'center',
+		                				width : '40',
+		                				rowspan:2,
+		                				formatter : function(val, row, index) {
+		                					if(isEmpty(val)){
+		                						return index + 1;																																																																			
+		                					}else{
+		                						return val;
+		                					}
+		                				}
+		                			}, {
+		                   				width : '150',
+		                   				title : '时间范围',
+		                   				rowspan : 2,
+		                   				sortable : true,
+		                   				align : 'center',
+		                   				id : 'startDT',
+		                   				field : 'startDT',
+		                   				formatter : function(value, row, index) {
+		                   					var st = formatDate(row.startDT);
+		                   					var et = formatDate(row.endDT);
+		                   					return st + "--" + et;
+		                   				}
+		                   			}, {
+		                   				width : '190',
+		                   				title : '地点',
+		                   				rowspan : 2,
+		                   				align : 'center',
+		                   				field : 'place'
+		                   			}, {
+		                   				width : '130',
+		                   				title : '工作',
+		                   				rowspan : 2,
+		                   				align : 'center',
+		                   				field : 'workDetail'
+		                   			}, {
+		                   				width : '150',
+		                   				title : '费用明细',
+		                   				rowspan : 2,
+		                   				align : 'center',
+		                   				field : 'costDetail'
+		                   			}] ],
+		                   			columns : [ [{
+		                   				title : '费用小计',
+		                   				colspan : 8
+		                   			}, {
+		                   				width : '100',
+		                   				title : '合计',
+		                   				rowspan : 2,
+		                   				align : 'center',
+		                   				sum : true,
+		                   				field : 'total',
+		                   			}],[ {
+		                   				width : '100',
+		                   				title : '交通费（元）',
+		                   				sum : true,
+		                   				align : 'center',
+		                   				field : 'trafficFee'
+		                   			}, {
+		                   				width : '100',
+		                   				title : '就餐费（元）',
+		                   				sum : true,
+		                   				align : 'center',
+		                   				field : 'mealFee'
+		                   			}, {
+		                   				width : '100',
+		                   				title : '办公费（元）',
+		                   				sum : true,
+		                   				align : 'center',
+		                   				field : 'officeFee'
+		                   			}, {
+		                   				width : '100',
+		                   				title : '招待费（元）',
+		                   				sum : true,
+		                   				align : 'center',
+		                   				field : 'receiveFee'
+		                   			}, {
+		                   				width : '100',
+		                   				title : '证章费（元）',
+		                   				align : 'center',
+		                   				sum : true,
+		                   				field : 'badgeFee'
+		                   			}, {
+		                   				width : '100',
+		                   				title : '通讯费（元）',
+		                   				sum : true,
+		                   				align : 'center',
+		                   				field : 'communicationFee'
+		                   			}, {
+		                   				width : '100',
+		                   				title : '培训费（元）',
+		                   				sum : true,
+		                   				align : 'center',
+		                   				field : 'trainFee'
+		                   			}, {
+		                   				width : '100',
+		                   				title : '其他费（元）',
+		                   				sum : true,
+		                   				align : 'center',
+		                   				field : 'otherFee'
+		                   			} ] ],
+		            onResize:function(){ 
+		                $('#dataGrid').datagrid('fixDetailRowHeight',index); 
+		            }, 
+		            onLoadSuccess:function(){ 
+		                setTimeout(function(){ 
+		                    $('#dataGrid').datagrid('fixDetailRowHeight',index); 
+		                },0); 
+		                $('#ddv-'+index).datagrid('statistics');
+		            } 
+		        }); 
+		        $('#dataGrid').datagrid('fixDetailRowHeight',index); 
+		    },
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [
@@ -32,25 +172,46 @@
 				field : 'id',
 				width : '30'
 			}, {
-				width : '150',
+				title : '序号',
+				field : 'index',
+				align : 'center',
+				width : '40',
+				rowspan:2,
+				formatter : function(val, row, index) {
+					if(isEmpty(val)){
+						return index + 1;
+					}else{
+						return val;
+					}
+				}
+			}, {
+				width : '90',
+				title : '报销人',
+				sortable : true,
+				align : 'center',
+				field : 'process1',
+				formatter : function(val,row,index){
+					var process = row.process_vo;
+					return isEmpty(process)?'':process.applyUserName;
+				}
+			}, {
+				width : '350',
 				title : '报销月份',
 				sortable : true,
 				align : 'center',
 				field : 'month',
-				formatter : Common.formatter
+				formatter : Common.formatterMonth
 			}, {
-				width : '190',
-				title : '报销总额',
-				align : 'center',
-				field : 'totalFee'
-			}, {
-				width : '130',
+				width : '350',
 				title : '申请时间',
 				align : 'center',
-				field : 'createDT',
-				formatter : Common.formatter
+				field : 'process',
+				formatter : function(value, row, index){
+					var process = row.process_vo;
+					return isEmpty(process)?'':Common.formatter(process.startDT);
+				}
 			}, {
-				width : '120',
+				width : '300',
 				title : '状态',
 				align : 'center',
 				field : 'process_vo',
@@ -79,16 +240,25 @@
 		});
 
 	});
+	
+	 function compute(colName) {
+         var rows = $('#dataGrid').datagrid('getRows');
+         var total = 0;
+         for (var i = 0; i < rows.length; i++) {
+             total += parseFloat(rows[i][colName]);
+         }
+         return total;
+     }
 
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
-		//queryParams.month = "";
-		//queryParams.createDT = "";
-		//queryParams['process.applyUser.id'] = "";
-		//var createDT = $('#createDT').val();
-		//var month = $('#month').val();
+		queryParams.month = "";
+		queryParams['process_vo.applyUserName'] = "";
+		queryParams.month = isEmpty($('#month').val())?'':$('#month').val();
+		if(!isEmpty(('#applyUserName'))){
+			queryParams['process_vo.applyUserName'] = isEmpty($('#applyUserName').val())?'':$('#applyUserName').val();
+		}
 		
-		//queryParams.month = isEmpty(month)?null:month;
 		//queryParams.createDT = isEmpty(createDT)?null:createDT;
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -130,6 +300,8 @@
 											.find('#reimbursementBatchAddForm');
 									parent.$.modalDialog.type = 1;
 									f.submit();
+									parent.$.modalDialog.handler
+									.dialog('close');
 								}
 							},
 							{
@@ -218,6 +390,8 @@
 									var f = parent.$.modalDialog.handler
 											.find('#reimbursementBatchEditForm');
 									f.submit();
+									parent.$.modalDialog.handler
+									.dialog('close');
 								}
 							},
 							{
@@ -288,6 +462,54 @@
 					parent.$.modalDialog.handler.dialog('close');
 				}
 			} ]
+		});
+	}
+	
+	function auditFun(id, state) {
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有审核对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能审核一条记录!');
+			return;
+		}
+
+		id = rows[0].process_vo.id;
+		
+		parent.$.modalDialog({
+			title : '报销审批',
+			width : '900',
+			height : '650',
+			resizable : true,
+			href : ctxPath+'/reimbursementBatch/handlerPage?id='+id,
+			buttons : [
+					{
+						text : '通过',
+						handler : function() {
+							var f = parent.$.modalDialog.handler
+									.find('#processBatchForm');
+							parent.$.modalDialog.openner_dataGrid = dataGrid;
+							parent.$.modalDialog.handler.find('#option').val(0);
+							f.submit();
+						}
+					},{
+						text : '退回',
+						handler : function() {
+							var f = parent.$.modalDialog.handler
+									.find('#processBatchForm');
+							parent.$.modalDialog.openner_dataGrid = dataGrid;
+							parent.$.modalDialog.handler.find('#option').val(1);
+							f.submit();
+						}
+					}, {
+						text : '退出',
+						handler : function() {
+							parent.$.modalDialog.handler.dialog('close');
+						}
+					} ]
 		});
 	}
 </script>
@@ -366,13 +588,27 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<!-- <a onclick="ExporterExcel();" href="javascript:void(0);"
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/handlerPage')}">
+				<a onclick="auditFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出excel</a> -->
+					data-options="plain:true,iconCls:'icon_toolbar_audit'">审核 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
+					color="gray">审核</font> </a>
+			</c:otherwise>
+		</c:choose>
+		
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>月份:</span> <input type="text" id="month" class="Wdate" onfocus="showDate('yyyy-MM-dd')"> 
+				<c:if test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/handlerPage')}">
+					<span>申请人:</span><input type="text" id="applyUserName">
+				</c:if>
+				<span>月份:</span> <input type="text" id="month" class="Wdate" onfocus="showMonth()"> 
 				<a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a

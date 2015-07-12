@@ -158,6 +158,12 @@
 						style="width: 100%; height: 100%; background-color: rgb(235, 235, 228);"
 						readonly="readonly" /></td>
 				</tr>
+				
+				<tr>
+					<th>备注&nbsp;</th>
+					<td colspan="5"><textarea style="width: 100%" rows="2"
+							name="remark2">${bidBond.remark2}</textarea></td>
+				</tr>
 
 				<tr>
 					<th colspan="6"><font color="blue" size="10px">（说明：以下内容由财务部出纳填写）</font></th>
