@@ -70,45 +70,85 @@ public class BidBondController extends BaseController {
 		return grid;
 	}
 
-	@RequestMapping("/addPage")
-	public String addPage(HttpServletRequest request, int type) {
-		// 根据类型返回 缴纳或者退回页面
-		BidBondVo bidBond = new BidBondVo();
+	/**
+	 * CRUD以及处理的界面统一管理
+	 * 
+	 * @param request
+	 * @param type业务类型
+	 *            缴纳，退回
+	 * @param handlerType处理类型add
+	 *            ,detail,edit,handler
+	 * @return
+	 */
+	@RequestMapping("/viewPage")
+	public String viewPage(HttpServletRequest request, int type,
+			String viewType, Long id) {
+		// 获取当前用户
 		SessionInfo sessionInfo = getSessionInfo(request);
-		if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
-			User u = userService.get(sessionInfo.getId());
-			if(u != null){
+		User u = userService.get(sessionInfo.getId());
+		viewType = StringUtils.isEmpty(viewType) ? "" : viewType;
+		BidBondVo bidBond = null;
+		if (!StringUtils.isEmpty(id) && Long.valueOf(id) > 0) {
+			// 编辑，详情，处理
+			bidBond = bidBondService.get(id);
+			if ("handler_cn".equals(viewType)) {
+				if (bidBond.getHandlerId() == null
+						|| bidBond.getHandlerId() <= 0) {
+					bidBond.setHandlerId(u.getId());
+					bidBond.setHandlerName(u.getName());
+				}
+				if (bidBond.getToAccountDT() == null) {
+					bidBond.setToAccountDT(new Date());
+				}
+				if (bidBond.getHandlerDT() == null) {
+					bidBond.setHandlerDT(new Date());
+				}
+
+			} else if ("handler_kj".equals(viewType)) {
+				if (bidBond.getHandlerId2() == null
+						|| bidBond.getHandlerId2() <= 0) {
+					bidBond.setHandlerId2(u.getId());
+					bidBond.setHandlerName2(u.getName());
+				}
+				if (bidBond.getOutAccountDT() == null) {
+					bidBond.setOutAccountDT(new Date());
+				}
+				if (bidBond.getHandlerDT2() == null) {
+					bidBond.setHandlerDT2(new Date());
+				}
+			}
+		} else {
+			// 添加
+			bidBond = new BidBondVo();
+			if (u != null) {
 				bidBond.setApplierName(u.getName());
+				bidBond.setApplierId(u.getId());
 				bidBond.setApplierPhone(u.getMobilePhone());
-//				bidBond.setApplyDT(new Date());
+				bidBond.setApplyDT(new Date());
 			}
 		}
 		request.setAttribute("bidBond", bidBond);
+		request.setAttribute("viewType", viewType);
 		// 申请人和申请时间
-		
+
+		// 根据类型返回 缴纳或者退回页面
 		if (type == 0) {
-			return "/basic/bidbond/bidBondPayAdd";
+			return "/basic/bidbond/bidBondPayView";
 		} else {
-			return "/basic/bidbond/bidBondBackAdd";
+			return "/basic/bidbond/bidBondBackView";
 		}
 	}
 
 	// 提交的时候需要传type值
-	@RequestMapping("/add")
+	@RequestMapping("/save")
 	@ResponseBody
-	public Json add(BidBondVo vo, HttpServletRequest request) {
+	public Json save(BidBondVo vo, String viewType, HttpServletRequest request) {
 		// 普通员工提交
 		Json j = new Json();
+		viewType = StringUtils.isEmpty(viewType) ? "" : viewType;
 		try {
 			// 缴号自动生成，编号规则为年份+月份+编号
 			vo.setIdNumber(generateIdNum(vo.getType()));
-
-			// 申请人和申请时间
-			SessionInfo sessionInfo = getSessionInfo(request);
-			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
-				vo.setApplierId(sessionInfo.getId());
-			}
-			vo.setApplyDT(new Date());
 
 			// 保证金转大写
 			if (vo.getBondFee() != null) {
@@ -117,9 +157,55 @@ public class BidBondController extends BaseController {
 				vo.setBondFeeCH(feeCH);
 			}
 
-			bidBondService.add(vo, request);
+			if ("handler_cn".equals(viewType)) {
+				// 到帐金额转大写
+				if (vo.getToAccountFee() != null) {
+					BigDecimal fee = new BigDecimal(vo.getToAccountFee());
+					String feeCH = NumberToCN.number2CNMontrayUnit(fee);
+					vo.setToAccountFeeCH(feeCH);
+				}
+				vo.setState(1);// 出纳已确认
+			} else if ("handler_kj".equals(viewType)) {
+				// 转出金额转大写
+				if (vo.getOutAccountFee() != null && vo.getOutAccountFee() > 0) {
+					BigDecimal fee = new BigDecimal(vo.getOutAccountFee());
+					String feeCH = NumberToCN.number2CNMontrayUnit(fee);
+					vo.setOutAccountFeeCH(feeCH);
+				}
+				vo.setState(2);// 会计已确认
+			}
+			// 添加
+			if (vo.getId() == null || vo.getId() <= 0) {
+				if (vo.getOption() == -1) {// 提交
+					vo.setState(-1);
+				}
+				bidBondService.add(vo, request);
+
+				// TODO 发送短信
+				if (vo.getOption() == -1) {// 提交
+				}
+
+			} else {// 编辑或者处理
+				if (vo.getOption() == 1 && "edit".equals(viewType)) {// 提交
+					vo.setState(-1);
+				}
+				bidBondService.edit(vo, request);
+
+				// TODO 发送短信
+				if (vo.getOption() == -1) {// 提交
+				}
+			}
+
+			if ("add".equals(viewType)) {
+				j.setMsg("添加成功！");
+			} else if ("edit".equals(viewType)) {
+				j.setMsg("修改成功！");
+			} else if ("handler_cn".equals(viewType)) {
+				j.setMsg("出纳确认成功！");
+			} else if ("handler_kj".equals(viewType)) {
+				j.setMsg("会计确认成功！");
+			}
 			j.setSuccess(true);
-			j.setMsg("添加成功！");
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
 		}
@@ -161,61 +247,6 @@ public class BidBondController extends BaseController {
 		return bidBondService.get(id);
 	}
 
-	@RequestMapping("/editPage")
-	public String editPage(HttpServletRequest request, Long id) {
-		BidBondVo bidBond = bidBondService.get(id);
-		request.setAttribute("bidBond", bidBond);
-		if (bidBond.getType() == 0) {
-			return "/basic/bidbond/bidBondPayEdit";// 缴纳
-		} else {
-			return "/basic/bidbond/bidBondBackEdit";// 退款
-		}
-	}
-
-	// 申请人编辑
-	@RequestMapping("/edit")
-	@ResponseBody
-	public Json edit(BidBondVo vo, HttpServletRequest request) {
-		Json j = new Json();
-		try {
-			bidBondService.edit(vo, request);
-			j.setSuccess(true);
-			j.setMsg("编辑成功！");
-		} catch (Exception e) {
-			j.setMsg(e.getMessage());
-		}
-		return j;
-	}
-
-	@RequestMapping("/detailPage")
-	public String detailPage(HttpServletRequest request, Long id) {
-		BidBondVo bidBond = bidBondService.get(id);
-		request.setAttribute("bidBond", bidBond);
-		if (bidBond.getType() == 0) {
-			return "/basic/bidbond/bidBondPayDetail";// 缴纳
-		} else {
-			return "/basic/bidbond/bidBondBackDetail";// 退款
-		}
-	}
-
-	/**
-	 * 财务处理
-	 * 
-	 * @param request
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping("/handlerPage")
-	public String handlerPage(HttpServletRequest request, Long id) {
-		BidBondVo bidBond = bidBondService.get(id);
-		request.setAttribute("bidBond", bidBond);
-		if (bidBond.getType() == 0) {
-			return "/basic/bidbond/bidBondPayHandler";// 缴纳
-		} else {
-			return "/basic/bidbond/bidBondBackHandler";// 退款
-		}
-	}
-
 	// 查找有没有需要提醒的任务
 	@RequestMapping("/findHanlder")
 	@ResponseBody
@@ -241,56 +272,4 @@ public class BidBondController extends BaseController {
 		j.setSuccess(true);
 		return j;
 	}
-
-	/**
-	 * 财务提交
-	 * 
-	 * @param vo
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/commit")
-	@ResponseBody
-	public Json commit(BidBondVo vo, HttpServletRequest request) {
-		Json j = new Json();
-		try {
-			// 出纳确认提交后不能修改啊
-			vo.setState(1);
-			// 办理人办理时间
-			SessionInfo sessionInfo = getSessionInfo(request);
-			if (sessionInfo.getId() != null && sessionInfo.getId() > 0) {
-				vo.setHandlerId(sessionInfo.getId());
-			}
-
-			if (vo.getHandlerDT() == null) {
-				vo.setHandlerDT(new Date());
-			}
-
-			if (vo.getOutAccountDT() == null) {
-				vo.setOutAccountDT(new Date());
-			}
-
-			// 转出金额转大写
-			if (vo.getOutAccountFee() != null && vo.getOutAccountFee() > 0) {
-				BigDecimal fee = new BigDecimal(vo.getOutAccountFee());
-				String feeCH = NumberToCN.number2CNMontrayUnit(fee);
-				vo.setOutAccountFeeCH(feeCH);
-			}
-
-			// 到帐金额转大写
-			if (vo.getToAccountFee() != null && vo.getToAccountFee() > 0) {
-				BigDecimal fee = new BigDecimal(vo.getToAccountFee());
-				String feeCH = NumberToCN.number2CNMontrayUnit(fee);
-				vo.setToAccountFeeCH(feeCH);
-			}
-
-			bidBondService.edit(vo, request);
-			j.setSuccess(true);
-			j.setMsg("编辑成功！");
-		} catch (Exception e) {
-			j.setMsg(e.getMessage());
-		}
-		return j;
-	}
-
 }

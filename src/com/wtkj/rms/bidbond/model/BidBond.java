@@ -68,14 +68,18 @@ public class BidBond extends IdEntity implements Serializable {
 	private String outAccountFeeCH;// 转出金额大写
 	private Date outAccountDT;// 转出时间
 
-	// 办理人办理时间
+	// 办理人办理时间(财务出纳)
 	private Tuser handler;
 	private Date handlerDT;
 
-	// 类型0申请 1退回
+	// 办理人办理时间(财务会计)
+	private Tuser handler2;
+	private Date handlerDT2;
+
+	// 类型0保证金申请 1保证金退回
 	private int type;
 
-	// 0普通人员提交 1财务提交，财务提交后不可更改
+	// 0申请人保存,-1普通提交 1出纳提交 2会计提交,>1不能修改
 	private int state;
 
 	private String remark;// 备注
@@ -100,7 +104,9 @@ public class BidBond extends IdEntity implements Serializable {
 	// 验证不能超过保证金
 	private Double totalFee;// 应扣保证金合计
 
-	private String remark2;// 保证金备注
+	private String remark2;// 保证金备注(财务出纳备注)
+
+	private String remark3;// 保证金备注(财务会计备注)
 
 	public String getIdNumber() {
 		return idNumber;
@@ -433,6 +439,32 @@ public class BidBond extends IdEntity implements Serializable {
 
 	public void setRemark2(String remark2) {
 		this.remark2 = remark2;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "handlerId2")
+	public Tuser getHandler2() {
+		return handler2;
+	}
+
+	public void setHandler2(Tuser handler) {
+		this.handler2 = handler;
+	}
+
+	public Date getHandlerDT2() {
+		return handlerDT2;
+	}
+
+	public void setHandlerDT2(Date handlerDT2) {
+		this.handlerDT2 = handlerDT2;
+	}
+
+	public String getRemark3() {
+		return remark3;
+	}
+
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
 	}
 
 }

@@ -11,7 +11,7 @@
 	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-detailview.js"
 	charset="utf-8"></script>
 <meta http-equiv="X-UA-Compatible" content="edge" />
-<title>投标保证金缴纳</title>
+<title>投标保证金退回</title>
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
@@ -45,48 +45,71 @@
 		            rownumbers:true, 
 		            loadMsg:'加载中...', 
 		            height:'auto', 
-		            columns:[[ 
-		                      {field:'toAccountFee',title:'到帐金额（元）',width:120,formatter:Common.formatterDecimal2}, 
-				                {field:'toAccountDT',title:'到帐时间',width:120,formatter:function(value){
-			                		if (!isEmpty(value)) {
-			                			var date = new Date(value);
-			                			return date.format('yyyy-MM-dd hh:mm');
-			                		}
-			                		return '';
-			                	}},
-				                {field:'outAccountFee',title:'转出金额',width:120,formatter:Common.formatterDecimal2},
-				                {field:'outAccountDT',title:'转出时间',width:120,formatter:function(value){
-			                		if (!isEmpty(value)) {
-			                			var date = new Date(value);
-			                			return date.format('yyyy-MM-dd hh:mm');
-			                		}
-			                		return '';
-			                	}},
-				                {field:'handlerName',title:'办理人',width:120},
-				                {field:'handlerDT',title:'办理时间',width:120,
-				                	formatter:function(value){
-				                		if (!isEmpty(value)) {
-				                			var date = new Date(value);
-				                			return date.format('yyyy-MM-dd hh:mm');
-				                		}
-				                		return '';
-				                	}}
-				            ]], 
-				            onResize:function(){ 
-				                $('#dataGrid').datagrid('fixDetailRowHeight',index); 
-				            }, 
-				            onLoadSuccess:function(){ 
-				                setTimeout(function(){ 
-				                    $('#dataGrid').datagrid('fixDetailRowHeight',index); 
-				                },0); 
-				            } 
-				        }); 
-				        $('#dataGrid').datagrid('fixDetailRowHeight',index); 
+		            columns:[[
+						{	title : '出纳反馈情况',
+							colspan : 4,
+						},{
+							title : '会计反馈情况',
+							colspan : 4,
+						} ],
+						[{
+							field : 'toAccountFee',
+							align : 'center',
+							title : '到帐金额（元）',
+							width : 120,
+							formatter : Common.formatterDecimal2
+						},{
+							field : 'toAccountDT',
+							align : 'center',
+							title : '到帐时间',
+							width : 120,
+							formatter : Common.formatterTime
+						},{
+							field : 'handlerName',
+							align : 'center',
+							title : '办理人',
+							width : 120
+						},{
+							field : 'handlerDT',
+							align : 'center',
+							title : '办理时间',
+							width : 120,
+							formatter : Common.formatterTime
+						},{
+							field : 'outAccountFee',
+							align : 'center',
+							title : '转出金额',
+							width : 120,
+							formatter : Common.formatterDecimal2
+						},{
+							field : 'outAccountDT',
+							align : 'center',
+							title : '转出时间',
+							width : 120,
+							formatter : Common.formatterTime
+						},{
+							field : 'handlerName2',
+							align : 'center',
+							title : '办理人',
+							width : 120
+						},{
+							field : 'handlerDT2',
+							align : 'center',
+							title : '办理时间',
+							width : 120,
+							formatter : Common.formatterTime
+						} ] ],
+						onResize : function() {$('#dataGrid').datagrid('fixDetailRowHeight',index);},
+						onLoadSuccess : function() {
+							setTimeout(function() {
+								$('#dataGrid').datagrid('fixDetailRowHeight',index);
+							}, 0);
+						}});
+						$('#dataGrid').datagrid('fixDetailRowHeight',index);
 		    },
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [
-
 			{
 				checkbox : true,
 				field : 'id',
@@ -133,7 +156,19 @@
 				align : 'center',
 				field : 'state',
 				formatter : function(value, row, index) {
-					return value == 0?'<font color="red">财务未提交</font>':'<font color="green">财务已提交</font>';
+					var reStr ="";
+					if(value == 0){
+						reStr = '<font color="red">未提交</font>';
+					}else if(value == -1){
+						reStr = '<font color="green">等待财务确认</font>';
+					}else if(value == 1){
+						reStr = '<font color="green">出纳已确认</font>';
+					}else if(value == 2){
+						reStr = '<font color="green">会计已确认</font>';
+					}else{
+						reStr = '初始化';
+					}
+					return reStr;
 				}
 			}, {
 				title : '申请信息',
@@ -254,31 +289,172 @@
 		$('#applierName').val('');
 	}
 
-	function addFun() {
+	//统一处理 add,edit,detail,handler
+	function viewFun(viewType) {
+		var me = this;
+		var title = '', href = '${ctx}/bidBond/viewPage?type=1&viewType='+ viewType;
+		var buttons = [];
+		if ('add' == viewType) {
+			title = '投标保证金退还申请登记';
+			buttons = [ {
+				text : '保存',
+				handler : me.submitForm
+			},{
+				text : '提交',
+				handler : function() {
+					parent.$.messager.confirm('提醒','提交后不能修改,确认提交？',function(b) {
+						if (b) {
+							parent.$.modalDialog.handler.find('#option').val(1);//提交
+							me.submitForm(1);
+						}else{
+							return;
+						}
+					});
+				}
+			}, {
+				text : '退出',
+				handler : me.closeDialog
+			} ];
+		} else {
+			var rows = dataGrid.datagrid('getSelections');
+			if (rows == null || rows.length == 0) {
+				parent.$.messager.alert('警告', '没有可查看对象!');
+				return;
+			}
+
+			if (rows.length > 1) {
+				parent.$.messager.alert('警告', '只能查看一条记录!');
+				return;
+			}
+
+			var id = rows[0].id;
+			var state = rows[0].state;
+			href += '&id=' + id;
+			//编辑
+			if ('edit' == viewType) {
+				if (state == 1) {
+					parent.$.messager.alert('警告', '出纳已提交不可修改!');
+					return;
+				}
+				if (state == 2) {
+					parent.$.messager.alert('警告', '会计已提交不可修改!');
+					return;
+				}
+				title = '投标保证金退还修改';
+				buttons = [ {
+					text : '编辑',
+					handler : me.submitForm
+				},{
+					text : '提交',
+					handler : function() {
+						parent.$.messager.confirm('提醒','提交后不能修改,确认提交？',function(b) {
+							if (b) {
+								parent.$.modalDialog.handler.find('#option').val(1);//提交
+								me.submitForm();
+							}else{
+								return;
+							}
+						});
+					}
+				}, {
+					text : '退出',
+					handler : me.closeDialog
+				} ];
+			} else if ('detail' == viewType) {
+				title = '投标保证金退还详情';
+				buttons = [ {
+					text : '退出',
+					handler : function() {
+						me.closeDialog();
+					}
+				} ];
+			} else if ('handler_cn' == viewType) {//2
+				if (state == -1) {
+					parent.$.messager.alert('警告', '等待会计办理!');
+					return;
+				}
+				if (state == 1) {
+					parent.$.messager.alert('警告', '已提交不可办理!');
+					return;
+				}
+				if (state == 0) {
+					parent.$.messager.alert('警告', '申请人尚未提交,不可办理!');
+					return;
+				}
+				title = '投标保证金退还->出纳确认';
+				buttons = [
+						{
+							text : '提交',
+							handler : function() {
+								parent.$.messager.confirm('提醒','必须将转帐截图发到申请人的邮箱（或公司群）!提交后不能修改,确认提交？',function(b) {
+									if (b) {
+										me.submitForm();
+									}else{
+										return;
+									}
+								});
+							}
+						}, {
+							text : '退出',
+							handler : closeDialog
+						} ];
+			} else if ('handler_kj' == viewType) {
+				if (state == 0) {
+					parent.$.messager.alert('警告', '申请人尚未提交,不可办理!');
+					return;
+				}
+				if (state == 1) {
+					parent.$.messager.alert('警告', '出纳已提交，不可办理!');
+					return;
+				}
+				if (state == 2) {
+					parent.$.messager.alert('警告', '已提交不可办理!');
+					return;
+				}
+				title = '投标保证金退还->会计确认';
+				buttons = [
+						{
+							text : '提交',
+							handler : function() {
+								parent.$.messager.confirm('提醒','必须将转帐截图发到申请人的邮箱（或公司群）!提交后不能修改,确认提交？',function(b) {
+									if (b) {
+										me.submitForm();
+									} else {
+										return;
+									}		
+								});
+							}
+						}, {
+							text : '退出',
+							handler : closeDialog
+						} ];
+			}
+
+		}
+
 		parent.$.modalDialog({
-			title : '投标保证金退还申请登记',
-			width : '1000',
-			height : '650',
+			title : title,
+			width : 1000,
+			height : 666,
 			resizable : true,
-			href : '${ctx}/bidBond/addPage?type=1',
-			buttons : [
-					{
-						text : '提交',
-						handler : function() {
-							parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-							var f = parent.$.modalDialog.handler
-									.find('#bidBondBackAddForm');
-							f.submit();
-						}
-					}, {
-						text : '退出',
-						handler : function() {
-							//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-							parent.$.modalDialog.handler.dialog('close');
-						}
-					} ]
+			href : href,
+			buttons : buttons
 		});
 	}
+
+	//提交form
+	function submitForm() {
+		//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
+		parent.$.modalDialog.openner_dataGrid = dataGrid;
+		var f = parent.$.modalDialog.handler.find('#bidBondBackViewForm');
+		f.submit();
+	}
+
+	//关闭窗口
+	function closeDialog() {
+		parent.$.modalDialog.handler.dialog('close');
+	}
+
 
 	function deleteFun() {
 		var selected = getSelected();
@@ -317,129 +493,6 @@
 		});
 	}
 
-	function editFun() {
-		var id = null;
-		var rows = dataGrid.datagrid('getSelections');
-		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可编辑对象!');
-			return;
-		}
-
-		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能对一条记录编辑!');
-			return;
-		}
-
-		id = rows[0].id;
-		var state = rows[0].state;
-		
-		if(state == 1){
-			parent.$.messager.alert('警告', '财务已提交不可修改!');
-			return;
-		}
-		
-		parent.$.modalDialog({
-			title : '投标保证金退还申请修改',
-			width : '1000',
-			height : '650',
-			href : '${ctx}/bidBond/editPage?id=' + id,
-			buttons : [
-					{
-						text : '编辑',
-						handler : function() {
-							parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-							var f = parent.$.modalDialog.handler
-									.find('#bidBondBackEditForm');
-							f.submit();
-						}
-					}, {
-						text : '退出',
-						handler : function() {
-							//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-							parent.$.modalDialog.handler.dialog('close');
-						}
-					} ]
-		});
-	}
-	
-	//财务处理
-	function handlerFun() {
-		var id = null;
-		var rows = dataGrid.datagrid('getSelections');
-		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可编辑对象!');
-			return;
-		}
-
-		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能对一条记录编辑!');
-			return;
-		}
-
-		id = rows[0].id;
-		var state = rows[0].state;
-		if(state == 1){
-			parent.$.messager.alert('警告', '财务已提交不可修改!');
-			return;
-		}
-		parent.$.modalDialog({
-			title : '投标保证金退还确认',
-			width : '1000',
-			height : '650',
-			href : '${ctx}/bidBond/handlerPage?id=' + id,
-			buttons : [
-					{
-						text : '提交',
-						handler : function() {
-							parent.$.messager.confirm('提醒', '必须将转帐截图发到申请人的邮箱（或公司群）!提交后不能修改,确认提交？', function(b) {
-								if (b) {
-									//TODO 预留短信接口!
-									parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-									var f = parent.$.modalDialog.handler
-											.find('#bidBondBackHandlerForm');
-									f.submit();
-								}else{
-									return;
-								}
-							});
-						}
-					}, {
-						text : '退出',
-						handler : function() {
-							//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-							parent.$.modalDialog.handler.dialog('close');
-						}
-					} ]
-		});
-	}
-
-	function detailFun() {
-		var id = null;
-		var rows = dataGrid.datagrid('getSelections');
-		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可查看对象!');
-			return;
-		}
-
-		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能查看一条记录!');
-			return;
-		}
-		id = rows[0].id;
-		parent.$.modalDialog({
-			title : '投标保证金退还申请详情',
-			width : '1000',
-			height : '650',
-			href : '${ctx}/bidBond/detailPage?id=' + id,
-			buttons : [ {
-				text : '退出',
-				handler : function() {
-					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialog.handler.dialog('close');
-				}
-			} ]
-		});
-	}
 	
 	function printFun(type) {
 		var id = null;
@@ -477,11 +530,10 @@
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div id="toolbar" class="mygrid-toolbar" style="inline: true">
-
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/bidBond/add')}">
-				<a onclick="addFun();" href="javascript:void(0);"
+				<a onclick="viewFun('add');" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_add'">添加 </a>
 			</c:when>
@@ -494,7 +546,7 @@
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/bidBond/edit')}">
-				<a onclick="editFun();" href="javascript:void(0);"
+				<a onclick="viewFun('edit');" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_edit'">编辑</a>
 			</c:when>
@@ -521,7 +573,7 @@
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/bidBond/detail')}">
-				<a onclick="detailFun();" href="javascript:void(0);"
+				<a onclick="viewFun('detail');" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail'">详情 </a>
 			</c:when>
@@ -531,55 +583,55 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
-		
-		<c:choose>
-			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/bidBond/confirm')}">
-				<a onclick="handlerFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">处理 </a>
-			</c:when>
-			<c:otherwise>
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
-					color="gray">处理</font> </a>
-			</c:otherwise>
-		</c:choose>
-		
-		<a onclick="printFun(0);" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览</a>
-					
-		<a onclick="printFun(1);" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 
-		<c:if test="${fn:contains(sessionInfo.resourceList, '/bidBond/search')}">
-			<table>
-				<tr>
-					<th>退 号:</th>
-					<td><input style="width:100px" type="text" id="idNumber"></td>
-					<th>项目名称:</th>
-					<td><input type="text" id="projectName"></td>
-					<th>申请人:</th>
-					<td><input style="width:100px" type="text" id="applierName"></td>
-					<th>时间范围:</th>
-					<td><input class="Wdate" data-options="required:true"
-						type="text" name="startDT" id="startDT"
-						style="width: 110px;"
-						onfocus="showStart('yyyy-MM-dd')" /> <input class="Wdate"
-						data-options="required:true" type="text" name="endDT" id="endDT"
-						style="width: 110px;" onfocus="showEnd('yyyy-MM-dd')" />
-					</td>
-					<td><a onclick="searchFun();" href="javascript:void(0);"
-						class="easyui-linkbutton"
-						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-						onclick="clearFun();" href="javascript:void(0);"
-						class="easyui-linkbutton"
-						data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
-				</tr>
-			</table>
+		<c:if
+			test="${fn:contains(sessionInfo.resourceList, '/bidBond/handler_cn')}">
+			<a onclick="viewFun('handler_cn');" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_detail'">出纳确认 </a>
+
 		</c:if>
+
+		<c:if
+			test="${fn:contains(sessionInfo.resourceList, '/bidBond/handler_kj')}">
+			<a onclick="viewFun('handler_kj');" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_detail'">会计确认 </a>
+
+		</c:if>
+		<c:if
+			test="${fn:contains(sessionInfo.resourceList, '/bidBond/print')}">
+			<a onclick="printFun(0);" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览</a>
+
+			<a onclick="printFun(1);" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
+		</c:if>
+		
+		<table>
+			<tr>
+				<th>退 号:</th>
+				<td><input style="width: 100px" type="text" id="idNumber"></td>
+				<th>项目名称:</th>
+				<td><input type="text" id="projectName"></td>
+				<th>申请人:</th>
+				<td><input style="width: 100px" type="text" id="applierName"></td>
+				<th>时间范围:</th>
+				<td><input class="Wdate" data-options="required:true"
+					type="text" name="startDT" id="startDT" style="width: 110px;"
+					onfocus="showStart('yyyy-MM-dd')" /> <input class="Wdate"
+					data-options="required:true" type="text" name="endDT" id="endDT"
+					style="width: 110px;" onfocus="showEnd('yyyy-MM-dd')" /></td>
+				<td><a onclick="searchFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+					onclick="clearFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

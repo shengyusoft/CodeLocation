@@ -188,6 +188,12 @@ public class BidBondServiceImpl implements BidBondServiceI {
 				po.setHandler(handler);
 			}
 		}
+		if (vo.getHandlerId2() != null && vo.getHandlerId2() > 0) {
+			Tuser handler = userDao.get(Tuser.class, vo.getHandlerId2());
+			if (handler != null) {
+				po.setHandler2(handler);
+			}
+		}
 		return po;
 	}
 
@@ -206,6 +212,12 @@ public class BidBondServiceImpl implements BidBondServiceI {
 			Tuser handler = userDao.get(Tuser.class, po.getHandler().getId());
 			vo.setHandlerId(handler.getId());
 			vo.setHandlerName(handler.getName());
+		}
+		
+		if (po.getHandler2() != null) {
+			Tuser handler = userDao.get(Tuser.class, po.getHandler2().getId());
+			vo.setHandlerId2(handler.getId());
+			vo.setHandlerName2(handler.getName());
 		}
 
 		if (!StringUtils.isEmpty(po.getBidSection())) {

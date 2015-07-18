@@ -53,12 +53,19 @@ public class BidBondVo implements Serializable {
 	private String outAccountFeeCH;// 转出金额大写
 	private Date outAccountDT;// 转出时间
 
-	// 办理人办理时间
+	// 出纳办理信息
 	private Long handlerId;
 
 	private String handlerName;
 
 	private Date handlerDT;
+
+	// 会计办理信息
+	private Long handlerId2;
+
+	private String handlerName2;
+
+	private Date handlerDT2;
 
 	private String remark;
 
@@ -91,6 +98,8 @@ public class BidBondVo implements Serializable {
 	private Double backFee;
 
 	private String remark2;// 保证金备注
+
+	private String remark3;// 会计备注
 
 	public String getRemark() {
 		return remark;
@@ -486,4 +495,45 @@ public class BidBondVo implements Serializable {
 		this.endDT = endDT;
 	}
 
+	public Long getHandlerId2() {
+		return handlerId2;
+	}
+
+	public void setHandlerId2(Long handlerId2) {
+		this.handlerId2 = handlerId2;
+	}
+
+	public String getHandlerName2() {
+		return handlerName2;
+	}
+
+	public void setHandlerName2(String handlerName2) {
+		this.handlerName2 = handlerName2;
+	}
+
+	public Date getHandlerDT2() {
+		return handlerDT2;
+	}
+
+	public void setHandlerDT2(Date handlerDT2) {
+		this.handlerDT2 = handlerDT2;
+	}
+
+	public String getRemark3() {
+		return remark3;
+	}
+
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
+	}
+	
+	private int option = 0;//保存或者提交
+
+	public int getOption() {
+		return option;
+	}
+
+	public void setOption(int option) {
+		this.option = option;
+	}
 }

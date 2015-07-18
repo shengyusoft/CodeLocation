@@ -71,5 +71,13 @@ public class GlobalConstant {
 	public static final String ACTION_MORE_EQ = ">=";
 	public static final String ACTION_LESS = ">";
 	public static final String ACTION_LESS_EQ = "<=";
+	
+	//请求页面处理类型
+	public static final String PAGE_TYPE_ADD = "add";//添加
+	public static final String PAGE_TYPE_EDIT = "edit";//编辑
+	public static final String PAGE_TYPE_DETAIL = "detail";//详情
+	public static final String PAGE_TYPE_AUDIT = "handler";//审核
+	
+	
 
 }

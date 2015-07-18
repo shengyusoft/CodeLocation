@@ -35,22 +35,24 @@ public class DateEditor extends PropertyEditorSupport {
 	 */
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
+		String regex = "[0-9]{4}-[0-9]{2}-[0-9]{2}";// yyyy-MM-dd
 		if (this.allowEmpty && !StringUtils.hasText(text)) {
 			// Treat empty String as null value.
 			setValue(null);
 		} else {
 			try {
-				if (this.dateFormat != null)
-					setValue(this.dateFormat.parse(text));
-				else {
-					if (text.contains(":"))
-						setValue(TIMEFORMAT.parse(text));
-					else if(text.length() <= 7){
-						text +="-01";
-						setValue(DATEFORMAT.parse(text));
-					}else{
-						setValue(DATEFORMAT.parse(text));
-					}
+				if (text.matches(regex)) {
+					// yyyy-MM-dd
+					setValue(DATEFORMAT.parse(text));
+				} else if (text.matches("[0-9]{4}-[0-9]{2}")) {
+					// yyyy-MM
+					setValue(DATEFORMAT.parse(text + "-01"));
+				} else if (text.matches(regex + " [0-9]{2}:[0-9]{2}")) {
+					// yyyy-MM-dd HH:mm
+					setValue(TIMEFORMAT.parse(text + ":00"));
+				} else if (text.matches(regex + " [0-9]{2}:[0-9]{2}:[0-9]{2}")) {
+					// yyyy-MM-dd HH:mm:ss
+					setValue(TIMEFORMAT.parse(text));
 				}
 			} catch (ParseException ex) {
 				throw new IllegalArgumentException("Could not parse date: "

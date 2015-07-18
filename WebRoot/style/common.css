@@ -544,3 +544,8 @@ h2 {
 	cursor: pointer;
 	background-position: -236px 0;
 }
+
+.disabled{
+  background-color: rgb(235, 235, 228);
+  border: 1px solid darkgrey;
+}
