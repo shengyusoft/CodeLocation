@@ -13,6 +13,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.wtkj.common.model.IdEntity;
+import com.wtkj.common.model.Tuser;
 
 /**
  * 工程款到帐及拨付情况
@@ -31,34 +32,34 @@ public class ProjectAppropriateAccount extends IdEntity implements
 
 	private ProjectAppropriateReg projectAppropriateReg;// 关联拨付款项
 
+	private Tuser applier;// 申请人
+
 	private int times;// 次数
 
+	// 工程部填写
 	private Double toAccountFee;// 到帐金额（元）业主本次拨付金额
-
-	private Date toAccountDT;// 到帐时间
-
 	private Double applyFee;// 申请拨付金额（本次计划支付金额）
-
-	private Date applyDT;// 申请拨付时间（业主本次拨付时间）
+	private String payee;// 收款人
+	private String bank;// 开户行
+	private String accountNum;// 帐号
+	private String remark1;// 备注1，工程部填写
 
 	// 以下会计填写
 	private Double actualFee;// 实际到帐金额（元）
-
-	private Double actualPayFee;// 实际支付金额（元）
-
 	private Date actualDT;// 实际到帐时间
+	private String remark2;// 会计备注
+	private Tuser handler1;// 办理人
 
-	private String payee;// 收款人
+	// 以下出纳填写
+	private Double actualPayFee;// 实际支付金额（元）(本次拨出金额)
+	private Date toAccountDT;// 到帐时间（拨出时间）
+	private String remark3;// 出纳备注
+	private Tuser handler2;// 办理人
 
-	private String bank;// 开户行
+	// 保留字段
+	private Date applyDT;// 申请拨付时间（业主本次拨付时间）
 
-	private String accountNum;// 帐号
-
-	private String remark1;// 备注1，工程部填写
-
-	private String remark2;// 备注2，会计部填写
-
-	// 0初始化综合部确认后状态;1工程部提交;会计部确认2
+	// 0初始化;1工程部提交;2会计部确认;3出纳确认
 	private int state;// 状态
 
 	@NotNull
@@ -177,12 +178,50 @@ public class ProjectAppropriateAccount extends IdEntity implements
 		this.remark2 = remark2;
 	}
 
+	public String getRemark3() {
+		return remark3;
+	}
+
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
+	}
+
 	public int getState() {
 		return state;
 	}
 
 	public void setState(int state) {
 		this.state = state;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "handlerId1")
+	public Tuser getHandler1() {
+		return handler1;
+	}
+
+	public void setHandler1(Tuser handler1) {
+		this.handler1 = handler1;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "handlerId2")
+	public Tuser getHandler2() {
+		return handler2;
+	}
+
+	public void setHandler2(Tuser handler2) {
+		this.handler2 = handler2;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "applierId")
+	public Tuser getApplier() {
+		return applier;
+	}
+
+	public void setApplier(Tuser applier) {
+		this.applier = applier;
 	}
 
 }

@@ -66,10 +66,17 @@
 		    				align : 'center',
 		    				field : 'state',
 		    				formatter : function(value, row, index) {
-		    					if(isEmpty(value) && value != 0 && value != '0'){
+		    					if(value == 0){
+		    						return '<font color="red">未提交</font>';
+		    					}else if(value == 1){
+		    						return '<font color="green">已提交</font>';
+		    					}else if(value == 2){
+		    						return '<font color="green">会计已确认</font>';
+		    					}else if(value == 3){
+		    						return '<font color="green">出纳已确认</font>';
+		    					}else{
 		    						return '';
 		    					}
-		    					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
 		    				}
 		    			},
 		                {field:'bank',title:'开户行',width:120,align:'center'},
@@ -213,63 +220,6 @@
 				align : 'center',
 				field : 'accountNum'
 			} ] ],
-
-			/* columns : [ [ {
-				title : '联系人信息',
-				colspan : 3,
-				align : 'center'
-			}, {
-				title : '收款人信息',
-				colspan : 3,
-				align : 'center'
-			}, {
-				width : '90',
-				title : '备注',
-				rowspan : 2,
-				align : 'center',
-				field : 'remark'
-			} ], [ {
-				width : '80',
-				title : '姓名',
-				rowspan : 2,
-				sortable : true,
-				align : 'center',
-				field : 'contactName'
-			}, {
-				width : '120',
-				title : '电话',
-				rowspan : 2,
-				sortable : true,
-				align : 'center',
-				field : 'contactTel'
-			}, {
-				width : '120',
-				title : '身份证号',
-				rowspan : 2,
-				align : 'center',
-				field : 'contactIdCard'
-			},{
-				width : '100',
-				title : '户名',
-				rowspan : 2,
-				sortable : true,
-				align : 'center',
-				field : 'payee'
-			}, {
-				width : '120',
-				title : '开户行',
-				rowspan : 2,
-				sortable : true,
-				align : 'center',
-				field : 'bank'
-			}, {
-				width : '120',
-				title : '帐号',
-				rowspan : 2,
-				align : 'center',
-				field : 'accountNum'
-			} ] ], */
-
 			toolbar : '#toolbar'
 		});
 
@@ -302,31 +252,77 @@
 		$('#contactName').val('');
 		$('#state').combobox('clear');
 	}
-
-	function addFun() {
-		parent.$.modalDialog({
-			title : '工程款拨付登记',
-			width : document.body.clientWidth*0.9,
-			height : 600,
-			//height : document.body.clientHeight*0.9,
-			href : '${ctx}/projectAppropriateReg/addPage',
-			buttons : [ {
+	
+	//统一处理 add,edit,detail,handler
+	function viewFun(viewType) {
+		var me = this;
+		var title = '', href = '${ctx}/projectAppropriateReg/viewPage?viewType='+ viewType;
+		var buttons = [];
+		if ('add' == viewType) {
+			title = '工程款拨付登记';
+			buttons = [ {
 				text : '登记',
 				id:'paregBtn',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
-							.find('#projectAppropriateRegAddForm');
-					f.submit();
-				}
+				handler : me.submitForm
 			}, {
 				text : '退出',
-				handler : function() {
-					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialog.handler.dialog('close');
-				}
-			} ]
+				handler : me.closeDialog
+			} ];
+		} else {
+			var rows = dataGrid.datagrid('getSelections');
+			if (rows == null || rows.length == 0) {
+				parent.$.messager.alert('警告', '没有可操作对象!');
+				return;
+			}
+
+			if (rows.length > 1) {
+				parent.$.messager.alert('警告', '只能操作一条记录!');
+				return;
+			}
+
+			var id = rows[0].id;
+			href += '&id=' + id;
+			//编辑
+			if ('edit' == viewType) {
+				title = '工程款拨付修改';
+				buttons = [ {
+					text : '修改',
+					id:'paregBtn',
+					handler : me.submitForm
+				}, {
+					text : '退出',
+					handler : me.closeDialog
+				} ];
+			} else if ('detail' == viewType) {
+				title = '工程款拨付详情';
+				buttons = [ {
+					text : '退出',
+					handler : me.closeDialog
+				} ];
+			}
+		}
+
+		parent.$.modalDialog({
+			title : title,
+			width : document.body.clientWidth*0.9,
+			height : 600,
+			resizable : true,
+			href : href,
+			buttons : buttons
 		});
+	}
+
+	//提交form
+	function submitForm() {
+		//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
+		parent.$.modalDialog.openner_dataGrid = dataGrid;
+		var f = parent.$.modalDialog.handler.find('#projectAppropriateRegViewForm');
+		f.submit();
+	}
+
+	//关闭窗口
+	function closeDialog() {
+		parent.$.modalDialog.handler.dialog('close');
 	}
 
 	function deleteFun() {
@@ -355,106 +351,6 @@
 		});
 	}
 
-	function handlerFun() {
-		var id = null;
-		var rows = dataGrid.datagrid('getSelections');
-		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可编辑对象!');
-			return;
-		}
-
-		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能对一条记录编辑!');
-			return;
-		}
-		id = rows[0].id;
-		parent.$.modalDialog({
-			title : '工程款拨付处理',
-			width : document.body.clientWidth*0.9,
-			height : 600,
-			//height : document.body.clientHeight*0.9,
-			href : '${ctx}/projectAppropriateReg/handlerPage?id=' + id,
-			buttons : [ {
-				text : '退出',
-				handler : function() {
-					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialog.handler.dialog('close');
-				}
-			} ]
-		});
-	}
-
-	function editFun() {
-		var id = null;
-		var rows = dataGrid.datagrid('getSelections');
-		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可编辑对象!');
-			return;
-		}
-
-		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能对一条记录编辑!');
-			return;
-		}
-
-		id = rows[0].id;
-
-		parent.$.modalDialog({
-			title : '工程款拨付修改',
-			width : document.body.clientWidth*0.9,
-			//height : document.body.clientHeight*0.9,
-			height : 600,
-			href : '${ctx}/projectAppropriateReg/editPage?id=' + id,
-			buttons : [ {
-				text : '编辑',
-				id:'paregBtn',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
-							.find('#projectAppropriateRegEditForm');
-					f.submit();
-				}
-			},{
-				text : '退出',
-				handler : function() {
-					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialog.handler.dialog('close');
-				}
-			} ]
-		});
-	}
-
-	function detailFun() {
-		var id = null;
-		var rows = dataGrid.datagrid('getSelections');
-		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可查看对象!');
-			return;
-		}
-
-		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能查看一条记录!');
-			return;
-		}
-
-		id = rows[0].id;
-
-		parent.$.modalDialog({
-			title : '工程款拨付详情',
-			width : document.body.clientWidth*0.9,
-			height : 600,
-			//height : document.body.clientHeight*0.9,
-			href : '${ctx}/projectAppropriateReg/detailPage?id=' + id,
-			buttons : [ {
-				text : '退出',
-				handler : function() {
-					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialog.handler.dialog('close');
-				}
-			} ]
-		});
-	}
-	
 	function printFun(type) {
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
@@ -494,7 +390,7 @@
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/add')}">
-				<a onclick="addFun();" href="javascript:void(0);"
+				<a onclick="viewFun('add');" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_add'">添加 </a>
 			</c:when>
@@ -507,7 +403,7 @@
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/edit')}">
-				<a onclick="editFun();" href="javascript:void(0);"
+				<a onclick="viewFun('edit');" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_edit'">编辑</a>
 			</c:when>
@@ -534,7 +430,7 @@
 		<c:choose>
 			<c:when
 				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateReg/detail')}">
-				<a onclick="detailFun();" href="javascript:void(0);"
+				<a onclick="viewFun('detail');" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail'">详情 </a>
 			</c:when>
@@ -544,20 +440,6 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
-		
-		<c:choose>
-			<c:when
-				test="${fn:contains(sessionInfo.resourceList, '/projectAppropriateAccount/handler')}">
-				<a onclick="handlerFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_audit'">处理</a>
-			</c:when>
-			<c:otherwise>
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
-					color="gray">处理</font> </a>
-			</c:otherwise>
-		</c:choose>
 
 		<a onclick="printFun(0);" href="javascript:void(0);"
 			class="easyui-linkbutton"
@@ -565,6 +447,7 @@
 			onclick="printFun(1);" href="javascript:void(0);"
 			class="easyui-linkbutton"
 			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
+			
 		<table>
 			<tr>
 				<th>项目名称:</th>

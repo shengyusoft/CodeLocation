@@ -46,7 +46,7 @@
 	</title>
 	<pageHeader>
 		<band height="20" splitType="Stretch">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
 				<reportElement x="683" y="0" width="119" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -57,6 +57,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="632" y="0" width="51" height="20"/>
@@ -370,7 +371,7 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{managerFee}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="false">
 				<reportElement stretchType="RelativeToBandHeight" x="502" y="37" width="77" height="36"/>
 				<box>
 					<topPen lineWidth="0.25"/>
@@ -381,7 +382,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{bidDT}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{bidDT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="647" y="37" width="65" height="36"/>

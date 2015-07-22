@@ -60,6 +60,19 @@ public class ProjectAppropriateAccountServiceImpl implements
 					ProjectAppropriateReg.class, vo.getProjectAppRegId());
 			po.setProjectAppropriateReg(preg);
 		}
+		if (vo.getApplierId() != null && vo.getApplierId() > 0) {
+			Tuser user = userDao.get(Tuser.class, vo.getApplierId());
+			po.setApplier(user);
+
+		}
+		if (vo.getHandlerId1() != null && vo.getHandlerId1() > 0) {
+			Tuser user = userDao.get(Tuser.class, vo.getHandlerId1());
+			po.setHandler1(user);
+		}
+		if (vo.getHandlerId2() != null && vo.getHandlerId2() > 0) {
+			Tuser user = userDao.get(Tuser.class, vo.getHandlerId2());
+			po.setHandler2(user);
+		}
 		return po;
 	}
 
@@ -74,6 +87,18 @@ public class ProjectAppropriateAccountServiceImpl implements
 			vo.setProjectAppRegId(po.getProjectAppropriateReg().getId());
 			vo.setProjectAppRegName(po.getProjectAppropriateReg()
 					.getProjectName());
+		}
+		if (po.getApplier() != null) {
+			vo.setApplierId(po.getApplier().getId());
+			vo.setApplierName(po.getApplier().getName());
+		}
+		if (po.getHandler1() != null) {
+			vo.setHandlerId1(po.getHandler1().getId());
+			vo.setHandlerIdName1(po.getHandler1().getName());
+		}
+		if (po.getHandler2() != null) {
+			vo.setHandlerId2(po.getHandler2().getId());
+			vo.setHandlerIdName2(po.getHandler2().getName());
 		}
 		return vo;
 	}
@@ -144,11 +169,11 @@ public class ProjectAppropriateAccountServiceImpl implements
 				+ id;
 		return projectAppropriateAccountDao.countBySql(sql);
 	}
-	
+
 	@Override
-	public BigInteger countByRegIdAndState(Long id,int state) {
-		String sql = "select count(*) from projectappropriateaccount t where t.state = "+state+" and t.projectAreg_id="
-				+ id;
+	public BigInteger countByRegIdAndState(Long id, int state) {
+		String sql = "select count(*) from projectappropriateaccount t where t.state = "
+				+ state + " and t.projectAreg_id=" + id;
 		return projectAppropriateAccountDao.countBySql(sql);
 	}
 
@@ -200,7 +225,7 @@ public class ProjectAppropriateAccountServiceImpl implements
 
 	@Override
 	public int findMaxTimes() {
-		//String hql = " select max(times) from ProjectAppropriateAccount t ";
+		// String hql = " select max(times) from ProjectAppropriateAccount t ";
 		return 0;
 	}
 

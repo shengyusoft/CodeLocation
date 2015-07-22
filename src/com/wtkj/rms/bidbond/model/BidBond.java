@@ -46,7 +46,7 @@ public class BidBond extends IdEntity implements Serializable {
 	private String payeeBank;// 开户行
 	private String payeeAccountNum;// 帐 号
 	private String payeeComments;// 附 言
-	private Date payeeHandleDT;// 办理时间
+	private Date payeeHandleDT;// 办理时间(截止时间)
 
 	// payer付款人信息
 	private String customerName;// 客服姓名

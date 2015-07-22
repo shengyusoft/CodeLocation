@@ -118,8 +118,6 @@ public class NumberToCN {
 	}
 
 	public static void main(String[] args) {
-		double money = 2020004.01;
-		BigDecimal numberOfMoney = new BigDecimal(money);
 		double n = 2020004.01;
 		BigDecimal nb = new BigDecimal(n);
 		System.out.println(NumberToCN.number2CNMontrayUnit(nb));

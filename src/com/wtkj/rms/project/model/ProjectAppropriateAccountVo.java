@@ -16,6 +16,10 @@ public class ProjectAppropriateAccountVo implements java.io.Serializable {
 
 	private String projectAppRegName;// 工程款拨付项目
 
+	private Long applierId;
+
+	private String applierName;
+
 	private Long projectAppRegId;// 工程款拨付Id
 
 	private int times;// 次数
@@ -45,8 +49,28 @@ public class ProjectAppropriateAccountVo implements java.io.Serializable {
 
 	private String remark2;// 备注2，会计部填写
 
+	private String remark3;// 出纳备注
+
+	// 会计办理人
+	private Long handlerId1;
+	private String handlerIdName1;
+
+	// 出纳办理人信息
+	private Long handlerId2;
+	private String handlerIdName2;
+
 	// 0初始化综合部确认后状态;1工程部提交;会计部提价2
 	private int state;// 状态
+
+	private int option;
+
+	public int getOption() {
+		return option;
+	}
+
+	public void setOption(int option) {
+		this.option = option;
+	}
 
 	public Long getId() {
 		return id;
@@ -182,6 +206,62 @@ public class ProjectAppropriateAccountVo implements java.io.Serializable {
 
 	public void setState(int state) {
 		this.state = state;
+	}
+
+	public String getRemark3() {
+		return remark3;
+	}
+
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
+	}
+
+	public Long getHandlerId1() {
+		return handlerId1;
+	}
+
+	public void setHandlerId1(Long handlerId1) {
+		this.handlerId1 = handlerId1;
+	}
+
+	public String getHandlerIdName1() {
+		return handlerIdName1;
+	}
+
+	public void setHandlerIdName1(String handlerIdName1) {
+		this.handlerIdName1 = handlerIdName1;
+	}
+
+	public Long getHandlerId2() {
+		return handlerId2;
+	}
+
+	public void setHandlerId2(Long handlerId2) {
+		this.handlerId2 = handlerId2;
+	}
+
+	public String getHandlerIdName2() {
+		return handlerIdName2;
+	}
+
+	public void setHandlerIdName2(String handlerIdName2) {
+		this.handlerIdName2 = handlerIdName2;
+	}
+
+	public Long getApplierId() {
+		return applierId;
+	}
+
+	public void setApplierId(Long applierId) {
+		this.applierId = applierId;
+	}
+
+	public String getApplierName() {
+		return applierName;
+	}
+
+	public void setApplierName(String applierName) {
+		this.applierName = applierName;
 	}
 
 }

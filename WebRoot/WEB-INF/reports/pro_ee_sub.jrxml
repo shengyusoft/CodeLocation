@@ -230,7 +230,7 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{toAccountFee}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="104" y="0" width="77" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
@@ -241,7 +241,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{toAccountDT}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{toAccountDT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="309" y="0" width="74" height="20"/>

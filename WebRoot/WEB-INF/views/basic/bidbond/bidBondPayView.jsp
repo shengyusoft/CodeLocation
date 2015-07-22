@@ -141,7 +141,7 @@ input {
 										name="payeeComments" id="payeeComments">${bidBond.payeeComments}</textarea></td>
 							</tr>
 							<tr>
-								<th>填表时间&nbsp;<label
+								<th>截止时间&nbsp;<label
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 								<td colspan="4"><input name="payeeHandleDT" type="text"
 									value="<fmt:formatDate value="${bidBond.payeeHandleDT}" pattern="yyyy-MM-dd"/>"

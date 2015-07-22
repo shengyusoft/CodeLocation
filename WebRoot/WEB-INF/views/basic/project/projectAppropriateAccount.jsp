@@ -78,7 +78,17 @@
 				align : 'center',
 				field : 'state',
 				formatter : function(value, row, index) {
-					return value == 0?'<font color="red">待确认</font>':'<font color="green">已确认</font>';
+					if(value == 0){
+						return '<font color="red">未提交</font>';
+					}else if(value == 1){
+						return '<font color="green">已提交</font>';
+					}else if(value == 2){
+						return '<font color="green">会计已确认</font>';
+					}else if(value == 3){
+						return '<font color="green">出纳已确认</font>';
+					}else{
+						return '';
+					}
 				}
 			} ] ],
 

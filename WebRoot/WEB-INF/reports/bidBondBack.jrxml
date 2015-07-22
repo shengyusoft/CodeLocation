@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="招投标公司投标保证金退还申请表" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="招投标公司投标保证金退还申请表" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -57,7 +57,7 @@ where b.id=$P{id}]]>
 	<title>
 		<band height="65" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="30"/>
+				<reportElement x="0" y="0" width="535" height="30"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -77,7 +77,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[退  号]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="437" y="42" width="118" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="437" y="42" width="98" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -136,7 +136,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[标段]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="359" y="0" width="196" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="359" y="0" width="176" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -149,7 +149,7 @@ where b.id=$P{id}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{bidNames}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="330" y="30" width="225" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="330" y="30" width="205" height="30"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -190,7 +190,7 @@ where b.id=$P{id}]]>
 ]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="151" y="60" width="404" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="60" width="384" height="30"/>
 				<box leftPadding="9">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -229,7 +229,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[开户行]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="151" y="90" width="404" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="90" width="384" height="30"/>
 				<box leftPadding="9">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -242,7 +242,7 @@ where b.id=$P{id}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{payeeBank}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="151" y="120" width="404" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="120" width="384" height="30"/>
 				<box leftPadding="9">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -268,7 +268,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[帐  号]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="151" y="150" width="404" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="150" width="384" height="30"/>
 				<box leftPadding="9">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -304,10 +304,10 @@ where b.id=$P{id}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[办理时间]]></text>
+				<text><![CDATA[截止时间]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="151" y="180" width="404" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="151" y="180" width="384" height="30"/>
 				<box leftPadding="9">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -320,7 +320,7 @@ where b.id=$P{id}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{payeeHandleDT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="85" y="210" width="163" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="85" y="210" width="225" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -346,7 +346,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[付款人]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="359" y="210" width="196" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="359" y="210" width="176" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -359,7 +359,7 @@ where b.id=$P{id}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{payerPhone}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="248" y="210" width="111" height="30"/>
+				<reportElement x="310" y="210" width="49" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -372,7 +372,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[联系方式]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="248" y="240" width="111" height="30"/>
+				<reportElement x="310" y="240" width="49" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -385,7 +385,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[申请时间]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="85" y="240" width="66" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="85" y="240" width="79" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -411,7 +411,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[申请人]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="359" y="240" width="196" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="359" y="240" width="176" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -424,7 +424,7 @@ where b.id=$P{id}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{applyDT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="151" y="240" width="97" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="213" y="240" width="97" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -437,7 +437,7 @@ where b.id=$P{id}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{applierPhone}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="270" width="555" height="18"/>
+				<reportElement x="0" y="270" width="535" height="18"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -450,7 +450,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[到帐转出情况]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="330" y="288" width="225" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="330" y="288" width="205" height="30"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -476,7 +476,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[到帐金额]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="85" y="318" width="470" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="85" y="318" width="450" height="30"/>
 				<box leftPadding="9">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -515,7 +515,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[转出金额]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="330" y="348" width="225" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="330" y="348" width="205" height="30"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -541,7 +541,7 @@ where b.id=$P{id}]]>
 				<text><![CDATA[转出时间]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="85" y="378" width="470" height="30"/>
+				<reportElement stretchType="RelativeToBandHeight" x="85" y="378" width="450" height="30"/>
 				<box leftPadding="9">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -592,8 +592,8 @@ where b.id=$P{id}]]>
 				</textElement>
 				<text><![CDATA[办理人]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="359" y="408" width="196" height="30"/>
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="359" y="408" width="176" height="30"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -603,7 +603,7 @@ where b.id=$P{id}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{handlerDT}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{handlerDT}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="85" y="348" width="66" height="30"/>
@@ -722,6 +722,19 @@ where b.id=$P{id}]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{bondFee}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="164" y="240" width="49" height="30"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[联系方式]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>

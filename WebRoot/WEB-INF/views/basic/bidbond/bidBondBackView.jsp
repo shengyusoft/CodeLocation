@@ -219,12 +219,14 @@ input {
 
 				<tr>
 					<th>应退保证金（元）&nbsp;</th>
-					<td><input name="backFee" value="${bidBond.backFee}"
+					<td colspan="5"><input name="backFee" value="${bidBond.backFee}"
 						type="text" id="backFee" style="width: 100%; height: 100%"
 						readonly="readonly" disabled="disabled" class="easyui-numberbox"
 						precision="2" min="0" /></td>
+				</tr>
+				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="3"><textarea style="width: 100%" rows="1"
+					<td colspan="5"><textarea style="width: 100%" rows="2"
 							name="remark2">${bidBond.remark2}</textarea></td>
 				</tr>
 				<tr>
@@ -260,16 +262,15 @@ input {
 				<c:choose>
 					<c:when test="${viewType == 'handler_kj'}">
 						<tr>
-							<th>转出金额</th>
-							<td colspan="2"><input name="outAccountFee" precision="2"
-								value="${bidBond.outAccountFee}" type="text" id="outAccountFee"
-								style="width: 100%; height: 100%" class="easyui-numberbox"
+							<th>到帐金额</th>
+							<td colspan="2"><input name="toAccountFee" precision="2"
+								type="text" value="${bidBond.toAccountFee}" id="toAccountFee"
+								class="easyui-numberbox" style="width: 100%;"
 								required="required" /></td>
-							<th>转出时间</th>
-							<td colspan="2"><input name="outAccountDT"
-								value="<fmt:formatDate value="${bidBond.outAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
-								type="text" id="outAccountDT" class="easyui-datebox"
-								required="required" /></td>
+							<th>到帐时间</th>
+							<td colspan="2"><input name="toAccountDT" type="text"
+								value="<fmt:formatDate value="${bidBond.toAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
+								id="toAccountDT" class="easyui-datebox" required="required" /></td>
 						</tr>
 						<tr>
 							<th>备注&nbsp;</th>
@@ -279,16 +280,15 @@ input {
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<th>转出金额</th>
-							<td colspan="2"><input name="outAccountFee" precision="2"
-								value="${bidBond.outAccountFee}" type="number"
-								id="outAccountFee" style="width: 100%; height: 100%"
-								class="easyui-numberbox disabled" readonly="readonly" /></td>
-							<th>转出时间</th>
-							<td colspan="2"><input name="outAccountDT"
-								value="<fmt:formatDate value="${bidBond.outAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
-								type="text" id="outAccountDT" class="Wdate disabled"
-								readonly="readonly" /></td>
+							<th>到帐金额</th>
+							<td colspan="2"><input name="toAccountFee" precision="2"
+								type="text" value="${bidBond.toAccountFee}" id="toAccountFee"
+								class="easyui-numberbox disabled"
+								style="width: 100%; height: 100%" readonly="readonly" /></td>
+							<th>到帐时间</th>
+							<td colspan="2"><input name="toAccountDT" type="text"
+								value="<fmt:formatDate value="${bidBond.toAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
+								id="toAccountDT" class="Wdate disabled" readonly="readonly" /></td>
 						</tr>
 						<tr>
 							<th>备注&nbsp;</th>
@@ -317,15 +317,16 @@ input {
 				<c:choose>
 					<c:when test="${viewType == 'handler_cn'}">
 						<tr>
-							<th>到帐金额</th>
-							<td colspan="2"><input name="toAccountFee" precision="2"
-								type="text" value="${bidBond.toAccountFee}" id="toAccountFee"
-								class="easyui-numberbox" style="width: 100%;"
+							<th>转出金额</th>
+							<td colspan="2"><input name="outAccountFee" precision="2"
+								value="${bidBond.outAccountFee}" type="text" id="outAccountFee"
+								style="width: 100%; height: 100%" class="easyui-numberbox"
 								required="required" /></td>
-							<th>到帐时间</th>
-							<td colspan="2"><input name="toAccountDT" type="text"
-								value="<fmt:formatDate value="${bidBond.toAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
-								id="toAccountDT" class="easyui-datebox" required="required" /></td>
+							<th>转出时间</th>
+							<td colspan="2"><input name="outAccountDT"
+								value="<fmt:formatDate value="${bidBond.outAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
+								type="text" id="outAccountDT" class="easyui-datebox"
+								required="required" /></td>
 						</tr>
 						<tr>
 							<th>备注&nbsp;</th>
@@ -335,15 +336,16 @@ input {
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<th>到帐金额</th>
-							<td colspan="2"><input name="toAccountFee" precision="2"
-								type="text" value="${bidBond.toAccountFee}" id="toAccountFee"
-								class="easyui-numberbox disabled"
-								style="width: 100%; height: 100%" readonly="readonly" /></td>
-							<th>到帐时间</th>
-							<td colspan="2"><input name="toAccountDT" type="text"
-								value="<fmt:formatDate value="${bidBond.toAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
-								id="toAccountDT" class="Wdate disabled" readonly="readonly" /></td>
+							<th>转出金额</th>
+							<td colspan="2"><input name="outAccountFee" precision="2"
+								value="${bidBond.outAccountFee}" type="number"
+								id="outAccountFee" style="width: 100%; height: 100%"
+								class="easyui-numberbox disabled" readonly="readonly" /></td>
+							<th>转出时间</th>
+							<td colspan="2"><input name="outAccountDT"
+								value="<fmt:formatDate value="${bidBond.outAccountDT}" pattern="yyyy-MM-dd HH:mm"/>"
+								type="text" id="outAccountDT" class="Wdate disabled"
+								readonly="readonly" /></td>
 						</tr>
 						<tr>
 							<th>备注&nbsp;</th>

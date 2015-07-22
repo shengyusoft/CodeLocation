@@ -1,7 +1,6 @@
 package com.wtkj.rms.project.controller;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.controller.BaseController;
-import com.wtkj.rms.project.model.ProjectAppropriateAccountVo;
 import com.wtkj.rms.project.model.ProjectAppropriateReg;
 import com.wtkj.rms.project.service.ProjectAppropriateAccountServiceI;
 import com.wtkj.rms.project.service.ProjectAppropriateRegServiceI;
@@ -43,19 +41,27 @@ public class ProjectAppropriateRegController extends BaseController {
 		Grid grid = new Grid();
 		List<ProjectAppropriateReg> regs = projectAppropriateRegService
 				.dataGrid(projectAppropriateReg, ph);
-		
-		//根据子状态判断状态值
+
+		// 根据子状态判断状态值
 		for (ProjectAppropriateReg reg : regs) {
-			BigInteger count = projectAppropriateAccountService.countByRegIdAndState(reg.getId(),0);
-			BigInteger baseCount = projectAppropriateAccountService.countByRegId(reg.getId());
+			BigInteger count = projectAppropriateAccountService
+					.countByRegIdAndState(reg.getId(), 1);
 			
-			if(baseCount.intValue() == 0){
+			//没有申请的记录数
+			BigInteger notApplyCount = projectAppropriateAccountService
+					.countByRegIdAndState(reg.getId(), 0);
+			//总数
+			BigInteger baseCount = projectAppropriateAccountService
+					.countByRegId(reg.getId());
+
+			//总数为0或者只有未申请的记录
+			if (baseCount.intValue() == 0 || baseCount.intValue() == notApplyCount.intValue()) {
 				reg.setState(-1);
-			}else{
-				if(count.intValue() > 0){
-					//能找到说明还有未拨款的
+			} else {
+				if (count.intValue() > 0) {
+					// 能找到说明还有未拨款的
 					reg.setState(0);
-				}else{
+				} else {
 					reg.setState(1);
 				}
 			}
@@ -66,20 +72,50 @@ public class ProjectAppropriateRegController extends BaseController {
 		return grid;
 	}
 
-	@RequestMapping("/addPage")
-	public String addPage(HttpServletRequest request) {
-		return "/basic/project/projectAppropriateRegAdd";
+	@RequestMapping("/get")
+	@ResponseBody
+	public ProjectAppropriateReg get(Long id) {
+		return projectAppropriateRegService.get(id);
 	}
 
-	@RequestMapping("/add")
+	@RequestMapping("/viewPage")
+	public String viewPage(HttpServletRequest request, String viewType, Long id) {
+		// 获取当前用户
+		ProjectAppropriateReg vo = null;
+		if (!StringUtils.isEmpty(id) && Long.valueOf(id) > 0) {
+			// 编辑，详情
+			vo = projectAppropriateRegService.get(id);
+		} else {
+			// 添加
+			vo = new ProjectAppropriateReg();
+		}
+		request.setAttribute("projectAppropriateReg", vo);
+		request.setAttribute("viewType", viewType);
+		return "/basic/project/projectAppropriateRegView";
+	}
+
+	@RequestMapping("/save")
 	@ResponseBody
-	public Json add(ProjectAppropriateReg vo, HttpServletRequest request) {
+	public Json save(ProjectAppropriateReg vo, String viewType,
+			HttpServletRequest request) {
+		// 普通员工提交
 		Json j = new Json();
+		viewType = StringUtils.isEmpty(viewType) ? "" : viewType;
 		try {
-			projectAppropriateRegService.add(vo, request);
+			// 添加
+			if (vo.getId() == null || vo.getId() <= 0) {
+				projectAppropriateRegService.add(vo, request);
+				j.setObj(vo);
+			} else {// 编辑或者处理
+				projectAppropriateRegService.edit(vo, request);
+			}
+
+			if ("add".equals(viewType)) {
+				j.setMsg("添加成功！");
+			} else if ("edit".equals(viewType)) {
+				j.setMsg("修改成功！");
+			}
 			j.setSuccess(true);
-			j.setMsg("添加成功！");
-			j.setObj(vo);
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
 		}
@@ -95,7 +131,6 @@ public class ProjectAppropriateRegController extends BaseController {
 			j.setSuccess(true);
 			return j;
 		}
-
 		try {
 			// TODO 关联拨付情况表，注意级联删除
 			projectAppropriateRegService.delete(ids);
@@ -106,79 +141,4 @@ public class ProjectAppropriateRegController extends BaseController {
 		}
 		return j;
 	}
-
-	@RequestMapping("/get")
-	@ResponseBody
-	public ProjectAppropriateReg get(Long id) {
-		return projectAppropriateRegService.get(id);
-	}
-
-	@RequestMapping("/editPage")
-	public String editPage(HttpServletRequest request, Long id) {
-		ProjectAppropriateReg vo = projectAppropriateRegService.get(id);
-		request.setAttribute("projectAppropriateReg", vo);
-		return "/basic/project/projectAppropriateRegEdit";
-	}
-
-	// 会计部处理
-	@RequestMapping("/handlerPage")
-	public String handlerPage(HttpServletRequest request, long id) {
-		ProjectAppropriateReg vo = projectAppropriateRegService.get(id);
-		request.setAttribute("projectAppropriateReg", vo);
-		return "/basic/project/projectAppropriateRegHandler";
-	}
-
-	@RequestMapping("/edit")
-	@ResponseBody
-	public Json edit(ProjectAppropriateReg vo, HttpServletRequest request) {
-		Json j = new Json();
-		try {
-			projectAppropriateRegService.edit(vo, request);
-			j.setSuccess(true);
-			j.setMsg("编辑成功！");
-		} catch (Exception e) {
-			j.setMsg(e.getMessage());
-		}
-		return j;
-	}
-
-	@RequestMapping("/detailPage")
-	public String detailPage(HttpServletRequest request, Long id) {
-		ProjectAppropriateReg vo = projectAppropriateRegService.get(id);
-		request.setAttribute("projectAppropriateReg", vo);
-		return "/basic/project/projectAppropriateRegDetail";
-	}
-
-	// 综合部会计确认
-	@RequestMapping("/confirm")
-	public Json confirm(String ids) {
-		Json j = new Json();
-		if (StringUtils.isEmpty(ids)) {
-			j.setMsg("没有记录!");
-			j.setSuccess(true);
-			return j;
-		}
-
-		try {
-			// 批量确认
-			projectAppropriateRegService.batchUpdateState(ids, 1);
-			// 确认的同时产生拨付情况的数据
-			if (!StringUtils.isEmpty(ids) && ids.length() > 0) {
-				String[] idArray = ids.split(",");
-				for (String id : idArray) {
-					ProjectAppropriateAccountVo at = new ProjectAppropriateAccountVo();
-					at.setToAccountDT(new Date());
-					at.setProjectAppRegId(Long.valueOf(id));
-					projectAppropriateAccountService.add(at, null);
-				}
-			}
-
-			j.setMsg("确认成功！");
-			j.setSuccess(true);
-		} catch (Exception e) {
-			j.setMsg(e.getMessage());
-		}
-		return j;
-	}
-
 }
