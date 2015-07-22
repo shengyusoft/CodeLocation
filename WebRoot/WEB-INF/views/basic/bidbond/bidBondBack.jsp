@@ -52,30 +52,7 @@
 							title : '会计反馈情况',
 							colspan : 4,
 						} ],
-						[{
-							field : 'toAccountFee',
-							align : 'center',
-							title : '到帐金额（元）',
-							width : 120,
-							formatter : Common.formatterDecimal2
-						},{
-							field : 'toAccountDT',
-							align : 'center',
-							title : '到帐时间',
-							width : 120,
-							formatter : Common.formatterTime
-						},{
-							field : 'handlerName',
-							align : 'center',
-							title : '办理人',
-							width : 120
-						},{
-							field : 'handlerDT',
-							align : 'center',
-							title : '办理时间',
-							width : 120,
-							formatter : Common.formatterTime
-						},{
+						[ {
 							field : 'outAccountFee',
 							align : 'center',
 							title : '转出金额',
@@ -94,6 +71,29 @@
 							width : 120
 						},{
 							field : 'handlerDT2',
+							align : 'center',
+							title : '办理时间',
+							width : 120,
+							formatter : Common.formatterTime
+						},{
+							field : 'toAccountFee',
+							align : 'center',
+							title : '到帐金额（元）',
+							width : 120,
+							formatter : Common.formatterDecimal2
+						},{
+							field : 'toAccountDT',
+							align : 'center',
+							title : '到帐时间',
+							width : 120,
+							formatter : Common.formatterTime
+						},{
+							field : 'handlerName',
+							align : 'center',
+							title : '办理人',
+							width : 120
+						},{
+							field : 'handlerDT',
 							align : 'center',
 							title : '办理时间',
 							width : 120,

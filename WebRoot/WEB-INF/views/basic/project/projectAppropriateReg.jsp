@@ -43,51 +43,122 @@
 		            loadMsg:'', 
 		            height:'auto', 
 		            showFooter : true,
-		            columns:[[ 
-						{title : '序号',field : 'index',align : 'center',width : '60',
-							formatter : function(val, row, index) {
-								if(isEmpty(val)){
-									return index + 1;
-								}else{
-									return val;
-								}
+		            columns : [ [ {
+						title : '序号',
+						field : 'index',
+						align : 'center',
+						width : '40',
+						rowspan:2,
+						formatter : function(val, row, index) {
+							if(isEmpty(val)){
+								return index + 1;
+							}else{
+								return val;
 							}
-						},
-		                {field:'toAccountFee',title:'到帐金额（元）',width:100,align:'center',sum : true,}, 
-		                {field:'toAccountDT',title:'到帐时间',width:150,align:'center'}, 
-		                {field:'applyFee',title:'申请拨付金额',width:120,align:'center',sum : true,},
-		                {field:'applyDT',title:'申请拨付时间',width:100,align:'center'},
-		                {field:'actualFee',title:'实际拨付金额（元）',width:150,align:'center',sum : true,},
-		                {field:'actualDT',title:'实际拨付时间',width:100,align:'center'},
-		                {field:'payee',title:'收款人',width:100,align:'center'},
-		                {
-		    				width : '120',
-		    				title : '状态',
-		    				align : 'center',
-		    				field : 'state',
-		    				formatter : function(value, row, index) {
-		    					if(value == 0){
-		    						return '<font color="red">未提交</font>';
-		    					}else if(value == 1){
-		    						return '<font color="green">已提交</font>';
-		    					}else if(value == 2){
-		    						return '<font color="green">会计已确认</font>';
-		    					}else if(value == 3){
-		    						return '<font color="green">出纳已确认</font>';
-		    					}else{
-		    						return '';
-		    					}
-		    				}
-		    			},
-		                {field:'bank',title:'开户行',width:120,align:'center'},
-		                {field:'accountNum',title:'帐号',width:150,align:'center'},
-		                {field:'remark1',title:'备注1',width:200,align:'center'},
-		                {field:'remark2',title:'备注2',width:200,align:'center'},
-		                {field : 'id',hidden:true},
-		                {field : 'projectAppRegName',hidden:true},
-		                {field : 'projectAppRegId',hidden:true},
-		                {field : 'times',hidden:true}
-		            ]], 
+						}
+					}, {
+						title : '以下内容工程部经理填写（单位：元）',
+						colspan : 6,
+						align : 'center'
+					}, {
+						title : '以下内容财务部会计填写（单位：元）',
+						colspan : 3,
+						align : 'center'
+					}, {
+						title : '以下内容财务部出纳填写（单位：元）',
+						colspan : 3,
+						align : 'center'
+					}, {
+						width : '90',
+						rowspan : 2,
+						title : '状态',
+						align : 'center',
+						field : 'state',
+						formatter : function(value, row, index) {
+							if(value == 0){
+								return '<font color="red">未提交</font>';
+							}else if(value == 1){
+								return '<font color="green">已提交</font>';
+							}else if(value == 2){
+								return '<font color="green">会计已确认</font>';
+							}else if(value == 3){
+								return '<font color="green">出纳已确认</font>';
+							}else{
+								return '';
+							}
+						}
+					} ] , [ {
+						width : 110,
+						title : '业主本次拨付金额',
+						align : 'center',
+						field : 'toAccountFee',
+						sum : true
+					}, {
+						width : 110,
+						title : '本次计划支付金额',
+						sortable : true,
+						align : 'center',
+						field : 'applyFee'
+					}, {
+						width : '90',
+						title : '收款人',
+						rowspan : 2,
+						align : 'center',
+						field : 'payee'
+					}, {
+						width : '90',
+						title : '开户行',
+						rowspan : 2,
+						align : 'center',
+						field : 'bank'
+					}, {
+						width : '90',
+						title : '帐号',
+						rowspan : 2,
+						align : 'center',
+						field : 'accountNum'
+					},{
+						width : '90',
+						title : '工程部备注',
+						align : 'center',
+						field : 'remark1'
+					}, {
+						width : 100,
+						title : '实际到帐金额',
+						sortable : true,
+						align : 'center',
+						field : 'actualFee',
+						sum : true
+					}, {
+						width : 100,
+						title : '实际到帐时间',
+						align : 'center',
+						field : 'actualDT',
+						formatter:Common.formatter
+					}, {
+						width : '90',
+						title : '会计备注',
+						align : 'center',
+						field : 'remark2'
+					}, {
+						width : 110,
+						title : '本次实际支付金额',
+						sortable : true,
+						align : 'center',
+						field : 'actualPayFee',
+						sum : true
+					}, {
+						width : '90',
+						title : '转出时间',
+						align : 'center',
+						field : 'toAccountDT',
+						formatter:Common.formatter
+					}, {
+						width : '90',
+						title : '出纳备注',
+						align : 'center',
+						field : 'remark3'
+					} ] ],
 		            onResize:function(){ 
 		                $('#dataGrid').datagrid('fixDetailRowHeight',index); 
 		            }, 

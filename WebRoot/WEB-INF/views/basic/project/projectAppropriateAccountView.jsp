@@ -166,9 +166,9 @@
 								value="${projectAppropriateAccount.actualPayFee}" /></td>
 							<th>拨出时间&nbsp;</th>
 							<td colspan="3"><input class="Wdate" type="text"
-								name="actualDT"
-								value="<fmt:formatDate value="${projectAppropriateAccount.actualDT}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-								id="actualDT" style="width: 98%; height: 100%;"
+								name="toAccountDT"
+								value="<fmt:formatDate value="${projectAppropriateAccount.toAccountDT}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+								id="toAccountDT" style="width: 98%; height: 100%;"
 								required="required" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
 						</tr>
 						<tr>
@@ -187,10 +187,10 @@
 								value="${projectAppropriateAccount.actualPayFee}" /></td>
 							<th>拨出时间&nbsp;</th>
 							<td colspan="3"><input class="Wdate disabled" type="text"
-								name="actualDT"
-								value="<fmt:formatDate value="${projectAppropriateAccount.actualDT}" 
+								name="toAccountDT"
+								value="<fmt:formatDate value="${projectAppropriateAccount.toAccountDT}" 
 								pattern="yyyy-MM-dd HH:mm:ss"/>"
-								id="actualDT" style="width: 98%; height: 100%;"
+								id="toAccountDT" style="width: 98%; height: 100%;"
 								readonly="readonly" /></td>
 						</tr>
 						<tr>

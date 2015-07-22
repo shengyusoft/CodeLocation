@@ -84,8 +84,12 @@
 				colspan : 6,
 				align : 'center'
 			}, {
+				title : '以下内容财务部会计填写（单位：元）',
+				colspan : 3,
+				align : 'center'
+			}, {
 				title : '以下内容财务部出纳填写（单位：元）',
-				colspan : 4,
+				colspan : 3,
 				align : 'center'
 			}, {
 				width : '90',
@@ -155,6 +159,11 @@
 				field : 'actualDT',
 				formatter:Common.formatter
 			}, {
+				width : '90',
+				title : '会计备注',
+				align : 'center',
+				field : 'remark2'
+			}, {
 				width : 150,
 				title : '本次实际支付金额',
 				sortable : true,
@@ -163,9 +172,15 @@
 				sum : true
 			}, {
 				width : '90',
-				title : '财务部备注',
+				title : '转出时间',
 				align : 'center',
-				field : 'remark2'
+				field : 'toAccountDT',
+				formatter:Common.formatter
+			}, {
+				width : '90',
+				title : '出纳备注',
+				align : 'center',
+				field : 'remark3'
 			} ] ],
 			onLoadSuccess:function(){ 
 	            $('#dataGrid').datagrid('statistics');
