@@ -442,8 +442,6 @@
 		var endDT = $('#endDT').val();
 		var applier = $('#applyUserName').val();
 		var place = $('#place').val();
-		console.log(applier);
-		console.log(place);
 		var url = ctxPath + "/report/reimbursement?type="+type+"&&startDT="+startDT+"&&endDT="+endDT+"&&applier="+applier+"&&place="+place;
 		if(type == 0){
 			var tmp = window.open (url,'newwindow','width='+(window.screen.availWidth-10)+',height='+(window.screen.availHeight-30)+ ',top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');

@@ -15,29 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wtkj.common.controller.BaseController;
+import com.wtkj.common.model.User;
+import com.wtkj.common.service.UserServiceI;
 import com.wtkj.common.utils.DateUtil;
 import com.wtkj.rms.customer.model.po.Customer;
 import com.wtkj.rms.customer.model.po.Order;
 import com.wtkj.rms.customer.service.OrderDetailServiceI;
 import com.wtkj.rms.customer.service.OrderServiceI;
-import com.wtkj.rms.customer.service.QuotationDetailServiceI;
-import com.wtkj.rms.customer.service.QuotationServiceI;
-import com.wtkj.rms.dailymaintain.service.TaskServiceI;
+import com.wtkj.rms.process.model.Process;
+import com.wtkj.rms.process.service.ProcessServiceI;
 import com.wtkj.rms.purchase.service.PurchasePlanDetailServiceI;
 import com.wtkj.rms.purchase.service.PurchasePlanServiceI;
+import com.wtkj.rms.reimbursement.model.po.ReimbursementBatch;
+import com.wtkj.rms.reimbursement.service.ReimbursementBatchServiceI;
 
 @Controller
 @RequestMapping("/report")
 public class ReportController extends BaseController {
-
-	@Autowired
-	protected TaskServiceI taskService;
-
-	@Autowired
-	protected QuotationServiceI quotationService;
-
-	@Autowired
-	protected QuotationDetailServiceI quotationDetailService;
 
 	@Autowired
 	protected OrderServiceI orderService;
@@ -50,6 +44,15 @@ public class ReportController extends BaseController {
 
 	@Autowired
 	protected PurchasePlanDetailServiceI purchasePlanDetailService;
+
+	@Autowired
+	protected ReimbursementBatchServiceI reimbursementBatchService;
+
+	@Autowired
+	protected ProcessServiceI processService;
+
+	@Autowired
+	protected UserServiceI userService;
 
 	@RequestMapping("/order")
 	public ModelAndView order(HttpServletRequest request, Long orderId,
@@ -252,6 +255,45 @@ public class ReportController extends BaseController {
 		}
 
 		return new ModelAndView("reimbursement", parameterMap);
+	}
+
+	/**
+	 * 员工报销报表-批量报销
+	 * 
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/reimbursementBatch")
+	public ModelAndView reimbursementBatch(long batchId, int type,
+			HttpServletRequest request) throws IOException {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		ReimbursementBatch rb = null;
+		if (batchId > 0) {
+			rb = reimbursementBatchService.get(batchId);
+		}
+		parameterMap.put("batchId", batchId);
+
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+
+		if (rb != null) {
+			Process process = processService.get(rb.getProcess().getId());
+			if (process != null) {
+				User u = userService.get(process.getApplyUser().getId());
+				parameterMap.put("applierName", u == null ? "" : u.getName());
+			}
+			parameterMap.put("month",
+					DateUtil.convertDateToString(rb.getMonth(), "yyyy-MM"));
+		} else {
+			parameterMap.put("applierName", "");
+			parameterMap.put("month", "");
+		}
+
+		return new ModelAndView("reimbursementBatch", parameterMap);
 	}
 
 }

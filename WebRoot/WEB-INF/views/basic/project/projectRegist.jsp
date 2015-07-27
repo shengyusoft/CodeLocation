@@ -39,7 +39,7 @@
 					return index+1;
 				}
 			}, {
-				width : '90',
+				width : '100',
 				title : '公司名称',
 				align : 'center',
 				field : 'company',
@@ -47,37 +47,27 @@
 					return isEmpty(value)?'':value.text ;
 				}
 			}, {
-				width : '140',
+				width : '200',
 				title : '项目名称',
 				sortable : true,
 				align : 'center',
 				field : 'projectName'
 			}, {
-				width : '80',
-				title : '省',
-				sortable : true,
-				align : 'center',
-				field : 'provice',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '90',
-				title : '市',
-				sortable : true,
-				align : 'center',
-				field : 'city',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '90',
-				title : '县',
+				width : '140',
+				title : '项目地点',
 				sortable : true,
 				align : 'center',
 				field : 'county',
 				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
+					var place = '';
+					if (!isEmpty(row.county)
+							&& !isEmpty(row.county.description)) {
+						place = row.county.description;
+					} else {
+						place = row.provice + row.city
+								+ row.county;
+					}
+					return place;
 				}
 			}, {
 				width : '100',

@@ -30,4 +30,6 @@ public interface BidBondServiceI {
 	public long countAll(int type);
 
 	public Long countByState(int i);
+
+	Long countByIdNumber(String idNumber);
 }

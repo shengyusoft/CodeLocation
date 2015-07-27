@@ -25,9 +25,15 @@
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
 	
-	<!--报销-->
+	<!--批量报销-->
 	<bean id="reimbursement" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
 		<property name="url" value="/WEB-INF/reports/reimbursement.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	
+	<!--报销-->
+	<bean id="reimbursementBatch" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/reimbursementBatch.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
 	

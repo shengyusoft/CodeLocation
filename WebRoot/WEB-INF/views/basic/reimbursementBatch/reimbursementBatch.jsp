@@ -268,6 +268,34 @@
 		$('#month').val('');
 		//$('#createDT').val('');
 	}
+	
+	function printFun(type) {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可查看对象!');
+			return;
+		}
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录查看!');
+			return;
+		}
+		id = rows[0].id;
+		var url = ctxPath + "/report/reimbursementBatch?batchId=" + id + "&&type=" + type;
+		if (type == 0) {
+			id = rows[0].id;
+			var tmp = window.open (
+					url,'newwindow',
+					'width='+(window.screen.availWidth-10)+
+					',height='+(window.screen.availHeight-30)+
+					',top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no'
+				);
+			tmp.focus();
+		} else {
+			var tmp = window.open(url);
+			tmp.focus();
+		}
+	}
 
 	function addFun() {
 		parent.$.modalDialog({
@@ -601,6 +629,14 @@
 					color="gray">审核</font> </a>
 			</c:otherwise>
 		</c:choose>
+		
+		<a onclick="printFun(0);" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览</a>
+
+			<a onclick="printFun(1);" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 		
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/search')}">

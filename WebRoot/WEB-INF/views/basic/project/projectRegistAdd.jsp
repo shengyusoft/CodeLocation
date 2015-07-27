@@ -1,6 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style type="text/css">
+.innerGrid{
+  border-bottom: none;
+  border-top: none;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+.innerGrid th{
+	border : none;
+}
+
+.innerGrid td{
+  border-bottom: none;
+  border-top: none;
+}
+</style>
 <script type="text/javascript">
 	$(function() {
 		$('#projectRegistAddForm').form({
@@ -64,7 +81,7 @@
 						parentField : 'dictionaryId',
 						valueField : 'id',
 						textField : 'text',
-						panelHeight : '300'		
+						panelHeight : '300'
 					});
 
 	$('#techniqueMgr').combobox({
@@ -191,18 +208,24 @@
 		<form id="projectRegistAddForm" method="post">
 			<table class="grid">
 				<tr>
-					<th width="90px">公司名称 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input type="hidden" name="type" id="type" value="0"></input>
-						<select id="company" name="company.id"
-						data-options="required:true" class="easyui-validatebox span2"
-						style="width: 150px;">
-					</select></td>
-					<th width="100px">项目名称 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" style="width: 100%;" type="text"
-						id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td colspan="4" style="padding: 0px;">
+						<table cellspacing="0" cellpadding="0" class="innerGrid">
+							<tr>
+								<th width="91px">公司名称 &nbsp;<label
+									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+								<td width="155px"><input type="hidden" name="type" id="type" value="0"></input>
+									<select id="company" name="company.id"
+									data-options="required:true" class="easyui-validatebox span2"
+									style="width: 150px;">
+								</select></td>
+								<th width="100px">项目名称 &nbsp;<label
+									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+								<td><input name="projectName" style="width: 100%;"
+									type="text" id="projectName" class="easyui-validatebox span2"
+									data-options="required:true" /></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 				<tr>
 					<th>地点 &nbsp;<label
@@ -223,9 +246,9 @@
 				<tr>
 					<th>资质要求&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="qualifyRequirement"
-						name="qualifyRequirement" class="easyui-validatebox span2"
-						style="width: 350px;" data-options="editable:false,required:true"></select></td>
+					<td><select id="qualifyRequirement" name="qualifyRequirement"
+						class="easyui-validatebox span2" style="width: 350px;"
+						data-options="editable:false,required:true"></select></td>
 					<th>标段 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="bd" name="bds"
@@ -250,21 +273,23 @@
 				<tr>
 					<th rowspan="2" width="90px">证书要求 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3">A证:&nbsp;<select id="certificateA" name="certificateA.id"
-						class="easyui-validatebox span2" style="width: 150px;"
-						data-options="editable:false,required:true">
-					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B证:&nbsp;<select id="certificateB" name="certificateB.id"
-						class="easyui-validatebox span2" style="width: 150px;"
-						data-options="editable:false,required:true">
-					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;C证:&nbsp;<select id="certificateC"
-						name="certificateC.id" class="easyui-validatebox span2"
+					<td colspan="3">A证:&nbsp;<select id="certificateA"
+						name="certificateA.id" class="easyui-validatebox span2"
 						style="width: 150px;" data-options="editable:false,required:true">
+					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B证:&nbsp;<select
+						id="certificateB" name="certificateB.id"
+						class="easyui-validatebox span2" style="width: 150px;"
+						data-options="editable:false,required:true">
+					</select>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;C证:&nbsp;<select
+						id="certificateC" name="certificateC.id"
+						class="easyui-validatebox span2" style="width: 150px;"
+						data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
-					<td colspan="4">五大员证 :&nbsp;<select id="member5Cards" name="member5Cards"
-						class="easyui-validatebox span2" style="width: 550px;"
-						data-options="editable:false,required:true">
+					<td colspan="4">五大员证 :&nbsp;<select id="member5Cards"
+						name="member5Cards" class="easyui-validatebox span2"
+						style="width: 550px;" data-options="editable:false,required:true">
 					</select></td>
 				</tr>
 				<tr>
@@ -328,11 +353,11 @@
 							</tr>
 							<tr>
 								<td><input name="bmFee" type="text" value='0' id="bmFee"
-									style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
 								<td><input name="kbFee" type="text" value='0' id="kbFee"
-									style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
 								<td><input name="head1Fee" type="text" value='0'
 									id="head1Fee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>
@@ -340,20 +365,20 @@
 									id="head2Fee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="zzFee" type="text" value='0' id="zzFee"
-									style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
 								<td><input name="bsFee" type="text" value='0' id="bsFee"
-									style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
 								<td><input name="ysFee" type="text" value='0' id="ysFee"
-									style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
 								<td><input name="xmjlFee" type="text" value='0'
 									id="xmjlFee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>
 								<td><input name="frFee" type="text" value='0' id="frFee"
-									style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
 								<td><input name="head3Fee" type="text" value='0'
 									id="head3Fee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>

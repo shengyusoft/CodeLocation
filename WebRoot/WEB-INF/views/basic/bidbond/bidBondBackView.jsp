@@ -307,7 +307,7 @@ input {
 					<th>办理时间</th>
 					<td colspan="2"><input name="handlerDT2" type="text"
 						value="<fmt:formatDate value="${bidBond.handlerDT2}" pattern="yyyy-MM-dd"/>"
-						id="handlerDT" class="Wdate disabled" readonly="readonly" /></td>
+						id="handlerDT2" class="Wdate disabled" readonly="readonly" /></td>
 				</tr>
 
 				<tr>

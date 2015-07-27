@@ -19,7 +19,7 @@
 			url : '${ctx}' + '/projectBookRegist/dataGrid',
 			striped : true,
 			pagination : true,
-			nowrap : false,
+			nowrap : true,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',

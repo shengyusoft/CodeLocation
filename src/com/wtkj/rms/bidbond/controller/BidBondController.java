@@ -153,8 +153,8 @@ public class BidBondController extends BaseController {
 		viewType = StringUtils.isEmpty(viewType) ? "" : viewType;
 		try {
 			// 缴号自动生成，编号规则为年份+月份+编号
-			vo.setIdNumber(generateIdNum(vo.getType()));
-
+			String idNum = validateIdNumber(generateIdNum(vo.getType()));
+			vo.setIdNumber(idNum);
 			// 保证金转大写
 			if (vo.getBondFee() != null) {
 				BigDecimal fee = new BigDecimal(vo.getBondFee());
@@ -217,6 +217,16 @@ public class BidBondController extends BaseController {
 		}
 		return j;
 	}
+	
+	private String validateIdNumber(String idNum){
+		Long num = bidBondService.countByIdNumber(idNum);
+		if(num > 0 ){
+			idNum = validateIdNumber(String.valueOf(Long.valueOf(idNum)+1));
+		}
+		return idNum;
+	}
+	
+	
 
 	private Map<String, String> getSendMsg(HttpServletRequest request,
 			BidBondVo vo) throws Exception {

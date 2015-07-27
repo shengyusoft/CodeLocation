@@ -20,7 +20,7 @@
 			url : '${ctx}' + '/projectRegist/dataGrid',
 			striped : true,
 			pagination : true,
-			nowrap : false,
+			nowrap : true,
 			queryParams : {
 				type : 1
 			},
@@ -33,7 +33,7 @@
 				checkbox : true,
 				field : 'id',
 				width : '30',
-			},{
+			}, {
 				title : '序号',
 				field : 'index',
 				align : 'center',
@@ -50,37 +50,27 @@
 					return isEmpty(value)?'':value.text ;
 				}
 			}, {
-				width : '120',
+				width : '210',
 				title : '项目名称',
 				sortable : true,
 				align : 'center',
 				field : 'projectName'
 			}, {
-				width : '90',
-				title : '省',
-				sortable : true,
-				align : 'center',
-				field : 'provice',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '90',
-				title : '市',
-				sortable : true,
-				align : 'center',
-				field : 'city',
-				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
-				}
-			}, {
-				width : '90',
-				title : '县',
+				width : '140',
+				title : '项目地点',
 				sortable : true,
 				align : 'center',
 				field : 'county',
 				formatter : function(value, row, index) {
-					return isEmpty(value)?'':value.text;
+					var place = '';
+					if (!isEmpty(row.county)
+							&& !isEmpty(row.county.description)) {
+						place = row.county.description;
+					} else {
+						place = row.provice + row.city
+								+ row.county;
+					}
+					return place;
 				}
 			}, {
 				width : '120',
@@ -88,7 +78,7 @@
 				align : 'center',
 				field : 'bdNames'
 			}, {
-				width : '120',
+				width : '140',
 				title : '资质要求',
 				align : 'center',
 				field : 'qualifyRequirementNames'

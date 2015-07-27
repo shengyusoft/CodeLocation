@@ -98,6 +98,20 @@ public class BidBondServiceImpl implements BidBondServiceI {
 		return bidBondDao.count(
 				"select count(*) " + hql + whereHql(vo, params), params);
 	}
+	
+	@Override
+	public Long countByIdNumber(String idNumber) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String hql = " from BidBond t ";
+		
+		//缴号，退号
+		if (!StringUtils.isEmpty(idNumber)) {
+			hql += " where t.idNumber = :idNumber";
+			params.put("idNumber", idNumber);
+		}
+		return bidBondDao.count(
+				"select count(*) " + hql, params);
+	}
 
 	@Override
 	public Long count(BidBondVo BidBondVo, PageFilter ph) {
