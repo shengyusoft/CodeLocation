@@ -134,7 +134,7 @@ public class ReimbursementServiceImpl implements ReimbursementServiceI {
 					hql += " and (t.process.state = :state or t.process.applyUser.id = :userId)";
 					params.put("state", 3);
 					params.put("userId", user.getId());
-				} else {
+				} else if(!"admin".equals(user.getName())) {
 					// 其他的都视为普通员工
 					hql += " and t.process.applyUser.id = :userId";
 					params.put("userId", user.getId());

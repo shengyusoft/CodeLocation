@@ -293,6 +293,18 @@
 						class="easyui-validatebox span2" /></td>
 				</tr>
 				<tr>
+					<th>标书编制&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="bsbz" type="text" id="bsbz"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+					<th>预算编制 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="ysbz" style="width: 100%; height: 100%"
+						data-options="required:true" type="text" id="ysbz"
+						class="easyui-validatebox span2" /></td>
+				</tr>
+				<tr>
 					<td colspan="4">
 						<table class="grid2">
 							<tr>
@@ -327,44 +339,44 @@
 									class="easyui-validatebox span2" /></td>
 							</tr>
 							<tr>
-								<td><input name="bmFee" type="text" value='0' id="bmFee"
+								<td><input name="bmFee" type="text"  id="bmFee"
 									style="width: 100%; height: 100%" data-options="required:true"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="kbFee" type="text" value='0' id="kbFee"
+								<td><input name="kbFee" type="text"  id="kbFee"
 									style="width: 100%; height: 100%" data-options="required:true"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="head1Fee" type="text" value='0'
+								<td><input name="head1Fee" type="text" 
 									id="head1Fee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="head2Fee" type="text" value='0'
+								<td><input name="head2Fee" type="text" 
 									id="head2Fee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="zzFee" type="text" value='0' id="zzFee"
+								<td><input name="zzFee" type="text"  id="zzFee"
 									style="width: 100%; height: 100%" data-options="required:true"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="bsFee" type="text" value='0' id="bsFee"
+								<td><input name="bsFee" type="text"  id="bsFee"
 									style="width: 100%; height: 100%" data-options="required:true"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="ysFee" type="text" value='0' id="ysFee"
+								<td><input name="ysFee" type="text"  id="ysFee"
 									style="width: 100%; height: 100%" data-options="required:true"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="xmjlFee" type="text" value='0' 
+								<td><input name="xmjlFee" type="text"  
 									id="xmjlFee" style="width: 100%; height: 100%" 
 									data-options="required:true"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="frFee" type="text" value='0' id="frFee"
+								<td><input name="frFee" type="text"  id="frFee"
 									style="width: 100%; height: 100%" data-options="required:true"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="head3Fee" type="text" value='0'
+								<td><input name="head3Fee" type="text" 
 									id="head3Fee" style="width: 100%; height: 100%" 
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="head4Fee" type="text" value='0'
+								<td><input name="head4Fee" type="text" 
 									id="head4Fee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="otherFee" type="text" value='0'
+								<td><input name="otherFee" type="text" 
 									id="otherFee" style="width: 100%; height: 100%"
 									class="easyui-numberbox" precision="2" min="0" /></td>
-								<td><input name="totalFee" type="text" value='0' id="totalFee"
+								<td><input name="totalFee" type="text"  id="totalFee"
 									style="width: 100%; height: 100%" value="自动统计"
 									readonly="readonly" disabled="disabled"
 									class="easyui-numberbox" precision="2" min="0" /></td>
@@ -374,7 +386,7 @@
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="3"><textarea style="width: 100%" rows="4"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							name="remark"></textarea></td>
 				</tr>
 			</table>

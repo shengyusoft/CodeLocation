@@ -277,6 +277,18 @@
 						type="text" id="contract" class="easyui-validatebox span2"/></td>
 				</tr>
 				<tr>
+					<th>标书编制&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="bsbz" value="${projectRegist.bsbz}" type="text" id="bsbz"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+					<th>预算编制 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="ysbz" value="${projectRegist.ysbz}" style="width: 100%; height: 100%"
+						data-options="required:true" type="text" id="ysbz"
+						class="easyui-validatebox span2" /></td>
+				</tr>
+				<tr>
 					<td colspan="4">
 						<table class="grid2">
 							<tr>
@@ -362,7 +374,7 @@
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="3"><textarea style="width: 100%" rows="4"
+					<td colspan="3"><textarea style="width: 100%" rows="3"
 							name="remark">${projectRegist.remark}</textarea></td>
 				</tr>
 			</table>

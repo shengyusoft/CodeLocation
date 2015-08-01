@@ -122,6 +122,11 @@ public class UserServiceImpl implements UserServiceI {
 				.get("from Tuser t left join fetch t.roles role where t.id = :id and t.deleteStatus=0",
 						params);
 		User u = new User();
+		
+		if(t == null){
+			return u;
+		}
+		
 		BeanUtils.copyProperties(t, u);
 
 		if (t.getOrganization() != null) {

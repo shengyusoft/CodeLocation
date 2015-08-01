@@ -100,16 +100,10 @@
 						rowspan : 2,
 						align : 'center',
 						field : 'workDetail'
-					}, {
-						width : '150',
-						title : '费用明细',
-						rowspan : 2,
-						align : 'center',
-						field : 'costDetail'
 					} ] ],
 					columns : [ [ {
 						title : '费用小计',
-						colspan : 8
+						colspan : 12
 					}, {
 						width : '100',
 						title : '合计',
@@ -142,7 +136,7 @@
 						field : 'receiveFee'
 					}, {
 						width : '100',
-						title : '证章费（元）',
+						title : '刻章费（元）',
 						sum : true,
 						align : 'center',
 						field : 'badgeFee'
@@ -154,10 +148,34 @@
 						field : 'communicationFee'
 					}, {
 						width : '100',
-						title : '培训费（元）',
+						title : '物品购置费（元）',
 						sum : true,
 						align : 'center',
 						field : 'trainFee'
+					}, {
+						width : '100',
+						title : '文印费（元）',
+						sum : true,
+						align : 'center',
+						field : 'wyFee'
+					}, {
+						width : '100',
+						title : '制证费（元）',
+						sum : true,
+						align : 'center',
+						field : 'zzFee'
+					}, {
+						width : '100',
+						title : '住宿费（元）',
+						sum : true,
+						align : 'center',
+						field : 'zsFee'
+					}, {
+						width : '100',
+						title : '快递费（元）',
+						sum : true,
+						align : 'center',
+						field : 'kdFee'
 					}, {
 						width : '100',
 						title : '其他费（元）',
@@ -175,118 +193,7 @@
 					toolbar : '#toolbar'
 				});
 	}
-
-	//报销详情方法
-	function addFun() {
-		var pid = $('#batchId').val();
-		if (isEmpty(pid)) {
-			parent.$.messager.alert('警告', '请先进行报销登记!');
-			return;
-		}
-		parent.$
-				.modalDialogTwo({
-					title : '报销详情',
-					width : '900',
-					height : '500',
-					href : '${ctx}/reimbursement/addPage',
-					buttons : [
-							{
-								text : '添加',
-								handler : function() {
-									parent.$.modalDialogTwo.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-									var f = parent.$.modalDialogTwo.handler
-											.find('#reimbursementAddForm');
-									parent.$.modalDialogTwo.handler.find(
-											'#option').val(0);
-									var batchId = parent.$.modalDialogTwo.handler
-											.find('#batchId');
-									if (batchId) {
-										batchId.val(pid);
-									}
-									f.submit();
-								}
-							},
-							{
-								text : '退出',
-								handler : function() {
-									//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-									parent.$.modalDialogTwo.handler
-											.dialog('close');
-								}
-							} ]
-				});
-	}
-
-	function deleteFun() {
-		var selected = parent.getSelecteds(dataGrid);
-		if (isEmpty(selected)) {
-			parent.$.messager.alert('警告', '至少选中一条记录!');
-			return;
-		}
-		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
-			if (b) {
-				progressLoad();
-				$.post('${ctx}/reimbursement/delete', {
-					ids : selected
-				}, function(result) {
-					if (result.success) {
-						parent.$.messager.alert('提示', result.msg, 'info');
-						//删除成功后,前台删除行,防止下次再删除的时候可以取到之前选到的行
-						removeSelectedRow(dataGrid);
-						dataGrid.datagrid('reload');
-					} else {
-						parent.$.messager.alert('警告', result.msg, 'warning');
-					}
-					progressClose();
-				}, 'JSON');
-			}
-		});
-	}
-
-	function editFun() {
-		var id = null;
-		var rows = dataGrid.datagrid('getSelections');
-		if (rows == null || rows.length == 0) {
-			parent.$.messager.alert('警告', '没有可编辑对象!');
-			return;
-		}
-
-		if (rows.length > 1) {
-			parent.$.messager.alert('警告', '只能对一条记录编辑!');
-			return;
-		}
-
-		id = rows[0].id;
-
-		parent.$
-				.modalDialogTwo({
-					title : '报销详情修改',
-					width : '900',
-					height : '500',
-					href : '${ctx}/reimbursement/editPage?id=' + id,
-					buttons : [
-							{
-								text : '编辑',
-								handler : function() {
-									//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-									parent.$.modalDialogTwo.openner_dataGrid = dataGrid;
-									parent.$.modalDialogTwo.handler.find(
-											'#option').val(2);
-									var f = parent.$.modalDialogTwo.handler
-											.find('#reimbursementEditForm');
-									f.submit();
-								}
-							},
-							{
-								text : '退出',
-								handler : function() {
-									parent.$.modalDialogTwo.handler
-											.dialog('close');
-								}
-							} ]
-				});
-	}
-
+	
 	function detailFun() {
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');

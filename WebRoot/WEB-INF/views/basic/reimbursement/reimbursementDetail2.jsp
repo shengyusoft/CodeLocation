@@ -68,47 +68,68 @@
 							<tr>
 								<th width="80">交通费（元）&nbsp;</th>
 								<td><input name="trafficFee" readonly="readonly"
-									value="${reimbursement.trafficFee}" type="number"
-									id="trafficFee" data-options="required:true"
-									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									value="${reimbursement.trafficFee}" type="text"
+									id="trafficFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">就餐费（元）&nbsp;</th>
-								<td><input name="mealFee" readonly="readonly"
-									value="${reimbursement.mealFee}" type="number" id="mealFee"
+								<td><input name="mealFee" value="${reimbursement.mealFee}"
+									type="text" id="mealFee" readonly="readonly"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">办公费（元）&nbsp;</th>
-								<td><input name="officeFee" readonly="readonly"
-									value="${reimbursement.officeFee}" type="number" id="officeFee"
-									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+								<td><input name="officeFee"
+									value="${reimbursement.officeFee}" type="text" id="officeFee"
+									style="width: 100%; height: 100%" readonly="readonly"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">招待费（元）&nbsp;</th>
 								<td><input name="receiveFee" readonly="readonly"
-									value="${reimbursement.receiveFee}" type="number"
+									value="${reimbursement.receiveFee}" type="text"
 									id="receiveFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 							</tr>
 							<tr>
-								<th width="80">证章费（元）&nbsp;</th>
+								<th width="80">刻章费（元）&nbsp;</th>
 								<td><input name="badgeFee" readonly="readonly"
-									value="${reimbursement.badgeFee}" type="number" id="badgeFee"
-									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									value="${reimbursement.badgeFee}" type="text" id="badgeFee"
+									style="width: 100%; height: 100%" readonly="readonly"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">通讯费（元）&nbsp;</th>
 								<td><input name="communicationFee" readonly="readonly"
-									value="${reimbursement.communicationFee}" type="number"
+									value="${reimbursement.communicationFee}" type="text"
 									id="communicationFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<th width="80">培训费（元）&nbsp;</th>
-								<td><input name="trainFee" readonly="readonly"
-									value="${reimbursement.trainFee}" type="number" id="trainFee"
-									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<th width="80">物品购置费（元）&nbsp;</th>
+								<td><input name="trainFee" min="0"
+									value="${reimbursement.trainFee}" type="text" id="trainFee"
+									style="width: 100%; height: 100%" readonly="readonly"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">其它费（元）&nbsp;</th>
-								<td><input name="otherFee" readonly="readonly"
-									value="${reimbursement.otherFee}" type="number" id="otherFee"
-									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+								<td><input name="otherFee" min="0"
+									value="${reimbursement.otherFee}" type="text" id="otherFee"
+									style="width: 100%; height: 100%" readonly="readonly"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+							</tr>
+							<tr>
+								<th width="80">文印费（元）&nbsp;</th>
+								<td><input name="wyFee" value="${reimbursement.wyFee}"
+									type="text" id="wyFee" readonly="readonly"
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
+								<th width="80">制证费（元）&nbsp;</th>
+								<td><input name="zzFee" type="text" id="zzFee"
+									value="${reimbursement.zzFee}" readonly="readonly"
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
+								<th width="120">住宿费（元）&nbsp;</th>
+								<td><input name="zsFee" value="${reimbursement.zsFee}"
+									type="text" id="zsFee" readonly="readonly"
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
+								<th width="80">快递费（元）&nbsp;</th>
+								<td><input name="kdFee" value="${reimbursement.kdFee}"
+									type="text" id="kdFee" readonly="readonly"
+									style="width: 100%; height: 100%" class="easyui-numberbox"
+									precision="2" min="0" /></td>
 							</tr>
 						</table>
 					</td>

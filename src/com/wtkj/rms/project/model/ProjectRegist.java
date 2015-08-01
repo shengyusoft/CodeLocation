@@ -102,6 +102,11 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	private Date st;
 	private Date et;
 
+	// 客户需求，新添加
+	private String bsbz;// 标书编制
+
+	private String ysbz;// 预算编制
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id")
@@ -489,6 +494,22 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	public void setTotalFee(Double totalFee) {
 		this.totalFee = totalFee;
+	}
+
+	public String getBsbz() {
+		return bsbz;
+	}
+
+	public void setBsbz(String bsbz) {
+		this.bsbz = bsbz;
+	}
+
+	public String getYsbz() {
+		return ysbz;
+	}
+
+	public void setYsbz(String ysbz) {
+		this.ysbz = ysbz;
 	}
 
 }

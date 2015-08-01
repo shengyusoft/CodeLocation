@@ -527,7 +527,7 @@ public class ReimbursementBatchController extends BaseController {
 			updateHistory(request, user, po, "总经理：" + user.getName() + "审批不通过");
 		} else if (roleNames.indexOf("超级管理员") >= 0) {
 			// 可以审批所有的单子
-			po.setState(vo.getState() + 1);
+			po.setState(-vo.getState());
 			// 增加流程操作历史记录
 			if (po.getState() < 4) {
 				updateHistory(request, user, po, "超级管理员：" + user.getName()

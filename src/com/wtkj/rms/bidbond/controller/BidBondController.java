@@ -163,22 +163,26 @@ public class BidBondController extends BaseController {
 			}
 
 			if ("handler_cn".equals(viewType)) {
-				// 到帐金额转大写
-				if (vo.getToAccountFee() != null) {
-					BigDecimal fee = new BigDecimal(vo.getToAccountFee());
-					String feeCH = NumberToCN.number2CNMontrayUnit(fee);
-					vo.setToAccountFeeCH(feeCH);
-				}
 				vo.setState(1);// 出纳已确认
 			} else if ("handler_kj".equals(viewType)) {
-				// 转出金额转大写
-				if (vo.getOutAccountFee() != null && vo.getOutAccountFee() > 0) {
-					BigDecimal fee = new BigDecimal(vo.getOutAccountFee());
-					String feeCH = NumberToCN.number2CNMontrayUnit(fee);
-					vo.setOutAccountFeeCH(feeCH);
-				}
+				
 				vo.setState(2);// 会计已确认
 			}
+			
+			// 到帐金额转大写
+			if (vo.getToAccountFee() != null) {
+				BigDecimal fee = new BigDecimal(vo.getToAccountFee());
+				String feeCH = NumberToCN.number2CNMontrayUnit(fee);
+				vo.setToAccountFeeCH(feeCH);
+			}
+			
+			// 转出金额转大写
+			if (vo.getOutAccountFee() != null && vo.getOutAccountFee() > 0) {
+				BigDecimal fee = new BigDecimal(vo.getOutAccountFee());
+				String feeCH = NumberToCN.number2CNMontrayUnit(fee);
+				vo.setOutAccountFeeCH(feeCH);
+			}
+			
 			// 添加
 			if (vo.getId() == null || vo.getId() <= 0) {
 				if (vo.getOption() == -1) {// 提交

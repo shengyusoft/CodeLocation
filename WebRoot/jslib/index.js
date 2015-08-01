@@ -398,27 +398,26 @@ function handlerToDo(id, state) {
 	parent.$.modalDialog({
 		title : '报销审批',
 		width : '900',
-		height : '500',
+		height : '650',
 		resizable : true,
-		href : ctxPath+'/reimbursement/handlerPage?id='+id,
+		href : ctxPath+'/reimbursementBatch/handlerPage?id='+id,
 		buttons : [
 				{
 					text : '通过',
 					handler : function() {
 						var f = parent.$.modalDialog.handler
-								.find('#processForm');
+								.find('#processBatchForm');
+						parent.$.modalDialog.openner_dataGrid = dataGrid;
 						parent.$.modalDialog.handler.find('#option').val(0);
-						parent.$.modalDialog.openner_dataGrid = $('#myTaskGrid');
 						f.submit();
 					}
 				},{
 					text : '退回',
 					handler : function() {
 						var f = parent.$.modalDialog.handler
-								.find('#processForm');
+								.find('#processBatchForm');
+						parent.$.modalDialog.openner_dataGrid = dataGrid;
 						parent.$.modalDialog.handler.find('#option').val(1);
-						//$('#myTaskGrid').datagrid('getPanel')
-						parent.$.modalDialog.openner_dataGrid = $('#myTaskGrid');
 						f.submit();
 					}
 				}, {

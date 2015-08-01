@@ -57,15 +57,15 @@
 							}
 						}
 					}, {
-						title : '以下内容工程部经理填写（单位：元）',
+						title : '<font color="red">以下内容工程部经理填写（单位：元）</font>',
 						colspan : 6,
 						align : 'center'
 					}, {
-						title : '以下内容财务部会计填写（单位：元）',
+						title : '<font color="blue">以下内容财务部会计填写（单位：元）</font>',
 						colspan : 3,
 						align : 'center'
 					}, {
-						title : '以下内容财务部出纳填写（单位：元）',
+						title : '<font color="green">以下内容财务部出纳填写（单位：元）</font>',
 						colspan : 3,
 						align : 'center'
 					}, {
@@ -238,8 +238,10 @@
 						return '未申请拨款';
 					}else if(value == 0){
 						return '<font color="red">待拨款</font>';
-					}else{
-						return '<font color="green">已拨付</font>';
+					}else if(value == 1){
+						return '<font color="blue">部分拨付</font>';
+					}else if(value == 2){
+						return '<font color="green">全部拨付</font>';
 					}
 				}
 			}, {

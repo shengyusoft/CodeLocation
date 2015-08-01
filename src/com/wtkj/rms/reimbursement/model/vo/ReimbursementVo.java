@@ -43,6 +43,12 @@ public class ReimbursementVo implements Serializable {
 	private Double communicationFee;// 通讯费
 	private Double trainFee;// 培训费
 	private Double otherFee;// 其他费
+
+	// 文印费，制证费，住宿费，快递费(增加的费用)
+	private Double wyFee;// 文印费
+	private Double zzFee;// 制证费
+	private Double zsFee;// 住宿费
+	private Double kdFee;// 快递费
 	private ProcessVo process_vo;
 	private Double total;
 
@@ -263,6 +269,38 @@ public class ReimbursementVo implements Serializable {
 
 	public void setTotal(Double total) {
 		this.total = total;
+	}
+
+	public Double getWyFee() {
+		return wyFee;
+	}
+
+	public void setWyFee(Double wyFee) {
+		this.wyFee = wyFee;
+	}
+
+	public Double getZzFee() {
+		return zzFee;
+	}
+
+	public void setZzFee(Double zzFee) {
+		this.zzFee = zzFee;
+	}
+
+	public Double getZsFee() {
+		return zsFee;
+	}
+
+	public void setZsFee(Double zsFee) {
+		this.zsFee = zsFee;
+	}
+
+	public Double getKdFee() {
+		return kdFee;
+	}
+
+	public void setKdFee(Double kdFee) {
+		this.kdFee = kdFee;
 	}
 
 }

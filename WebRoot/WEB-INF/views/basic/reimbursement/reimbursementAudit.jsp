@@ -105,7 +105,7 @@
 
 			columns : [ [{
 				title : '费用小计',
-				colspan : 8
+				colspan : 12
 			}],[ {
 				width : '100',
 				title : '交通费（元）',
@@ -128,7 +128,7 @@
 				field : 'receiveFee'
 			}, {
 				width : '100',
-				title : '证章费（元）',
+				title : '刻章费（元）',
 				align : 'center',
 				field : 'badgeFee'
 			}, {
@@ -138,9 +138,33 @@
 				field : 'communicationFee'
 			}, {
 				width : '100',
-				title : '培训费（元）',
+				title : '物品购置费（元）',
 				align : 'center',
 				field : 'trainFee'
+			}, {
+				width : '100',
+				title : '文印费（元）',
+				sum : true,
+				align : 'center',
+				field : 'wyFee'
+			}, {
+				width : '100',
+				title : '制证费（元）',
+				sum : true,
+				align : 'center',
+				field : 'zzFee'
+			}, {
+				width : '100',
+				title : '住宿费（元）',
+				sum : true,
+				align : 'center',
+				field : 'zsFee'
+			}, {
+				width : '100',
+				title : '快递费（元）',
+				sum : true,
+				align : 'center',
+				field : 'kdFee'
 			}, {
 				width : '100',
 				title : '其他费（元）',

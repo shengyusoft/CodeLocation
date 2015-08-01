@@ -2,12 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="招投标公司投标保证金缴纳申请表" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="75"/>
+	<property name="ireport.y" value="123"/>
 	<parameter name="id" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select b.*,u1.name as applierName,u1.mobilePhone as applierPhone,u3.name as handlerName2,
+		<![CDATA[select b.*,u1.name as applierName,u1.mobilePhone,u3.name as handlerName2,
 u2.name as handlerName,bd.bidNames from bidbond as b
 left join sys_user as u1 on b.applierId=u1.id
 left join sys_user as u2 on b.handlerId=u2.id
@@ -67,6 +67,7 @@ where b.id=$P{id}]]>
 	<field name="remark2" class="java.lang.String"/>
 	<field name="remark3" class="java.lang.String"/>
 	<field name="applierName" class="java.lang.String"/>
+	<field name="mobilePhone" class="java.lang.String"/>
 	<field name="handlerName2" class="java.lang.String"/>
 	<field name="handlerName" class="java.lang.String"/>
 	<field name="bidNames" class="java.lang.String"/>
@@ -674,7 +675,7 @@ where b.id=$P{id}]]>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{applierPhone}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{mobilePhone}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="170" y="240" width="77" height="18"/>

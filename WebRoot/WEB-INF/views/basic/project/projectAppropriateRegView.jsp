@@ -80,15 +80,15 @@
 					}
 				}
 			}, {
-				title : '以下内容工程部经理填写（单位：元）',
+				title : '<font color="red">以下内容工程部经理填写（单位：元）</font>',
 				colspan : 6,
 				align : 'center'
 			}, {
-				title : '以下内容财务部会计填写（单位：元）',
+				title : '<font color="blue">以下内容财务部会计填写（单位：元）</font>',
 				colspan : 3,
 				align : 'center'
 			}, {
-				title : '以下内容财务部出纳填写（单位：元）',
+				title : '<font color="green">以下内容财务部出纳填写（单位：元）</font>',
 				colspan : 3,
 				align : 'center'
 			}, {

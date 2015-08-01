@@ -373,7 +373,7 @@
 				<tr>
 					<th>项目名称:</th>
 					<td><input type="text" id="projectName"> </td>
-					<th>登记时间:</th>
+					<th>报名时间:</th>
 					<td>
 						<input class="Wdate" type="text" name="st" id="st"
 						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - 

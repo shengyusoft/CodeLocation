@@ -91,7 +91,7 @@
 								class="easyui-validatebox span2" /></td>
 						</tr>
 						<tr>
-							<th width="80">证章费（元）&nbsp;</th>
+							<th width="80">刻章费（元）&nbsp;</th>
 							<td><input name="badgeFee" readonly="readonly"
 								value="${reimbursement.badgeFee}" type="number" id="badgeFee"
 								style="width: 100%; height: 100%"
@@ -102,7 +102,7 @@
 								type="number" id="communicationFee"
 								style="width: 100%; height: 100%"
 								class="easyui-validatebox span2" /></td>
-							<th width="80">培训费（元）&nbsp;</th>
+							<th width="80">物品购置费（元）&nbsp;</th>
 							<td><input name="trainFee" value="${reimbursement.trainFee}"
 								readonly="readonly" type="number" id="trainFee"
 								style="width: 100%; height: 100%"
@@ -113,6 +113,28 @@
 								style="width: 100%; height: 100%"
 								class="easyui-validatebox span2" /></td>
 						</tr>
+						<tr>
+							<th width="80">文印费（元）&nbsp;</th>
+							<td><input name="wyFee" value="${reimbursement.wyFee}"
+								type="text" id="wyFee" readonly="readonly"
+								style="width: 100%; height: 100%" class="easyui-numberbox"
+								precision="2" min="0" /></td>
+							<th width="80">制证费（元）&nbsp;</th>
+							<td><input name="zzFee" type="text" id="zzFee"
+								value="${reimbursement.zzFee}" readonly="readonly"
+								style="width: 100%; height: 100%" class="easyui-numberbox"
+								precision="2" min="0" /></td>
+							<th width="120">住宿费（元）&nbsp;</th>
+							<td><input name="zsFee" value="${reimbursement.zsFee}"
+								type="text" id="zsFee" readonly="readonly"
+								style="width: 100%; height: 100%" class="easyui-numberbox"
+								precision="2" min="0" /></td>
+							<th width="80">快递费（元）&nbsp;</th>
+							<td><input name="kdFee" value="${reimbursement.kdFee}"
+								type="text" id="kdFee" readonly="readonly"
+								style="width: 100%; height: 100%" class="easyui-numberbox"
+								precision="2" min="0" /></td>
+						</tr>
 					</table>
 				</td>
 			</tr>
@@ -121,17 +143,19 @@
 			<table class="grid">
 				<tr>
 					<th>流程名称 &nbsp;</th>
-					<td><input type="hidden" name="id" value="${reimbursement.process_vo.id}" /> <input
-						type="hidden" name="option" id="option" value="" type="text" /><input
-						name="processName" value="${reimbursement.process_vo.processName}" type="text"
-						id="processName" style="width: 100%; height: 100%"
+					<td><input type="hidden" name="id"
+						value="${reimbursement.process_vo.id}" /> <input type="hidden"
+						name="option" id="option" value="" type="text" /><input
+						name="processName" value="${reimbursement.process_vo.processName}"
+						type="text" id="processName" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" readonly="readonly" /></td>
 					<th>申请人 &nbsp;</th>
 					<td><input type="hidden" name="applyUserId"
-						value="${reimbursement.process_vo.applyUserId}" /> <input name="applyUserName"
-						value="${reimbursement.process_vo.applyUserName}" type="text" id="applyUserName"
-						style="width: 100%; height: 100%" class="easyui-validatebox span2"
-						readonly="readonly" /></td>
+						value="${reimbursement.process_vo.applyUserId}" /> <input
+						name="applyUserName"
+						value="${reimbursement.process_vo.applyUserName}" type="text"
+						id="applyUserName" style="width: 100%; height: 100%"
+						class="easyui-validatebox span2" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<th>开始时间 &nbsp;</th>
@@ -140,8 +164,8 @@
 						value="${reimbursement.process_vo.startDT}" /></td>
 					<th>结束时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="endDT"
-						readonly="readonly" value="${reimbursement.process_vo.endDT}" id="endDT"
-						style="width: 98%; height: 100%;" /></td>
+						readonly="readonly" value="${reimbursement.process_vo.endDT}"
+						id="endDT" style="width: 98%; height: 100%;" /></td>
 				</tr>
 				<tr>
 					<th>办理意见&nbsp;</th>

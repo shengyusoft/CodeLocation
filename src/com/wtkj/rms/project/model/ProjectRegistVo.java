@@ -82,6 +82,11 @@ public class ProjectRegistVo implements java.io.Serializable {
 	private Date st;
 	private Date et;
 
+	// 客户需求，新添加,开标用到
+	private String bsbz;// 标书编制
+
+	private String ysbz;// 预算编制
+
 	public Long getId() {
 		return id;
 	}
@@ -432,6 +437,22 @@ public class ProjectRegistVo implements java.io.Serializable {
 
 	public void setOtherFee(Double otherFee) {
 		this.otherFee = otherFee;
+	}
+
+	public String getBsbz() {
+		return bsbz;
+	}
+
+	public void setBsbz(String bsbz) {
+		this.bsbz = bsbz;
+	}
+
+	public String getYsbz() {
+		return ysbz;
+	}
+
+	public void setYsbz(String ysbz) {
+		this.ysbz = ysbz;
 	}
 
 }

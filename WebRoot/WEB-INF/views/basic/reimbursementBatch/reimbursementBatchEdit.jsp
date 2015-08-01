@@ -84,7 +84,7 @@
 					return st + "--" + et;
 				}
 			}, {
-				width : '190',
+				width : '150',
 				title : '地点',
 				rowspan : 2,
 				align : 'center',
@@ -95,16 +95,10 @@
 				rowspan : 2,
 				align : 'center',
 				field : 'workDetail'
-			}, {
-				width : '150',
-				title : '费用明细',
-				rowspan : 2,
-				align : 'center',
-				field : 'costDetail'
 			} ] ],
 			columns : [ [{
 				title : '费用小计',
-				colspan : 8
+				colspan : 12
 			}, {
 				width : '100',
 				title : '合计',
@@ -137,7 +131,7 @@
 				field : 'receiveFee'
 			}, {
 				width : '100',
-				title : '证章费（元）',
+				title : '刻章费（元）',
 				sum : true,
 				align : 'center',
 				field : 'badgeFee'
@@ -149,10 +143,34 @@
 				field : 'communicationFee'
 			}, {
 				width : '100',
-				title : '培训费（元）',
+				title : '物品购置费（元）',
 				sum : true,
 				align : 'center',
 				field : 'trainFee'
+			}, {
+				width : '100',
+				title : '文印费（元）',
+				sum : true,
+				align : 'center',
+				field : 'wyFee'
+			}, {
+				width : '100',
+				title : '制证费（元）',
+				sum : true,
+				align : 'center',
+				field : 'zzFee'
+			}, {
+				width : '100',
+				title : '住宿费（元）',
+				sum : true,
+				align : 'center',
+				field : 'zsFee'
+			}, {
+				width : '100',
+				title : '快递费（元）',
+				sum : true,
+				align : 'center',
+				field : 'kdFee'
 			}, {
 				width : '100',
 				title : '其他费（元）',

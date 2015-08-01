@@ -159,7 +159,8 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 						.getQualifyRequirement()));
 			}
 			if (prst.getDelegator() != null && prst.getDelegator().getId() > 0) {
-				Tuser user = userDao.get(Tuser.class, prst.getDelegator().getId());
+				Tuser user = userDao.get(Tuser.class, prst.getDelegator()
+						.getId());
 				vo.setDelegatorId(user.getId());
 				vo.setDelegatorName(user.getName());
 			}
@@ -235,7 +236,19 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 			// 委托人
 			if (!StringUtils.isEmpty(p.getDelegatorName())) {
 				hql += " and t.delegator.name like :delegatorName";
-				params.put("delegatorName", "%%"+p.getDelegatorName()+"%%");
+				params.put("delegatorName", "%%" + p.getDelegatorName() + "%%");
+			}
+
+			// 标书编制
+			if (!StringUtils.isEmpty(p.getBsbz())) {
+				hql += " and t.bsbz like :bsbz";
+				params.put("bsbz", "%%" + p.getBsbz() + "%%");
+			}
+			
+			// 预算编制
+			if (!StringUtils.isEmpty(p.getYsbz())) {
+				hql += " and t.ysbz like :ysbz";
+				params.put("ysbz", "%%" + p.getYsbz() + "%%");
 			}
 		}
 
@@ -251,22 +264,26 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 	}
 
 	private double calTotal(ProjectRegist p) {
-		double total = p.getBmFee() + p.getKbFee() + p.getZzFee()
-				+ p.getBsFee() + p.getYsFee() + p.getXmjlFee() + p.getFrFee()
-				+ p.getOtherFee();
+		double total = calFee(p.getBmFee()) + calFee(p.getKbFee()) + calFee(p.getZzFee())
+				+ calFee(p.getBsFee()) + calFee(p.getYsFee()) + calFee(p.getXmjlFee()) + calFee(p.getFrFee())
+				+ calFee(p.getOtherFee());
 
 		if (!StringUtils.isEmpty(p.getHead1())) {
-			total += p.getHead1Fee();
+			total += calFee(p.getHead1Fee());
 		}
 		if (!StringUtils.isEmpty(p.getHead2())) {
-			total += p.getHead2Fee();
+			total += calFee(p.getHead2Fee());
 		}
 		if (!StringUtils.isEmpty(p.getHead3())) {
-			total += p.getHead3Fee();
+			total += calFee(p.getHead3Fee());
 		}
 		if (!StringUtils.isEmpty(p.getHead4())) {
-			total += p.getHead4Fee();
+			total += calFee(p.getHead4Fee());
 		}
 		return total;
+	}
+	
+	private Double calFee(Double fee){
+		return fee==null?0:fee;
 	}
 }

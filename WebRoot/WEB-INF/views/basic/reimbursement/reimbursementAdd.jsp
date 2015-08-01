@@ -140,40 +140,59 @@
 						<table title="费用小计" width="800">
 							<tr>
 								<th width="80">交通费（元）&nbsp;</th>
-								<td><input name="trafficFee" min="0" value="0"
-									type="number" id="trafficFee" style="width: 100%; height: 100%"
-									min="0" value="0" class="easyui-validatebox span2" /></td>
+								<td><input name="trafficFee" min="0" 
+									type="text" id="trafficFee" style="width: 100%; height: 100%"
+									min="0"  class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">就餐费（元）&nbsp;</th>
-								<td><input name="mealFee" min="0" value="0" type="number"
+								<td><input name="mealFee" min="0"  type="text"
 									id="mealFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<th width="80">办公费（元）&nbsp;</th>
-								<td><input name="officeFee" min="0" value="0" type="number"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<th width="120">办公费（元）&nbsp;</th>
+								<td><input name="officeFee" min="0"  type="text"
 									id="officeFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">招待费（元）&nbsp;</th>
-								<td><input name="receiveFee" min="0" value="0"
-									type="number" id="receiveFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+								<td><input name="receiveFee" min="0" 
+									type="text" id="receiveFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 							</tr>
 							<tr>
-								<th width="80">证章费（元）&nbsp;</th>
-								<td><input name="badgeFee" min="0" value="0" type="number"
+								<th width="80">刻章费（元）&nbsp;</th>
+								<td><input name="badgeFee" min="0"  type="text"
 									id="badgeFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">通讯费（元）&nbsp;</th>
-								<td><input name="communicationFee" min="0" value="0"
-									type="number" id="communicationFee"
+								<td><input name="communicationFee" min="0"
+									type="text" id="communicationFee"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-								<th width="80">培训费（元）&nbsp;</th>
-								<td><input name="trainFee" min="0" value="0" type="number"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<th width="120">物品购置费（元）&nbsp;</th>
+								<td><input name="trainFee" min="0" type="text"
 									id="trainFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
 								<th width="80">其它（元）&nbsp;</th>
-								<td><input name="otherFee" min="0" value="0" type="number"
+								<td><input name="otherFee" min="0"  type="text"
 									id="otherFee" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-numberbox" precision="2" min="0" /></td>
+							</tr>
+							<tr>
+								<th width="80">文印费（元）&nbsp;</th>
+								<td><input name="wyFee" min="0"  type="text"
+									id="wyFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<th width="80">制证费（元）&nbsp;</th>
+								<td><input name="zzFee" min="0" 
+									type="text" id="zzFee"
+									style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<th width="120">住宿费（元）&nbsp;</th>
+								<td><input name="zsFee" min="0"  type="text"
+									id="zsFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
+								<th width="80">快递费（元）&nbsp;</th>
+								<td><input name="kdFee" min="0"  type="text"
+									id="kdFee" style="width: 100%; height: 100%"
+									class="easyui-numberbox" precision="2" min="0" /></td>
 							</tr>
 						</table>
 					</td>

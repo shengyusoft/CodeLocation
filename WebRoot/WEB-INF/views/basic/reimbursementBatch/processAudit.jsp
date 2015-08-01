@@ -70,7 +70,8 @@
 				align : 'center',
 				field : 'startDT',
 				formatter : function(value, row, index) {
-					if(value.indexOf('合计')>=0){
+					debugger;
+					if(!isEmpty(value) && value.indexOf('合计')>=0){
    						return value;
    					}
 					var st = formatDate(row.startDT);
@@ -78,7 +79,7 @@
 					return st + "--" + et;
 				}
 			}, {
-				width : '190',
+				width : '150',
 				title : '地点',
 				rowspan : 2,
 				align : 'center',
@@ -89,16 +90,10 @@
 				rowspan : 2,
 				align : 'center',
 				field : 'workDetail'
-			}, {
-				width : '150',
-				title : '费用明细',
-				rowspan : 2,
-				align : 'center',
-				field : 'costDetail'
 			} ] ],
 			columns : [ [{
 				title : '费用小计',
-				colspan : 8
+				colspan : 12
 			}, {
 				width : '100',
 				title : '合计',
@@ -131,7 +126,7 @@
 				field : 'receiveFee'
 			}, {
 				width : '100',
-				title : '证章费（元）',
+				title : '刻章费（元）',
 				sum : true,
 				align : 'center',
 				field : 'badgeFee'
@@ -143,10 +138,34 @@
 				field : 'communicationFee'
 			}, {
 				width : '100',
-				title : '培训费（元）',
+				title : '物品购置费（元）',
 				sum : true,
 				align : 'center',
 				field : 'trainFee'
+			}, {
+				width : '100',
+				title : '文印费（元）',
+				sum : true,
+				align : 'center',
+				field : 'wyFee'
+			}, {
+				width : '100',
+				title : '制证费（元）',
+				sum : true,
+				align : 'center',
+				field : 'zzFee'
+			}, {
+				width : '100',
+				title : '住宿费（元）',
+				sum : true,
+				align : 'center',
+				field : 'zsFee'
+			}, {
+				width : '100',
+				title : '快递费（元）',
+				sum : true,
+				align : 'center',
+				field : 'kdFee'
 			}, {
 				width : '100',
 				title : '其他费（元）',
@@ -162,6 +181,37 @@
                 $('#totalFee').val(sumTotal);
           	},
 			toolbar : '#toolbar'
+		});
+	}
+	
+	function detailFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可查看对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能查看一条记录!');
+			return;
+		}
+
+		id = rows[0].id;
+
+		parent.$.modalDialogTwo({
+			title : '报销明细详情',
+			autoScroll : true,
+			width : document.body.clientWidth * 0.7,
+			height : document.body.clientHeight * 0.9,
+			href : '${ctx}/reimbursement/detailPage2?id=' + id,
+			buttons : [ {
+				text : '退出',
+				handler : function() {
+					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					parent.$.modalDialogTwo.handler.dialog('close');
+				}
+			} ]
 		});
 	}
 </script>
@@ -195,6 +245,11 @@
 	<div data-options="fit:true,border:false" style="overflow: auto;height: 360px">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
+	<div id="toolbar" class="mygrid-toolbar" style="inline: true">
+		<a onclick="detailFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">详情 </a>
+	</div>
 	<div data-options="fit:true,border:false" style="overflow: auto;">
 		<form id="processBatchForm" method="post">
 			<table class="grid">
@@ -220,7 +275,7 @@
 					<th>结束时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="endDT"
 						readonly="readonly" value="${reimbursementBatch.process_vo.endDT}" id="endDT"
-						style="width: 98%; height: 100%;" /></td>
+						style="width: 98%;" /></td>
 				</tr>
 				<tr>
 					<th>办理意见&nbsp;</th>

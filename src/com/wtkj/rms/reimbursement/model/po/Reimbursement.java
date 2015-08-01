@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -49,10 +48,17 @@ public class Reimbursement extends IdEntity implements Serializable {
 	private Double mealFee;// 就餐费
 	private Double officeFee;// 办公费
 	private Double receiveFee;// 招待费
-	private Double badgeFee;// 证章费
+	private Double badgeFee;// 证章费，客户需求改为：刻章费
 	private Double communicationFee;// 通讯费
-	private Double trainFee;// 培训费
+	private Double trainFee;// 培训费,客户需求改为：物品购置费
 	private Double otherFee;// 其他费
+
+	// 文印费，制证费，住宿费，快递费(增加的费用)
+	private Double wyFee;// 文印费
+	private Double zzFee;// 制证费
+	private Double zsFee;// 住宿费
+	private Double kdFee;// 快递费
+	
 	private Process process;
 	private int option;
 
@@ -224,6 +230,38 @@ public class Reimbursement extends IdEntity implements Serializable {
 
 	public void setOtherFee(Double otherFee) {
 		this.otherFee = otherFee;
+	}
+
+	public Double getWyFee() {
+		return wyFee;
+	}
+
+	public void setWyFee(Double wyFee) {
+		this.wyFee = wyFee;
+	}
+
+	public Double getZzFee() {
+		return zzFee;
+	}
+
+	public void setZzFee(Double zzFee) {
+		this.zzFee = zzFee;
+	}
+
+	public Double getZsFee() {
+		return zsFee;
+	}
+
+	public void setZsFee(Double zsFee) {
+		this.zsFee = zsFee;
+	}
+
+	public Double getKdFee() {
+		return kdFee;
+	}
+
+	public void setKdFee(Double kdFee) {
+		this.kdFee = kdFee;
 	}
 
 	@Transient

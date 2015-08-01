@@ -159,11 +159,11 @@
 							formatter : function(value,row, index) {
 								var reStr ="";
 								if(value == 0){
-									reStr = '<font color="red">未提交</font>';
+									reStr = '未提交';
 								}else if(value == -1){
-									reStr = '<font color="green">等待财务确认</font>';
+									reStr = '<font color="red">等待财务确认</font>';
 								}else if(value == 1){
-									reStr = '<font color="green">出纳已确认</font>';
+									reStr = '<font color="blue">出纳已确认</font>';
 								}else if(value == 2){
 									reStr = '<font color="green">会计已确认</font>';
 								}else{

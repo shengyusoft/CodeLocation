@@ -127,7 +127,7 @@ public class ReimbursementBatchServiceImpl implements
 					hql += " and (t.process.state = :state or t.process.applyUser.id = :userId)";
 					params.put("userId", user.getId());
 					params.put("state", 3);
-				} else {
+				} else if(!"admin".equals(user.getName())) {
 					//其他类型都视为普通员工
 					hql += " and t.process.applyUser.id = :userId";
 					params.put("userId", user.getId());

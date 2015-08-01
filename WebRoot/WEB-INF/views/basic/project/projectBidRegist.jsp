@@ -19,6 +19,7 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/projectRegist/dataGrid',
 			striped : true,
+			tooltip : true,
 			pagination : true,
 			nowrap : true,
 			queryParams : {
@@ -111,11 +112,22 @@
 				align : 'center',
 				field : 'createDT',
 				formatter : Common.formatter
+			}, {
+				width : '90',
+				title : '标书编制',
+				sortable : true,
+				align : 'center',
+				field : 'bsbz'
+			}, {
+				width : '90',
+				title : '预算编制',
+				sortable : true,
+				align : 'center',
+				field : 'ysbz'
 			} ] ],
 
 			toolbar : '#toolbar'
 		});
-
 	});
 	//必要的初始化
 	function init(){
@@ -180,6 +192,8 @@
 		queryParams['city.id'] = -1;
 		queryParams['county.id'] = -1;
 		queryParams.delegatorName = "";
+		queryParams.bsbz = "";
+		queryParams.ysbz = "";
 		
 		var projectName = $('#projectName').val();
 		var st = $('#st').val();
@@ -188,6 +202,8 @@
 		var city = $('#city').combobox('getValue');
 		var county = $('#county').combobox('getValue');
 		var delegatorName = $('#delegatorName').val();
+		var bsbz = $('#bsbz').val();
+		var ysbz = $('#ysbz').val();
 		
 		queryParams.projectName = isEmpty(projectName)?"":projectName;
 		queryParams.st = isEmpty(st)?"":st;
@@ -195,7 +211,9 @@
 		queryParams['provice.id'] = isEmpty(provice)?-1:provice;
 		queryParams['city.id'] = isEmpty(city)?-1:city;
 		queryParams['county.id'] = isEmpty(county)?-1:county;
-		queryParams['delegatorName'] = isEmpty(delegatorName) ? "" : delegatorName;;
+		queryParams['delegatorName'] = isEmpty(delegatorName) ? "" : delegatorName;
+		queryParams.bsbz = isEmpty(bsbz)?"":bsbz;
+		queryParams.ysbz = isEmpty(ysbz)?"":ysbz;
 		
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -209,13 +227,15 @@
 		$('#city').combobox('clear');
 		$('#county').combobox('clear');
 		$('#delegatorName').val('');
+		$('#bsbz').val('');
+		$('#ysbz').val('');
 	}
 	
 	function addFun() {
 		parent.$.modalDialog({
 			title : '项目开标登记',
 			width : 850,
-			height : 535,
+			height : 560,
 			href : '${ctx}/projectRegist/addPage?type=1',
 			buttons : [ {
 				text : '添加',
@@ -273,7 +293,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记编辑',
 			width : 850,
-			height : 535,
+			height : 560,
 			href : '${ctx}/projectRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -305,7 +325,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记详情',
 			width : 850,
-			height : 535,
+			height : 560,
 			href : '${ctx}/projectRegist/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -377,33 +397,36 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
+		<a onclick="searchFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
+		<a onclick="clearFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
 
 		<c:if test="${fn:contains(sessionInfo.resourceList, '/projectRegist/search')}">
-			<table style="width:1000px;overflow: scroll;">
+			<table style="width:900px;overflow: scroll;" class="grid">
 				<tr>
-					<th>项目名称:</th>
+					<td>项目名称:</td>
 					<td><input type="text" id="projectName"> </td>
-					<th>登记时间:</th>
+					<td>开标时间:</td>
 					<td>
 						<input class="Wdate" type="text" name="st" id="st"
-						style="height: 100%" onfocus="showDate('yyyy-MM-dd')" /> - 
-						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
+						style="height: 100%;width: 100px" onfocus="showDate('yyyy-MM-dd')" /> - 
+						<input class="Wdate" type="text" name="et" id="et" style="height: 100%;width: 100px"
 						onfocus="showDate('yyyy-MM-dd')" /> 
 					</td>
-					<th>委托人:</th>
+					<td>委托人:</td>
 					<td>
-						<input type="text" id="delegatorName">
+						<input type="text" id="delegatorName" style="width: 110px">
 					</td>
-					<td rowspan="2">
-						<a onclick="searchFun();" href="javascript:void(0);" class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
-					
-						<a onclick="clearFun();" href="javascript:void(0);"class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
+					<td>标书编制:</td>
+					<td>
+						<input type="text" id="bsbz" style="width: 110px">
 					</td>
 				</tr>
 				<tr>
-					<th>地点</th>
+					<td>地点</td>
 					<td colspan="5">
 						省：<select id="provice" data-options="editable:false" name="provice.id" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
@@ -413,6 +436,10 @@
 					 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						县(区)：<select id="county" name="county.id" data-options="editable:false" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
+					</td>
+					<td>预算编制:</td>
+					<td>
+						<input type="text" id="ysbz" style="width: 110px">
 					</td>
 				</tr>
 			</table>
