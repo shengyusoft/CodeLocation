@@ -1,8 +1,6 @@
 package com.wtkj.common.controller;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -108,7 +106,8 @@ public class ShotcutController extends BaseController {
 			File file = new File(upload_virtual_path + GlobalConstant.TEMP_DIR
 					+ "/" + vo.getIconUrl());
 			if (file.exists()) {
-				FileUtil.cut(file, upload_virtual_path + "/shotcut");
+				//FileUtil.cut(file, upload_virtual_path + "/shotcut");
+				FileUtil.cut(file, request.getRealPath("/") + "/style/images/shotcut");
 			}
 
 			vo.setIconUrl("/shotcut/" + vo.getIconUrl());

@@ -82,35 +82,34 @@
 										width : '30',
 									},
 									{
-										width : '240',
+										width : '150',
 										title : '添加人',
 										align : 'center',
 										field : 'userName'
 									},
 									{
-										width : '260',
+										width : '150',
 										title : '快键资源',
 										align : 'center',
 										field : 'resourceName'
 									},
 									{
-										width : '240',
+										width : '150',
 										title : '更新时间',
 										align : 'center',
 										field : 'updateDT'
-									}/* ,
+									} ,
 									{
-										width : '240',
+										width : '120',
 										title : '快键图标',
 										align : 'center',
 										sortable : true,
 										field : 'iconUrl',
 										formatter : function(value, row, index) {
-											return '<img style="margin: 0px; width: 25px; height: 25px; border: 0px; opacity: 1;" src="'
+											return '<img style="margin: 0px; width: 25px; height: 25px; border: 0px; opacity: 1;" src="${ctx}/style/images'
 													+ value + '"</img>';
 										}
-									},
-									{
+									},{
 										field : 'action',
 										title : '操作',
 										width : 100,
@@ -125,7 +124,7 @@
 													row.id);
 											return str;
 										}
-									}  */] ],
+									}  ] ],
 							toolbar : '#toolbar'
 						});
 	}

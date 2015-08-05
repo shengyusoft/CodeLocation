@@ -164,7 +164,7 @@ a:hover {
 											style="float: left; width: 60px; height: 70px; margin: 8px;">
 											<a href="#"
 												onclick="shotTab('${d.resourceUrl}','${d.resourceName}','${d.resourceIcon}')">
-												<img src="${imgPath}/shotcut/${d.iconUrl}"
+												<img src="${ctx}/style/images${d.iconUrl}"
 												style="height: 55px; width: 55px;" /><br /> <span>${d.resourceName}</span>
 											</a>
 										</div>

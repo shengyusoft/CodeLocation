@@ -162,9 +162,9 @@
 					}else if(value == -1){
 						reStr = '<font color="red">等待财务确认</font>';
 					}else if(value == 1){
-						reStr = '<font color="blue">出纳已确认</font>';
+						reStr = '<font color="green">出纳已确认</font>';
 					}else if(value == 2){
-						reStr = '<font color="green">会计已确认</font>';
+						reStr = '<font color="blue">会计已确认</font>';
 					}else{
 						reStr = '初始化';
 					}

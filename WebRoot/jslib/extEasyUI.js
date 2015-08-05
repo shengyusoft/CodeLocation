@@ -264,7 +264,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 			return /^\d+(\.\d+)?$/i.test(value);
 		},
 		message : '请输入数字，并确保格式正确'
-	},
+	}
 });
 
 $.extend($.fn.validatebox.defaults.rules, {

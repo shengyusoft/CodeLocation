@@ -26,14 +26,14 @@
 				type : 1
 			},
 			idField : 'id',
-			sortName : 'id',
+			sortName : 'registDT',
 			sortOrder : 'desc',
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [ {
 				checkbox : true,
 				field : 'id',
-				width : '30',
+				width : '30'
 			}, {
 				title : '序号',
 				field : 'index',
