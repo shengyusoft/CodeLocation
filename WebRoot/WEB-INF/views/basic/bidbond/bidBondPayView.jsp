@@ -145,7 +145,7 @@ input {
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 								<td colspan="4"><input name="payeeHandleDT" type="text"
 									value="<fmt:formatDate value="${bidBond.payeeHandleDT}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-									id="payeeHandleDT" class="easyui-validatebox Wdate" onfocus="showDate('yyyy-MM-dd  HH:mm:ss')" 
+									id="payeeHandleDT" class="easyui-validatebox Wdate" onfocus="showDate('yyyy-MM-dd HH:mm:ss')" 
 									data-options="required:true" /></td>
 							</tr>
 						</table>
