@@ -308,8 +308,8 @@
 		parent.$.modalDialogTwo({
 			title : '报销明细详情',
 			autoScroll : true,
-			width : document.body.clientWidth * 0.7,
-			height : document.body.clientHeight * 0.9,
+			width : '900',
+			height : '500',
 			href : '${ctx}/reimbursement/detailPage2?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -347,7 +347,7 @@
 		</form>
 	</div>
 	<span style="font-size: 14px; color: blue">报销明细</span>
-	<div data-options="fit:true,border:false" style="overflow: auto;height: 360px">
+	<div data-options="fit:true,border:false" style="overflow: auto;height: 460px">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div id="toolbar" class="mygrid-toolbar" style="inline: true">

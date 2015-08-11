@@ -225,7 +225,6 @@
 						</table>
 					</td>
 				</tr>
-
 			</table>
 		</form>
 	</div>

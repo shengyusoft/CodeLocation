@@ -373,7 +373,7 @@
 	</div>
 	<span style="font-size: 14px; color: blue">报销明细</span>
 	<div data-options="fit:true,border:false"
-		style="overflow: auto; height: 360px">
+		style="overflow: auto; height: 460px">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div id="toolbar" class="mygrid-toolbar" style="inline: true">

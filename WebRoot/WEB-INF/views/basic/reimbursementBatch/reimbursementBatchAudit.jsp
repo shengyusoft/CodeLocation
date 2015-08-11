@@ -288,8 +288,8 @@
 	function addFun() {
 		parent.$.modalDialog({
 					title : '报销申请',
-					width : '900',
-					height : '500',
+					width : '1000',
+					height : '600',
 					resizable : true,
 					href : '${ctx}/reimbursementBatch/addPage',
 					buttons : [
@@ -381,8 +381,8 @@
 					title : '编辑报销单',
 					resizable : true,
 					autoScroll:true,
-					width : '900',
-					height : '500',
+					width : '1000',
+					height : '600',
 					href : '${ctx}/reimbursementBatch/editPage?id=' + id,
 					buttons : [
 							{
@@ -468,8 +468,8 @@
 		parent.$.modalDialog({
 			title : '报销申请详情',
 			autoScroll : true,
-			width : '900',
-			height : '500',
+			width : '1000',
+			height : '600',
 			href : '${ctx}/reimbursementBatch/detailPage2?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -497,7 +497,7 @@
 		
 		parent.$.modalDialog({
 			title : '报销审批',
-			width : '900',
+			width : '1000',
 			height : '650',
 			resizable : true,
 			href : ctxPath+'/reimbursementBatch/handlerPage?id='+id,

@@ -257,10 +257,13 @@ public class ReimbursementVo implements Serializable {
 	}
 
 	public Double getTotal() {
-		return parseValue(this.trafficFee) + parseValue(this.mealFee)
+		this.total = parseValue(this.trafficFee) + parseValue(this.mealFee)
 				+ parseValue(this.officeFee) + parseValue(this.receiveFee)
 				+ parseValue(this.badgeFee) + parseValue(this.communicationFee)
-				+ parseValue(this.otherFee);
+				+ parseValue(this.otherFee) + parseValue(this.trainFee)
+				+ parseValue(this.wyFee) + parseValue(this.zzFee)
+				+ parseValue(this.zsFee) + parseValue(this.kdFee);
+		return this.total;
 	}
 
 	private Double parseValue(Double fee) {
