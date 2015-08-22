@@ -14,7 +14,6 @@ import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.controller.BaseController;
-import com.wtkj.common.model.Dictionary;
 import com.wtkj.rms.project.model.Certificate;
 import com.wtkj.rms.project.service.CertificateServiceI;
 
