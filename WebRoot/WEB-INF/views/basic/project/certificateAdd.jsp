@@ -26,19 +26,29 @@
 			}
 		});
 	});
+	
+	$('#card_name').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=zsmc",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : '300'				
+	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="certificateAddForm" method="post"
-			style="width: 800px; height: 330px;">
+		<form id="certificateAddForm" method="post">
 			<table class="grid">
 				<tr>
 					<th>证书名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="card_name" style="width: 100%; height: 100%"
-						type="text" id="card_name" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td>
+						<select id="card_name" name="card_name"
+						class="easyui-validatebox span2" style="width: 180px;"
+						data-options="required:true">
+						</select>
+					</td>
 					<th>证书编码 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="card_code" style="width: 100%; height: 100%"
@@ -63,7 +73,7 @@
 					<th>发证单位&nbsp;</th>
 					<td><input name="card_issuer" type="text" id="card_issuer"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2" /></td>
-					<th>证书所有人&nbsp;</th>
+					<th>持证人&nbsp;</th>
 					<td><input name="card_owner" style="width: 100%; height: 100%"
 						type="text" id="card_owner" class="easyui-validatebox span2" /></td>
 				</tr>
@@ -82,7 +92,7 @@
 						</select>
 						
 					</td>
-					<th>证书等级&nbsp;</th>
+					<th>所属公司&nbsp;</th>
 					<td><input name="card_level" style="width: 100%; height: 100%"
 						type="text" id="card_level" class="easyui-validatebox span2" /></td>
 				</tr>
@@ -95,16 +105,17 @@
     						<option value="已使用">已使用</option>
     						<option value="已过期">已过期</option>
 						</select>
-						
 					</td>
-					
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
 					<td colspan="3"><textarea style="width: 100%" rows="5"
-							name="remark"></textarea></td>
+							name="remark"></textarea><input type="hidden"
+						name="attachmentIds" id="attachmentIds"></td>
 				</tr>
 			</table>
 		</form>
+		<input type="hidden" id="attachmentType" value="zsmc">
+		<jsp:include page="../../upload.jsp"></jsp:include>
 	</div>
 </div>

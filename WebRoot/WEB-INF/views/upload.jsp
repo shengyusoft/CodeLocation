@@ -122,7 +122,7 @@
 </script>
 
 <form id="fileAddForm" method="post" enctype="multipart/form-data"
-	style="height: auto; margin-top: 10px">
+	style="height: 200px;margin-top: 10px">
 	<table class="grid">
 		<tr>
 			<th>上传文件</th>
@@ -137,7 +137,7 @@
 		<tr>
 			<th>附件列表</th>
 			<td colspan="3">
-				<div id="downloadDiv" style="height: auto; vertical-align: middle;"></div>
+				<div id="downloadDiv" style="min-height: 80px; vertical-align: middle;"></div>
 			</td>
 		</tr>
 	</table>

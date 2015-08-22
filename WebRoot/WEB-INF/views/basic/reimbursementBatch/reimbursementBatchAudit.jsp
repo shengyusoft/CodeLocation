@@ -207,7 +207,7 @@
 				title : '报销人',
 				sortable : true,
 				align : 'center',
-				field : 'process1',
+				field : 'process.applyUser.name',
 				formatter : function(val,row,index){
 					var process = row.process_vo;
 					return isEmpty(process)?'':process.applyUserName;
@@ -232,10 +232,12 @@
 				width : '300',
 				title : '状态',
 				align : 'center',
-				field : 'process_vo',
+				sortable : true,
+				field : 'process.state',
 				formatter : function(value, row, index) {
-					if (value != null) {
-						switch (value.state) {
+					var process = row.process_vo;
+					if (process != null) {
+						switch (process.state) {
 						case 0:
 							return '初始化';
 						case 1:

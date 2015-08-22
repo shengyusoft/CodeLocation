@@ -115,6 +115,7 @@
 			}, {
 				width : '100',
 				title : '就餐费（元）',
+				sum : true,
 				align : 'center',
 				field : 'mealFee'
 			}, {
@@ -180,7 +181,7 @@
 			} ] ],
 			
 			onLoadSuccess:function(){ 
-                $('#dataGrid').datagrid('statistics');
+                $('#dataGrid').datagrid('statistics');//加载末行统计
                 var footers=$('#dataGrid').datagrid('getFooterRows');
                 var sumTotal = footers[0].total;
                 $('#totalFee').val(sumTotal);

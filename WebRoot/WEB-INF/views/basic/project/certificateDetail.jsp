@@ -4,8 +4,7 @@
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
-		<form id="certificateAddForm" method="post"
-			style="width: 800px; height: 330px;">
+		<form id="certificateAddForm" method="post">
 			<table class="grid">
 				<tr>
 					<th>证书名称 &nbsp;<label
@@ -38,7 +37,7 @@
 					<td><input name="card_issuer" type="text" disabled="disabled" id="card_issuer" readonly="readonly"
 						value="${certificate.card_issuer}" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" /></td>
-					<th>证书所有人 &nbsp;</th>
+					<th>持证人 &nbsp;</th>
 					<td><input name="card_owner" style="width: 100%; height: 100%"
 						value="${certificate.card_owner}" type="text" disabled="disabled" id="card_owner"
 						readonly="readonly" class="easyui-validatebox span2" /></td>
@@ -49,7 +48,7 @@
 					<td><input name="card_type" type="text" disabled="disabled" id="card_type"
 						value="${certificate.card_type}" readonly="readonly"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2" /></td>
-					<th>证书等级 &nbsp;</th>
+					<th>所属公司 &nbsp;</th>
 					<td><input name="card_level" style="width: 100%; height: 100%"
 						readonly="readonly" value="${certificate.card_level}" type="text" disabled="disabled"
 						id="card_level" class="easyui-validatebox span2" /></td>
@@ -64,9 +63,13 @@
 				<tr>
 					<th>备注&nbsp;</th>
 					<td colspan="3"><textarea style="width: 100%" rows="5"
-							readonly="readonly" disabled="disabled" name="remark">${certificate.remark}</textarea></td>
+							readonly="readonly" disabled="disabled" name="remark">${certificate.remark}</textarea>
+						<input type="hidden" name="attachmentIds" id="attachmentIds"
+						value="${certificate.attachmentIds}"></td>
 				</tr>
 			</table>
 		</form>
+		<input type="hidden" id="attachmentType" value="xdfw">
+		<jsp:include page="../../uploadDetail.jsp"></jsp:include>
 	</div>
 </div>

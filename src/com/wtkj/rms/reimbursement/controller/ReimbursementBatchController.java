@@ -233,8 +233,17 @@ public class ReimbursementBatchController extends BaseController {
 
 			} else {
 				// 第一次申请提交报销单
-				Long docId = reimbursementBatchService.add(reimbursementBatch,
-						request);
+				Long docId = reimbursementBatch.getId();
+				Date month = reimbursementBatch.getMonth();
+				if (docId!= null && docId > 0) {
+					reimbursementBatch = reimbursementBatchService.get(docId);
+					reimbursementBatch.setMonth(month);
+					reimbursementBatchService.edit(reimbursementBatch, request);
+
+				}else{
+					docId = reimbursementBatchService.add(reimbursementBatch,request);
+				}
+						
 				// 提交后保存流程以及流程历史操作记录
 				Process process = new Process();
 				if (user == null) {

@@ -86,6 +86,11 @@ public class CertificateServiceImpl implements CertificateServiceI {
 				hql += " and t.card_name like :name";
 				params.put("name", "%%" + vo.getCard_name() + "%%");
 			}
+			
+			if (!StringUtils.isEmpty(vo.getCard_owner())) {
+				hql += " and t.card_owner like :name";
+				params.put("name", "%%" + vo.getCard_owner() + "%%");
+			}
 		}
 
 		return hql;

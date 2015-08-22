@@ -120,6 +120,7 @@
 					}, {
 						width : '100',
 						title : '就餐费（元）',
+						sum : true,
 						align : 'center',
 						field : 'mealFee'
 					}, {

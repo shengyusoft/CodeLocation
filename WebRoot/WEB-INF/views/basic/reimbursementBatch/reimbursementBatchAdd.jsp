@@ -12,37 +12,37 @@
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
-		$('#reimbursementBatchAddForm')
-				.form(
-						{
-							url : '${pageContext.request.contextPath}/reimbursementBatch/apply',
-							onSubmit : function() {
-								progressLoad();
-								var isValid = $(this).form('validate');
-								if (!isValid) {
-									progressClose();
-								}
-								return isValid;
-							},
-							success : function(result) {
-								progressClose();
-								result = $.parseJSON(result);
-								if (result.success) {
-									$("#batchRegistBtn").linkbutton("disable");
-									if (result.obj) {
-										console.log(result.obj);
-										console.log(result.obj.id);
-										$('#batchId').val(result.obj.id);
-									}
-									//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
-									parent.$.modalDialog.openner_dataGrid
-											.datagrid('reload');
-								} else {
-									parent.$.messager.alert('错误', result.msg,
-											'error');
-								}
-							}
-						});
+		$('#reimbursementBatchAddForm').form({
+			url : '${pageContext.request.contextPath}/reimbursementBatch/apply',
+			onSubmit : function() {
+				progressLoad();
+				debugger;
+				var isValid = $(this).form('validate');
+				if (!isValid) {
+					progressClose();
+				}
+				return isValid;
+			},
+			success : function(result) {
+				progressClose();
+				result = $.parseJSON(result);
+				if (result.success) {
+					$("#batchRegistBtn").linkbutton("disable");
+					if (result.obj) {
+						console.log(result.obj);
+						console.log(result.obj.id);
+						$('#batchId').val(result.obj.id);
+					}
+					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
+					parent.$.modalDialog.openner_dataGrid
+							.datagrid('reload');
+				} else {
+					parent.$.messager.alert('错误', result.msg,
+							'error');
+				}
+			}
+		});
+		
 		detailGridRegist();
 	});
 
@@ -127,6 +127,7 @@
 					}, {
 						width : '100',
 						title : '就餐费（元）',
+						sum : true,
 						align : 'center',
 						field : 'mealFee'
 					}, {
@@ -353,7 +354,7 @@
 				<tr>
 					<th>月份 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input id="batchId" type="hidden" name="batchId"><input
+					<td><input id="batchId" type="hidden" name="id"><input
 						type="hidden" name="option" id="option" value="" /> <input
 						class="Wdate" type="text" name="month" id="month"
 						style="width: 68%; height: 100%;" data-options="required:true"
@@ -361,8 +362,7 @@
 					<th>报销人&nbsp;</th>
 					<td colspan="4"><input class="easyui-validatebox"
 						style="width: 100%" name="bxr" id="bxr"
-						value="${sessionInfo.name}"
-						readonly="readonly" disabled="disabled"></input></td>
+						value="${sessionInfo.name}"readonly="readonly" disabled="disabled"></input></td>
 					<th>报销总额&nbsp;</th>
 					<td colspan="4"><input class="easyui-validatebox"
 						style="width: 100%" name="totalFee" id="totalFee"

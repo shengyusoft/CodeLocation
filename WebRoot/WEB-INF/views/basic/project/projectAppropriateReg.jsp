@@ -513,30 +513,29 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
-
+		
 		<a onclick="printFun(0);" href="javascript:void(0);"
 			class="easyui-linkbutton"
 			data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览</a> <a
 			onclick="printFun(1);" href="javascript:void(0);"
 			class="easyui-linkbutton"
 			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
-			
-		<table>
-			<tr>
-				<th>项目名称:</th>
-				<td><input style="width:150px" type="text" id="projectName"></td>
-				<th>收款人:</th>
-				<td><input style="width:100px" type="text" id="payee"></td>
-				<th>联系人:</th>
-				<td><input style="width:100px" type="text" id="contactName"></td>
-				<td>
-					<a onclick="searchFun();" href="javascript:void(0);"
+		
+		<a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
 					<a onclick="clearFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-				</td>
+
+		<table>
+			<tr>
+				<th>项目名称:</th>
+				<td><input style="width: 150px" type="text" id="projectName"></td>
+				<th>收款人:</th>
+				<td><input style="width: 100px" type="text" id="payee"></td>
+				<th>联系人:</th>
+				<td><input style="width: 100px" type="text" id="contactName"></td>
 			</tr>
 		</table>
 	</div>

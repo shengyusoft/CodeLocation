@@ -12,7 +12,6 @@
 <script type="text/javascript">
 	var dataGrid;
 	$(function() {
-
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/certificate/dataGrid',
 			striped : true,
@@ -42,7 +41,7 @@
 				field : 'card_name'
 			}, {
 				width : '90',
-				title : '证书到期时间',
+				title : '到期时间',
 				align : 'center',
 				field : 'card_enddate'
 			}, {
@@ -52,7 +51,8 @@
 				field : 'card_issuer'
 			}, {
 				width : '120',
-				title : '证书所有人',
+				//title : '证书所有人',
+				title : '持证人',
 				align : 'center',
 				field : 'card_owner'
 			}, {
@@ -62,7 +62,8 @@
 				field : 'card_type'
 			}, {
 				width : '80',
-				title : '证书等级',
+				//title : '证书等级',
+				title : '所属公司',
 				align : 'center',
 				field : 'card_level'
 			},  {
@@ -84,10 +85,15 @@
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.card_name = "";
+		queryParams.card_owner = "";
 
-		var name = $('#card_name').val();
-		if (!isEmpty(name)) {
-			queryParams.card_name = name;
+		var card_name = $('#card_name').val();
+		var card_owner = $('#card_owner').val();
+		if (!isEmpty(card_name)) {
+			queryParams.card_name = card_name;
+		}
+		if (!isEmpty(card_owner)) {
+			queryParams.card_owner = card_owner;
 		}
 		//重新加载datagrid的数据  
 		$("#dataGrid").datagrid('reload');
@@ -95,6 +101,7 @@
 
 	function clearFun() {
 		$('#card_name').val('');
+		$('#card_owner').val('');
 	}
 
 	function addFun() {
@@ -269,7 +276,8 @@
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/certificate/search')}">
 			<div id="searchbar" class="search-toolbar">
-				<span>证书名称:</span> <input type="text" id="card_name"> <a
+				<span>证书名称:</span> <input type="text" id="card_name"> <span>持证人:</span>
+				<input type="text" id="card_owner"> <a
 					onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
