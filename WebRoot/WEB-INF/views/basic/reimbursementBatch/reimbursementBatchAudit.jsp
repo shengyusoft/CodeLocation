@@ -334,6 +334,7 @@
 
 	function deleteFun() {
 		var selected = getSelected();
+		console.log(selected);
 		if (isEmpty(selected)) {
 			parent.$.messager.alert('警告', '至少选中一条记录!');
 			return;

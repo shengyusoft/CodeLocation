@@ -69,7 +69,14 @@ where r.batchId = $P{batchId}]]>
 		<variableExpression><![CDATA[$F{otherFee}]]></variableExpression>
 	</variable>
 	<variable name="totalFeeT" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{totalFee}]]></variableExpression>
+		<variableExpression><![CDATA[($F{trafficFee}==null?0:$F{trafficFee})+
+($F{officeFee}==null?0:$F{officeFee})+
+($F{receiveFee}==null?0:$F{receiveFee})+
+($F{badgeFee}==null?0:$F{badgeFee})+
+($F{communicationFee}==null?0:$F{communicationFee})+
+($F{trainFee}==null?0:$F{trainFee})+
+($F{otherFee}==null?0:$F{otherFee})+
+($F{wyFee}==null?0:$F{wyFee})+($F{zzFee}==null?0:$F{zzFee})+($F{kdFee}==null?0:$F{kdFee})]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{totalFee}]]></initialValueExpression>
 	</variable>
 	<variable name="wyFeeT" class="java.lang.Double" calculation="Sum">
@@ -456,7 +463,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{mealFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{mealFee}==null?0:$F{mealFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="464" y="0" width="32" height="20"/>
@@ -469,7 +476,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{receiveFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{receiveFee}==null?0:$F{receiveFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="762" y="0" width="40" height="20"/>
@@ -482,7 +489,14 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{totalFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{trafficFee}==null?0:$F{trafficFee})+
+($F{officeFee}==null?0:$F{officeFee})+
+($F{receiveFee}==null?0:$F{receiveFee})+
+($F{badgeFee}==null?0:$F{badgeFee})+
+($F{communicationFee}==null?0:$F{communicationFee})+
+($F{trainFee}==null?0:$F{trainFee})+
+($F{otherFee}==null?0:$F{otherFee})+
+($F{wyFee}==null?0:$F{wyFee})+($F{zzFee}==null?0:$F{zzFee})+($F{kdFee}==null?0:$F{kdFee})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="496" y="0" width="32" height="20"/>
@@ -495,7 +509,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{badgeFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{badgeFee}==null?0:$F{badgeFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="432" y="0" width="32" height="20"/>
@@ -508,7 +522,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{officeFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{officeFee}==null?0:$F{officeFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="528" y="0" width="32" height="20"/>
@@ -521,7 +535,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{communicationFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{communicationFee}==null?0:$F{communicationFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="560" y="0" width="41" height="20"/>
@@ -534,7 +548,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{trainFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{trainFee}==null?0:$F{trainFee}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="82" y="0" width="9" height="20"/>
@@ -573,7 +587,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{trafficFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{trafficFee}==null?0:$F{trafficFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="281" y="0" width="86" height="20"/>
@@ -625,7 +639,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{otherFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{otherFee}==null?0:$F{otherFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="601" y="0" width="32" height="20"/>
@@ -638,7 +652,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{wyFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{wyFee}==null?0:$F{wyFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="633" y="0" width="33" height="20"/>
@@ -651,7 +665,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{zzFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zzFee}==null?0:$F{zzFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="666" y="0" width="32" height="20"/>
@@ -664,7 +678,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{zsFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zsFee}==null?0:$F{zsFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="698" y="0" width="32" height="20"/>
@@ -677,7 +691,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{kdFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{kdFee}==null?0:$F{kdFee}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -950,7 +964,7 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{kdFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{kdFeeT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

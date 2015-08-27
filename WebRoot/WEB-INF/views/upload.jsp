@@ -10,6 +10,12 @@
 			url : ctxPath + '/fileup/add',
 			onSubmit : function() {
 				progressLoad();
+				debugger;
+				if(isEmpty($('#textfield').val())){
+					progressClose();
+					alert('请选择文件!');
+					return false;
+				}
 				var attachType = $('#attachmentType').val();
 				$('#attachmentTypeCode').val(attachType);
 				var isValid = $(this).form('validate');
