@@ -39,6 +39,26 @@ public class Process extends IdEntity implements Serializable {
 	private Date arriveDT;// 任务每一步到达时间
 	private String remark;
 	private int option;// 审批是否统一，仅仅用于前台传值
+	
+	private String applyUserName;
+	private Long applyUserId;
+	
+	@Transient
+	public String getApplyUserName() {
+		return applyUserName;
+	}
+
+	public void setApplyUserName(String applyUserName) {
+		this.applyUserName = applyUserName;
+	}
+	@Transient
+	public Long getApplyUserId() {
+		return applyUserId;
+	}
+
+	public void setApplyUserId(Long applyUserId) {
+		this.applyUserId = applyUserId;
+	}
 
 	public String getProcessName() {
 		return processName;

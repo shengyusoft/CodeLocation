@@ -35,6 +35,6 @@
 
 	<!-- 自动扫描repository和service包(自动注入) -->
 	<context:component-scan
-		base-package="com.wtkj.common.dao,com.wtkj.common.service,com.wtkj.rms.*.dao,com.wtkj.rms.*.service,com.wtkj.rms.quartzJob" />
+		base-package="com.wtkj.common.dao,com.wtkj.common.service,com.wtkj.rms.*.dao,com.wtkj.rms.*.service,com.wtkj.rms.quartzJob,com.wtkj.rms.pmcc.soft.dao,com.wtkj.rms.pmcc.soft.service" />
 
 </beans>

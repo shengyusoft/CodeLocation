@@ -15,15 +15,14 @@
 		dataGrid = $('#dataGrid').datagrid({
 			url : '${ctx}' + '/certificate/dataGrid',
 			striped : true,
-			rownumbers : true,
 			pagination : true,
-			nowrap : true,
+			nowrap : false,
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
-			frozenColumns : [ [
+			columns : [ [
 
 			{
 				checkbox : true,
@@ -42,15 +41,17 @@
 			}, {
 				width : '90',
 				title : '到期时间',
+				sortable : true,
 				align : 'center',
-				field : 'card_enddate'
+				field : 'card_enddate',
+				formatter : Common.formatter
 			}, {
 				width : '160',
 				title : '发证单位',
 				align : 'center',
 				field : 'card_issuer'
 			}, {
-				width : '120',
+				width : '80',
 				//title : '证书所有人',
 				title : '持证人',
 				align : 'center',
@@ -61,7 +62,7 @@
 				align : 'center',
 				field : 'card_type'
 			}, {
-				width : '80',
+				width : '160',
 				//title : '证书等级',
 				title : '所属公司',
 				align : 'center',
@@ -72,7 +73,7 @@
 				align : 'center',
 				field : 'card_status'
 			},{
-				width : '100',
+				width : '210',
 				title : '备注',
 				align : 'center',
 				field : 'remark'
@@ -272,19 +273,23 @@
 					color="gray">详情</font> </a>
 			</c:otherwise>
 		</c:choose>
-
-		<c:if
-			test="${fn:contains(sessionInfo.resourceList, '/certificate/search')}">
-			<div id="searchbar" class="search-toolbar">
-				<span>证书名称:</span> <input type="text" id="card_name"> <span>持证人:</span>
-				<input type="text" id="card_owner"> <a
-					onclick="searchFun();" href="javascript:void(0);"
+		
+		<a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
+					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
+		<a onclick="clearFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-			</div>
+
+		<c:if test="${fn:contains(sessionInfo.resourceList, '/certificate/search')}">
+			<table>
+				<tr>
+					<th>证书名称:</th>
+					<td><input type="text" id="card_name"></td>
+					<th>持证人:</th>
+					<td><input type="text" id="card_owner"></td>
+				</tr>
+			</table>
 		</c:if>
 	</div>
 </body>

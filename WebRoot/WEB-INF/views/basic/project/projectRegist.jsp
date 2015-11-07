@@ -39,7 +39,7 @@
 					return index+1;
 				}
 			}, {
-				width : '100',
+				width : '60',
 				title : '公司名称',
 				align : 'center',
 				field : 'company',
@@ -47,7 +47,7 @@
 					return isEmpty(value)?'':value.text ;
 				}
 			}, {
-				width : '200',
+				width : '470',
 				title : '项目名称',
 				sortable : true,
 				align : 'center',
@@ -80,7 +80,7 @@
 				align : 'center',
 				field : 'qualifyRequirementNames'
 			}, {
-				width : '90',
+				width : '60',
 				title : '项目经理',
 				sortable : true,
 				align : 'center',
@@ -89,20 +89,20 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '90',
+				width : '50',
 				title : '委托人',
 				sortable : true,
 				align : 'center',
 				field : 'delegatorName'
 			}, {
-				width : '100',
+				width : '80',
 				title : '报名时间',
 				sortable : true,
 				align : 'center',
 				field : 'registDT',
 				formatter:Common.formatter
 			}, {
-				width : '100',
+				width : '80',
 				title : '登记时间',
 				sortable : true,
 				align : 'center',
@@ -368,6 +368,14 @@
 			</c:otherwise>
 		</c:choose>
 
+
+		<a onclick="searchFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+			onclick="clearFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
+
 		<c:if test="${fn:contains(sessionInfo.resourceList, '/projectRegist/search')}">
 			<table style="width:1000px;overflow: scroll;">
 				<tr>
@@ -384,13 +392,7 @@
 					<td>
 						<input type="text" id="delegatorName">
 					</td>
-					<td rowspan="2">
-						<a onclick="searchFun();" href="javascript:void(0);" class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
 					
-						<a onclick="clearFun();" href="javascript:void(0);"class="easyui-linkbutton"
-							data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-					</td>
 				</tr>
 				<tr>
 					<th>地点:</th>

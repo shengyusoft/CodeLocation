@@ -38,13 +38,13 @@
 					return index+1;
 				}
 			}, {
-				width : '160',
+				width : '400',
 				title : '项目名称',
 				sortable : true,
 				align : 'center',
 				field : 'projectName'
 			}, {
-				width : '120',
+				width : '60',
 				title : '公司名称',
 				sortable : true,
 				align : 'center',
@@ -55,19 +55,19 @@
 				align : 'center',
 				field : 'qualifyRequirementNames'
 			}, {
-				width : '100',
+				width : '60',
 				title : '投标人',
 				sortable : true,
 				align : 'center',
 				field : 'bidder'
 			}, {
-				width : '100',
+				width : '90',
 				title : '联系方式',
 				sortable : true,
 				align : 'center',
 				field : 'contract'
 			}, {
-				width : '100',
+				width : '60',
 				title : '登记人',
 				sortable : true,
 				align : 'center',
@@ -79,14 +79,14 @@
 				align : 'center',
 				field : 'bookFee'
 			}, {
-				width : '120',
+				width : '75',
 				title : '登记时间',
 				sortable : true,
 				align : 'center',
 				field : 'registDT',
 				formatter : Common.formatter
 			}, {
-				width : '120',
+				width : '150',
 				title : '备注',
 				sortable : true,
 				align : 'center',
@@ -198,8 +198,7 @@
 				text : '编辑',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
-							.find('#projectBookRegistEditForm');
+					var f = parent.$.modalDialog.handler.find('#projectBookRegistEditForm');
 					f.submit();
 				}
 			} ]
@@ -297,14 +296,25 @@
 			</c:otherwise>
 		</c:choose>
 
+		<a onclick="searchFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
+			<a
+			onclick="clearFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
+
+
 		<c:if
 			test="${fn:contains(sessionInfo.resourceList, '/projectBookRegist/search')}">
 			<table style="width:900px;overflow: scroll;">
 				<tr>
-					<!-- <th>项目名称:</th>
-					<td><input type="text" id="projectName"></td> -->
+					<th>项目名称:</th>
+					<td><input type="text" id="projectName"></td>
 					<th>投标人:</th>
 					<td><input type="text" id="bidder"></td>
+				</tr>
+				<tr>
 					<th>登记人:</th>
 					<td><input type="text" id="registerName"></td>
 					<th>登记时间段:</th>
@@ -314,12 +324,7 @@
 						<input class="Wdate" type="text" name="et" id="et" style="height: 100%"
 						onfocus="showDate('yyyy-MM-dd')" /> 
 					</td>
-					<td rowspan="2"><a onclick="searchFun();" href="javascript:void(0);"
-						class="easyui-linkbutton"
-						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-						onclick="clearFun();" href="javascript:void(0);"
-						class="easyui-linkbutton"
-						data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
+					
 				</tr>
 			</table>
 		</c:if>

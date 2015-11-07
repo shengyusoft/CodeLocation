@@ -2,6 +2,7 @@ package com.wtkj.common.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomBooleanEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.wtkj.common.DateEditor;
 import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.SessionInfo;
+import com.wtkj.common.model.User;
+import com.wtkj.common.service.UserServiceI;
 
 @Controller
 @RequestMapping("/base")
@@ -23,6 +26,9 @@ public class BaseController {
 	protected String order = "asc";// asc/desc
 
 	protected String ids;// 主键集合，逗号分割
+
+	@Autowired
+	protected UserServiceI userService;
 
 	@InitBinder
 	public void initBinder(ServletRequestDataBinder binder) {
@@ -85,6 +91,18 @@ public class BaseController {
 		SessionInfo sessionInfo = (SessionInfo) request.getSession()
 				.getAttribute(GlobalConstant.SESSION_INFO);
 		return sessionInfo;
+	}
+
+	/**
+	 * 流程设计到用户较多，获取当前用户的操作包装，以方便取
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected User getLoginUser(HttpServletRequest request) {
+		Long userId = getSessionInfo(request).getId();
+		User user = userService.get(userId);
+		return user;
 	}
 
 }

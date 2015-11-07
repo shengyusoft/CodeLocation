@@ -82,7 +82,7 @@ $P!{whereSql}]]>
 	<columnHeader>
 		<band height="37" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="42" height="37"/>
+				<reportElement x="0" y="0" width="29" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -95,7 +95,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[序号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="101" y="0" width="111" height="37"/>
+				<reportElement x="72" y="0" width="111" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -108,7 +108,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[项目名称]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="271" y="0" width="59" height="37"/>
+				<reportElement x="242" y="0" width="59" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -134,7 +134,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[登记人]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="212" y="0" width="59" height="37"/>
+				<reportElement x="183" y="0" width="59" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -147,7 +147,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[项目地点]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="42" y="0" width="59" height="37"/>
+				<reportElement x="29" y="0" width="43" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -160,7 +160,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[公司名称]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="330" y="0" width="42" height="37"/>
+				<reportElement x="301" y="0" width="42" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -173,7 +173,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[项目经理]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="372" y="0" width="42" height="37"/>
+				<reportElement x="343" y="0" width="42" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -186,7 +186,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[技术负责人]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="414" y="0" width="53" height="37"/>
+				<reportElement x="385" y="0" width="53" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -199,7 +199,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[工期结束时间]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="467" y="0" width="55" height="37"/>
+				<reportElement x="438" y="0" width="55" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -212,7 +212,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[中标时间]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="522" y="0" width="46" height="37"/>
+				<reportElement x="493" y="0" width="75" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -281,7 +281,7 @@ $P!{whereSql}]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="42" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="29" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -294,7 +294,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{index}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="42" y="0" width="59" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="29" y="0" width="43" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -307,7 +307,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{companyName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="372" y="0" width="41" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="344" y="0" width="41" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -320,7 +320,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{tecName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="467" y="0" width="55" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="438" y="0" width="55" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -346,7 +346,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{recordman}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="522" y="0" width="46" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="493" y="0" width="75" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -359,7 +359,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{bid_cost}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="414" y="0" width="53" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="385" y="0" width="53" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -398,7 +398,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{headman}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="101" y="0" width="111" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="72" y="0" width="111" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -411,7 +411,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{projectName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="330" y="0" width="42" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="301" y="0" width="42" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -424,7 +424,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{mgrName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="271" y="0" width="59" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="242" y="0" width="59" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -437,7 +437,7 @@ $P!{whereSql}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{bdNames}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="212" y="0" width="59" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="183" y="0" width="59" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -548,7 +548,7 @@ $P!{whereSql}]]>
 				<text><![CDATA[统计]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="169" y="1" width="353" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="169" y="1" width="324" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.25"/>
@@ -582,7 +582,7 @@ $P!{whereSql}]]>
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="522" y="1" width="46" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="493" y="1" width="75" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.25"/>

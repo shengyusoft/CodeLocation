@@ -1,5 +1,6 @@
 package com.wtkj.common.utils;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,6 +22,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 public abstract class DateUtil {
 	private static Log log = LogFactory.getLog(DateUtil.class);
 	private static final String TIME_PATTERN = "HH:mm";
+	public static final String YYYY_MM_DD = "yyyy-MM-dd";
+	public static final String YYYYMMDD = "yyyyMMdd";
+	public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
 	/**
 	 * Return default datePattern (MM/dd/yyyy)
@@ -227,4 +231,104 @@ public abstract class DateUtil {
 
 	}
 
+	/*----------------------开始----------------------*/
+	/**
+	 * 获取某月的开始时间
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static Date getMonthStartTime(Date time) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(isNullTimestamp(time));
+		c.set(Calendar.DATE, 1);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		return StringToDate(
+				DateToString(new Date(c.getTime().getTime()), YYYY_MM_DD_HH_MM_SS), YYYY_MM_DD_HH_MM_SS);
+	}
+
+	/**
+	 * 获取某月的结束时间
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static Date getMonthEndTime(Date time) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(isNullTimestamp(time));
+		c.set(Calendar.DATE, 1);
+		c.add(Calendar.MONTH, 1);
+		c.add(Calendar.DAY_OF_MONTH, -1);
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		return StringToDate(
+				DateToString(new Date(c.getTime().getTime()),
+						YYYY_MM_DD_HH_MM_SS), YYYY_MM_DD_HH_MM_SS);
+	}
+	
+	private static Date isNullTimestamp(Date time) {
+		if (time == null) {
+			return getCurrentTime();
+		}
+		return time;
+	}
+	/**
+	 * 获取当前时间
+	 * 
+	 * @return
+	 */
+	public static Date getCurrentTime() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		return StringToDate(
+				DateToString(new Date(c.getTime().getTime()),
+						YYYY_MM_DD_HH_MM_SS), YYYY_MM_DD_HH_MM_SS);
+	}
+	public static SimpleDateFormat getDateFormat(String parttern)
+			throws RuntimeException {
+		return new SimpleDateFormat(parttern);
+	}
+	/**
+	 * 时间转指定格式字符串
+	 * 
+	 * @param date
+	 * @param parttern
+	 * @return
+	 */
+	public static String DateToString(Date date, String parttern) {
+		String formatDate = null;
+		if (date != null) {
+			try {
+				formatDate = getDateFormat(parttern).format(date);
+			} catch (Exception e) {
+				formatDate = new String();
+			}
+		}
+		return formatDate;
+	}
+	/**
+	 * 字符串转指定格式时间
+	 * 
+	 * @param date
+	 * @param parttern
+	 * @return
+	 */
+	public static Date StringToDate(String date, String parttern) {
+		Date formatDate = null;
+		if (date != null) {
+			try {
+				formatDate = getDateFormat(parttern).parse(date);
+			} catch (Exception e) {
+				formatDate = new Date();
+			}
+		}
+		return new Timestamp(formatDate.getTime());
+	}
+	/*----------------------结束----------------------*/
+	
 }

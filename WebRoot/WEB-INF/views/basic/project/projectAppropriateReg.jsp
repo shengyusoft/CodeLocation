@@ -187,7 +187,7 @@
 					return index + 1;
 				}
 			}, {
-				width : '120',
+				width : '300',
 				title : '项目名称',
 				rowspan : 2,
 				align : 'center',
@@ -200,21 +200,21 @@
 				align : 'center',
 				field : 'bidPrice'
 			}, {
-				width : '120',
+				width : '100',
 				title : '管理费比例(%)',
 				rowspan : 2,
 				sortable : true,
 				align : 'center',
 				field : 'managerFeeRate'
 			}, {
-				width : '120',
+				width : '100',
 				title : '管理费数额(元)',
 				rowspan : 2,
 				sortable : true,
 				align : 'center',
 				field : 'managerFee'
 			}, {
-				width : '100',
+				width : '75',
 				title : '中标日期',
 				rowspan : 2,
 				sortable : true,
@@ -228,7 +228,7 @@
 				align : 'center',
 				field : 'contractDuration'
 			}, {
-				width : '90',
+				width : '60',
 				title : '状态',
 				rowspan : 2,
 				align : 'center',
@@ -259,36 +259,36 @@
 				align : 'center',
 				field : 'remark'
 			} ], [ {
-				width : '80',
+				width : '50',
 				title : '姓名',
 				sortable : true,
 				align : 'center',
 				field : 'contactName'
 			}, {
-				width : '120',
+				width : '90',
 				title : '电话',
 				sortable : true,
 				align : 'center',
 				field : 'contactTel'
 			}, {
-				width : '120',
+				width : '150',
 				title : '身份证号',
 				align : 'center',
 				field : 'contactIdCard'
 			},{
-				width : '90',
+				width : '50',
 				title : '户名',
 				sortable : true,
 				align : 'center',
 				field : 'payee'
 			}, {
-				width : '120',
+				width : '150',
 				title : '开户行',
 				sortable : true,
 				align : 'center',
 				field : 'bank'
 			}, {
-				width : '120',
+				width : '150',
 				title : '帐号',
 				align : 'center',
 				field : 'accountNum'

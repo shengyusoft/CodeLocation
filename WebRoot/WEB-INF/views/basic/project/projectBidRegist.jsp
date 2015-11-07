@@ -43,7 +43,7 @@
 					return index+1;
 				}
 			}, {
-				width : '90',
+				width : '60',
 				title : '公司名称',
 				align : 'center',
 				field : 'company',
@@ -51,7 +51,7 @@
 					return isEmpty(value)?'':value.text ;
 				}
 			}, {
-				width : '210',
+				width : '400',
 				title : '项目名称',
 				sortable : true,
 				align : 'center',
@@ -84,7 +84,7 @@
 				align : 'center',
 				field : 'qualifyRequirementNames'
 			}, {
-				width : '90',
+				width : '60',
 				title : '项目经理',
 				sortable : true,
 				align : 'center',
@@ -93,33 +93,33 @@
 					return isEmpty(value)?'':value.text;
 				}
 			}, {
-				width : '90',
+				width : '50',
 				title : '委托人',
 				sortable : true,
 				align : 'center',
 				field : 'delegatorName'
 			}, {
-				width : '90',
+				width : '75',
 				title : '开标时间',
 				sortable : true,
 				align : 'center',
 				field : 'registDT',
 				formatter : Common.formatter
 			}, {
-				width : '90',
+				width : '75',
 				title : '登记时间',
 				sortable : true,
 				align : 'center',
 				field : 'createDT',
 				formatter : Common.formatter
 			}, {
-				width : '90',
+				width : '60',
 				title : '标书编制',
 				sortable : true,
 				align : 'center',
 				field : 'bsbz'
 			}, {
-				width : '90',
+				width : '60',
 				title : '预算编制',
 				sortable : true,
 				align : 'center',
@@ -405,28 +405,28 @@
 			data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
 
 		<c:if test="${fn:contains(sessionInfo.resourceList, '/projectRegist/search')}">
-			<table style="width:900px;overflow: scroll;" class="grid">
+			<table style="width:900px;overflow: scroll;">
 				<tr>
-					<td>项目名称:</td>
+					<th>项目名称:</th>
 					<td><input type="text" id="projectName"> </td>
-					<td>开标时间:</td>
+					<th>开标时间:</th>
 					<td>
 						<input class="Wdate" type="text" name="st" id="st"
 						style="height: 100%;width: 100px" onfocus="showDate('yyyy-MM-dd')" /> - 
 						<input class="Wdate" type="text" name="et" id="et" style="height: 100%;width: 100px"
 						onfocus="showDate('yyyy-MM-dd')" /> 
 					</td>
-					<td>委托人:</td>
+					<th>委托人:</th>
 					<td>
 						<input type="text" id="delegatorName" style="width: 110px">
 					</td>
-					<td>标书编制:</td>
+					<th>标书编制:</th>
 					<td>
 						<input type="text" id="bsbz" style="width: 110px">
 					</td>
 				</tr>
 				<tr>
-					<td>地点</td>
+					<th>地点:</th>
 					<td colspan="5">
 						省：<select id="provice" data-options="editable:false" name="provice.id" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
@@ -437,7 +437,7 @@
 						县(区)：<select id="county" name="county.id" data-options="editable:false" class="easyui-validatebox span2" style="width: 140px;">
 					</select>
 					</td>
-					<td>预算编制:</td>
+					<th>预算编制:</th>
 					<td>
 						<input type="text" id="ysbz" style="width: 110px">
 					</td>

@@ -656,21 +656,25 @@
 			<a onclick="printFun(1);" href="javascript:void(0);"
 				class="easyui-linkbutton"
 				data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
-		
-		<c:if
-			test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/search')}">
-			<div id="searchbar" class="search-toolbar">
-				<c:if test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/handlerPage')}">
-					<span>报销人:</span><input type="text" id="applyUserName">
-				</c:if>
-				<span>月份:</span> <input type="text" id="month" class="Wdate" onfocus="showMonth()"> 
-				<a onclick="searchFun();" href="javascript:void(0);"
+			<a onclick="searchFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
+					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
+			<a onclick="clearFun();" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
-			</div>
+		
+		<c:if test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/search')}">
+			<table>
+				<tr>
+					<c:if
+						test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/handlerPage')}">
+						<th>报销人:</th>
+						<td><input type="text" id="applyUserName"></td>
+					</c:if>
+					<th>月份:</th>
+					<td><input type="text" id="month" class="Wdate" onfocus="showMonth()"></td>
+				</tr>
+			</table>
 		</c:if>
 	</div>
 </body>

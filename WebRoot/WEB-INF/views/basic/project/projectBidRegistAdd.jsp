@@ -196,11 +196,13 @@
 					<td><input type="hidden" name="type" id="type" value="1"></input>
 						<select id="company" name="company.id"
 						data-options="required:true" class="easyui-validatebox span2"
-						style="width: 150px;">
+						style="width:150px;">
 					</select></td>
+				</tr>
+				<tr>
 					<th width="100px">项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" style="width: 100%;" type="text"
+					<td colspan="3"><input name="projectName" style="width: 100%;" type="text"
 						id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 				</tr>

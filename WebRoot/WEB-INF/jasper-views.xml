@@ -54,4 +54,32 @@
 		<property name="url" value="/WEB-INF/reports/pro_ee.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
+	
+	<bean id="carRentalReg" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/carRentalReg.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	
+	<!--**************************开始**************************-->
+	<!--业务费用支付审批登记-->
+	<bean id="businessCostApprovalRegister" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/businessCostApprovalRegister.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	<!--员工借款审批登记-->
+	<bean id="loanApprovalRegister" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/loan_approval_register.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	<!--工资发放登记-->
+	<bean id="payrollRegister" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/payroll_register.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	<!--绩效提成-->
+	<bean id="scoreCutRegister" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/score_cut_register.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	<!--**************************结束**************************-->
 </beans>

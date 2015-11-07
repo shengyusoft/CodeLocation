@@ -2,6 +2,7 @@ package com.wtkj.rms.report.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -295,5 +296,161 @@ public class ReportController extends BaseController {
 
 		return new ModelAndView("reimbursementBatch", parameterMap);
 	}
+	
+	@RequestMapping({ "/carRentalReg" })
+	public ModelAndView carRentalReg(int type, HttpServletRequest request)
+			throws IOException {
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		if (type == 0)
+			parameterMap.put("format", "pdf");
+		else {
+			parameterMap.put("format", "xls");
+		}
+
+		StringBuilder sqlBuilder = new StringBuilder(" where 1=1");
+		User u = getLoginUser(request);
+		if (u != null) {
+			parameterMap.put("applierUseName", u.getName());
+			if (u.getRoleNames().indexOf("超级管理员") < 0
+					|| u.getRoleNames().indexOf("总经理") < 0) {
+				// 非超级管理员或者总经理，打印当前用户一个月的
+				sqlBuilder.append(" and p.applyUserId =" + u.getId());
+
+			}
+		}
+		
+		//当月一个月的记录
+		Date st =  DateUtil.getMonthStartTime(new Date());
+		Date et =  DateUtil.getMonthEndTime(new Date());
+		sqlBuilder.append(" and p.startDT >= '" + DateUtil.convertDateToString(st)+"'");
+		sqlBuilder.append(" and p.startDT <= '" + DateUtil.convertDateToString(et)+"'");
+
+		if(!StringUtils.isEmpty(sqlBuilder.toString())){
+			System.out.println("--------whereSQL="+sqlBuilder.toString());
+			parameterMap.put("whereSql", sqlBuilder.toString());
+		}
+		
+		return new ModelAndView("carRentalReg", parameterMap);
+	}
+	
+	/*-----------------------------开始-----------------------------*/
+	/**
+	 * 业务费用支付审批登记
+	 * @param id
+	 * @param type
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/businessCostApprovalRegister")
+	public ModelAndView businessCostApprovalRegister(String ids, int type,
+			HttpServletRequest request) throws IOException {
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		String str = "";
+		if(ids != null && !"".equals(ids)){
+			str = "'" + ids.replaceAll(",", "','") + "'";
+		}
+		parameterMap.put("ids", str);
+		
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+		
+		return new ModelAndView("businessCostApprovalRegister", parameterMap);
+	}
+	/**
+	 * 员工借款审批登记
+	 * @param id
+	 * @param type
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/loanApprovalRegister")
+	public ModelAndView loanApprovalRegister(String ids, int type,
+			HttpServletRequest request) throws IOException {
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		String str = "";
+		if(ids != null && !"".equals(ids)){
+			str = "'" + ids.replaceAll(",", "','") + "'";
+		}
+		parameterMap.put("ids", str);
+		
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+		
+		return new ModelAndView("loanApprovalRegister", parameterMap);
+	}
+	/**
+	 * 工资发放
+	 * @param id
+	 * @param type
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/payrollRegister")
+	public ModelAndView payrollRegister(Date creatTime, int type,
+			HttpServletRequest request) throws IOException {
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		Date st = null;
+		Date et = null;
+		String month = "";
+		if(creatTime != null){
+			st = DateUtil.getMonthStartTime(creatTime);
+			et = DateUtil.getMonthEndTime(creatTime);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(creatTime);
+			int mon = cal.get(Calendar.MONTH) + 1; 
+			month = String.valueOf(mon);
+		}
+		parameterMap.put("sDate", st);
+		parameterMap.put("eDate", et);
+		parameterMap.put("month", month);
+		
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+		
+		return new ModelAndView("payrollRegister", parameterMap);
+	}
+	/**
+	 * 绩效提成
+	 * @param id
+	 * @param type
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/scoreCutRegister")
+	public ModelAndView scoreCutRegister(Date sDate, Date eDate, int type,
+			HttpServletRequest request) throws IOException {
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("sDate", sDate);
+		parameterMap.put("eDate", eDate);
+		parameterMap.put("st", DateUtil.getDate(sDate));
+		parameterMap.put("et", DateUtil.getDate(eDate));
+		
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+		
+		return new ModelAndView("scoreCutRegister", parameterMap);
+	}
+	
+	/*-----------------------------结束-----------------------------*/
 
 }

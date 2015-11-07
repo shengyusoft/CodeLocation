@@ -14,7 +14,10 @@ function init() {
 	loadMenu();
 	editTip();
 	taskRemind();// 任务提醒
-	loadToDo();// 加载我的待办
+	
+	//根据不同的用户权限显示不同的代办
+	//loadToDo();// 加载我的待办
+	loadToDo2();// 加载我的待办
 }
 
 function loadindex() {
@@ -391,6 +394,131 @@ function loadToDo() {
 	});
 	
 	$('#myTaskGrid').datagrid('getPanel').addClass('lines-no');
+}
+
+//加载任务分配待办
+function loadToDo2() {
+	toDoGrid = $('#myTaskGrid').datagrid({
+		url : ctxPath + '/task/toDoGrid',
+		striped : true,
+		fit : true,
+		nowrap : true,
+		idField : 'id',
+		frozenColumns : [ [
+				{
+					title : '序号',
+					field : 'index',
+					align : 'center',
+					width : 35,
+					formatter : function(value, row, index) {
+						return index + 1;
+					}
+				},
+				{
+					width : 140,
+					title : '任务主题',
+					align : 'center',
+					field : 'topic'
+				},
+				{
+					width : 90,
+					title : '分配人',
+					sortable : true,
+					align : 'center',
+					field : 'assignerName'
+				},
+				{
+					width : 80,
+					title : '分配时间',
+					sortable : true,
+					align : 'center',
+					field : 'assignDt',
+					formatter : Common.formatter
+				},
+				{
+					width : 80,
+					title : '承办人',
+					sortable : true,
+					align : 'center',
+					field : 'receiverName'
+				},
+				{
+					width : 90,
+					title : '计划完成时间',
+					sortable : true,
+					align : 'center',
+					field : 'planFinishDt',
+					formatter : Common.formatter
+				},
+				{
+					width : 110,
+					title : '办理状态',
+					align : 'center',
+					field : 'handlerState',
+					formatter : function(val,row,index){
+						if(val == 0){
+							return '<font color="red">未办理</font>';
+						}else if(val == 1){
+							return '<font color="blue">办理中</blue>';
+						}else if(row.handlerState == 2){
+							return '<font color="green">已办理</font>';
+						}
+					}
+				},
+				{
+					width : 90,
+					field : 'action',
+					title : '操作',
+					formatter : function(value, row, index) {
+						var str = $.formatString(
+								'<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo2(\'{0}\',\'{1}\');" >任务办理</a>',
+								row.id, row.handlerState);
+						
+						if(row.handlerState == 2){
+							str = $.formatString('<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo2(\'{0}\',\'{1}\');" >效果确认</a>',
+									row.id, row.handlerState);
+						}
+						
+						return str;
+					}
+				} ] ],
+		toolbar : '#toolbar'
+	});
+}
+
+//任务处理2
+function handlerToDo2(id, state) {
+	var href = "",title = '';
+	if(state == 2){
+		title = "效果确认";
+		href = ctxPath+'/task/viewPage?viewType=edit&&id='+id;
+	}else{
+		title = "任务办理";
+		href = ctxPath+'/task/viewPage?viewType=handler&&id='+id;
+	}
+	
+	parent.$.modalDialog({
+		title : title,
+		width : '900',
+		height : '650',
+		resizable : true,
+		href : href,
+		buttons : [
+				{
+					text : '保存',
+					handler : function() {
+						parent.$.modalDialog.openner_dataGrid = dataGrid;
+						var f = parent.$.modalDialog.handler.find('#taskEditForm');
+						f.submit();
+					}
+				}, {
+					text : '退出',
+					handler : function() {
+						parent.$.modalDialog.handler.dialog('close');
+					}
+				} ]
+	});
+
 }
 
 // 任务处理

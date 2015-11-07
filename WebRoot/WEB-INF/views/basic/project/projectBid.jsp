@@ -45,7 +45,7 @@
 										}
 									},
 									{
-										width : '90',
+										width : '60',
 										title : '公司名称',
 										align : 'center',
 										field : 'company',
@@ -55,14 +55,14 @@
 										}
 									},
 									{
-										width : '120',
+										width : '400',
 										title : '项目名称',
 										sortable : true,
 										align : 'center',
 										field : 'projectName'
 									},
 									{
-										width : '120',
+										width : '130',
 										title : '项目地点',
 										sortable : true,
 										align : 'center',
@@ -86,7 +86,7 @@
 										field : 'bdNames'
 									},
 									{
-										width : '80',
+										width : '60',
 										title : '项目经理',
 										sortable : true,
 										align : 'center',
@@ -97,7 +97,7 @@
 										}
 									},
 									{
-										width : '90',
+										width : '75',
 										title : '技术负责人',
 										sortable : true,
 										align : 'center',
@@ -107,34 +107,35 @@
 													: value.text;
 										}
 									}, {
-										width : '95',
+										width : '85',
 										title : '工期结束时间',
 										align : 'center',
 										field : 'duration',
 										formatter : Common.formatter
 									}, {
-										width : '85',
+										width : '75',
 										title : '中标时间',
+										sortable : true,
 										align : 'center',
 										field : 'bidDt',
 										formatter : Common.formatter
 									}, {
-										width : '90',
-										title : '中标价（元）',
+										width : '100',
+										title : '中标价(元)',
 										align : 'center',
 										field : 'bid_cost'
 									}, {
-										width : '105',
-										title : '管理费比例（%）',
+										width : '90',
+										title : '管理费比例(%)',
 										align : 'center',
 										field : 'manageFeeRate'
 									}, {
-										width : '90',
-										title : '管理费（元）',
+										width : '100',
+										title : '管理费(元)',
 										align : 'center',
 										field : 'manageFee'
 									}, {
-										width : '90',
+										width : '75',
 										title : '施工负责人',
 										sortable : true,
 										align : 'center',
@@ -146,7 +147,7 @@
 										align : 'center',
 										field : 'tel'
 									}, {
-										width : '80',
+										width : '50',
 										title : '登记人',
 										sortable : true,
 										align : 'center',

@@ -57,11 +57,13 @@
 		<form id="projectBookRegistAddForm" method="post">
 			<table class="grid">
 				<tr>
-					<th>项目名称 &nbsp;<label
+					
+					<th>公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" style="width: 100%;" type="text"
-						id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td><select id="company" name="companyId"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
+					</select></td>
 					<th>预订费用（元）&nbsp;</th>
 					<td><input name="bookFee" type="text" class="easyui-numberbox"
 						precision="2" min="0" id="bookFee"
@@ -69,12 +71,11 @@
 
 				</tr>
 				<tr>
-					<th>公司名称 &nbsp;<label
+					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="company" name="companyId"
-						class="easyui-validatebox span2"
-						data-options="editable:false,required:true" style="width: 180px;">
-					</select></td>
+					<td colspan="5"><input name="projectName" style="width: 100%;" type="text"
+						id="projectName" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

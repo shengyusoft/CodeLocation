@@ -423,13 +423,15 @@
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input id="projectAppRegId" type="hidden"
+					<td colspan="5"><input id="projectAppRegId" type="hidden"
 						value="${projectAppropriateReg.id}"></input> <input type="hidden"
 						name="id" id="id" value="${projectAppropriateReg.id}" /> <input
 						name="projectName" style="width: 100%; height: 100%" type="text"
 						id="projectName" class="easyui-validatebox span2"
 						data-options="required:true"
 						value="${projectAppropriateReg.projectName}" /></td>
+				</tr>
+				<tr>
 					<th>中标价（元） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bidPrice" style="width: 100%; height: 100%"

@@ -121,6 +121,7 @@ public class CertificateServiceImpl implements CertificateServiceI {
 					Certificate d = new Certificate();
 					d.setId(lt.get(i).getId());
 					d.setCard_name(lt.get(i).getCard_name());
+					d.setCard_owner(lt.get(i).getCard_owner());
 					ld.add(d);
 				}
 			}

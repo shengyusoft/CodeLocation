@@ -82,7 +82,7 @@ input {
 							<tr style="border: none">
 								<th>项目名称 &nbsp;<label
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-								<td width="300px"><input name="id" type="hidden"
+								<td colspan="5"><input name="id" type="hidden"
 									value="${bidBond.id}" /> <input name="type" type="hidden"
 									value="1" /> <input name="idNumber" type="hidden"
 									value="${bidBond.idNumber}" /> <input name="applierId"
@@ -94,6 +94,8 @@ input {
 									name="projectName" value="${bidBond.projectName}"
 									style="width: 100%; height: 100%" type="text" id="projectName"
 									class="easyui-validatebox span2" data-options="required:true" /></td>
+							</tr>
+							<tr>
 								<th>标段 &nbsp;<label
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 								<td><select id="bidSection" name="bidSection"

@@ -35,7 +35,6 @@ import com.wtkj.common.service.SystemLogServiceI;
 import com.wtkj.common.service.UserServiceI;
 import com.wtkj.rms.customer.model.po.Customer;
 import com.wtkj.rms.customer.service.CustomerServiceI;
-import com.wtkj.rms.dailymaintain.service.TaskServiceI;
 import com.wtkj.rms.msgcenter.model.vo.ArticleVo;
 import com.wtkj.rms.msgcenter.service.ArticleServiceI;
 import com.wtkj.rms.process.model.Process;
@@ -59,9 +58,6 @@ public class IndexController extends BaseController {
 
 	@Autowired
 	private ArticleServiceI articleService;
-
-	@Autowired
-	private TaskServiceI taskService;
 
 	@Autowired
 	private ProcessServiceI processService;
@@ -232,7 +228,7 @@ public class IndexController extends BaseController {
 			return j;
 		}
 		// validate login
-		String vcode = session.getAttribute("randCode").toString();
+		/*String vcode = session.getAttribute("randCode").toString();
 
 		if (vcode == null) {
 			j.setSuccess(false);
@@ -247,7 +243,7 @@ public class IndexController extends BaseController {
 			j.setSuccess(false);
 			j.setMsg("验证码输入错误");
 			return j;
-		}
+		}*/
 
 		User sysuser = userService.login(user);
 		if (sysuser != null) {

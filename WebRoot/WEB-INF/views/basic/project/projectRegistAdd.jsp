@@ -44,26 +44,24 @@
 		});
 	});
 
-	$('#typeId')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=goodstype",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : 'auto'
-					});
+	$('#typeId').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=goodstype",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : 'auto'
+	});
+						
 
-	$('#company')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						textField : 'text',
-						required : true,
-						panelHeight : 'auto'
-					});
+	$('#company').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		required : true,
+		panelHeight : 'auto'
+	});
+						
 
 	$('#bd').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=bd",
@@ -74,15 +72,14 @@
 		panelHeight : '300'
 	});
 
-	$('#projectMgr')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : '300'
-					});
+	$('#projectMgr').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : '300'
+	});
+						
 
 	$('#techniqueMgr').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=jsjl",
@@ -92,46 +89,41 @@
 		panelHeight : '300'
 	});
 
-	$('#certificateA')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=A",
-						parentField : 'card_code',
-						valueField : 'id',
-						textField : 'card_name',
-						panelHeight : 'auto'
-					});
+	$('#certificateA').combobox({ 
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=A",
+		parentField : 'card_code',
+		valueField : 'id',
+		textField : 'card_owner',
+		panelHeight : '300'
+	});
+	
 
-	$('#certificateB')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
-						parentField : 'card_code',
-						valueField : 'id',
-						textField : 'card_name',
-						panelHeight : '300'
-					});
+	$('#certificateB').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
+		parentField : 'card_code',
+		valueField : 'id',
+		textField : 'card_name',
+		panelHeight : '300'
+	});
 
-	$('#certificateC')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
-						parentField : 'card_code',
-						valueField : 'id',
-						textField : 'card_name',
-						panelHeight : 'auto'
-					});
+	$('#certificateC').combobox(
+	{
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
+		parentField : 'card_code',
+		valueField : 'id',
+		textField : 'card_name',
+		panelHeight : '200'
+	});
 
-	$('#member5Cards')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=D",
-						parentField : 'card_code',
-						valueField : 'id',
-						multiple : true,
-						textField : 'card_name',
-						panelHeight : 'auto'
-					});
+	$('#member5Cards').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=D",
+		parentField : 'card_code',
+		valueField : 'id',
+		multiple : true,
+		textField : 'card_name',
+		panelHeight : '200'
+	});
+						
 
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
@@ -142,47 +134,39 @@
 		panelHeight : 'auto'
 	});
 
-	$('#provice')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs=" + 2,
-						parentField : 'pid',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : 300,
+	$('#provice').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs=" + 2,
+		parentField : 'pid',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : 300,
+		required : true,
+		editable : false,//不可编辑，只能选择
+		value : '--请选择--',
+		onChange : function(provice) {
+			$('#city').combobox({
+				url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+ provice + "&&lvs=3",
+				valueField : 'id', //值字段
+				textField : 'text', //显示的字段
+				panelHeight : 'auto',
+				required : true,
+				editable : false,//不可编辑，只能选择
+				value : '--请选择--',
+				onChange : function(city, n) {
+					$('#county').combobox({
+						url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+ city+ "&&lvs=4",
+						valueField : 'id', //值字段
+						textField : 'text', //显示的字段
+						panelHeight : 'auto',
 						required : true,
 						editable : false,//不可编辑，只能选择
-						value : '--请选择--',
-						onChange : function(provice) {
-							$('#city')
-									.combobox(
-											{
-												url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-														+ provice + "&&lvs=3",
-												valueField : 'id', //值字段
-												textField : 'text', //显示的字段
-												panelHeight : 'auto',
-												required : true,
-												editable : false,//不可编辑，只能选择
-												value : '--请选择--',
-												onChange : function(city, n) {
-													$('#county')
-															.combobox(
-																	{
-																		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-																				+ city
-																				+ "&&lvs=4",
-																		valueField : 'id', //值字段
-																		textField : 'text', //显示的字段
-																		panelHeight : 'auto',
-																		required : true,
-																		editable : false,//不可编辑，只能选择
-																		value : '--请选择--'
-																	});
-												}
-											});
-						}
+						value : '--请选择--'
 					});
+				}
+			});
+		}
+	});
+						
 
 	$('#city').combobox({
 		valueField : 'id', //值字段
@@ -201,6 +185,7 @@
 		editable : false,//不可编辑，只能选择
 		value : '--请选择--'
 	});
+	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""

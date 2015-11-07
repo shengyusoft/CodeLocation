@@ -122,8 +122,8 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		value:'${projectRegist.certificateA.id}',
-		textField : 'card_name',
-		panelHeight : 'auto'				
+		textField : 'card_owner',
+		panelHeight : '200'				
 	});
 	
 	$('#certificateB').combobox({
@@ -132,7 +132,7 @@
 		valueField : 'id',
 		value:'${projectRegist.certificateB.id}',
 		textField : 'card_name',
-		panelHeight : 'auto'				
+		panelHeight : '200'				
 	});
 	
 	$('#certificateC').combobox({
@@ -141,7 +141,7 @@
 		valueField : 'id',
 		value:'${projectRegist.certificateC.id}',
 		textField : 'card_name',
-		panelHeight : 'auto'				
+		panelHeight : '200'				
 	});
 	
 	$('#provice').combobox({

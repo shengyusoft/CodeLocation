@@ -142,17 +142,20 @@
 					<td><select id="company" name="company.id" 
 						class="easyui-validatebox span2" data-options="editable:false,required:true" style="width: 180px;">
 					</select></td>
-					<th width="150px">项目名称 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" style="width: 180px;"
-						type="text" id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					
 					<th width="120px">标段 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="bd" name="bds"
 						class="easyui-validatebox span2" style="width: 150px;"
 						data-options="editable:false,required:true">
 					</select></td>
+				</tr>
+				<tr>
+					<th width="150px">项目名称 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td colspan="5"><input name="projectName" style="width: 100%;"
+						type="text" id="projectName" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>

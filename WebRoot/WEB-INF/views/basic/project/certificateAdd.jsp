@@ -89,6 +89,7 @@
     						<option value="B证">B证</option>
     						<option value="C证">C证</option>
     						<option value="五大员证">五大员证</option>
+    						<option value="五大员证">其他类型</option>
 						</select>
 						
 					</td>

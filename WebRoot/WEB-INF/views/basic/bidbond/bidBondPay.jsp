@@ -125,26 +125,27 @@
 								return index + 1;
 							}
 						},{
-							width : '140',
+							width : '95',
 							rowspan : 2,
 							title : '缴号',
+							sortable : true,
 							align : 'center',
 							field : 'idNumber'
 						},{
-							width : '140',
+							width : '400',
 							rowspan : 2,
 							title : '项目名称',
 							sortable : true,
 							align : 'center',
 							field : 'projectName'
 						},{
-							width : '140',
+							width : '120',
 							rowspan : 2,
 							title : '标段',
 							align : 'center',
 							field : 'bdNames'
 						},{
-							width : '120',
+							width : '90',
 							rowspan : 2,
 							title : '保证金数额',
 							sortable : true,
@@ -185,58 +186,58 @@
 							align : 'center',
 						} ], [ {
 					title : '申请人',
-					width : '120',
+					width : '50',
 					align : 'center',
 					sortable : true,
 					field : 'applierName'
 				}, {
 					title : '联系方式',
-					width : '120',
+					width : '90',
 					align : 'center',
 					field : 'applierPhone'
 				}, {
 					title : '申请时间',
-					width : '120',
+					width : '75',
 					sortable : true,
 					align : 'center',
 					field : 'applyDT',
 					formatter : Common.formatter
 				}, {
 					title : '付款人',
-					width : '120',
+					width : '50',
 					align : 'center',
 					field : 'payer'
 				}, {
 					title : '联系方式',
-					width : '120',
+					width : '90',
 					sortable : true,
 					align : 'center',
 					field : 'payerPhone'
 				}, {
 					title : '户  名',
-					width : '120',
+					width : '160',
 					align : 'center',
 					//sortable : true,
 					field : 'payeeAccountName'
 				}, {
 					title : '开户行',
-					width : '120',
+					width : '160',
 					align : 'center',
 					field : 'payeeBank'
 				}, {
 					title : '帐  号',
-					width : '120',
+					width : '160',
 					sortable : true,
 					align : 'center',
 					field : 'payeeAccountNum'
 				}, {
 					title : '附  言',
-					width : '120',
+					width : '200',
 					align : 'center',
 					field : 'payeeComments'
 				}, {
 					title : '办理时间',
-					width : '100',
+					width : '75',
 					sortable : true,
 					align : 'center',
 					field : 'payeeHandleDT',
@@ -613,13 +614,17 @@
 				data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 
 		</c:if>
+		<a onclick="searchFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+			onclick="clearFun();" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
 
 		<table>
 			<tr>
 				<th>缴 号:</th>
 				<td><input style="width: 100px" type="text" id="idNumber"></td>
-				<th>项目名称:</th>
-				<td><input type="text" id="projectName"></td>
 				<th>申请人:</th>
 				<td><input style="width: 100px" type="text" id="applierName"></td>
 				<th>时间范围:</th>
@@ -628,12 +633,11 @@
 					onfocus="showStart('yyyy-MM-dd')" /> <input class="Wdate"
 					data-options="required:true" type="text" name="endDT" id="endDT"
 					style="width: 110px;" onfocus="showEnd('yyyy-MM-dd')" /></td>
-				<td><a onclick="searchFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
-					onclick="clearFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a></td>
+				
+			</tr>
+			<tr>
+				<th>项目名称:</th>
+				<td colspan="6"><input type="text" id="projectName" style="width: 100%;"></td>
 			</tr>
 		</table>
 	</div>

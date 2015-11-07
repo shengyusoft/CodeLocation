@@ -31,6 +31,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 扩展EasyUI图标 -->
 <link rel="stylesheet" href="${ctx}/style/common.css" type="text/css">
 
+<!-- 金额转中文大写 -->
+<link rel="stylesheet" href="${ctx}/jslib/Cap.js" type="text/css">
+
 
 <script type="text/javascript">
 $(window).load(function(){

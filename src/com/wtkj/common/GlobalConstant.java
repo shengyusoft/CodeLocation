@@ -76,7 +76,15 @@ public class GlobalConstant {
 	public static final String PAGE_TYPE_ADD = "add";//添加
 	public static final String PAGE_TYPE_EDIT = "edit";//编辑
 	public static final String PAGE_TYPE_DETAIL = "detail";//详情
+	public static final String PAGE_TYPE_APPLY = "apply";//申请
 	public static final String PAGE_TYPE_AUDIT = "handler";//审核
+	
+	//CRUD操作码
+	public static final String ACTION_ADD = "add";//添加
+	public static final String ACTION_COMMIT = "commit";//添加
+	public static final String ACTION_EDIT = "edit";//添加
+	
+	
 	
 	
 

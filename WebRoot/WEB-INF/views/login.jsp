@@ -50,13 +50,13 @@
 				<dt>
 					<strong>用户名：</strong><input name="loginname" style="width: 120px;"
 						class="inputText" type="text"
-						onfocus="this.className='inputClick'" value="${cookie_name}"
+						onfocus="this.className='inputClick'" value="admin"
 						id="loginname" />
 				</dt>
 				<dt>
 					<strong>密　码：</strong><input name="password" style="width: 120px;"
 						class="inputText" type="password"
-						onfocus="this.className='inputClick'" value="${cookie_passward}"
+						onfocus="this.className='inputClick'" value="admin"
 						id="password" />
 				</dt>
 				<dt>
