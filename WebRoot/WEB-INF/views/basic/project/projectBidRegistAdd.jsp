@@ -34,7 +34,7 @@
 						parentField : 'dictionaryId',
 						valueField : 'id',
 						textField : 'text',
-						panelHeight : 'auto'
+						panelHeight : '200'
 					});
 
 	$('#company')
@@ -45,7 +45,7 @@
 						valueField : 'id',
 						textField : 'text',
 						required : true,
-						panelHeight : 'auto'
+						panelHeight : '200'
 					});
 
 	$('#bd').combobox({
@@ -81,8 +81,8 @@
 						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=A",
 						parentField : 'card_code',
 						valueField : 'id',
-						textField : 'card_name',
-						panelHeight : 'auto'
+						textField : 'card_owner',
+						panelHeight : '200'
 					});
 
 	$('#certificateB')
@@ -91,7 +91,7 @@
 						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
 						parentField : 'card_code',
 						valueField : 'id',
-						textField : 'card_name',
+						textField : 'card_owner',
 						panelHeight : '300'
 					});
 
@@ -101,8 +101,8 @@
 						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
 						parentField : 'card_code',
 						valueField : 'id',
-						textField : 'card_name',
-						panelHeight : 'auto'
+						textField : 'card_owner',
+						panelHeight : '200'
 					});
 
 	$('#member5Cards')
@@ -112,8 +112,8 @@
 						parentField : 'card_code',
 						valueField : 'id',
 						multiple : true,
-						textField : 'card_name',
-						panelHeight : 'auto'
+						textField : 'card_owner',
+						panelHeight : '200'
 					});
 
 	$('#qualifyRequirement').combobox({
@@ -122,7 +122,7 @@
 		valueField : 'id',
 		multiple : true,
 		textField : 'text',
-		panelHeight : 'auto'
+		panelHeight : '200'
 	});
 
 	$('#provice')
@@ -144,7 +144,7 @@
 														+ provice + "&&lvs=3",
 												valueField : 'id', //值字段
 												textField : 'text', //显示的字段
-												panelHeight : 'auto',
+												panelHeight : '200',
 												required : true,
 												editable : false,//不可编辑，只能选择
 												value : '--请选择--',
@@ -157,7 +157,7 @@
 																				+ "&&lvs=4",
 																		valueField : 'id', //值字段
 																		textField : 'text', //显示的字段
-																		panelHeight : 'auto',
+																		panelHeight : '200',
 																		required : true,
 																		editable : false,//不可编辑，只能选择
 																		value : '--请选择--'
@@ -170,7 +170,7 @@
 	$('#city').combobox({
 		valueField : 'id', //值字段
 		textField : 'text', //显示的字段
-		panelHeight : 'auto',
+		panelHeight : '200',
 		required : true,
 		editable : false,//不可编辑，只能选择
 		value : '--请选择--'
@@ -179,7 +179,7 @@
 	$('#county').combobox({
 		valueField : 'id', //值字段
 		textField : 'text', //显示的字段
-		panelHeight : 'auto',
+		panelHeight : '200',
 		required : true,
 		editable : false,//不可编辑，只能选择
 		value : '--请选择--'

@@ -102,7 +102,7 @@
 		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
 		parentField : 'card_code',
 		valueField : 'id',
-		textField : 'card_name',
+		textField : 'card_owner',
 		panelHeight : '300'
 	});
 
@@ -111,7 +111,7 @@
 		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
 		parentField : 'card_code',
 		valueField : 'id',
-		textField : 'card_name',
+		textField : 'card_owner',
 		panelHeight : '200'
 	});
 
@@ -120,7 +120,7 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		multiple : true,
-		textField : 'card_name',
+		textField : 'card_owner',
 		panelHeight : '200'
 	});
 						

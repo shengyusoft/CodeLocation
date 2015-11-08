@@ -65,22 +65,34 @@
 				}
 			}
 		});
-		
 		console.log('${viewType}');
-		
 	});
 	
-	$("#endMileage").blur(function() {
-		$("#drivingMileage").val(parseInt($("#startingMileage").val()) - parseInt($("#endMileage").val()));
+	$('#startingMileage').bind('input propertychange', function() {
+		calc();
 	});
 	
-	$("#unitPrice").blur(function() {
-		$("#carCost").val(parseInt($("#unitPrice").val()) * parseInt($("#drivingMileage").val()));
+	$('#endMileage').bind('input propertychange', function() { 
+		calc();
 	});
 	
-	$("#tolls").blur(function() {
-		$("#totalCost").val(parseInt($("#tolls").val()) + parseInt($("#carCost").val()));
+	$("#unitPrice").bind('input propertychange', function() {
+		calc();
 	});
+	
+	$("#tolls").bind('input propertychange', function() {
+		calc();
+	});
+	
+	function calc(){
+		debugger;
+		var endMileage = parseInt(isEmpty($("#endMileage").val())?0:$("#endMileage").val());
+		var startingMileage = parseInt(isEmpty($("#startingMileage").val())?0:$("#startingMileage").val());
+		$("#drivingMileage").val(endMileage - startingMileage);
+		$("#carCost").val(parseInt(isEmpty($("#unitPrice").val())?0:$("#unitPrice").val()) * parseInt($("#drivingMileage").val()));
+		$("#totalCost").val(parseInt(isEmpty($("#tolls").val())?0:$("#tolls").val()) + parseInt($("#carCost").val()==null?0:$("#carCost").val()));
+	}
+	
 </script>
 
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -89,105 +101,111 @@
 		<form id="carRentalRegEditForm" method="post">
 			<table class="grid">
 				<tr>
+					<td colspan="6"><label style="font-weight: bold; color: red;">说明：1、因工作需要租车，必须经公司综合部经理批准备案。2、租车期间的所有安全责任由车主承担，与公司无关</label>
+					</td>
+				</tr>
+				<tr>
 					<th>用车人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input type="hidden" name="id" value="${carRentalReg.id}"/>
+					<td><input type="hidden" name="id" value="${carRentalReg.id}" />
 						<c:if test="${carRentalReg.process_vo != null}">
-							<input type="hidden" name="process_vo.id" value="${carRentalReg.process_vo.id}" />
-						</c:if>
-						<!-- 动作类型 -->
-						<input type="hidden" name="actionType" id="actionType" value="" />
-						<input name="usedName" value="${carRentalReg.usedName}"
-						style="width: 100%;" type="text" id="usedName"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
-						
+							<input type="hidden" name="process_vo.id"
+								value="${carRentalReg.process_vo.id}" />
+						</c:if> <!-- 动作类型 --> <input type="hidden" name="actionType"
+						id="actionType" value="" /> <input name="usedName"
+						value="${carRentalReg.usedName}" style="width: 100%;" type="text"
+						id="usedName" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+
 					<th>用车时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="usedTime"
 						value="<fmt:formatDate value="${carRentalReg.usedTime}" pattern="yyyy-MM-dd"/>"
-						id="usedTime" style="width: 100%; height: 100%" onfocus="showDate('yyyy-MM-dd')" /></td>
+						id="usedTime" style="width: 100%; height: 100%"
+						onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
-				<tr>	
+				<tr>
 					<th>用车事由&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="5">
-						<input name="usedReason" value="${carRentalReg.usedReason}"
-						style="width: 100%;" type="text" id="usedReason"
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+					<td colspan="5"><input name="usedReason"
+						value="${carRentalReg.usedReason}" style="width: 100%;"
+						type="text" id="usedReason" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
 				</tr>
-				 <tr>
+				<tr>
 					<th>车主&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input name="driver" value="${carRentalReg.driver}"
+					<td><input name="driver" value="${carRentalReg.driver}"
 						style="width: 100%;" type="text" id="driver"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
-				
-					
+
+
 					<th>车号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input name="license" value="${carRentalReg.license}"
+					<td><input name="license" value="${carRentalReg.license}"
 						style="width: 100%;" type="text" id="license"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
-						
+
 				</tr>
 				<tr>
 					<th>起点里程&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input name="startingMileage" value="${carRentalReg.startingMileage}"
-						style="width: 100%;" type="text" id="startingMileage"
-						 data-options="required:true" /></td>
-				
+					<td><input name="startingMileage"
+						value="${carRentalReg.startingMileage}" style="width: 100%;"
+						type="text" id="startingMileage" class="easyui-numberbox"
+						precision="2" min="0" data-options="required:true" /></td>
+
 					<th>终点里程&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input name="endMileage" value="${carRentalReg.endMileage}"
-						style="width: 100%;" type="text" id="endMileage"
-						 data-options="required:true" /></td>
-						
+					<td><input name="endMileage"
+						value="${carRentalReg.endMileage}" style="width: 100%;"
+						type="text" id="endMileage" class="easyui-numberbox" precision="2"
+						min="0" data-options="required:true" /></td>
+
 					<th>行驶里程&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-						<input name="drivingMileage" value="${carRentalReg.drivingMileage}"
-						style="width: 100%;" type="text" id="drivingMileage"
-						 data-options="required:true" /></td>
+					<td><input name="drivingMileage"
+						value="${carRentalReg.drivingMileage}" style="width: 100%;"
+						type="text" id="drivingMileage" class="easyui-numberbox"
+						precision="2" min="0" data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>单价(元/公里)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="unitPrice"  value="${carRentalReg.unitPrice}"
-						style="width: 100%;" type="text" id="unitPrice" class="easyui-numberbox"  precision="2" min="0"
+					<td><input name="unitPrice" value="${carRentalReg.unitPrice}"
+						style="width: 100%;" type="text" id="unitPrice"
+						class="easyui-numberbox" precision="2" min="0"
 						data-options="required:true" /></td>
-						
+
 					<th>合价(元)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="carCost"  value="${carRentalReg.carCost}"
-						style="width: 100%;" type="text" id="carCost" 
+					<td><input name="carCost" value="${carRentalReg.carCost}"
+						style="width: 100%;" type="text" id="carCost"
+						class="easyui-numberbox" precision="2" min="0"
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>过路费(元)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="tolls"  value="${carRentalReg.tolls}"
-						style="width: 100%;" type="text" id="tolls" class="easyui-numberbox"  precision="2" min="0"
+					<td><input name="tolls" value="${carRentalReg.tolls}"
+						style="width: 100%;" type="text" id="tolls"
+						class="easyui-numberbox" precision="2" min="0"
 						data-options="required:true" /></td>
-						
+
 					<th>总计(元)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="totalCost"  value="${carRentalReg.totalCost}"
-						style="width: 100%;" type="text" id="totalCost" 
+					<td><input name="totalCost" value="${carRentalReg.totalCost}"
+						style="width: 100%;" type="text" id="totalCost"
+						class="easyui-numberbox" precision="2" min="0"
 						data-options="required:true" /></td>
-				</tr> 
+				</tr>
 			</table>
 		</form>
-		
+
 		<c:if test="${fn:contains(viewType, 'handler')}">
 			<form id="processForm" method="post">
 				<table class="grid">
-					<caption align="top" class="caption">流程审核</caption>  
+					<caption align="top" class="caption">流程审核</caption>
 					<tr>
 						<th>流程名称 &nbsp;</th>
 						<td><input type="hidden" name="id"

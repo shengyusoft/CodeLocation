@@ -9,6 +9,7 @@
 		value:'${projectRegist.company.id}',
 		required:true,
 		textField : 'text',
+		minHeight:200,
 		panelHeight : 'auto'				
 	});
 
@@ -20,7 +21,7 @@
 		valueField : 'id',
 		multiple:true,
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '200'				
 	});
 	
 	var selectedBds=[];
@@ -35,7 +36,7 @@
 		valueField : 'id',
 		multiple:true,
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '200'				
 	});
 	var selectedQFs=[];
 	var qfs = '${projectRegist.qualifyRequirement}';
@@ -48,8 +49,8 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		multiple:true,
-		textField : 'card_name',
-		panelHeight : 'auto'				
+		textField : 'card_owner',
+		panelHeight : '200'				
 	});
 	var selectedM5ds=[];
 	var md5s = '${projectRegist.member5Cards}';
@@ -79,8 +80,8 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		value:'${projectRegist.certificateA.id}',
-		textField : 'card_name',
-		panelHeight : 'auto'				
+		textField : 'card_owner',
+		panelHeight : '200'				
 	});
 	
 	$('#certificateB').combobox({
@@ -88,8 +89,8 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		value:'${projectRegist.certificateB.id}',
-		textField : 'card_name',
-		panelHeight : 'auto'				
+		textField : 'card_owner',
+		panelHeight : '200'				
 	});
 	
 	$('#certificateC').combobox({
@@ -97,8 +98,8 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		value:'${projectRegist.certificateC.id}',
-		textField : 'card_name',
-		panelHeight : 'auto'				
+		textField : 'card_owner',
+		panelHeight : '200'				
 	});
 	
 	$('#provice').combobox({
@@ -116,7 +117,7 @@
 	    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+provice+"&&lvs=3",
 		    valueField:'id', //值字段
 		    textField:'text', //显示的字段
-		    panelHeight:'auto',
+		    panelHeight:'200',
 		    required:true,
 		    editable:false,//不可编辑，只能选择
 		    value:'--请选择--',
@@ -125,7 +126,7 @@
 			    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
 				    valueField:'id', //值字段
 				    textField:'text', //显示的字段
-				    panelHeight:'auto',
+				    panelHeight:'200',
 				    required:true,
 				    editable:false,//不可编辑，只能选择
 				    value:'--请选择--'
@@ -141,7 +142,7 @@
     	parentField : 'pid',
 	    valueField:'id', //值字段
 	    textField:'text', //显示的字段
-	    panelHeight:'auto',
+	    panelHeight:'200',
 	    required:true,
 	    editable:false,//不可编辑，只能选择
 	    defaultValue:'--请选择--',
@@ -151,7 +152,7 @@
 		    	url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+city+"&&lvs=4",
 			    valueField:'id', //值字段
 			    textField:'text', //显示的字段
-			    panelHeight:'auto',
+			    panelHeight:'200',
 			    required:true,
 			    editable:false,//不可编辑，只能选择
 			    value:'--请选择--'
@@ -165,7 +166,7 @@
     	parentField : 'pid',
 	    valueField:'id', //值字段
 	    textField:'text', //显示的字段
-	    panelHeight:'auto',
+	    panelHeight:'200',
 	    required:true,
 	    editable:false,//不可编辑，只能选择
 	    defaultValue:'--请选择--',
@@ -178,19 +179,27 @@
 		<form id="projectRegistEditForm" method="post" >
 			<table class="grid">
 				<tr>
-					<th width="90px">公司名称 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td>
-					<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input>
-					<input type="hidden" name="type" id="type" value="${projectRegist.type}"></input>
-					<select id="company" name="company.id" data-options="required:true"
-						class="easyui-validatebox span2" style="width: 100%;">
-					</select></td>
-					<th width="100px">项目名称 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName" value="${projectRegist.projectName}" style="width: 150px;"
-						type="text" id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td colspan="4">
+						<table class="grid2">
+							<tr>
+								<th width="10%">
+									公司名称 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
+								</th>
+								<td width="20%">
+									<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input>
+									<input type="hidden" name="type" id="type" value="${projectRegist.type}"></input>
+									<select id="company" name="company.id" data-options="required:true"
+										class="easyui-validatebox span2" style="width: 100%;">
+									</select>
+								</td>
+								<th width="10%">项目名称 &nbsp;<label
+									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+								<td width="60%"><input name="projectName" value="${projectRegist.projectName}" 
+									style="width: 100%;height: 100%" type="text" id="projectName" class="easyui-validatebox span2"
+									data-options="required:true" /></td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 				<tr>
 					<th>地点 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label></th>

@@ -90,6 +90,12 @@
     						<option value="B证">B证</option>
     						<option value="C证">C证</option>
     						<option value="五大员证">五大员证</option>
+    						<option value="建造师注册证">建造师注册证</option>
+    						<option value="建造师执业资格证">建造师执业资格证</option>
+    						<option value="职称证">职称证</option>
+    						<option value="公司五大证">公司五大证</option>
+    						<option value="安全生产考核合格证">安全生产考核合格证</option>
+    						<option value="其他">其他</option>
 						</select></td>
 					<th>所属公司 &nbsp;</th>
 					<td><input name="card_level" style="width: 100%; height: 100%"

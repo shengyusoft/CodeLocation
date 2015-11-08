@@ -91,7 +91,7 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		multiple:true,
-		textField : 'card_name',
+		textField : 'card_owner',
 		panelHeight : 'auto'				
 	});
 	var selectedM5ds=[];
@@ -131,7 +131,7 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		value:'${projectRegist.certificateB.id}',
-		textField : 'card_name',
+		textField : 'card_owner',
 		panelHeight : '200'				
 	});
 	
@@ -140,7 +140,7 @@
 		parentField : 'card_code',
 		valueField : 'id',
 		value:'${projectRegist.certificateC.id}',
-		textField : 'card_name',
+		textField : 'card_owner',
 		panelHeight : '200'				
 	});
 	
