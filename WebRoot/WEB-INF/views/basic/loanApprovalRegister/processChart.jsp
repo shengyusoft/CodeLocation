@@ -15,34 +15,42 @@
 	});
 	
 	function initProcessImg(){
-		var state = $('#processFlag').val();
+		var state = $('#state').val();
 		if(isEmpty(state)){
 			return;
 		}
-		if(state <= 0){
+		
+		if(state <= 0){//x-55;y-104
 			//申请
-			$('#process')[0].style.left = '47px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '42px';
+			$('#process')[0].style.left = '130px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
 			$('#process')[0].style.width = '76px';
 		}else if(state == 1){
-			//会计
-			$('#process')[0].style.left = '170px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '42px';
-			$('#process')[0].style.width = '70px';
-		}else if(state == 2){
 			//总经理
-			$('#process')[0].style.left = '399px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '42px';
-			$('#process')[0].style.width = '84px';
+			$('#process')[0].style.left = '253px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
+			$('#process')[0].style.width = '76px';
+		}else if(state == 2){
+			//会计
+			$('#process')[0].style.left = '487px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
+			$('#process')[0].style.width = '76px';
 		}else if(state == 3){
 			//出纳
-			$('#process')[0].style.left = '643px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '43px';
-			$('#process')[0].style.width = '83px';
+			$('#process')[0].style.left = '708px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
+			$('#process')[0].style.width = '76px';
+		}else if(state == 4){
+			//流程结束
+			$('#process')[0].style.left = '811px';
+			$('#process')[0].style.top = '50px';
+			$('#process')[0].style.height = '34px';
+			$('#process')[0].style.width = '52px';
+			$('#process')[0].style.borderRadius = '35%';
 		}
 	}
 
@@ -92,21 +100,26 @@
 	}
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'center',fit:true,collapsed:false" style="overflow: hidden; border: none">
-		<div title="流程图" style="position: relative; padding: 0px; margin: 0px; border-bottom: 1px">
-			<img src="${ctx}/style/images/flow/flow_bx2.png" />
+	<div data-options="region:'center',fit:true,collapsed:false"
+		style="overflow: hidden; border: none">
+		<div title="流程图"
+			style="position: relative; padding: 0px; margin: 0px; border-bottom: 1px">
+			<img src="${ctx}/style/images/flow/flow_jk.png" />
 			<div id='process' style="position: absolute; border: 2px solid red;"></div>
 		</div>
 		<div style="color: green; size: 18px; font-size: 18px;">历史记录</div>
-		<div data-options="fit:true,border:true" style="overflow: auto; height: 180px">
+		<div data-options="fit:true,border:true"
+			style="overflow: auto; height: 350px">
 			<table id="dataGrid" data-options="fit:true,border:false">
 				<tr>
-					<td>
-						<input type="hidden" name="processId" id="processId" value="${loanApprovalRegister.processId}"> 
-						<input type="hidden" name="processFlag" id="processFlag" value="${loanApprovalRegister.processFlag}">
-					</td>
+					<td><input type="hidden" name="processId" id="processId"
+						value="${process.id}"> <input
+						type="hidden" name="state" id="state"
+						value="${process.state}"></td>
 				</tr>
 			</table>
 		</div>
+
 	</div>
+
 </div>

@@ -29,8 +29,8 @@ public class ProcessHistoryServiceImpl implements ProcessHistoryServiceI {
 	private BaseDaoI<Tdictionary> dictionaryDao;
 
 	@Override
-	public void add(ProcessHistory p, HttpServletRequest request) {
-		processHistoryDao.save(p);
+	public Long add(ProcessHistory p, HttpServletRequest request) {
+		return (Long)processHistoryDao.save(p);
 	}
 
 	@Override
@@ -83,7 +83,9 @@ public class ProcessHistoryServiceImpl implements ProcessHistoryServiceI {
 	public Long count(ProcessHistory ProcessHistory, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from ProcessHistory t ";
-		return processHistoryDao.count("select count (*) " + hql + whereHql(ProcessHistory, params),params);
+		return processHistoryDao.count(
+				"select count (*) " + hql + whereHql(ProcessHistory, params),
+				params);
 	}
 
 	private String whereHql(ProcessHistory processHistory,
@@ -105,6 +107,17 @@ public class ProcessHistoryServiceImpl implements ProcessHistoryServiceI {
 			orderString = " order by t." + ph.getSort() + " " + ph.getOrder();
 		}
 		return orderString;
+	}
+
+	@Override
+	public void deleteByProcessId(String ids) {
+		String sql = "delete from process_history where process_id in (" + ids
+				+ ")";
+		try {
+			processHistoryDao.executeSql(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

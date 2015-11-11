@@ -21,6 +21,7 @@ public class ProcessVo implements Serializable {
 	private Long docId;// 启动流程的具体资源，比如报销，这里存的就是报销的ID
 	private Date arriveDT;// 任务每一步到达时间
 	private String remark;
+	private String remark2;
 	private int option;// 审批是否统一，仅仅用于前台传值
 
 	public Long getId() {
@@ -109,6 +110,14 @@ public class ProcessVo implements Serializable {
 
 	public void setOption(int option) {
 		this.option = option;
+	}
+
+	public String getRemark2() {
+		return remark2;
+	}
+
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
 	}
 
 }

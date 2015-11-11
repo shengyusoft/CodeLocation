@@ -2,48 +2,56 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="金鹰公司员工借款审批单      " language="groovy" pageWidth="523" pageHeight="553" whenNoDataType="NoDataSection" columnWidth="483" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.210000000000003"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="226"/>
+	<property name="ireport.y" value="72"/>
 	<parameter name="ids" class="java.lang.String">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select
-ID,
-LOAN AS 借款人,
-LOANDATE AS 借款日期,
-LOANMONEY AS 借款金额,
-LOANMONEYCAP 金额大写,
-LOANREASON AS 借款事由,
-USERNAME AS 户名,
-BANK AS 开户行,
-ACCOUNT AS 账号,
-LOANREMARK AS 借款人备注,
-MANAGEROPINION AS 总经理审批意见,
-APPROVEDATE AS 审批时间,
-MANAGERREMARK AS 总经理审批意见备注,
-HANDLE AS 办理人,
-HANDLEDATE AS 办理时间,
-HANDLEREMARK AS 办理人填写备注,
-PROCESSFLAG AS 出纳流程标记
-from loan_approval_register where ID in ($P!{ids})]]>
+		<![CDATA[
+
+SELECT r.LOAN,r.LOANDATE,r.LOANMONEY,r.LOANMONEYCAP,r.LOANREASON,r.USERNAME,r.ACCOUNT,r.BANK,r.LOANREMARK,
+zjl.remark as zjl_remark,
+zjl.remark2 as zjl_remark2,
+zjl.operateDT as zjl_operateDT,
+u1.name as zjl_name,
+kj.remark as kj_remark,
+kj.remark2 as kj_remark2,
+kj.operateDT as kj_operateDT,
+u2.name as kj_name,
+cn.remark as cn_remark,
+cn.remark2 as cn_remark2,
+cn.operateDT as cn_operateDT,
+u3.name as cn_name
+from loan_approval_register r
+left join process_history zjl on zjl.id = r.zjl_id
+left join process_history kj on kj.id = r.kj_id
+left join process_history cn on cn.id = r.cn_id
+left join sys_user u1 on zjl.user_id = u1.id
+left join sys_user u2 on kj.user_id = u2.id
+left join sys_user u3 on cn.user_id = u3.id
+where r.ID in ($P!{ids})]]>
 	</queryString>
-	<field name="ID" class="java.lang.Integer"/>
-	<field name="借款人" class="java.lang.String"/>
-	<field name="借款日期" class="java.sql.Date"/>
-	<field name="借款金额" class="java.math.BigDecimal"/>
-	<field name="金额大写" class="java.lang.String"/>
-	<field name="借款事由" class="java.lang.String"/>
-	<field name="户名" class="java.lang.String"/>
-	<field name="开户行" class="java.lang.String"/>
-	<field name="账号" class="java.lang.String"/>
-	<field name="借款人备注" class="java.lang.String"/>
-	<field name="总经理审批意见" class="java.lang.String"/>
-	<field name="审批时间" class="java.sql.Date"/>
-	<field name="总经理审批意见备注" class="java.lang.String"/>
-	<field name="办理人" class="java.lang.String"/>
-	<field name="办理时间" class="java.sql.Date"/>
-	<field name="办理人填写备注" class="java.lang.String"/>
-	<field name="出纳流程标记" class="java.lang.String"/>
+	<field name="LOAN" class="java.lang.String"/>
+	<field name="LOANDATE" class="java.sql.Date"/>
+	<field name="LOANMONEY" class="java.math.BigDecimal"/>
+	<field name="LOANMONEYCAP" class="java.lang.String"/>
+	<field name="LOANREASON" class="java.lang.String"/>
+	<field name="USERNAME" class="java.lang.String"/>
+	<field name="ACCOUNT" class="java.lang.String"/>
+	<field name="BANK" class="java.lang.String"/>
+	<field name="LOANREMARK" class="java.lang.String"/>
+	<field name="zjl_remark" class="java.lang.String"/>
+	<field name="zjl_remark2" class="java.lang.String"/>
+	<field name="zjl_operateDT" class="java.sql.Timestamp"/>
+	<field name="zjl_name" class="java.lang.String"/>
+	<field name="kj_remark" class="java.lang.String"/>
+	<field name="kj_remark2" class="java.lang.String"/>
+	<field name="kj_operateDT" class="java.sql.Timestamp"/>
+	<field name="kj_name" class="java.lang.String"/>
+	<field name="cn_remark" class="java.lang.String"/>
+	<field name="cn_remark2" class="java.lang.String"/>
+	<field name="cn_operateDT" class="java.sql.Timestamp"/>
+	<field name="cn_name" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -58,7 +66,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="14" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					<font fontName="宋体" size="14" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[金鹰公司员工借款审批单
 ]]></text>
@@ -71,7 +79,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 	<detail>
 		<band height="390" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="87" height="39"/>
+				<reportElement x="0" y="0" width="87" height="24"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -84,7 +92,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[借款人]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="0" width="100" height="39"/>
+				<reportElement x="87" y="0" width="100" height="24"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -94,10 +102,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{借款人}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOAN}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="187" y="0" width="100" height="39"/>
+				<reportElement x="187" y="0" width="99" height="24"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -109,8 +117,8 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				</textElement>
 				<text><![CDATA[借款日期]]></text>
 			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="287" y="0" width="102" height="39"/>
+			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement x="287" y="0" width="104" height="24"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -120,10 +128,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{借款日期}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{LOANDATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="39" width="87" height="35"/>
+				<reportElement x="0" y="24" width="87" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -136,7 +144,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[借款金额（元）]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="39" width="100" height="35"/>
+				<reportElement x="87" y="24" width="100" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -146,10 +154,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{借款金额}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOANMONEY}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="187" y="39" width="202" height="35"/>
+				<reportElement x="187" y="24" width="204" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -159,10 +167,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{金额大写}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOANMONEYCAP}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="74" width="87" height="35"/>
+				<reportElement x="0" y="49" width="87" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -175,7 +183,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[借款事由]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="74" width="302" height="35"/>
+				<reportElement x="87" y="49" width="304" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -185,10 +193,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{借款事由}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOANREASON}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="109" width="87" height="75"/>
+				<reportElement x="0" y="72" width="87" height="75"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -201,7 +209,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[款项支付]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="187" y="134" width="202" height="25"/>
+				<reportElement x="189" y="97" width="202" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -211,10 +219,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{开户行}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BANK}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="187" y="159" width="202" height="25"/>
+				<reportElement x="189" y="122" width="202" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -224,10 +232,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{账号}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ACCOUNT}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="187" y="109" width="202" height="25"/>
+				<reportElement x="189" y="72" width="202" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -237,10 +245,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{户名}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{USERNAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="184" width="87" height="30"/>
+				<reportElement x="0" y="147" width="87" height="34"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -253,7 +261,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[备注]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="184" width="302" height="30"/>
+				<reportElement x="87" y="147" width="304" height="34"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -263,10 +271,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{借款人备注}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOANREMARK}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="242" width="87" height="30"/>
+				<reportElement x="0" y="207" width="87" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -274,12 +282,12 @@ from loan_approval_register where ID in ($P!{ids})]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					<font fontName="宋体" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[总经理审批意见]]></text>
+				<text><![CDATA[总经理]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="186" y="242" width="100" height="30"/>
+				<reportElement x="186" y="207" width="103" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -292,7 +300,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[审批时间]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="286" y="242" width="103" height="30"/>
+				<reportElement x="289" y="207" width="102" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -302,10 +310,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{审批时间}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zjl_operateDT}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="272" width="87" height="30"/>
+				<reportElement x="198" y="237" width="41" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -318,7 +326,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[备注]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="272" width="302" height="30"/>
+				<reportElement x="239" y="237" width="152" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -328,10 +336,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{总经理审批意见备注}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zjl_remark2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="330" width="86" height="30"/>
+				<reportElement x="0" y="267" width="87" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -339,12 +347,12 @@ from loan_approval_register where ID in ($P!{ids})]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					<font fontName="宋体" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[办理人]]></text>
+				<text><![CDATA[会计]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="86" y="330" width="100" height="30"/>
+				<reportElement x="45" y="237" width="153" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -354,62 +362,10 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{办理人}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="289" y="330" width="100" height="30"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{办理时间}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zjl_remark}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="360" width="86" height="30"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[备注]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="86" y="360" width="303" height="30"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{办理人填写备注}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="242" width="99" height="30"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{总经理审批意见}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="87" y="109" width="100" height="25"/>
+				<reportElement x="87" y="72" width="102" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -422,7 +378,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[户名]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="87" y="134" width="100" height="25"/>
+				<reportElement x="87" y="97" width="102" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -435,7 +391,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[开户行]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="87" y="159" width="100" height="25"/>
+				<reportElement x="87" y="122" width="102" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -448,33 +404,7 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<text><![CDATA[账号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="214" width="389" height="28"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement>
-					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="302" width="389" height="28"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement>
-					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="186" y="330" width="103" height="30"/>
+				<reportElement x="0" y="237" width="45" height="30"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -484,7 +414,228 @@ from loan_approval_register where ID in ($P!{ids})]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[办理时间]]></text>
+				<text><![CDATA[审批意见]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="87" y="207" width="99" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{zjl_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="87" y="267" width="100" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{kj_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="187" y="267" width="103" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[审批时间]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="290" y="267" width="100" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{kj_operateDT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="198" y="297" width="41" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[备注]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="297" width="153" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{kj_remark}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="239" y="297" width="152" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{kj_remark2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="297" width="45" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[审批意见]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="239" y="357" width="152" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cn_remark2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="327" width="87" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[出纳]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="87" y="327" width="100" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cn_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="357" width="45" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[审批意见]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="290" y="327" width="100" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cn_operateDT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="198" y="357" width="41" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[备注]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="357" width="153" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cn_remark}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="187" y="327" width="103" height="30"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[审批时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="181" width="391" height="26"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[审核详情]]></text>
 			</staticText>
 		</band>
 	</detail>

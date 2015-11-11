@@ -88,7 +88,7 @@ public abstract class BaseProcessController extends BaseController {
 	 * @param process
 	 * @param detail
 	 */
-	protected void updateHistory(HttpServletRequest request, User user,
+	protected Long updateHistory(HttpServletRequest request, User user,
 			Process process, String detail) {
 		if (process.getId() != null && process.getId() > 0) {
 			ProcessHistory history = new ProcessHistory();
@@ -98,9 +98,11 @@ public abstract class BaseProcessController extends BaseController {
 			history.setOperator(tuser);
 			history.setOperateDetail(detail);
 			history.setRemark(process.getRemark());
+			history.setRemark2(process.getRemark2());
 			history.setProcess(process);
-			processHistoryService.add(history, request);
+			return processHistoryService.add(history, request);
 		}
+		return null;
 	}
 
 	/**

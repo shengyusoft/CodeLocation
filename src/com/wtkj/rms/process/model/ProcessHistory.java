@@ -31,24 +31,23 @@ public class ProcessHistory extends IdEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Tuser operator;// 当前操作人
-//	private Tuser nextOperator;// 下一步操作人
+	// private Tuser nextOperator;// 下一步操作人
 	private Date operateDT;// 操作时间
 	private String operateDetail;// 操作详情
 	private Process process;// 关联流程
 	private String remark;// 审批意见,一般不通过时说明原因
-	
-	
-	
-//	@NotNull
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "next_user_id")
-//	public Tuser getNextOperator() {
-//		return nextOperator;
-//	}
-//
-//	public void setNextOperator(Tuser nextOperator) {
-//		this.nextOperator = nextOperator;
-//	}
+	private String remark2;// 备注
+
+	// @NotNull
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "next_user_id")
+	// public Tuser getNextOperator() {
+	// return nextOperator;
+	// }
+	//
+	// public void setNextOperator(Tuser nextOperator) {
+	// this.nextOperator = nextOperator;
+	// }
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -94,6 +93,14 @@ public class ProcessHistory extends IdEntity implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getRemark2() {
+		return remark2;
+	}
+
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
 	}
 
 }

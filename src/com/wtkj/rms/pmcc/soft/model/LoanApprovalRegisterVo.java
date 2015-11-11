@@ -3,29 +3,16 @@ package com.wtkj.rms.pmcc.soft.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import com.wtkj.common.model.IdEntity;
-import com.wtkj.rms.process.model.Process;
+import com.wtkj.rms.process.model.ProcessVo;
 
 /**
  * 员工借款审批登记
  */
-@Entity
-@Table(name = "loan_approval_register", schema = "")
-@DynamicInsert(true)
-@DynamicUpdate(true)
-public class LoanApprovalRegister extends IdEntity implements Serializable {
+public class LoanApprovalRegisterVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	private String loan; // 借款人
 	private Date loanDate; // 借款日期
 	private Double loanMoney; // 借款金额
@@ -36,6 +23,9 @@ public class LoanApprovalRegister extends IdEntity implements Serializable {
 	private String account; // 账号
 	private String loanRemark; // 借款人备注
 
+	// 处理类型
+	private String actionType;
+
 	// 总经理最后审批历史记录
 	private Long zjl_id;
 	// 会计最后审批
@@ -44,16 +34,29 @@ public class LoanApprovalRegister extends IdEntity implements Serializable {
 	private Long cn_id;
 
 	// 关联流程
-	private Process process;
+	private ProcessVo process_vo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "process_id")
-	public Process getProcess() {
-		return process;
+	// 查询参数
+	private Date applyStartDt;
+	private Date applyEndDt;
+
+	private Date loanDateSt; // 借款日期开始
+	private Date loanDateEt; // 借款日期结束
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setProcess(Process process) {
-		this.process = process;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public ProcessVo getProcess_vo() {
+		return process_vo;
+	}
+
+	public void setProcess_vo(ProcessVo process_vo) {
+		this.process_vo = process_vo;
 	}
 
 	public String getLoan() {
@@ -126,6 +129,46 @@ public class LoanApprovalRegister extends IdEntity implements Serializable {
 
 	public void setLoanRemark(String loanRemark) {
 		this.loanRemark = loanRemark;
+	}
+
+	public String getActionType() {
+		return actionType;
+	}
+
+	public void setActionType(String actionType) {
+		this.actionType = actionType;
+	}
+
+	public Date getApplyStartDt() {
+		return applyStartDt;
+	}
+
+	public void setApplyStartDt(Date applyStartDt) {
+		this.applyStartDt = applyStartDt;
+	}
+
+	public Date getApplyEndDt() {
+		return applyEndDt;
+	}
+
+	public void setApplyEndDt(Date applyEndDt) {
+		this.applyEndDt = applyEndDt;
+	}
+
+	public Date getLoanDateSt() {
+		return loanDateSt;
+	}
+
+	public void setLoanDateSt(Date loanDateSt) {
+		this.loanDateSt = loanDateSt;
+	}
+
+	public Date getLoanDateEt() {
+		return loanDateEt;
+	}
+
+	public void setLoanDateEt(Date loanDateEt) {
+		this.loanDateEt = loanDateEt;
 	}
 
 	public Long getZjl_id() {

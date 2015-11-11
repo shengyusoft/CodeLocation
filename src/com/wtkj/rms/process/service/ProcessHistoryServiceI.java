@@ -16,13 +16,20 @@ public interface ProcessHistoryServiceI {
 
 	public ProcessHistory get(Long id);
 
-	public void add(ProcessHistory ProcessHistory, HttpServletRequest request);
+	public Long add(ProcessHistory ProcessHistory, HttpServletRequest request);
 
 	public void edit(ProcessHistory ProcessHistory, HttpServletRequest request);
 
 	public void delete(Long id);
 
 	public void delete(String ids);
+
+	/**
+	 * 根据流程ID删除流程历史记录信息
+	 * 
+	 * @param ids
+	 */
+	public void deleteByProcessId(String ids);
 
 	public List<ProcessHistory> findAll();
 

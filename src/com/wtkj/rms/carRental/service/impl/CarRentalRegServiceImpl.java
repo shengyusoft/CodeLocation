@@ -84,7 +84,7 @@ public class CarRentalRegServiceImpl implements CarRentalRegServiceI {
 					params.put("username", "%%" + process.getApplyUserName()
 							+ "%%");
 				}
-				
+
 				if (p.getApplyStartDt() != null) {
 					hql = hql + " and t.process.startDT >= :rentalTimeST";
 					params.put("rentalTimeST", p.getApplyStartDt());
