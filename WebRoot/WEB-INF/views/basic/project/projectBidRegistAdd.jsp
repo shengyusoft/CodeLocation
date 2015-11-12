@@ -26,27 +26,30 @@
 			}
 		});
 	});
+	
+	function showDate() {
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			minDate:'%y-%M-%d'
+		});
+	}
 
-	$('#typeId')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=goodstype",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : '200'
-					});
+	$('#typeId').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=goodstype",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : '200'
+	});				
 
-	$('#company')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						textField : 'text',
-						required : true,
-						panelHeight : '200'
-					});
+	$('#company').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		required : true,
+		panelHeight : '200'
+	});				
 
 	$('#bd').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=bd",
@@ -57,15 +60,13 @@
 		panelHeight : '300'
 	});
 
-	$('#projectMgr')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : '300'		
-					});
+	$('#projectMgr').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=manager",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : '300'		
+	});				
 
 	$('#techniqueMgr').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=jsjl",
@@ -75,46 +76,38 @@
 		panelHeight : '300'
 	});
 
-	$('#certificateA')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=A",
-						parentField : 'card_code',
-						valueField : 'id',
-						textField : 'card_owner',
-						panelHeight : '200'
-					});
+	$('#certificateA').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=A",
+		parentField : 'card_code',
+		valueField : 'id',
+		textField : 'card_owner',
+		panelHeight : '200'
+	});				
 
-	$('#certificateB')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
-						parentField : 'card_code',
-						valueField : 'id',
-						textField : 'card_owner',
-						panelHeight : '300'
-					});
+	$('#certificateB').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=B",
+		parentField : 'card_code',
+		valueField : 'id',
+		textField : 'card_owner',
+		panelHeight : '300'
+	});				
 
-	$('#certificateC')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
-						parentField : 'card_code',
-						valueField : 'id',
-						textField : 'card_owner',
-						panelHeight : '200'
-					});
+	$('#certificateC').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=C",
+		parentField : 'card_code',
+		valueField : 'id',
+		textField : 'card_owner',
+		panelHeight : '200'
+	});				
 
-	$('#member5Cards')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=D",
-						parentField : 'card_code',
-						valueField : 'id',
-						multiple : true,
-						textField : 'card_owner',
-						panelHeight : '200'
-					});
+	$('#member5Cards').combobox({
+		url : "${pageContext.request.contextPath}/certificate/comboxbytype?type=D",
+		parentField : 'card_code',
+		valueField : 'id',
+		multiple : true,
+		textField : 'card_owner',
+		panelHeight : '200'
+	});				
 
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
@@ -125,47 +118,38 @@
 		panelHeight : '200'
 	});
 
-	$('#provice')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs=" + 2,
-						parentField : 'pid',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : 300,
+	$('#provice').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid=&&lvs=" + 2,
+		parentField : 'pid',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : 300,
+		required : true,
+		editable : false,//不可编辑，只能选择
+		value : '--请选择--',
+		onChange : function(provice) {
+			$('#city').combobox({
+				url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+ provice + "&&lvs=3",
+				valueField : 'id', //值字段
+				textField : 'text', //显示的字段
+				panelHeight : '200',
+				required : true,
+				editable : false,//不可编辑，只能选择
+				value : '--请选择--',
+				onChange : function(city, n) {
+					$('#county').combobox({
+						url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="+ city+"&&lvs=4",
+						valueField : 'id', //值字段
+						textField : 'text', //显示的字段
+						panelHeight : '200',
 						required : true,
 						editable : false,//不可编辑，只能选择
-						value : '--请选择--',
-						onChange : function(provice) {
-							$('#city')
-									.combobox(
-											{
-												url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-														+ provice + "&&lvs=3",
-												valueField : 'id', //值字段
-												textField : 'text', //显示的字段
-												panelHeight : '200',
-												required : true,
-												editable : false,//不可编辑，只能选择
-												value : '--请选择--',
-												onChange : function(city, n) {
-													$('#county')
-															.combobox(
-																	{
-																		url : "${pageContext.request.contextPath}/dictionary/xzqhCombox?pid="
-																				+ city
-																				+ "&&lvs=4",
-																		valueField : 'id', //值字段
-																		textField : 'text', //显示的字段
-																		panelHeight : '200',
-																		required : true,
-																		editable : false,//不可编辑，只能选择
-																		value : '--请选择--'
-																	});
-												}
-											});
-						}
-					});
+						value : '--请选择--'
+					});				
+				}
+			});
+		}
+	});				
 
 	$('#city').combobox({
 		valueField : 'id', //值字段
@@ -280,7 +264,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT"
 						id="registDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+						data-options="required:true" onfocus="showDate()" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label
@@ -326,62 +310,61 @@
 								<th>开标</th>
 								<td><input name="head1" type="text" id="head1"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-validatebox span2" data-options="required:true"/></td>
 								<td><input name="head2" type="text" id="head2"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
-
+									class="easyui-validatebox span2" data-options="required:true" /></td>
 								<th>项目经理</th>
 								<th>法人</th>
 								<td><input name="head3" type="text" id="head3"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-validatebox span2" data-options="required:true"/></td>
 								<td><input name="head4" type="text" id="head4"
 									style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-validatebox span2" data-options="required:true" /></td>
 							</tr>
 							<tr>
 								<td><input name="bmFee" type="text"  id="bmFee"
 									style="width: 100%; height: 100%" data-options="required:true"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="kbFee" type="text"  id="kbFee"
 									style="width: 100%; height: 100%" data-options="required:true"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="head1Fee" type="text" 
 									id="head1Fee" style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="head2Fee" type="text" 
 									id="head2Fee" style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="zzFee" type="text"  id="zzFee"
 									style="width: 100%; height: 100%" data-options="required:true"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="bsFee" type="text"  id="bsFee"
 									style="width: 100%; height: 100%" data-options="required:true"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="ysFee" type="text"  id="ysFee"
 									style="width: 100%; height: 100%" data-options="required:true"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="xmjlFee" type="text"  
 									id="xmjlFee" style="width: 100%; height: 100%" 
 									data-options="required:true"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="frFee" type="text"  id="frFee"
 									style="width: 100%; height: 100%" data-options="required:true"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="head3Fee" type="text" 
 									id="head3Fee" style="width: 100%; height: 100%" 
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="head4Fee" type="text" 
 									id="head4Fee" style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="otherFee" type="text" 
 									id="otherFee" style="width: 100%; height: 100%"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 								<td><input name="totalFee" type="text"  id="totalFee"
 									style="width: 100%; height: 100%" value="自动统计"
 									readonly="readonly" disabled="disabled"
-									class="easyui-numberbox" precision="2" min="0" /></td>
+									class="easyui-numberbox" precision="2" min="0" data-options="required:true" /></td>
 							</tr>
 						</table>
 					</td>

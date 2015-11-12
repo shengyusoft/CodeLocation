@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 	$(function() {
 		$('#projectBidRegistEditForm').form({
@@ -26,6 +27,13 @@
 			}
 		});
 	});
+	
+	function showDate() {
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			minDate:'${projectRegist.createDT}'
+		});
+	}
 
 	$('#company').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
@@ -303,10 +311,10 @@
 						name="delegator.id" value="${projectRegist.delegatorId}"></input></td>
 					<th>开标时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="registDT"
-						value="${projectRegist.registDT}" id="registDT"
-						style="width: 98%; height: 100%;" data-options="required:true"
-						onfocus="showDate('yyyy-MM-dd')" /></td>
+					<td><input class="Wdate" type="text" name="registDT" id="registDT"
+						value="<fmt:formatDate value="${projectRegist.registDT}" pattern="yyyy-MM-dd"/>"
+						style="width: 98%; height: 100%;" data-options="required:true" onfocus="showDate()" />
+					</td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label
@@ -352,73 +360,73 @@
 								<th>开标</th>
 								<td><input name="head1" value="${projectRegist.head1}"
 									type="text" id="head1" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-validatebox span2" data-options="required:true" /></td>
 								<td><input name="head2" value="${projectRegist.head2}"
 									type="text" id="head2" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-validatebox span2" data-options="required:true" /></td>
 
 								<th>项目经理</th>
 								<th>法人</th>
 								<td><input name="head3" value="${projectRegist.head3}"
 									type="text" id="head3" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-validatebox span2" data-options="required:true" /></td>
 								<td><input name="head4" value="${projectRegist.head4}"
 									type="text" id="head4" style="width: 100%; height: 100%"
-									class="easyui-validatebox span2" /></td>
+									class="easyui-validatebox span2" data-options="required:true" /></td>
 							</tr>
 							<tr>
 								<td><input name="bmFee" value="${projectRegist.bmFee}"
 									data-options="required:true" type="text" id="bmFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="kbFee" value="${projectRegist.kbFee}"
 									data-options="required:true" type="text" id="kbFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="head1Fee"
 									value="${projectRegist.head1Fee}" type="text" id="head1Fee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="head2Fee"
 									value="${projectRegist.head2Fee}" type="text" id="head2Fee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="zzFee" value="${projectRegist.zzFee}"
 									data-options="required:true" type="text" id="zzFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="bsFee" value="${projectRegist.bsFee}"
 									data-options="required:true" type="text" id="bsFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="ysFee" value="${projectRegist.ysFee}"
 									data-options="required:true" type="text" id="ysFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="xmjlFee" value="${projectRegist.xmjlFee}"
 									data-options="required:true" type="text" id="xmjlFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="frFee" value="${projectRegist.frFee}"
 									data-options="required:true" type="text" id="frFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="head3Fee"
 									value="${projectRegist.head3Fee}" type="text" id="head3Fee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="head4Fee"
 									value="${projectRegist.head4Fee}" type="text" id="head4Fee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="otherFee"
 									value="${projectRegist.otherFee}" type="text" id="otherFee"
-									style="width: 100%; height: 100%" class="easyui-numberbox"
+									style="width: 100%; height: 100%" class="easyui-numberbox" data-options="required:true"
 									precision="2" min="0" /></td>
 								<td><input name="totalFee"
 									value="${projectRegist.totalFee}" type="text" id="totalFee"
 									style="width: 100%; height: 100%" readonly="readonly"
-									disabled="disabled" class="easyui-numberbox" precision="2"
+									disabled="disabled" class="easyui-numberbox" data-options="required:true" precision="2"
 									min="0" /></td>
 							</tr>
 						</table>

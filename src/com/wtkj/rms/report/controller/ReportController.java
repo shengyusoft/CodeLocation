@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,8 @@ import com.wtkj.rms.customer.model.po.Order;
 import com.wtkj.rms.customer.service.OrderDetailServiceI;
 import com.wtkj.rms.customer.service.OrderServiceI;
 import com.wtkj.rms.process.model.Process;
+import com.wtkj.rms.process.model.ProcessHistory;
+import com.wtkj.rms.process.service.ProcessHistoryServiceI;
 import com.wtkj.rms.process.service.ProcessServiceI;
 import com.wtkj.rms.purchase.service.PurchasePlanDetailServiceI;
 import com.wtkj.rms.purchase.service.PurchasePlanServiceI;
@@ -51,6 +54,9 @@ public class ReportController extends BaseController {
 
 	@Autowired
 	protected ProcessServiceI processService;
+
+	@Autowired
+	protected ProcessHistoryServiceI processHistoryService;
 
 	@Autowired
 	protected UserServiceI userService;
@@ -281,12 +287,39 @@ public class ReportController extends BaseController {
 			parameterMap.put("format", "xls");
 		}
 
+		// 审核人
+		String kjName = "", cnName = "", zjlName = "";
 		if (rb != null) {
 			Process process = processService.get(rb.getProcess().getId());
 			if (process != null) {
 				User u = userService.get(process.getApplyUser().getId());
 				parameterMap.put("applierName", u == null ? "" : u.getName());
+				List<ProcessHistory> ph = processHistoryService.find(process
+						.getId());
+
+				// 从流程中找出最后一步的执行人名称
+				for (ProcessHistory processHistory : ph) {
+					Long userId = processHistory.getOperator().getId();
+					if (userId != null && userId > 0) {
+						User u1 = userService.get(userId);
+						if (u1 != null && !StringUtils.isEmpty(u1.getRoleNames())) {
+							//已经签字的审核人
+							if (u1.getRoleNames().indexOf("总经理") >= 0 && process.getState() >=3) {
+								zjlName = u1.getName();
+							} else if (u1.getRoleNames().indexOf("会计") >= 0 && process.getState() >=2) {
+								kjName = u1.getName();
+							} else if (u1.getRoleNames().indexOf("出纳") >= 0 && process.getState() >=4) {
+								cnName = u1.getName();
+							}
+						}
+					}
+				}
 			}
+
+			parameterMap.put("kjName", kjName);
+			parameterMap.put("cnName", cnName);
+			parameterMap.put("zjlName", zjlName);
+
 			parameterMap.put("month",
 					DateUtil.convertDateToString(rb.getMonth(), "yyyy-MM"));
 		} else {
@@ -296,7 +329,7 @@ public class ReportController extends BaseController {
 
 		return new ModelAndView("reimbursementBatch", parameterMap);
 	}
-	
+
 	@RequestMapping({ "/carRentalReg" })
 	public ModelAndView carRentalReg(int type, HttpServletRequest request)
 			throws IOException {
@@ -318,24 +351,27 @@ public class ReportController extends BaseController {
 
 			}
 		}
-		
-		//当月一个月的记录
-		Date st =  DateUtil.getMonthStartTime(new Date());
-		Date et =  DateUtil.getMonthEndTime(new Date());
-		sqlBuilder.append(" and p.startDT >= '" + DateUtil.convertDateToString(st)+"'");
-		sqlBuilder.append(" and p.startDT <= '" + DateUtil.convertDateToString(et)+"'");
 
-		if(!StringUtils.isEmpty(sqlBuilder.toString())){
-			System.out.println("--------whereSQL="+sqlBuilder.toString());
+		// 当月一个月的记录
+		Date st = DateUtil.getMonthStartTime(new Date());
+		Date et = DateUtil.getMonthEndTime(new Date());
+		sqlBuilder.append(" and p.startDT >= '"
+				+ DateUtil.convertDateToString(st) + "'");
+		sqlBuilder.append(" and p.startDT <= '"
+				+ DateUtil.convertDateToString(et) + "'");
+
+		if (!StringUtils.isEmpty(sqlBuilder.toString())) {
+			System.out.println("--------whereSQL=" + sqlBuilder.toString());
 			parameterMap.put("whereSql", sqlBuilder.toString());
 		}
-		
+
 		return new ModelAndView("carRentalReg", parameterMap);
 	}
-	
+
 	/*-----------------------------开始-----------------------------*/
 	/**
 	 * 业务费用支付审批登记
+	 * 
 	 * @param id
 	 * @param type
 	 * @param request
@@ -345,24 +381,26 @@ public class ReportController extends BaseController {
 	@RequestMapping("/businessCostApprovalRegister")
 	public ModelAndView businessCostApprovalRegister(String ids, int type,
 			HttpServletRequest request) throws IOException {
-		
+
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		String str = "";
-		if(ids != null && !"".equals(ids)){
+		if (ids != null && !"".equals(ids)) {
 			str = "'" + ids.replaceAll(",", "','") + "'";
 		}
 		parameterMap.put("ids", str);
-		
+
 		if (type == 0) {
 			parameterMap.put("format", "pdf");
 		} else {
 			parameterMap.put("format", "xls");
 		}
-		
+
 		return new ModelAndView("businessCostApprovalRegister", parameterMap);
 	}
+
 	/**
 	 * 员工借款审批登记
+	 * 
 	 * @param id
 	 * @param type
 	 * @param request
@@ -372,24 +410,26 @@ public class ReportController extends BaseController {
 	@RequestMapping("/loanApprovalRegister")
 	public ModelAndView loanApprovalRegister(String ids, int type,
 			HttpServletRequest request) throws IOException {
-		
+
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		String str = "";
-		if(ids != null && !"".equals(ids)){
+		if (ids != null && !"".equals(ids)) {
 			str = "'" + ids.replaceAll(",", "','") + "'";
 		}
 		parameterMap.put("ids", str);
-		
+
 		if (type == 0) {
 			parameterMap.put("format", "pdf");
 		} else {
 			parameterMap.put("format", "xls");
 		}
-		
+
 		return new ModelAndView("loanApprovalRegister", parameterMap);
 	}
+
 	/**
 	 * 工资发放
+	 * 
 	 * @param id
 	 * @param type
 	 * @param request
@@ -399,33 +439,35 @@ public class ReportController extends BaseController {
 	@RequestMapping("/payrollRegister")
 	public ModelAndView payrollRegister(Date creatTime, int type,
 			HttpServletRequest request) throws IOException {
-		
+
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		Date st = null;
 		Date et = null;
 		String month = "";
-		if(creatTime != null){
+		if (creatTime != null) {
 			st = DateUtil.getMonthStartTime(creatTime);
 			et = DateUtil.getMonthEndTime(creatTime);
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(creatTime);
-			int mon = cal.get(Calendar.MONTH) + 1; 
+			int mon = cal.get(Calendar.MONTH) + 1;
 			month = String.valueOf(mon);
 		}
 		parameterMap.put("sDate", st);
 		parameterMap.put("eDate", et);
 		parameterMap.put("month", month);
-		
+
 		if (type == 0) {
 			parameterMap.put("format", "pdf");
 		} else {
 			parameterMap.put("format", "xls");
 		}
-		
+
 		return new ModelAndView("payrollRegister", parameterMap);
 	}
+
 	/**
 	 * 绩效提成
+	 * 
 	 * @param id
 	 * @param type
 	 * @param request
@@ -435,22 +477,22 @@ public class ReportController extends BaseController {
 	@RequestMapping("/scoreCutRegister")
 	public ModelAndView scoreCutRegister(Date sDate, Date eDate, int type,
 			HttpServletRequest request) throws IOException {
-		
+
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("sDate", sDate);
 		parameterMap.put("eDate", eDate);
 		parameterMap.put("st", DateUtil.getDate(sDate));
 		parameterMap.put("et", DateUtil.getDate(eDate));
-		
+
 		if (type == 0) {
 			parameterMap.put("format", "pdf");
 		} else {
 			parameterMap.put("format", "xls");
 		}
-		
+
 		return new ModelAndView("scoreCutRegister", parameterMap);
 	}
-	
+
 	/*-----------------------------结束-----------------------------*/
 
 }

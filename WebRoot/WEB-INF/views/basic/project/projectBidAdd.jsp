@@ -137,7 +137,7 @@
 		<form id="projectBidAddForm" method="post" >
 			<table class="grid">
 				<tr>
-					<th width="150px">公司名称 &nbsp;<label
+					<th width="120px">公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="company" name="company.id" 
 						class="easyui-validatebox span2" data-options="editable:false,required:true" style="width: 180px;">
@@ -183,7 +183,7 @@
 						id="bidDt" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 						
-					<th>工期结束时间 &nbsp;<label
+					<th width="140px">工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="duration"
 						id="duration" style="width: 98%; height: 100%;"

@@ -166,7 +166,13 @@
 			});
 		}
 	});
-						
+	
+	function showDate() {
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			minDate:'%y-%M-%d'
+		});
+	}
 
 	$('#city').combobox({
 		valueField : 'id', //值字段
@@ -288,7 +294,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT"
 						id="registDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+						data-options="required:true" onfocus="showDate()" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

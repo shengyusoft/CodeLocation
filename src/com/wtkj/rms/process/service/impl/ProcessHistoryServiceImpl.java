@@ -30,7 +30,7 @@ public class ProcessHistoryServiceImpl implements ProcessHistoryServiceI {
 
 	@Override
 	public Long add(ProcessHistory p, HttpServletRequest request) {
-		return (Long)processHistoryDao.save(p);
+		return (Long) processHistoryDao.save(p);
 	}
 
 	@Override
@@ -118,6 +118,15 @@ public class ProcessHistoryServiceImpl implements ProcessHistoryServiceI {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<ProcessHistory> find(Long processId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String hql = " from ProcessHistory t where t.process.id = :processId order by t.operateDT asc";
+		params.put("processId", processId);
+		List<ProcessHistory> ps = processHistoryDao.find(hql, params);
+		return ps;
 	}
 
 }

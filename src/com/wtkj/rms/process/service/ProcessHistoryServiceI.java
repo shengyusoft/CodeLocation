@@ -32,5 +32,7 @@ public interface ProcessHistoryServiceI {
 	public void deleteByProcessId(String ids);
 
 	public List<ProcessHistory> findAll();
+	
+	public List<ProcessHistory> find(Long processId);
 
 }

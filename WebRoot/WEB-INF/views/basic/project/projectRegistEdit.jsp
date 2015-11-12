@@ -214,6 +214,13 @@
 	    defaultValue:'--请选择--',
 	    value:'${projectRegist.county.id}'
 	});
+	
+	function showDate() {
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			minDate:'${projectRegist.createDT}'
+		});
+	}
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -320,7 +327,7 @@
 					<td><input class="Wdate" type="text" name="registDT"
 						value="<fmt:formatDate value="${projectRegist.registDT}" pattern="yyyy-MM-dd"/>"
 						id="registDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+						data-options="required:true" onfocus="showDate()" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label
