@@ -16,7 +16,6 @@ import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.rms.project.model.Certificate;
 import com.wtkj.rms.project.service.CertificateServiceI;
 
-
 @Service
 public class CertificateServiceImpl implements CertificateServiceI {
 
@@ -74,8 +73,8 @@ public class CertificateServiceImpl implements CertificateServiceI {
 	public Long count(Certificate vo, PageFilter ph) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from Certificate t ";
-		return certificateDao.count("select count(*) " + hql
-				+ whereHql(vo, params), params);
+		return certificateDao.count(
+				"select count(*) " + hql + whereHql(vo, params), params);
 	}
 
 	private String whereHql(Certificate vo, Map<String, Object> params) {
@@ -86,10 +85,15 @@ public class CertificateServiceImpl implements CertificateServiceI {
 				hql += " and t.card_name like :name";
 				params.put("name", "%%" + vo.getCard_name() + "%%");
 			}
-			
+
 			if (!StringUtils.isEmpty(vo.getCard_owner())) {
-				hql += " and t.card_owner like :name";
-				params.put("name", "%%" + vo.getCard_owner() + "%%");
+				hql += " and t.card_owner like :ower";
+				params.put("ower", "%%" + vo.getCard_owner() + "%%");
+			}
+			
+			if (!StringUtils.isEmpty(vo.getCard_code())) {
+				hql += " and t.card_code like :code";
+				params.put("code", "%%" + vo.getCard_code() + "%%");
 			}
 		}
 
@@ -113,8 +117,7 @@ public class CertificateServiceImpl implements CertificateServiceI {
 	public List<Certificate> combox(String type) {
 		List<Certificate> ld = new ArrayList<Certificate>();
 		List<Certificate> lt = certificateDao
-				.find("from Certificate t where t.card_type='"
-						+ type + "'");
+				.find("from Certificate t where t.card_type='" + type + "'");
 		if (lt != null && lt.size() > 0) {
 			for (int i = 0; i < lt.size(); i++) {
 				if (lt.get(i).getCard_status().equals("正常")) {
@@ -127,6 +130,13 @@ public class CertificateServiceImpl implements CertificateServiceI {
 			}
 		}
 		return ld;
+	}
+
+	@Override
+	public List<Certificate> findExpired() {
+		String sql = "SELECT * from tb_certificate t where t.card_enddate <= DATE_ADD(curdate(),INTERVAL 3 month)";
+		List<Certificate> s = certificateDao.findBySql(sql, Certificate.class);
+		return s;
 	}
 
 }

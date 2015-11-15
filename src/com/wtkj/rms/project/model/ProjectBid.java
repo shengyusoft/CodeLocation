@@ -32,6 +32,7 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	private Tdictionary company;// 公司名称
 	private String projectName;// 项目名称
 	private Date bidDt;// 中标时间
+	private Date signDt;// 合同签订时间
 
 	// 省市县区划
 	private Tdictionary provice;
@@ -60,6 +61,8 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	private String tel;// 联系方式
 
 	private String recordman;// 登记人
+
+	private String sender;// 发包人
 
 	private String remark;
 
@@ -234,6 +237,14 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 		this.recordman = recordman;
 	}
 
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
 	public String getHeadmanIdCard() {
 		return headmanIdCard;
 	}
@@ -266,6 +277,14 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	public void setBidDt(Date bidDt) {
 		this.bidDt = bidDt;
+	}
+
+	public Date getSignDt() {
+		return signDt;
+	}
+
+	public void setSignDt(Date signDt) {
+		this.signDt = signDt;
 	}
 
 }

@@ -221,4 +221,10 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 		}
 		return fee;
 	}
+
+	@Override
+	public List<ProjectBid> findAll() {
+		List<ProjectBid> l = projectBidDao.find(" from ProjectBid t ");
+		return l;
+	}
 }

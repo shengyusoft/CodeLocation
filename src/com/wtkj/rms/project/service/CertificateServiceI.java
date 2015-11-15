@@ -5,9 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.wtkj.common.PageFilter;
-import com.wtkj.common.model.Dictionary;
 import com.wtkj.rms.project.model.Certificate;
-
 
 public interface CertificateServiceI {
 
@@ -26,7 +24,7 @@ public interface CertificateServiceI {
 	public void delete(String ids);
 
 	public List<Certificate> findAll();
-	
+
 	public List<Certificate> combox(String type);
 
 	/**
@@ -36,4 +34,12 @@ public interface CertificateServiceI {
 	 * @return
 	 */
 	public List<Certificate> checkRelate(String ids);
+
+	/**
+	 * 查找快过期的
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<Certificate> findExpired();
 }

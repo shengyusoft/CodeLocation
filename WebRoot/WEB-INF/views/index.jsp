@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <c:set var="imgPath" value="${ctx}/style/images" />
 <!DOCTYPE html>
@@ -138,25 +139,75 @@ a:hover {
 										<li style="margin-top: 10px;">上次登录：${sessionInfo.lastLoginTimeStr}</li>
 									</ul>
 								</div>
-								<!-- <div style="float: right;">
-									<img src="../style/images/Other/13.png" />
-								</div> -->
 							</div>
 							<div class="easyui-tabs" style="margin-top: 5px; height: 270px;">
-								<div id="task_to_do" title="我的待办"
-									data-options="iconCls:'icon_rms_todo'"
+								<div id="index_notice" title="通知公告<font color='red'>(${fn:length(notices)})</font>"
+									data-options="iconCls:'icon_rms_notice'"
+									style="padding: 10px; background: #FCFCFD">
+									<table id="notice">
+										<c:forEach items="${notices}" var="d" varStatus="status">
+											<tr>
+												<td width="20px" class="icon_rms_notice_clos" />
+												<c:choose>
+													<c:when test="${status.first == true}">
+														<td width="300px">
+															<a class="STYLE1" style="color: red" href="#"
+															onclick="detailArticle('${d.title}','notice','${d.id}')">
+															${fn:substring(d.title, 0, 10)}
+															</a>
+														</td>
+													</c:when>
+													<c:otherwise>
+														<td width="300px"><a class="STYLE1" href="#"
+															onclick="detailArticle('${d.title}','notice','${d.id}')">${d.title}</a>
+														</td>
+													</c:otherwise>
+												</c:choose>
+												<td width="120px">【${d.organizationName}】${d.createUserName}</td>
+												<td width="60px" style="color: #cc0000">${d.publishDTText}</td>
+												<td width="60px">阅<font color="#cc0000">${d.numberOfScan}</font>次
+												</td>
+											</tr>
+										</c:forEach>
+									</table>
+								</div>
+								<div id="task_to_do" title="我的待办" data-options="iconCls:'icon_rms_todo'"
 									style="padding: 10px; overflow: scroll;">
 									<table id="myTaskGrid" style="border: 0px; width: 480px;"
 										data-options="border:false"></table>
 								</div>
+								
+								<div id="index_remind" title="消息提醒<font color='red'>(${fn:length(certificates)})</font>"
+									data-options="iconCls:'icon_rms_msg_center'" style="padding: 10px; background: #FCFCFD">
+									<table id="remind">
+										<c:forEach items="${certificates}" var="d" varStatus="status">
+											<tr>
+												<td width="20px" class="icon_rms_notice_clos" />
+												<c:choose>
+													<c:when test="${status.first == true}">
+														<td width="100px">
+															<a style="color: red" href="#" onclick="detailRemind('${d.id}')">
+															${fn:substring(d.card_name, 0, 10)}
+															</a>
+														</td>
+													</c:when>
+													<c:otherwise>
+														<td width="100px"><a href="#"
+															onclick="detailRemind('${d.id}')">${d.card_name}</a>
+														</td>
+													</c:otherwise>
+												</c:choose>
+												<td width="250px">${d.card_enddate}：证书过期提醒</td>
+												<td width="60px">${d.card_owner}</td>
+											</tr>
+										</c:forEach>
+									</table>
+								</div>
 							</div>
 						</div>
 						<div style="float: right; width: 260px; padding-left: 5px;">
-
 							<div class="easyui-calendar" style="width: 260px; height: 250px;"
 								data-options="formatter:formatDay"></div>
-
-
 							<div class="easyui-tabs" style="padding-top: 5px; height: 270px;">
 								<div title="快捷方式" style="padding: 10px;">
 									<c:forEach items="${shotcuts}" var="d" varStatus="status">

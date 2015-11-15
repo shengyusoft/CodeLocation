@@ -1,5 +1,8 @@
 package com.wtkj.rms.project.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.controller.BaseController;
+import com.wtkj.common.model.User;
 import com.wtkj.common.service.DictionaryServiceI;
 import com.wtkj.rms.project.model.ProjectBid;
 import com.wtkj.rms.project.service.ProjectBidServiceI;
@@ -29,7 +33,25 @@ public class ProjectBidController extends BaseController {
 
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request) {
+		User u = getLoginUser(request);
+		if (u.getRoleNames().indexOf("超级管理员") >= 0
+				|| (u.getRoleNames().indexOf("总经理") >= 0)) {
+			request.setAttribute("flag", 1);
+		} else {
+			request.setAttribute("flag", 0);
+		}
 
+		// 计算统计列
+		double totalBidCost = 0d;
+		List<ProjectBid> pbs = projectBidService.findAll();
+		for (ProjectBid p : pbs) {
+			totalBidCost += p.getBid_cost();
+		}
+
+		BigDecimal costDiget = new java.math.BigDecimal(totalBidCost);
+		java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
+		String costString = myformat.format(costDiget);
+		request.setAttribute("totalBidCost", costString);
 		return "/basic/project/projectBid";
 
 	}

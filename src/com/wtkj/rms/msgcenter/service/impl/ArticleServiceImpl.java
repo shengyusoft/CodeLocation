@@ -230,6 +230,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
 		return ats;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public List<ArticleVo> findPublishs(String type, Long userId) {
 		List<Article> as = null;
@@ -248,36 +249,31 @@ public class ArticleServiceImpl implements ArticleServiceI {
 			sql.append("left join sys_user u on a.createUserID = u.id ");
 			where += "and u.id=" + userId;
 		}
-
 		sql.append(where);
 		sql.append(" order by updateDT desc, createDT desc");
-
 		as = articleDao.findBySql(sql.toString(), Article.class);
 		for (Article article : as) {
 			ArticleVo vo = new ArticleVo();
 			BeanUtils.copyProperties(article, vo);
-
 			if (article.getUser() != null) {
 				Torganization o = organizationDao.get(Torganization.class,
 						article.getUser().getOrganization().getId());
 				vo.setOrganizationName(o.getName());
+				Tuser user = userDao
+						.get(Tuser.class, article.getUser().getId());
+				vo.setCreateUserID(user.getId());
+				vo.setCreateUserName(user.getName());
 			}
-
 			if (article.getPublishDT() != null) {
 				Date d = article.getPublishDT();
 				vo.setPublishDTText(d.getMonth() + "月" + d.getDate() + "日");
 			}
-
 			if (article.getCreateDT() != null) {
 				Date d = article.getCreateDT();
 				vo.setCreateDTText(d.getMonth() + "月" + d.getDate() + "日");
 			}
-
-			// vo.set
 			aos.add(vo);
-
 		}
-
 		return aos;
 	}
 

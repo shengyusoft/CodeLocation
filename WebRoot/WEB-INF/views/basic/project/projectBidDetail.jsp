@@ -19,7 +19,7 @@
 		valueField : 'id',
 		multiple:true,
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '200'				
 	});
 	
 	var selectedBds=[];
@@ -182,6 +182,13 @@
 						id="bidDt" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 						
+					<th width="120px">合同签订时间 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input class="Wdate" type="text" name="signDt" id="signDt" style="width: 98%; height: 100%;"
+						value="<fmt:formatDate value="${projectBid.signDt}" pattern="yyyy-MM-dd"/>"
+						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+				</tr>
+				<tr>
 					<th>工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text"
@@ -189,8 +196,7 @@
 						name="duration" id="duration"
 						style="width: 98%; height: 100%;" data-options="required:true"
 						onfocus="showDate('yyyy-MM-dd')" /></td>
-				</tr>
-				<tr>
+						
 					<th>管理费比例（%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="manageFeeRate"
@@ -246,10 +252,16 @@
 				<tr>
 					<th>登记人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="5"><input name="recordman" type="text" readonly
+					<td><input name="recordman" type="text" readonly
 						id="recordman" value="${sessionInfo.name}"
 						style="width: 50%; height: 100%" class="easyui-validatebox span2"
 						value="${projectBid.recordman}" data-options="required:true" /></td>
+						
+					<th>发包人&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="sender" type="text" id="sender" value="${projectBid.sender}"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>

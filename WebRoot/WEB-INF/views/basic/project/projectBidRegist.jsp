@@ -288,6 +288,19 @@
 			return;
 		}
 		
+		var flag = '${flag}';//管理员或者总经理
+		var obj = rows[0];
+		if(obj.registDT != null && flag != '1'){
+			var registDT = new Date(obj.registDT);
+			//超过一周不能上传
+			var limitDate = new Date(registDT.getFullYear(),registDT.getMonth(),registDT.getDay()+7);
+			var now = new Date();
+			if(now >= limitDate){
+				alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，请联系总经理上传）');
+				return;
+			}
+		}
+		
 		id = rows[0].id;
 
 		parent.$.modalDialog({

@@ -1,7 +1,6 @@
 package com.wtkj.rms.msgcenter.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +13,6 @@ import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
 import com.wtkj.common.SessionInfo;
-import com.wtkj.rms.msgcenter.model.po.Article;
 import com.wtkj.rms.msgcenter.model.vo.ArticleVo;
 
 @Controller
@@ -36,17 +34,6 @@ public class NoticeController extends ArticleController {
 		return super.manager(request, TAG);
 	}
 
-//	@Override
-//	@RequestMapping("/dataGrid")
-//	@ResponseBody
-//	public Grid dataGrid(ArticleVo articleVo, PageFilter ph) {
-//		checkDictionary(CODE);
-//		if (dictionaryCache != null) {
-//			articleVo.setDictionaryId(dictionaryCache.getId());
-//		}
-//		return super.dataGrid(articleVo, ph);
-//	}
-	
 	@RequestMapping("/dataGrid")
 	@ResponseBody
 	public Grid dataGrid(ArticleVo articleVo, PageFilter ph, boolean zdTag) {

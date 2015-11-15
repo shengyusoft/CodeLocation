@@ -49,7 +49,7 @@
 		valueField : 'id',
 		multiple:true,
 		textField : 'text',
-		panelHeight : 'auto'				
+		panelHeight : '200'				
 	});
 	
 	$('#projectMgr').combobox({
@@ -183,13 +183,19 @@
 						id="bidDt" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 						
+					<th>合同签订时间 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input class="Wdate" type="text" name="signDt"
+						id="signDt" style="width: 98%; height: 100%;"
+						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+				</tr>
+				<tr>
 					<th width="140px">工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="duration"
 						id="duration" style="width: 98%; height: 100%;"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
-				</tr>
-				<tr>
+						
 					<th>管理费比例（%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="manageFeeRate"
@@ -198,7 +204,7 @@
 						class="easyui-numberbox" data-options="required:true" /></td>
 						
 					<th width="120px">管理费数额（元）&nbsp;</th>
-					<td colspan="3"><input name="manageFee" style="width: 100%; height: 100%"
+					<td><input name="manageFee" style="width: 100%; height: 100%"
 						type="text" id="manageFee" class="easyui-validatebox span2"
 						disabled="disabled" /></td>
 				</tr>
@@ -243,9 +249,14 @@
 				<tr>
 					<th>登记人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="5"><input name="recordman" type="text" readonly id="recordman" value="${sessionInfo.name}"
-						style="width: 100%; height: 100%" class="easyui-validatebox span2"
+					<td><input name="recordman" type="text" readonly id="recordman" value="${sessionInfo.name}"
+						style="width: 100%; height: 100%" class="easyui-validatebox span2 disabled"
 						data-options="required:true" /></td>
+						
+					<th>发包人&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="sender" type="text" id="sender"style="width: 100%; height: 100%" 
+						class="easyui-validatebox span2" data-options="required:true" /></td>
 				</tr>
 				
 				<tr>

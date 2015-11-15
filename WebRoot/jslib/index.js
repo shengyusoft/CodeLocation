@@ -9,12 +9,10 @@ function init() {
 	} else {
 		window.location.href = ctxPath + '/admin/index';
 	}
-
 	loadindex();
 	loadMenu();
 	editTip();
 	taskRemind();// 任务提醒
-	
 	//根据不同的用户权限显示不同的代办
 	//loadToDo();// 加载我的待办
 	loadToDo2();// 加载我的待办
@@ -335,6 +333,23 @@ function detailArticle(title, type, id) {
 	});
 }
 
+function detailRemind(id) {
+	var url = ctxPath + '/certificate/detailPage?id=' + id;
+	parent.$.modalDialog({
+		title : '证书详情',
+		width : '815',
+		height : '500',
+		href : url,
+		buttons : [ {
+			text : '退出',
+			handler : function() {
+				//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+				parent.$.modalDialog.handler.dialog('close');
+			}
+		} ]
+	});
+}
+
 var toDoGrid;
 function loadToDo() {
 	toDoGrid = $('#myTaskGrid').datagrid({
@@ -404,6 +419,10 @@ function loadToDo2() {
 		fit : true,
 		nowrap : true,
 		idField : 'id',
+		onLoadSuccess:function(data){
+			var todo = $('.icon_rms_todo').parent().children()[0];
+			todo.innerHTML="我的待办<font color='red'>("+data.rows.length+")</font>";
+		},
 		frozenColumns : [ [
 				{
 					title : '序号',

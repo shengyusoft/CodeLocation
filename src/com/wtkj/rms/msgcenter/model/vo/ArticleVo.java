@@ -26,7 +26,7 @@ public class ArticleVo implements java.io.Serializable {
 	private String organizationName;
 	private String attachmentIds;// 附件,关联附件表
 	private AttachmentVo avo;
-	private Boolean publish = null;// 状态,0 未发表,1已发表,默认未发表
+	private Boolean publish = false;// 状态,0 未发表,1已发表,默认未发表
 	private boolean zd;// 是否置顶
 	private int numberOfScan;// 浏览次数
 	private Long dictionaryId;// 文章类型,关联字典表

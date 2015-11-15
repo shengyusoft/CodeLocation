@@ -86,10 +86,15 @@
 	function searchFun() {
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.card_name = "";
+		queryParams.card_code = "";
 		queryParams.card_owner = "";
 
 		var card_name = $('#card_name').val();
 		var card_owner = $('#card_owner').val();
+		var card_code = $('#card_code').val();
+		if (!isEmpty(card_code)) {
+			queryParams.card_code = card_code;
+		}
 		if (!isEmpty(card_name)) {
 			queryParams.card_name = card_name;
 		}
@@ -101,6 +106,7 @@
 	}
 
 	function clearFun() {
+		$('#card_code').val('');
 		$('#card_name').val('');
 		$('#card_owner').val('');
 	}
@@ -284,6 +290,8 @@
 		<c:if test="${fn:contains(sessionInfo.resourceList, '/certificate/search')}">
 			<table>
 				<tr>
+					<th>证书编号:</th>
+					<td><input type="text" id="card_code"></td>
 					<th>证书名称:</th>
 					<td><input type="text" id="card_name"></td>
 					<th>持证人:</th>

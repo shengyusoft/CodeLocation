@@ -330,30 +330,23 @@ function detailFun() {
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_task_handler'">发布 </a>
 		</c:if>
-		
-		<c:if test="${fn:contains(sessionInfo.resourceList, '/notice/search')}">
-			<div id="searchbar" class = "search-toolbar">
-				<span>重要等级:</span>
-				<select id="level" class = "easyui-combobox" name="level"
-					style="width: 100px;" panelHeight="auto">
-					<option value="0">--请选择--</option>
-					<option value="1">一般</option>
-					<option value="2">重要</option>
-					<option value="3">紧急</option>
-				</select> 
-				
-				<span>标题关键字:</span> 
-				<input type="text" id="title" name="title"> 
-				
-				<a onclick="searchFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 
-					
-				<a onclick="clearFun();" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a> 
-			</div>
-		</c:if>
+
+		<div id="searchbar" class="search-toolbar">
+			<span>重要等级:</span> <select id="level" class="easyui-combobox"
+				name="level" style="width: 100px;" panelHeight="auto">
+				<option value="0">--请选择--</option>
+				<option value="1">一般</option>
+				<option value="2">重要</option>
+				<option value="3">紧急</option>
+			</select> <span>标题关键字:</span> <input type="text" id="title" name="title">
+
+			<a onclick="searchFun();" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> <a
+				onclick="clearFun();" href="javascript:void(0);"
+				class="easyui-linkbutton"
+				data-options="plain:true,iconCls:'icon_toolbar_clear'">清空</a>
+		</div>
 
 	</div>
 

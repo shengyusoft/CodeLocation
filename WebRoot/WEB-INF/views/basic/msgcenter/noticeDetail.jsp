@@ -6,7 +6,10 @@
 .bottom{text-align:left;width:98%;overflow:auto;line-height:20px; max-height:80px; bottom:0; left:0;right:0;font-size:15px; padding:6px; position:absolute;}
 .attach{width:100%;max-height: 65px;overflow: auto;overflow-x:hidden;overflow-y:auto;}
 div{ word-wrap: break-word; word-break: normal;}
-.panel-body{background: #F0F5FB;}
+.panel-body{background: rgb(224, 229, 245);}
+body{
+background-color: rgb(224, 229, 245)
+}
 </style>
 <script type="text/javascript">
 $(function() {
@@ -16,8 +19,7 @@ $(function() {
 <div data-options="fit:true,border:false" style="width:100%;height:100%;">
 	<div data-options="region:'center',border:false" title="" style="overflow: hidden; padding: 0px;">
 		<div id="content" style="width: 100%;height: 100%; overflow:auto;">
-			<input type="hidden" name="attachmentIds"
-						id="attachmentIds" value="${article.attachmentIds}"> 
+			<input type="hidden" name="attachmentIds" id="attachmentIds" value="${article.attachmentIds}"> 
 			<h1 style="text-align:center;">
 				<span style="line-height:1.5;color:#337FE5;font-family:KaiTi_GB2312;font-size: x-large;">${article.title}</span> 
 			</h1>
@@ -30,20 +32,19 @@ $(function() {
 				</span> 
 			</p>
 			<hr style="width: 80%;height: 1.5;vertical-align: middle;text-align: center;" />
-			<div style="margin: 15px">
+			<div style="width: 80%;margin-left: 10%;margin-right: 10%">
 				${article.html}
+				<fieldset>
+					<legend>附件</legend>
+					<div id="downloadDiv" class="attach"></div>
+				</fieldset>
 			</div>
-			
-			<div class="bottom" >
+			<!-- <div class="bottom" >
 			<div style="width: 100%;height: auto;">
 				<hr style="border:1px dashed #000; height:1px;width: 45%; float: left">
 				<span style="float: left;width: 8%;text-align: center;"><font size="15px" color="red">附件</font></span>
 				<hr style="fit:true;border:1px dashed #000; height:1px;width: 45%; float: left">
-			</div>
-			<div id="downloadDiv" class="attach">
-			</div>
+			</div> -->
 		</div>
-		</div>
-		
 	</div>
 </div>

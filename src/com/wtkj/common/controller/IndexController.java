@@ -40,6 +40,8 @@ import com.wtkj.rms.msgcenter.service.ArticleServiceI;
 import com.wtkj.rms.process.model.Process;
 import com.wtkj.rms.process.model.ProcessVo;
 import com.wtkj.rms.process.service.ProcessServiceI;
+import com.wtkj.rms.project.model.Certificate;
+import com.wtkj.rms.project.service.CertificateServiceI;
 
 @Controller
 @RequestMapping("/admin")
@@ -71,6 +73,9 @@ public class IndexController extends BaseController {
 	@Autowired
 	private CustomerServiceI customerService;
 
+	@Autowired
+	private CertificateServiceI certificateService;
+
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request) {
 		SessionInfo sessionInfo = (SessionInfo) request.getSession()
@@ -92,15 +97,21 @@ public class IndexController extends BaseController {
 	private void loadData(HttpServletRequest request, SessionInfo sessionInfo) {
 		// 登录成功后加载已发表的文章或知识
 		List<ArticleVo> notices = null;
-		List<ArticleVo> knowledges = null;
+		// List<ArticleVo> knowledges = null;
 		List<ShotcutInfoVo> shotcuts = null;
 		try {
 			// 加载通知和我的知识库
 			notices = articleService.findPublishs("tzgg", null);
-			knowledges = articleService.findPublishs("zsglk",
-					sessionInfo.getId());
 			request.setAttribute("notices", notices);
-			request.setAttribute("knowledges", knowledges);
+
+			List<Certificate> certificates = certificateService.findExpired();
+			request.setAttribute("certificates", certificates);
+
+			/*
+			 * knowledges = articleService.findPublishs("zsglk",
+			 * sessionInfo.getId()); request.setAttribute("knowledges",
+			 * knowledges);
+			 */
 
 			// 加载快键方式
 			shotcuts = shotcutService.dataGrid(null, null, sessionInfo.getId());
@@ -228,22 +239,15 @@ public class IndexController extends BaseController {
 			return j;
 		}
 		// validate login
-		/*String vcode = session.getAttribute("randCode").toString();
-
-		if (vcode == null) {
-			j.setSuccess(false);
-			j.setMsg("验证码过期");
-			return j;
-		}
-		if (vercode == null || vercode.equals("")) {
-			j.setSuccess(false);
-			j.setMsg("验证码不能为空");
-			return j;
-		} else if (!vercode.equals(vcode)) {
-			j.setSuccess(false);
-			j.setMsg("验证码输入错误");
-			return j;
-		}*/
+		/*
+		 * String vcode = session.getAttribute("randCode").toString();
+		 * 
+		 * if (vcode == null) { j.setSuccess(false); j.setMsg("验证码过期"); return
+		 * j; } if (vercode == null || vercode.equals("")) {
+		 * j.setSuccess(false); j.setMsg("验证码不能为空"); return j; } else if
+		 * (!vercode.equals(vcode)) { j.setSuccess(false); j.setMsg("验证码输入错误");
+		 * return j; }
+		 */
 
 		User sysuser = userService.login(user);
 		if (sysuser != null) {

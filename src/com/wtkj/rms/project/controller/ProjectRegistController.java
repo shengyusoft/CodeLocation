@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
-import com.wtkj.common.SessionInfo;
 import com.wtkj.common.controller.BaseController;
 import com.wtkj.common.model.User;
 import com.wtkj.common.service.DictionaryServiceI;
@@ -27,7 +26,7 @@ public class ProjectRegistController extends BaseController {
 
 	@Autowired
 	private ProjectRegistServiceI projectRegistService;
-	
+
 	@Autowired
 	private UserServiceI userService;
 
@@ -36,6 +35,13 @@ public class ProjectRegistController extends BaseController {
 
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request, int type) {
+		User u = getLoginUser(request);
+		if (u.getRoleNames().indexOf("超级管理员") >= 0
+				|| (u.getRoleNames().indexOf("总经理") >= 0)) {
+			request.setAttribute("flag", 1);
+		} else {
+			request.setAttribute("flag", 0);
+		}
 		if (type == 0) {
 			return "/basic/project/projectRegist";
 		} else {
@@ -54,14 +60,7 @@ public class ProjectRegistController extends BaseController {
 
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request, int type) {
-		
-		SessionInfo sessionInfo = getSessionInfo(request);
-		User user = null;
-		if (sessionInfo != null && sessionInfo.getId() != null) {
-			user = userService.get(sessionInfo.getId());
-		}
-		request.setAttribute("cuser", user);
-		
+		request.setAttribute("cuser", getLoginUser(request));
 		if (type == 0) {
 			return "/basic/project/projectRegistAdd";
 		} else {
@@ -77,7 +76,7 @@ public class ProjectRegistController extends BaseController {
 			projectRegistService.add(vo, request);
 			j.setSuccess(true);
 			j.setMsg("添加成功！");
-			//j.setObj(vo);
+			// j.setObj(vo);
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
 		}

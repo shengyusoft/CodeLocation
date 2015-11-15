@@ -117,10 +117,10 @@ public class ReportController extends BaseController {
 			sb.append("and p.projectName like %" + projectName + "% ");
 		}
 		if (st != null) {
-			sb.append("and p.bidDt >=" + st + " ");
+			sb.append("and p.bidDt >='" + DateUtil.convertDateToString(st) + "' ");
 		}
 		if (et != null) {
-			sb.append("and p.bidDt <=" + et + " ");
+			sb.append("and p.bidDt <='" + DateUtil.convertDateToString(et) + "' ");
 		}
 
 		if (provice > 0) {

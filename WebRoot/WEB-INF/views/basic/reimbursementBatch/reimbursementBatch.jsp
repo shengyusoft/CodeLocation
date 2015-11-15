@@ -305,6 +305,7 @@
 			return;
 		}
 		id = rows[0].id;
+		console.log(id);
 		var url = ctxPath + "/report/reimbursementBatch?batchId=" + id + "&&type=" + type;
 		if (type == 0) {
 			id = rows[0].id;

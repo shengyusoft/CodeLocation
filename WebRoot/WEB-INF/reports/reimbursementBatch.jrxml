@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="金鹰公司员工报销单" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="19"/>
 	<parameter name="batchId" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[$P{batchId}]]></defaultValueExpression>
 	</parameter>
@@ -19,9 +19,12 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select r.*,x.description,
-(r.trafficFee+r.mealFee+r.officeFee+r.receiveFee+r.badgeFee+r.communicationFee+r.trainFee+r.otherFee) as totalFee
+(r.trafficFee+r.mealFee+r.officeFee+r.receiveFee+r.badgeFee+r.communicationFee+r.trainFee+r.otherFee) as totalFee,
+u.name as applyUserName,p.startDT as applyDt
 from reimbursement r
 left join sys_dictionary x on r.county_id=x.id
+left join process p on r.batchId = p.docId
+left join sys_user u on p.applyUserId = u.id
 where r.batchId = $P{batchId}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
@@ -49,6 +52,8 @@ where r.batchId = $P{batchId}]]>
 	<field name="kdFee" class="java.lang.Double"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="totalFee" class="java.lang.Double"/>
+	<field name="applyUserName" class="java.lang.String"/>
+	<field name="applyDt" class="java.sql.Timestamp"/>
 	<variable name="index" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{id}]]></variableExpression>
 	</variable>
@@ -121,7 +126,7 @@ where r.batchId = $P{batchId}]]>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					<font fontName="宋体" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[报销人]]></text>
 			</staticText>
@@ -147,7 +152,7 @@ where r.batchId = $P{batchId}]]>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					<font fontName="宋体" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[报销月份]]></text>
 			</staticText>
@@ -167,7 +172,7 @@ where r.batchId = $P{batchId}]]>
 			<staticText>
 				<reportElement x="633" y="43" width="79" height="38" isPrintInFirstWholeBand="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+					<font fontName="宋体" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[打印日期：]]></text>
 			</staticText>
@@ -176,12 +181,38 @@ where r.batchId = $P{batchId}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="432" y="43" width="116" height="38" isPrintInFirstWholeBand="true"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{applyDt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="43" width="52" height="38" isPrintInFirstWholeBand="true"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="宋体" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[申请时间]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="37" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="20" height="37"/>
+				<reportElement x="0" y="33" width="20" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -194,7 +225,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[序号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="20" y="0" width="70" height="37"/>
+				<reportElement x="20" y="33" width="70" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -207,7 +238,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[何时]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="90" y="0" width="56" height="37"/>
+				<reportElement x="90" y="33" width="56" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -220,7 +251,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[何地]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="0" width="395" height="20"/>
+				<reportElement x="367" y="33" width="395" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -233,7 +264,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[费用小计（元）]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="146" y="0" width="63" height="37"/>
+				<reportElement x="146" y="33" width="63" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -246,7 +277,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[办何事]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="528" y="20" width="32" height="17"/>
+				<reportElement x="528" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -259,7 +290,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[通讯]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="209" y="0" width="158" height="37"/>
+				<reportElement x="209" y="33" width="158" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -272,7 +303,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[费用明细]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="762" y="0" width="40" height="37"/>
+				<reportElement x="762" y="33" width="40" height="37"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -285,7 +316,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[费用合计]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="560" y="20" width="41" height="17"/>
+				<reportElement x="560" y="53" width="41" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -298,7 +329,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[物品购置]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="496" y="20" width="32" height="17"/>
+				<reportElement x="496" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -311,7 +342,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[刻章]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="464" y="20" width="32" height="17"/>
+				<reportElement x="464" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -324,7 +355,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[招待]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="432" y="20" width="32" height="17"/>
+				<reportElement x="432" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -337,7 +368,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[办公]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="20" width="32" height="17"/>
+				<reportElement x="400" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -350,7 +381,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[就餐]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="367" y="20" width="33" height="17"/>
+				<reportElement x="367" y="53" width="33" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -363,7 +394,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[交通]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="730" y="20" width="32" height="17"/>
+				<reportElement x="730" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -376,7 +407,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[其它]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="601" y="20" width="32" height="17"/>
+				<reportElement x="601" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -389,7 +420,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[文印]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="633" y="20" width="33" height="17"/>
+				<reportElement x="633" y="53" width="33" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -402,7 +433,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[制证]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="666" y="20" width="32" height="17"/>
+				<reportElement x="666" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -415,7 +446,7 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[住宿]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="698" y="20" width="32" height="17"/>
+				<reportElement x="698" y="53" width="32" height="17"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -426,6 +457,55 @@ where r.batchId = $P{batchId}]]>
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[快递]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="337" y="13" width="22" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="359" y="13" width="19" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[页]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="13" width="16" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[共]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="13" width="16" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="410" y="13" width="22" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="321" y="13" width="16" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[第]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="13" width="20" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[页]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -705,56 +785,7 @@ where r.batchId = $P{batchId}]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="56" splitType="Stretch">
-			<staticText>
-				<reportElement x="321" y="36" width="16" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[第]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="337" y="36" width="22" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="394" y="36" width="16" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[共]]></text>
-			</staticText>
-			<textField evaluationTime="Report" isBlankWhenNull="true">
-				<reportElement x="410" y="36" width="22" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="359" y="36" width="19" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[页]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="378" y="36" width="16" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[/]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="432" y="36" width="20" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[页]]></text>
-			</staticText>
+		<band height="33" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="70" height="31"/>
 				<box>
@@ -835,12 +866,13 @@ where r.batchId = $P{batchId}]]>
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="232" splitType="Stretch">
+	<lastPageFooter>
+		<band height="35">
 			<staticText>
-				<reportElement x="32" y="1" width="109" height="20"/>
+				<reportElement x="32" y="10" width="109" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
@@ -850,9 +882,10 @@ where r.batchId = $P{batchId}]]>
 				<text><![CDATA[本月总计]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="730" y="0" width="32" height="21"/>
+				<reportElement stretchType="RelativeToBandHeight" x="730" y="10" width="32" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
@@ -862,126 +895,9 @@ where r.batchId = $P{batchId}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{otherFeeT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="141" y="1" width="67" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="141" y="10" width="67" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="561" y="0" width="40" height="21"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{trainFeeT}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="464" y="1" width="32" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{receiveFeeT}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="496" y="0" width="32" height="21"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{badgeFeeT}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="281" y="1" width="86" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="400" y="1" width="32" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{mealFeeT}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="208" y="1" width="73" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="528" y="0" width="32" height="21"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{communicationFeeT}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="367" y="1" width="33" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{trafficT}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="432" y="1" width="32" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{officeFeeT}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="1" width="32" height="20"/>
-				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
@@ -991,9 +907,137 @@ where r.batchId = $P{batchId}]]>
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="762" y="0" width="40" height="21"/>
+				<reportElement stretchType="RelativeToBandHeight" x="561" y="10" width="40" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{trainFeeT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="464" y="10" width="32" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{receiveFeeT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="496" y="10" width="32" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{badgeFeeT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="281" y="10" width="86" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="10" width="32" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{mealFeeT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="208" y="10" width="73" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="528" y="10" width="33" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{communicationFeeT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="367" y="10" width="33" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{trafficT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="432" y="10" width="32" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{officeFeeT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="10" width="32" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				</textElement>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="762" y="10" width="40" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
@@ -1003,9 +1047,10 @@ where r.batchId = $P{batchId}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{totalFeeT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="601" y="0" width="32" height="21"/>
+				<reportElement stretchType="RelativeToBandHeight" x="601" y="10" width="32" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
@@ -1015,9 +1060,10 @@ where r.batchId = $P{batchId}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{wyFeeT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="633" y="0" width="33" height="21"/>
+				<reportElement stretchType="RelativeToBandHeight" x="633" y="10" width="33" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
@@ -1027,9 +1073,10 @@ where r.batchId = $P{batchId}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{zzFeeT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="666" y="0" width="32" height="21"/>
+				<reportElement stretchType="RelativeToBandHeight" x="666" y="10" width="32" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
@@ -1039,9 +1086,10 @@ where r.batchId = $P{batchId}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{zsFeeT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="698" y="0" width="32" height="21"/>
+				<reportElement stretchType="RelativeToBandHeight" x="698" y="10" width="32" height="20"/>
 				<box>
-					<topPen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
 					<bottomPen lineWidth="0.25"/>
 					<rightPen lineWidth="0.25"/>
 				</box>
@@ -1051,5 +1099,8 @@ where r.batchId = $P{batchId}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$V{kdFeeT}]]></textFieldExpression>
 			</textField>
 		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="232" splitType="Stretch"/>
 	</summary>
 </jasperReport>
