@@ -353,7 +353,7 @@
 		if(obj.bidDt != null && flag != '1'){
 			var bidDt = new Date(obj.bidDt);
 			//超过一周不能上传
-			var limitDate = new Date(bidDt.getFullYear(),bidDt.getMonth(),bidDt.getDay()+7);
+			var limitDate = new Date(bidDt.getFullYear(),bidDt.getMonth(),bidDt.getDate()+7);
 			var now = new Date();
 			if(now >= limitDate){
 				alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，请联系总经理上传）');
