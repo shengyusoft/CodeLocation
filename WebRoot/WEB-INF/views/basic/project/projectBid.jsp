@@ -67,6 +67,22 @@
 						field : 'projectName'
 					},
 					{
+						width : '100',
+						title : '状态',
+						sortable : true,
+						align : 'center',
+						field : 'state',
+						formatter : function(val){
+							if(val == 0){
+								return '正常上报';
+							}else if(val == 1){
+								return '<font color="red">过期申请上报</font>';
+							}else if(val == 2){
+								return '<font color="green">审批通过</font>';
+							}
+						}
+					},
+					{
 						width : '130',
 						title : '项目地点',
 						sortable : true,
@@ -294,18 +310,26 @@
 	function addFun() {
 		parent.$.modalDialog({
 			title : '项目中标登记',
-			width : 960,
+			width : 980,
 			height : 410,
 			href : '${ctx}/projectBid/addPage',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
-							.find('#projectBidAddForm');
+					parent.$.modalDialog.handler.find('#option').val(0);//直接保存
+					var f = parent.$.modalDialog.handler.find('#projectBidAddForm');
 					f.submit();
 				}
-			} ]
+			},{
+				text : '申请上传',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
+					parent.$.modalDialog.handler.find('#option').val(1);//过期申请
+					var f = parent.$.modalDialog.handler.find('#projectBidAddForm');
+					f.submit();
+				}
+			}]
 		});
 	}
 
@@ -347,22 +371,12 @@
 			parent.$.messager.alert('警告', '只能对一条记录编辑!');
 			return;
 		}
-		
-		var flag = '${flag}';//管理员或者总经理
-		var obj = rows[0];
-		if(obj.bidDt != null && flag != '1'){
-			var bidDt = new Date(obj.bidDt);
-			//超过一周不能上传
-			var limitDate = new Date(bidDt.getFullYear(),bidDt.getMonth(),bidDt.getDate()+7);
-			var now = new Date();
-			if(now >= limitDate){
-				alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，请联系总经理上传）');
-				return;
-			}
-		}
-
 		id = rows[0].id;
-
+		var state = rows[0].state;
+		if(state == 1){
+			alert('审核中,不能修改!');
+			return;
+		}
 		parent.$.modalDialog({
 			title : '项目中标登记编辑',
 			width : 980,
@@ -372,11 +386,58 @@
 				text : '编辑',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler
-							.find('#projectBidEditForm');
+					var f = parent.$.modalDialog.handler.find('#projectBidEditForm');
+					parent.$.modalDialog.handler.find('#option').val(0);//过期申请
+					f.submit();
+				}
+			},{
+				text : '申请上传',
+				id : 'bid_apply',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
+					parent.$.modalDialog.handler.find('#option').val(1);//过期申请
+					var f = parent.$.modalDialog.handler.find('#projectBidEditForm');
 					f.submit();
 				}
 			} ]
+		});
+	}
+	
+	function auditFun() {
+		var id = null;
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有可编辑对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能对一条记录编辑!');
+			return;
+		}
+		id = rows[0].id;
+		var state = rows[0].state;
+		if(state == 0){
+			alert('不是申请的数据，无需审核!');
+			return;
+		}else if(state == 2){
+			alert('已经审核!');
+			return;
+		}
+		parent.$.modalDialog({
+			title : '项目中标登记过期审核',
+			width : 980,
+			height : 410,
+			href : '${ctx}/projectBid/auditPage?id=' + id,
+			buttons : [ {
+				text : '同意上报',
+				handler : function() {
+					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+					var f = parent.$.modalDialog.handler.find('#projectBidEditForm');
+					parent.$.modalDialog.handler.find('#option').val(0);//过期申请
+					f.submit();
+				}
+			}]
 		});
 	}
 
@@ -468,6 +529,20 @@
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail_disabled'"><font
 					color="gray">详情</font> </a>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/projectBid/audit')}">
+				<a onclick="auditFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit'">过期审核 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
+					color="gray">过期审核</font> </a>
 			</c:otherwise>
 		</c:choose>
 		

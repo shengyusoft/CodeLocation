@@ -74,7 +74,7 @@
 					<td><input name="card_issuer" type="text" id="card_issuer"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2" /></td>
 					<th>持证人&nbsp;</th>
-					<td><input name="card_owner" style="width: 100%; height: 100%"
+					<td><input name="card_owner" style="width: 100%; height: 100%" validtype="NAME"
 						type="text" id="card_owner" class="easyui-validatebox span2" /></td>
 				</tr>
 

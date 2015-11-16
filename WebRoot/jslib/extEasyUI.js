@@ -328,6 +328,36 @@ $.extend($.fn.validatebox.defaults.rules, {
 	}
 });
 
+$.extend($.fn.validatebox.defaults.rules, {  
+    //验证汉字  
+    CHS: {  
+        validator: function (value) {  
+            return /^[\u0391-\uFFE5]+$/.test(value);  
+        },  
+        message: '必须输入中文'  
+    },  
+    NAME: {  
+    	validator: function (value) {  
+    		if(value.length < 2 || value.length >= 10){
+    			return false;
+    		}else{
+    			return true;
+    		}
+    	},  
+    	message: '人名长度在2-10字符之间'  
+    },  
+    ID_CARD: {  
+    	validator: function (value) {  
+    		//身份证正则表达式(15位)   
+    		var isIDCard1=/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;   
+    		//身份证正则表达式(18位)   
+    		var isIDCard2=/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/;
+    		return isIDCard1.test(value) || isIDCard2.test(value);  
+    	},  
+    	message: '身份证格式不正确'  
+    },  
+});
+
 // 扩展tree，使其可以获取实心节点
 $.extend($.fn.tree.methods, {
 	getCheckedExt : function(jq) {// 获取checked节点(包括实心)

@@ -475,7 +475,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="payee" style="width: 100%; height: 100%"
 						type="text" id="payee" class="easyui-validatebox span2"
-						data-options="required:true"
+						data-options="required:true" validtype="NAME"
 						value="${projectAppropriateReg.payee}" /></td>
 					<th>开户行&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -495,7 +495,7 @@
 				<tr>
 					<th>姓名 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactName"
+					<td><input name="contactName" validtype="NAME"
 						style="width: 100%; height: 100%" type="text" id="contactName"
 						class="easyui-validatebox span2" data-options="required:true"
 						value="${projectAppropriateReg.contactName}" /></td>
@@ -507,7 +507,7 @@
 						value="${projectAppropriateReg.contactTel}" /></td>
 					<th>身份证号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contactIdCard"
+					<td><input name="contactIdCard" validtype="ID_CARD"
 						style="width: 100%; height: 100%" type="text" id="contactIdCard"
 						class="easyui-validatebox span2" data-options="required:true"
 						value="${projectAppropriateReg.contactIdCard}" /></td>

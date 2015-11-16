@@ -377,8 +377,8 @@
 
 		parent.$.modalDialog({
 			title : title,
-			width : document.body.clientWidth*0.9,
-			height : 600,
+			width : 900,
+			height : 630,
 			resizable : true,
 			href : href,
 			buttons : buttons

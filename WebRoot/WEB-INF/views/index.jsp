@@ -180,6 +180,7 @@ a:hover {
 								<div id="index_remind" title="消息提醒<font color='red'>(${fn:length(certificates)})</font>"
 									data-options="iconCls:'icon_rms_msg_center'" style="padding: 10px; background: #FCFCFD">
 									<table id="remind">
+										<tr><td colspan="3"><label>证书过期提醒</label></td></tr>
 										<c:forEach items="${certificates}" var="d" varStatus="status">
 											<tr>
 												<td width="20px" class="icon_rms_notice_clos" />

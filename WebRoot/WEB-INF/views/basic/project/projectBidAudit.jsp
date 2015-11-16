@@ -5,32 +5,10 @@
 <script type="text/javascript">
 	$(function() {
 		$('#projectBidEditForm').form({
-			url : '${pageContext.request.contextPath}/projectBid/edit',
+			url : '${pageContext.request.contextPath}/projectBid/audit',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
-				//自定义验证
-				var state = '${projectBid.state}';
-				if(state == 0){
-					var option = $('#option').val();
-					var bidDt = new Date($('#bidDt').val());
-					var limitDate = new Date(bidDt.getFullYear(),bidDt.getMonth(),bidDt.getDate()+7);
-					var now = new Date();
-					if(option == 0){//save
-						//超过一周不能上传,只能申请上传
-						if(now >= limitDate){
-							alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）');
-							isValid = false;
-						}
-					}else{//apply
-						if(now < limitDate){
-							alert('项目报名时间没有过期，请点击添加!');
-							isValid = false;
-						}
-					}
-				}
-				
-				
 				if (!isValid) {
 					progressClose();
 				}
@@ -49,11 +27,6 @@
 			}
 		});
 	});
-	
-	var state = '${projectBid.state}';
-	if(state == 2){//审核通过的无需审核
-		$('#bid_apply').linkbutton('disable');
-	}
 	
 	$('#company').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
@@ -177,6 +150,8 @@
 	    value:'${projectBid.county.id}'
 	});
 	
+	disableForm('projectBidEditForm',true);
+	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -288,7 +263,7 @@
 
 					<th>施工负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="headman" type="text" id="headman" validtype="NAME"
+					<td><input name="headman" type="text" id="headman"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						value="${projectBid.headman}" data-options="required:true" /></td>
 					<th>联系方式 &nbsp;<label
@@ -298,7 +273,7 @@
 						value="${projectBid.tel}" class="easyui-validatebox span2" /></td>
 					<th>身份证号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="headmanIdCard" type="text" id="headmanIdCard" validtype="ID_CARD"
+					<td><input name="headmanIdCard" type="text" id="headmanIdCard"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						value="${projectBid.headmanIdCard}" data-options="required:true" /></td>
 				</tr>
@@ -313,7 +288,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="sender" type="text" id="sender" value="${projectBid.sender}"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
-						data-options="required:true" validtype="NAME" /></td>
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>

@@ -27,15 +27,13 @@
 		});
 	});
 
-	$('#company')
-			.combobox(
-					{
-						url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
-						parentField : 'dictionaryId',
-						valueField : 'id',
-						textField : 'text',
-						panelHeight : 'auto'
-					});
+	$('#company').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=company",
+		parentField : 'dictionaryId',
+		valueField : 'id',
+		textField : 'text',
+		panelHeight : 'auto'
+	});				
 
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
@@ -48,7 +46,6 @@
 
 	var d = new Date();
 	d = d.format('yyyy-MM-dd');
-	debugger;
 	$('#registDT').val(d);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
@@ -82,7 +79,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bidder" type="text" id="bidder"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+						data-options="required:true" validtype="NAME" /></td>
 					<th>联系方式 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="contract" style="width: 100%; height: 100%"

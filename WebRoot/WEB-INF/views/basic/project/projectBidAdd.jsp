@@ -8,9 +8,31 @@
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
+				
+				//自定义验证
+				var option = $('#option').val();
+				var bidDt = new Date($('#bidDt').val());
+				var limitDate = new Date(bidDt.getFullYear(),bidDt.getMonth(),bidDt.getDate()+7);
+				var now = new Date();
+				if(option == 0){//save
+					//超过一周不能上传,只能申请上传
+					if(now >= limitDate){
+						alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）');
+						isValid = false;
+					}
+				}else{//apply
+					if(now < limitDate){
+						alert('项目报名时间没有过期，请点击添加!');
+						isValid = false;
+					}else{
+						$('#bidDt').val('');
+					}
+				}
+				
 				if (!isValid) {
 					progressClose();
 				}
+				
 				return isValid;
 			},
 			success : function(result) {
@@ -139,9 +161,14 @@
 				<tr>
 					<th width="120px">公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="company" name="company.id" 
-						class="easyui-validatebox span2" data-options="editable:false,required:true" style="width: 180px;">
-					</select></td>
+						
+						
+					<td>
+						<input type="hidden" name="option" id="option" value="0"></input>
+						<select id="company" name="company.id" class="easyui-validatebox span2" 
+							data-options="editable:false,required:true" style="width: 180px;">
+						</select>
+					</td>
 					
 					<th width="120px">标段 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -181,7 +208,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="bidDt"
 						id="bidDt" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+						onfocus="showDate('yyyy-MM-dd')" /></td>
 						
 					<th>合同签订时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -233,7 +260,7 @@
 					
 					<th>施工负责人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="headman" type="text" id="headman"
+					<td><input name="headman" type="text" id="headman" validtype="NAME"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 					<th>联系方式 &nbsp;<label
@@ -244,7 +271,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td ><input name="headmanIdCard" type="text" id="headmanIdCard"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2" value="${projectBid.headmanIdCard}"
-						data-options="required:true" /></td>
+						data-options="required:true" validtype="ID_CARD" /></td>
 				</tr>
 				<tr>
 					<th>登记人&nbsp;<label
@@ -256,7 +283,7 @@
 					<th>发包人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="sender" type="text" id="sender"style="width: 100%; height: 100%" 
-						class="easyui-validatebox span2" data-options="required:true" /></td>
+						class="easyui-validatebox span2" validtype="NAME" data-options="required:true" /></td>
 				</tr>
 				
 				<tr>

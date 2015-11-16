@@ -157,7 +157,7 @@ input {
 				<tr>
 					<th>客户姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="customerName" value="${bidBond.customerName}"
+					<td><input name="customerName" value="${bidBond.customerName}" validtype="NAME"
 						type="text" id="customerName" style="width: 100%; height: 100%"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
 					<th width="100px">客户联系方式&nbsp;<label
@@ -168,7 +168,7 @@ input {
 					<th width="100px">转款人姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="payer" value="${bidBond.payer}" type="text"
-						id="payer" style="width: 100%; height: 100%"
+						id="payer" style="width: 100%; height: 100%" validtype="NAME"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
 				</tr>
 				<tr>

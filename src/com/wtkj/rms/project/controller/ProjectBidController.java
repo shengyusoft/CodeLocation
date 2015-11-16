@@ -77,6 +77,10 @@ public class ProjectBidController extends BaseController {
 	public Json add(ProjectBid vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
+			
+			if(vo.getOption() == 1){
+				vo.setState(1);
+			}
 			projectBidService.add(vo, request);
 			j.setSuccess(true);
 			j.setMsg("添加成功！");
@@ -127,9 +131,28 @@ public class ProjectBidController extends BaseController {
 	public Json edit(ProjectBid vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
+			if(vo.getOption() == 1){
+				vo.setState(1);
+			}
 			projectBidService.edit(vo, request);
 			j.setSuccess(true);
 			j.setMsg("编辑成功！");
+		} catch (Exception e) {
+			j.setMsg(e.getMessage());
+		}
+		return j;
+	}
+	
+	@RequestMapping("/audit")
+	@ResponseBody
+	public Json audit(ProjectBid vo, HttpServletRequest request) {
+		Json j = new Json();
+		try {
+			ProjectBid po = projectBidService.get(String.valueOf(vo.getId()));
+			po.setState(2);
+			projectBidService.edit(po, request);
+			j.setSuccess(true);
+			j.setMsg("审核成功！");
 		} catch (Exception e) {
 			j.setMsg(e.getMessage());
 		}
@@ -143,6 +166,15 @@ public class ProjectBidController extends BaseController {
 
 		return "/basic/project/projectBidDetail";
 
+	}
+	
+	@RequestMapping("/auditPage")
+	public String auditPage(HttpServletRequest request, String id) {
+		ProjectBid vo = projectBidService.get(id);
+		request.setAttribute("projectBid", vo);
+		
+		return "/basic/project/projectBidAudit";
+		
 	}
 
 }

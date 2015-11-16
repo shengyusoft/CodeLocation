@@ -85,7 +85,6 @@
 	});
 	
 	function calc(){
-		debugger;
 		var endMileage = parseInt(isEmpty($("#endMileage").val())?0:$("#endMileage").val());
 		var startingMileage = parseInt(isEmpty($("#startingMileage").val())?0:$("#startingMileage").val());
 		$("#drivingMileage").val(endMileage - startingMileage);
@@ -111,11 +110,12 @@
 						<c:if test="${carRentalReg.process_vo != null}">
 							<input type="hidden" name="process_vo.id"
 								value="${carRentalReg.process_vo.id}" />
-						</c:if> <!-- 动作类型 --> <input type="hidden" name="actionType"
-						id="actionType" value="" /> <input name="usedName"
-						value="${carRentalReg.usedName}" style="width: 100%;" type="text"
+						</c:if> 
+						<!-- 动作类型 --> 
+						<input type="hidden" name="actionType" id="actionType" value="" /> 
+						<input name="usedName" value="${carRentalReg.usedName}" style="width: 100%;" type="text"
 						id="usedName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+						data-options="required:true" validtype="NAME" /></td>
 
 					<th>用车时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -136,7 +136,7 @@
 					<th>车主&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="driver" value="${carRentalReg.driver}"
-						style="width: 100%;" type="text" id="driver"
+						style="width: 100%;" type="text" id="driver" validtype="NAME"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
 
 

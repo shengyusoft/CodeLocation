@@ -78,7 +78,7 @@
 					<th>持证人 &nbsp;</th>
 					<td><input name="card_owner" style="width: 100%; height: 100%"
 						value="${certificate.card_owner}" type="text" id="card_owner"
-						class="easyui-validatebox span2" /></td>
+						class="easyui-validatebox span2" validtype="NAME" /></td>
 				</tr>
 				<tr>
 					<th>证书类型&nbsp;<label

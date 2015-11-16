@@ -86,7 +86,7 @@
 						id="applyFee" style="width: 98%; height: 100%;"
 						data-options="required:true" /></td>
 					<th>收款人 &nbsp;</th>
-					<td><input name="payee"
+					<td><input name="payee" validtype="NAME"
 						value="${projectAppropriateAccount.payee}"
 						style="width: 100%; height: 100%" type="text" id="accountNum"
 						class="easyui-validatebox span2" data-options="required:true" /></td>

@@ -269,7 +269,7 @@
 				<tr>
 					<th>投标人姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="bidder" type="text" id="bidder"
+					<td><input name="bidder" type="text" id="bidder" validtype="NAME"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 					<th>联系方式 &nbsp;<label

@@ -84,7 +84,7 @@
 					<th>投标人姓名&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="bidder" value="${projectBookRegist.bidder}"
-						type="text" id="bidder" style="width: 100%; height: 100%"
+						type="text" id="bidder" style="width: 100%; height: 100%" validtype="NAME"
 						class="easyui-validatebox span2" data-options="required:true" /></td>
 					<th>联系方式 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>

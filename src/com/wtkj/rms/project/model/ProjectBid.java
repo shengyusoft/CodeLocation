@@ -71,6 +71,11 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	private Date durationEt;// 工期结束
 
+	// 0 正常情况 1 过期需要总经理审批
+	private int state = 0;
+
+	private int option;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id")
@@ -285,6 +290,23 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	public void setSignDt(Date signDt) {
 		this.signDt = signDt;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	@Transient
+	public int getOption() {
+		return option;
+	}
+
+	public void setOption(int option) {
+		this.option = option;
 	}
 
 }
