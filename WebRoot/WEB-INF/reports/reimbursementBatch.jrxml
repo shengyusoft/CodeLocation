@@ -90,7 +90,10 @@ where r.batchId = $P{batchId}]]>
 ($F{communicationFee}==null?0:$F{communicationFee})+
 ($F{trainFee}==null?0:$F{trainFee})+
 ($F{otherFee}==null?0:$F{otherFee})+
-($F{wyFee}==null?0:$F{wyFee})+($F{zzFee}==null?0:$F{zzFee})+($F{kdFee}==null?0:$F{kdFee})]]></variableExpression>
+($F{wyFee}==null?0:$F{wyFee})+
+($F{zzFee}==null?0:$F{zzFee})+
+($F{zsFee}==null?0:$F{zsFee})+
+($F{kdFee}==null?0:$F{kdFee})]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{totalFee}]]></initialValueExpression>
 	</variable>
 	<variable name="wyFeeT" class="java.lang.Double" calculation="Sum">
@@ -582,7 +585,10 @@ where r.batchId = $P{batchId}]]>
 ($F{communicationFee}==null?0:$F{communicationFee})+
 ($F{trainFee}==null?0:$F{trainFee})+
 ($F{otherFee}==null?0:$F{otherFee})+
-($F{wyFee}==null?0:$F{wyFee})+($F{zzFee}==null?0:$F{zzFee})+($F{kdFee}==null?0:$F{kdFee})]]></textFieldExpression>
+($F{wyFee}==null?0:$F{wyFee})+
+($F{zzFee}==null?0:$F{zzFee})+
+($F{zsFee}==null?0:$F{zsFee})+
+($F{kdFee}==null?0:$F{kdFee})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="496" y="0" width="32" height="42"/>

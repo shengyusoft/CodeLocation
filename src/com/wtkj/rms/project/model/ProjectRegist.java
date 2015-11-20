@@ -107,6 +107,11 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	private String ysbz;// 预算编制
 
+	private int option;
+
+	// 超期状态
+	private int state = 0;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id")
@@ -510,6 +515,23 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 
 	public void setYsbz(String ysbz) {
 		this.ysbz = ysbz;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	@Transient
+	public int getOption() {
+		return option;
+	}
+
+	public void setOption(int option) {
+		this.option = option;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.wtkj.rms.reimbursement.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -191,13 +192,26 @@ public class ReimbursementBatchController extends BaseController {
 	}
 
 	// 提交报账时
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "deprecation" })
 	@RequestMapping("/commit")
 	@ResponseBody
 	public Json commit(ReimbursementBatch reimbursementBatch,
 			HttpServletRequest request) {
 		Json j = new Json();
 		try {
+			//验证每月1-7号提交上月的报销单
+			//申请报销的月份
+			Date applyMonth = reimbursementBatch.getMonth();
+			//上个月今天
+			Date now = new Date();
+			Date lastMonth = DateUtil.dateAdd(now, Calendar.MONTH, -1);
+			if(now.getDate() > 7 || (lastMonth.getMonth() != applyMonth.getMonth())){
+				j.setSuccess(false);
+				j.setObj(reimbursementBatch);
+				j.setMsg("注：每月1-7号提交上月的报销单！");
+				return j;
+			}
+			
 			Long userId = getSessionInfo(request).getId();
 			User user = userService.get(userId);
 			Tuser tuser = new Tuser();
@@ -354,6 +368,19 @@ public class ReimbursementBatchController extends BaseController {
 					convert2Vo(ReimbursementBatch));
 		}
 		return "/basic/reimbursementBatch/reimbursementBatchEdit";
+	}
+	
+	@RequestMapping("/auditPage")
+	public String auditPage(HttpServletRequest request, Long id) {
+		ReimbursementBatch ReimbursementBatch = reimbursementBatchService
+				.get(id);
+		
+		if (ReimbursementBatch != null) {
+			request.setAttribute("reimbursementBatch",
+					convert2Vo(ReimbursementBatch));
+		}
+		
+		return "/basic/reimbursementBatch/reimbursementBatchAudit";
 	}
 
 	@RequestMapping("/edit")

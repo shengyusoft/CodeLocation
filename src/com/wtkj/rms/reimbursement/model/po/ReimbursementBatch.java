@@ -40,6 +40,9 @@ public class ReimbursementBatch extends IdEntity implements Serializable {
 
 	private int option;
 
+	// 过期申请的话锁住该申请
+	private int locked = 0;
+
 	// @NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "process_id")
@@ -82,6 +85,14 @@ public class ReimbursementBatch extends IdEntity implements Serializable {
 
 	public void setOption(int option) {
 		this.option = option;
+	}
+
+	public int getLocked() {
+		return locked;
+	}
+
+	public void setLocked(int locked) {
+		this.locked = locked;
 	}
 
 }

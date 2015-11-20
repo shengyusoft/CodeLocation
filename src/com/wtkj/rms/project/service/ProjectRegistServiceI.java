@@ -19,6 +19,8 @@ public interface ProjectRegistServiceI {
 	public void add(ProjectRegist p, HttpServletRequest request);
 
 	public void edit(ProjectRegist p, HttpServletRequest request);
+	
+	public void audit(ProjectRegist p, HttpServletRequest request);
 
 	public void delete(String ids);
 }

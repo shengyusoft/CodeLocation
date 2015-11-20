@@ -92,7 +92,12 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 	@Override
 	public void edit(ProjectRegist p, HttpServletRequest request) {
-		p.setRegistDT(new Date());
+		if(p.getRegistDT() != null){
+			p.setRegistDT(p.getRegistDT());
+		}
+		if(p.getCreateDT() != null){
+			p.setCreateDT(p.getCreateDT());
+		}
 		p.setProjectMgr(dictionaryDao.get(Tdictionary.class, p.getProjectMgr()
 				.getId()));
 		p.setTechniqueMgr(dictionaryDao.get(Tdictionary.class, p
@@ -117,6 +122,12 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 		// 投标费用明细
 		p.setTotalFee(calTotal(p));
 		projectRegistDao.update(p);
+	}
+	@Override
+	public void audit(ProjectRegist p, HttpServletRequest request) {
+		ProjectRegist po = projectRegistDao.get(ProjectRegist.class, p.getId());
+		po.setState(2);
+		projectRegistDao.update(po);
 	}
 
 	@Override

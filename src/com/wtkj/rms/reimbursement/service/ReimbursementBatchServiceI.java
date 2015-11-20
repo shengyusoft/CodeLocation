@@ -20,7 +20,7 @@ public interface ReimbursementBatchServiceI {
 	public Long add(ReimbursementBatch ReimbursementBatch, HttpServletRequest request);
 
 	public void edit(ReimbursementBatch ReimbursementBatch, HttpServletRequest request);
-
+	
 	public void delete(Long id);
 
 	public void delete(String ids);

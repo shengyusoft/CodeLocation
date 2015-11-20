@@ -79,6 +79,8 @@ public class ProjectRegistVo implements java.io.Serializable {
 	// 0项目登记 1项目开标登记
 	private int type;
 
+	private int option;
+
 	private Date st;
 	private Date et;
 
@@ -86,6 +88,8 @@ public class ProjectRegistVo implements java.io.Serializable {
 	private String bsbz;// 标书编制
 
 	private String ysbz;// 预算编制
+
+	private int state = 0;
 
 	public Long getId() {
 		return id;
@@ -453,6 +457,22 @@ public class ProjectRegistVo implements java.io.Serializable {
 
 	public void setYsbz(String ysbz) {
 		this.ysbz = ysbz;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public int getOption() {
+		return option;
+	}
+
+	public void setOption(int option) {
+		this.option = option;
 	}
 
 }

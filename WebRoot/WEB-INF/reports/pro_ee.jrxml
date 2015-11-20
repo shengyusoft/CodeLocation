@@ -384,7 +384,7 @@
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{bidDT}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="647" y="37" width="65" height="36"/>
 				<box>
 					<topPen lineWidth="0.25"/>
@@ -395,7 +395,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{contractDuration}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{contractDuration}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="116" y="74" width="49" height="37"/>
