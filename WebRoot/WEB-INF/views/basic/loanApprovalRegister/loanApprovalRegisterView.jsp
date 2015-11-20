@@ -117,7 +117,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
 					<td><input name="loan" id="loan" type="text"
-						style="width: 100%;" class="easyui-validatebox span2"
+						style="width: 100%;" class="easyui-validatebox span2"  validtype="NAME"
 						value="${loanApprovalRegister.loan}" data-options="required:true" />
 					</td>
 					<th>借款日期 &nbsp;<label

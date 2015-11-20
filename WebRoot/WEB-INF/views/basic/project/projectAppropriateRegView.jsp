@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <script type="text/javascript"
 	src="${ctx}/jslib/easyui1.3.3/plugins/datagrid-statistics.js"
@@ -448,11 +449,13 @@
 				<tr>
 					<th>合同工期（天） &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="contractDuration"
+					<td>
+					<fmt:parseNumber var="contractDuration" integerOnly="true" type="number" value="${projectAppropriateReg.contractDuration}" />
+					<input name="contractDuration"
 						style="width: 100%; height: 100%" type="number"
 						id="contractDuration" class="easyui-validatebox span2"
-						data-options="required:true"
-						value="${projectAppropriateReg.contractDuration}" /></td>
+						data-options="required:true" precision="0"
+						value="${contractDuration}" /></td>
 					<th>管理费比例（%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="managerFeeRate"

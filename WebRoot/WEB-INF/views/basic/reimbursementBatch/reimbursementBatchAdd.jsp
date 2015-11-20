@@ -16,7 +16,6 @@
 			url : '${pageContext.request.contextPath}/reimbursementBatch/apply',
 			onSubmit : function() {
 				progressLoad();
-				debugger;
 				var isValid = $(this).form('validate');
 				if (!isValid) {
 					progressClose();

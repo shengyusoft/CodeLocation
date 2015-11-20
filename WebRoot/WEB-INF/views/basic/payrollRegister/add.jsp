@@ -41,7 +41,7 @@
 						姓名 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
 					<td>
-						<input name="name" id="name" type="text" style="width: 100%;"  
+						<input name="name" id="name" type="text" style="width: 100%;"  validtype="NAME" 
 							 class="easyui-validatebox span2" data-options="required:true" />
 					</td>
 					<th>

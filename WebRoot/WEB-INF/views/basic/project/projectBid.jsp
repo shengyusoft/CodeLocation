@@ -93,12 +93,10 @@
 							if(row == null || isEmpty(row.id)){
 								return '';
 							}
-							if (!isEmpty(row.county)
-									&& !isEmpty(row.county.description)) {
+							if (!isEmpty(row.county)&& !isEmpty(row.county.description)) {
 								place = row.county.description;
 							} else {
-								place = row.provice + row.city
-										+ row.county;
+								place = row.provice + row.city+ row.county;
 							}
 							return place;
 						}
@@ -116,8 +114,7 @@
 						align : 'center',
 						field : 'projectMgr',
 						formatter : function(value, row, index) {
-							return isEmpty(value) ? ''
-									: value.text;
+							return isEmpty(value) ? '': value.text;
 						}
 					},
 					{
@@ -127,15 +124,8 @@
 						align : 'center',
 						field : 'techniqueMgr',
 						formatter : function(value, row, index) {
-							return isEmpty(value) ? ''
-									: value.text;
+							return isEmpty(value) ? '': value.text;
 						}
-					}, {
-						width : '85',
-						title : '工期结束时间',
-						align : 'center',
-						field : 'duration',
-						formatter : Common.formatter
 					}, {
 						width : '75',
 						title : '中标时间',
@@ -144,33 +134,82 @@
 						field : 'bidDt',
 						formatter : Common.formatter
 					}, {
+						width : '85',
+						title : '合同签订时间',
+						align : 'center',
+						field : 'signDt',
+						formatter : Common.formatter
+					}, {
+						width : '85',
+						title : '工期结束时间',
+						align : 'center',
+						field : 'duration',
+						formatter : Common.formatter
+					}, {
 						width : '120',
 						title : '中标价(元)',
 						sum : true,
 						align : 'center',
-						field : 'bid_cost'
+						field : 'bid_cost',
+						formatter : function(val,row,index){
+							debugger;
+							if(row != null && row.state == 1){
+								return '';
+							}else{
+								return val;
+							}
+						}
 					}, {
 						width : '90',
 						title : '管理费比例(%)',
 						align : 'center',
-						field : 'manageFeeRate'
+						field : 'manageFeeRate',
+						formatter : function(val,row,index){
+							if(row != null && row.state == 1){
+								return '';
+							}else{
+								return val;
+							}
+							
+						}
 					}, {
 						width : '100',
 						title : '管理费(元)',
 						align : 'center',
-						field : 'manageFee'
+						field : 'manageFee',
+						formatter : function(val,row,index){
+							if(row != null && row.state == 1){
+								return '';
+							}else{
+								return val;
+							}
+						}
 					}, {
 						width : '75',
 						title : '施工负责人',
 						sortable : true,
 						align : 'center',
-						field : 'headman'
+						field : 'headman',
+						formatter : function(val,row,index){
+							if(row != null && row.state == 1){
+								return '';
+							}else{
+								return val;
+							}
+						}
 					}, {
 						width : '95',
 						title : '联系电话',
 						sortable : true,
 						align : 'center',
-						field : 'tel'
+						field : 'tel',
+						formatter : function(val,row,index){
+							if(row != null && row.state == 1){
+								return '';
+							}else{
+								return val;
+							}
+						}
 					}, {
 						width : '50',
 						title : '登记人',

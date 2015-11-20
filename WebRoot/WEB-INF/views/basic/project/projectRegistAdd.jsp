@@ -25,6 +25,28 @@
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
+				//自定义验证
+				var state = '${projectRegist.state}';
+				if(state == 0){
+					var option = $('#option').val();
+					var registDT = new Date($('#registDT').val());
+					var limitDate = new Date(registDT.getFullYear(),registDT.getMonth(),registDT.getDate()+7);
+					var now = new Date();
+					if(option == 0){//save
+						//超过一周不能上传,只能申请上传
+						if(now >= limitDate){
+							alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）');
+							isValid = false;
+						}
+					}else{//apply
+						if(now < limitDate){
+							alert('项目报名时间没有过期，请点击添加!');
+							isValid = false;
+						}else{
+							$('#registDT').val('');
+						}
+					}
+				}
 				if (!isValid) {
 					progressClose();
 				}
@@ -167,13 +189,6 @@
 		}
 	});
 	
-	function showDate() {
-		WdatePicker({
-			dateFmt : 'yyyy-MM-dd',
-			minDate:'%y-%M-%d'
-		});
-	}
-
 	$('#city').combobox({
 		valueField : 'id', //值字段
 		textField : 'text', //显示的字段
@@ -204,7 +219,9 @@
 							<tr>
 								<th width="91px">公司名称 &nbsp;<label
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-								<td width="155px"><input type="hidden" name="type" id="type" value="0"></input>
+								<td width="155px">
+									<input type="hidden" name="type" id="type" value="0"></input>
+									<input type="hidden" name="option" id="option" value="0"></input>
 									<select id="company" name="company.id"
 									data-options="required:true" class="easyui-validatebox span2"
 									style="width: 150px;">
@@ -294,7 +311,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="registDT"
 						id="registDT" style="width: 98%; height: 100%;"
-						data-options="required:true" onfocus="showDate()" /></td>
+						onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

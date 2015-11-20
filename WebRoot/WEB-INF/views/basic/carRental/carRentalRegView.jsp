@@ -85,11 +85,11 @@
 	});
 	
 	function calc(){
-		var endMileage = parseInt(isEmpty($("#endMileage").val())?0:$("#endMileage").val());
-		var startingMileage = parseInt(isEmpty($("#startingMileage").val())?0:$("#startingMileage").val());
+		var endMileage = parseFloat(isEmpty($("#endMileage").val())?0:$("#endMileage").val());
+		var startingMileage = parseFloat(isEmpty($("#startingMileage").val())?0:$("#startingMileage").val());
 		$("#drivingMileage").val(endMileage - startingMileage);
-		$("#carCost").val(parseInt(isEmpty($("#unitPrice").val())?0:$("#unitPrice").val()) * parseInt($("#drivingMileage").val()));
-		$("#totalCost").val(parseInt(isEmpty($("#tolls").val())?0:$("#tolls").val()) + parseInt($("#carCost").val()==null?0:$("#carCost").val()));
+		$("#carCost").val(parseFloat(isEmpty($("#unitPrice").val())?0:$("#unitPrice").val()) * parseFloat($("#drivingMileage").val()));
+		$("#totalCost").val(parseFloat(isEmpty($("#tolls").val())?0:$("#tolls").val()) + parseFloat($("#carCost").val()==null?0:$("#carCost").val()));
 	}
 	
 </script>
@@ -100,7 +100,7 @@
 		<form id="carRentalRegEditForm" method="post">
 			<table class="grid">
 				<tr>
-					<td colspan="6"><label style="font-weight: bold; color: red;">说明：1、因工作需要租车，必须经公司综合部经理批准备案。2、租车期间的所有安全责任由车主承担，与公司无关</label>
+					<td colspan="6"><label style="font-weight: bold; color: red;">说明：1、因工作需要租车，必须经公司综合部经理批准备案。2、租车期间的所有安全责任由车主承担，与公司无关。</label>
 					</td>
 				</tr>
 				<tr>
@@ -164,9 +164,9 @@
 
 					<th>行驶里程&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="drivingMileage"
+					<td><input name="drivingMileage" readonly="readonly"
 						value="${carRentalReg.drivingMileage}" style="width: 100%;"
-						type="text" id="drivingMileage" class="easyui-numberbox"
+						type="text" id="drivingMileage" class="disabled"
 						precision="2" min="0" data-options="required:true" /></td>
 				</tr>
 				<tr>
@@ -180,8 +180,8 @@
 					<th>合价(元)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="carCost" value="${carRentalReg.carCost}"
-						style="width: 100%;" type="text" id="carCost"
-						class="easyui-numberbox" precision="2" min="0"
+						style="width: 100%;" type="text" id="carCost" readonly="readonly"
+						class="disabled" precision="2" min="0"
 						data-options="required:true" /></td>
 				</tr>
 				<tr>
@@ -195,8 +195,8 @@
 					<th>总计(元)&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="totalCost" value="${carRentalReg.totalCost}"
-						style="width: 100%;" type="text" id="totalCost"
-						class="easyui-numberbox" precision="2" min="0"
+						style="width: 100%;" type="text" id="totalCost" readonly="readonly"
+						class="disabled" precision="2" min="0"
 						data-options="required:true" /></td>
 				</tr>
 			</table>

@@ -143,7 +143,7 @@
 					</th>
 					<td width="320px">
 						<input name="contactPerson" id="contactPerson" type="text" style="width: 100%;"  
-							 class="easyui-validatebox span2" data-options="required:true" />
+							 class="easyui-validatebox span2" data-options="required:true"  validtype="NAME" />
 					</td>
 					<th>
 						联系方式  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>

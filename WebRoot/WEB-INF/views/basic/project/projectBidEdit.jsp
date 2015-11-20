@@ -14,18 +14,28 @@
 				if(state == 0){
 					var option = $('#option').val();
 					var bidDt = new Date($('#bidDt').val());
+					var signDt = new Date($('#signDt').val());
+					var duration = new Date($('#duration').val());
 					var limitDate = new Date(bidDt.getFullYear(),bidDt.getMonth(),bidDt.getDate()+7);
+					var limitDate2 = new Date(signDt.getFullYear(),signDt.getMonth(),signDt.getDate()+7);
+					var limitDate3 = new Date(duration.getFullYear(),duration.getMonth(),duration.getDate()+7);
 					var now = new Date();
 					if(option == 0){//save
 						//超过一周不能上传,只能申请上传
-						if(now >= limitDate){
+						if(now >= limitDate || now > limitDate2 || now > limitDate3){
 							alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）');
 							isValid = false;
 						}
 					}else{//apply
-						if(now < limitDate){
-							alert('项目报名时间没有过期，请点击添加!');
+						if(now < limitDate && now < limitDate2 && now < limitDate3 ){
+							alert('项目中标时间没有过期，请点击添加!');
 							isValid = false;
+						}else if(now >= limitDate){
+							$('#bidDt').val('${projectBid.bidDt}');
+						}else if(now >= limitDate2){
+							$('#signDt').val('${projectBid.signDt}');
+						}else if(now >= limitDate3){
+							$('#duration').val('${projectBid.duration}');
 						}
 					}
 				}
@@ -240,15 +250,15 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="signDt" id="signDt" style="width: 98%; height: 100%;"
 						value="<fmt:formatDate value="${projectBid.signDt}" pattern="yyyy-MM-dd"/>"
-						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
+						onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>
 					<th>工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text"
-						name="duration" value="${projectBid.duration}" id="duration"
-						style="width: 98%; height: 100%;" data-options="required:true"
-						onfocus="showDate('yyyy-MM-dd')" /></td>
+					<td>
+						<input class="Wdate" type="text" name="duration" value="${projectBid.duration}" id="duration"
+						style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
+					</td>
 						
 					<th>管理费比例（%）&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>

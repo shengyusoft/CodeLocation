@@ -22,32 +22,10 @@
 <script type="text/javascript">
 	$(function() {
 		$('#projectRegistEditForm').form({
-			url : '${pageContext.request.contextPath}/projectRegist/edit',
+			url : '${pageContext.request.contextPath}/projectRegist/audit',
 			onSubmit : function() {
 				progressLoad();
 				var isValid = $(this).form('validate');
-				//自定义验证
-				var state = '${projectRegist.state}';
-				if(state == 0){
-					var option = $('#option').val();
-					var registDT = new Date($('#registDT').val());
-					var limitDate = new Date(registDT.getFullYear(),registDT.getMonth(),registDT.getDate()+7);
-					var now = new Date();
-					if(option == 0){//save
-						//超过一周不能上传,只能申请上传
-						if(now >= limitDate){
-							alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）');
-							isValid = false;
-						}
-					}else{//apply
-						if(now < limitDate){
-							alert('项目报名时间没有过期，请点击添加!');
-							isValid = false;
-						}else{
-							$('#registDT').val('${projectRegist.registDT}');
-						}
-					}
-				}
 				if (!isValid) {
 					progressClose();
 				}
@@ -237,6 +215,14 @@
 	    value:'${projectRegist.county.id}'
 	});
 	
+	function showDate() {
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			minDate:'${projectRegist.createDT}'
+		});
+	}
+	
+	disableForm('projectRegistEditForm',true);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -251,7 +237,6 @@
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 								<td width="155px">
 									<input type="hidden" name="option" id="option" value="0"></input> 
-									<input type="hidden" name="createDT" id="createDT" value="${projectRegist.createDT}"></input> 
 									<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input> 
 									<input type="hidden" name="type" id="type" value="${projectRegist.type}"></input> 
 									<select id="company" name="company.id" data-options="required:true"
@@ -346,7 +331,7 @@
 					<td><input class="Wdate" type="text" name="registDT"
 						value="<fmt:formatDate value="${projectRegist.registDT}" pattern="yyyy-MM-dd"/>"
 						id="registDT" style="width: 98%; height: 100%;"
-						onfocus="showDate('yyyy-MM-dd')" /></td>
+						data-options="required:true" onfocus="showDate()" /></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

@@ -37,6 +37,15 @@
 		textField : 'text',
 		panelHeight : '300'				
 	});
+	
+	$('#card_type').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=zslx",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		value : '${certificate.card_type}',
+		textField : 'text',
+		panelHeight : '240'				
+	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -83,20 +92,11 @@
 				<tr>
 					<th>证书类型&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><select id="card_type" name="card_type" style="width: 100%;height: 100%""
-							class="easyui-validatebox span2" 
-							data-options="required:true">
-							<option value="A证">A证</option>
-    						<option value="B证">B证</option>
-    						<option value="C证">C证</option>
-    						<option value="五大员证">五大员证</option>
-    						<option value="建造师注册证">建造师注册证</option>
-    						<option value="建造师执业资格证">建造师执业资格证</option>
-    						<option value="职称证">职称证</option>
-    						<option value="公司五大证">公司五大证</option>
-    						<option value="安全生产考核合格证">安全生产考核合格证</option>
-    						<option value="其他">其他</option>
-						</select></td>
+					<td>
+						<select id="card_type" name="card_type" class="easyui-validatebox span2" 
+							style="width: 180px;" data-options="required:true">
+						</select>
+					</td>
 					<th>所属公司 &nbsp;</th>
 					<td><input name="card_level" style="width: 100%; height: 100%"
 						value="${certificate.card_level}" type="text" id="card_level"
