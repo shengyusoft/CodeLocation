@@ -73,6 +73,9 @@ public class ProjectRegistController extends BaseController {
 	public Json add(ProjectRegist vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
+			if(vo.getOption() == 1){
+				vo.setState(1);
+			}
 			projectRegistService.add(vo, request);
 			j.setSuccess(true);
 			j.setMsg("添加成功！");
@@ -125,6 +128,9 @@ public class ProjectRegistController extends BaseController {
 	public Json edit(ProjectRegist vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
+			if(vo.getOption() == 1){
+				vo.setState(1);
+			}
 			projectRegistService.edit(vo, request);
 			j.setSuccess(true);
 			j.setMsg("编辑成功！");
@@ -146,4 +152,46 @@ public class ProjectRegistController extends BaseController {
 		}
 	}
 
+	/**
+	 * 过期审核
+	 * 
+	 * @param vo
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/audit")
+	@ResponseBody
+	public Json audit(ProjectRegist po, HttpServletRequest request) {
+		Json j = new Json();
+		try {
+			if (po.getId() != null && po.getId() > 0) {
+				projectRegistService.audit(po, request);
+			}
+			j.setSuccess(true);
+			j.setMsg("审核成功！");
+		} catch (Exception e) {
+			j.setMsg(e.getMessage());
+		}
+		return j;
+	}
+
+	/**
+	 * 过期审核page
+	 * 
+	 * @param vo
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/auditPage")
+	public String auditPage(HttpServletRequest request, String id) {
+		ProjectRegistVo vo = projectRegistService.get(Long.valueOf(id));
+		request.setAttribute("projectRegist", vo);
+		if (vo.getType() == 0) {
+			return "/basic/project/projectRegistAudit";
+		} else if (vo.getType() == 1) {
+			return "/basic/project/projectBidRegistAudit";
+		} else {
+			return "error.jsp";
+		}
+	}
 }
