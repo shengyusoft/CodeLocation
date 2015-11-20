@@ -84,6 +84,7 @@ where r.batchId = $P{batchId}]]>
 	</variable>
 	<variable name="totalFeeT" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[($F{trafficFee}==null?0:$F{trafficFee})+
+($F{mealFee}==null?0:$F{mealFee})+
 ($F{officeFee}==null?0:$F{officeFee})+
 ($F{receiveFee}==null?0:$F{receiveFee})+
 ($F{badgeFee}==null?0:$F{badgeFee})+
