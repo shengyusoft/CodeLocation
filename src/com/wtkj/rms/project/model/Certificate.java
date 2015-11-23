@@ -1,6 +1,7 @@
 package com.wtkj.rms.project.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -26,8 +27,8 @@ public class Certificate extends IdEntity implements Serializable {
 
 	private String card_code;
 	private String card_name;
-	private String card_getdate;
-	private String card_enddate;
+	private Date card_getdate;
+	private Date card_enddate;
 	private String card_issuer;
 	private String card_owner;
 	private String card_owner_id;
@@ -52,22 +53,6 @@ public class Certificate extends IdEntity implements Serializable {
 
 	public void setCard_name(String card_name) {
 		this.card_name = card_name;
-	}
-
-	public String getCard_getdate() {
-		return card_getdate;
-	}
-
-	public void setCard_getdate(String card_getdate) {
-		this.card_getdate = card_getdate;
-	}
-
-	public String getCard_enddate() {
-		return card_enddate;
-	}
-
-	public void setCard_enddate(String card_enddate) {
-		this.card_enddate = card_enddate;
 	}
 
 	public String getCard_issuer() {
@@ -132,6 +117,22 @@ public class Certificate extends IdEntity implements Serializable {
 
 	public void setAttachmentIds(String attachmentIds) {
 		this.attachmentIds = attachmentIds;
+	}
+
+	public Date getCard_getdate() {
+		return card_getdate;
+	}
+
+	public void setCard_getdate(Date card_getdate) {
+		this.card_getdate = card_getdate;
+	}
+
+	public Date getCard_enddate() {
+		return card_enddate;
+	}
+
+	public void setCard_enddate(Date card_enddate) {
+		this.card_enddate = card_enddate;
 	}
 
 }

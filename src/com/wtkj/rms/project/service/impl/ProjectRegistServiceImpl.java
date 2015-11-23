@@ -73,21 +73,12 @@ public class ProjectRegistServiceImpl implements ProjectRegistServiceI {
 
 	@Override
 	public void delete(String ids) {
-		String sqlids = "";
-		if (!StringUtils.isEmpty(ids) && ids.length() > 0) {
-			String[] idArray = ids.split(",");
-			if (idArray.length == 1) {
-				sqlids = "'" + idArray[0] + "'";
-			} else {
-				for (int i = 0; i < idArray.length; i++) {
-					String id = idArray[i];
-					sqlids += i == idArray.length ? ("'" + id + "'") : ("'"
-							+ id + "',");
-				}
-			}
+		String sql = "delete from ProjectRegist where id in (" + ids + ")";
+		try {
+			projectRegistDao.executeSql(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		String sql = "delete from ProjectRegist where id in (" + sqlids + ")";
-		projectRegistDao.executeSql(sql);
 	}
 
 	@Override

@@ -73,7 +73,7 @@ public class ProjectRegistController extends BaseController {
 	public Json add(ProjectRegist vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			if(vo.getOption() == 1){
+			if (vo.getOption() == 1) {
 				vo.setState(1);
 			}
 			projectRegistService.add(vo, request);
@@ -128,7 +128,7 @@ public class ProjectRegistController extends BaseController {
 	public Json edit(ProjectRegist vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			if(vo.getOption() == 1){
+			if (vo.getOption() == 1) {
 				vo.setState(1);
 			}
 			projectRegistService.edit(vo, request);
