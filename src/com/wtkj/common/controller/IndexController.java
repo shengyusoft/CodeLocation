@@ -238,16 +238,23 @@ public class IndexController extends BaseController {
 			j.setMsg("试用期已到,请联系开发人员（18326145167）");
 			return j;
 		}
+		
 		// validate login
-		/*
-		 * String vcode = session.getAttribute("randCode").toString();
-		 * 
-		 * if (vcode == null) { j.setSuccess(false); j.setMsg("验证码过期"); return
-		 * j; } if (vercode == null || vercode.equals("")) {
-		 * j.setSuccess(false); j.setMsg("验证码不能为空"); return j; } else if
-		 * (!vercode.equals(vcode)) { j.setSuccess(false); j.setMsg("验证码输入错误");
-		 * return j; }
-		 */
+		String vcode = session.getAttribute("randCode").toString();
+		if (vcode == null) {
+			j.setSuccess(false);
+			j.setMsg("验证码过期");
+			return j;
+		}
+		if (vercode == null || vercode.equals("")) {
+			j.setSuccess(false);
+			j.setMsg("验证码不能为空");
+			return j;
+		} else if (!vercode.equals(vcode)) {
+			j.setSuccess(false);
+			j.setMsg("验证码输入错误");
+			return j;
+		}
 
 		User sysuser = userService.login(user);
 		if (sysuser != null) {
