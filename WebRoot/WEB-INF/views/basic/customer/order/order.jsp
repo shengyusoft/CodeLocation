@@ -109,7 +109,7 @@
 			queryParams['customer.companyName'] = name;
 		}
 		//重新加载datagrid的数据  
-		$("#dataGrid").datagrid('reload');
+		reloadGrid($("#dataGrid"));
 	}
 
 	function clearFun() {
