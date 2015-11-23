@@ -345,7 +345,7 @@ $P!{whereSql}]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{recordman}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="493" y="0" width="75" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
@@ -371,7 +371,7 @@ $P!{whereSql}]]>
 				</textElement>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{duration}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="614" y="0" width="46" height="20"/>
 				<box>
 					<topPen lineWidth="0.25"/>
@@ -382,7 +382,7 @@ $P!{whereSql}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{manageFee}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Number"><![CDATA[$F{manageFee}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="660" y="0" width="46" height="20"/>
@@ -558,7 +558,7 @@ $P!{whereSql}]]>
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="614" y="1" width="46" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -568,7 +568,7 @@ $P!{whereSql}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{mangerFeeT}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{mangerFeeT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="660" y="1" width="142" height="20"/>
@@ -581,7 +581,7 @@ $P!{whereSql}]]>
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="493" y="1" width="75" height="20"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -591,7 +591,7 @@ $P!{whereSql}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{bidFeeT}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{bidFeeT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="1" width="42" height="20"/>

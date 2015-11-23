@@ -339,6 +339,24 @@ function newDateAndTime(dateStr) {
 	return r;
 }
 
+
+//设置默认显示第一页
+function setFirstPage(dataGrid) {
+	var opts = dataGrid.datagrid('options');
+	var pager = dataGrid.datagrid('getPager');
+	opts.pageNumber = 1;
+	opts.pageSize = opts.pageSize;
+	pager.pagination('refresh', {
+		pageNumber : 1,
+		pageSize : opts.pageSize
+	});
+}
+
+function reloadGrid(dg){
+	setFirstPage(dg);
+	dg.datagrid('reload');
+}
+
 // html编辑器,fix bug,第二次进入编辑器时,必须全屏然后才可以获取焦点
 function initKingEditor(editor) {
 	editor = KindEditor.create('#html', {

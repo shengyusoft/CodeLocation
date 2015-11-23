@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="payroll_register" language="groovy" pageWidth="1300" pageHeight="337" orientation="Landscape" columnWidth="1260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0000000000000069"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="251"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="sDate" class="java.util.Date"/>
 	<parameter name="eDate" class="java.util.Date"/>
@@ -43,6 +43,45 @@ FROM
 	<field name="实发工资" class="java.math.BigDecimal"/>
 	<field name="备注" class="java.lang.String"/>
 	<field name="合计" class="java.math.BigDecimal"/>
+	<variable name="t1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{基本工资}]]></variableExpression>
+	</variable>
+	<variable name="t2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{工龄工资}]]></variableExpression>
+	</variable>
+	<variable name="t3" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{绩效提成}]]></variableExpression>
+	</variable>
+	<variable name="t4" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{养老保险}]]></variableExpression>
+	</variable>
+	<variable name="t5" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{工伤保险}]]></variableExpression>
+	</variable>
+	<variable name="t6" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{医疗保险}]]></variableExpression>
+	</variable>
+	<variable name="t7" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{失业保险}]]></variableExpression>
+	</variable>
+	<variable name="t8" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{住房公积金}]]></variableExpression>
+	</variable>
+	<variable name="t9" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{其他}]]></variableExpression>
+	</variable>
+	<variable name="t10" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{应发工资合计}]]></variableExpression>
+	</variable>
+	<variable name="t11" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{代缴代扣}]]></variableExpression>
+	</variable>
+	<variable name="t12" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{罚款}]]></variableExpression>
+	</variable>
+	<variable name="t13" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{实发工资}]]></variableExpression>
+	</variable>
 	<title>
 		<band height="50" splitType="Stretch">
 			<staticText>
@@ -528,7 +567,7 @@ FROM
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="32">
+		<band height="31">
 			<staticText>
 				<reportElement x="0" y="0" width="104" height="31"/>
 				<box>
@@ -542,58 +581,58 @@ FROM
 				</textElement>
 				<text><![CDATA[合计]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement x="104" y="0" width="66" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t1}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="448" y="0" width="65" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t6}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="585" y="0" width="80" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t8}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="725" y="0" width="86" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t10}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="1037" y="0" width="81" height="31"/>
 				<box>
@@ -607,58 +646,58 @@ FROM
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement x="170" y="0" width="66" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t2}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="385" y="0" width="63" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t5}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="884" y="0" width="70" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t12}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="811" y="0" width="73" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t11}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="1118" y="0" width="104" height="31"/>
 				<box>
@@ -672,58 +711,58 @@ FROM
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement x="311" y="0" width="74" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t4}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="665" y="0" width="60" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t9}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="513" y="0" width="72" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t7}]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="236" y="0" width="75" height="31"/>
 				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t3}]]></textFieldExpression>
+			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="954" y="0" width="83" height="31"/>
 				<box>
@@ -735,7 +774,7 @@ FROM
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{合计}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{t13}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
