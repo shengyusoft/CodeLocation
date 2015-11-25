@@ -177,6 +177,7 @@
 	}
 	
 	function searchFun() {
+		debugger;
 		var queryParams = $('#dataGrid').datagrid('options').queryParams;
 		queryParams.projectName = "";
 		queryParams.st = "";
@@ -203,9 +204,9 @@
 		queryParams['delegatorName'] = isEmpty(delegatorName) ? "" : delegatorName;
 
 		//重新加载datagrid的数据  
-		$("#dataGrid").datagrid('reload');
+		reloadGrid($("#dataGrid"));
 	}
-
+	
 	function clearFun() {
 		$('#projectName').val('');
 		$('#st').val('');
@@ -222,24 +223,29 @@
 			width : 850,
 			height : 535,
 			href : '${ctx}/projectRegist/addPage?type=0',
-			buttons : [ {
-				text : '添加',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;
-					parent.$.modalDialog.handler.find('#option').val(0);//过期申请
-					var f = parent.$.modalDialog.handler.find('#projectRegistAddForm');
-					f.submit();
-				}
-			} ,{
-				text : '申请上传',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-					parent.$.modalDialog.handler.find('#option').val(1);//过期申请
-					var f = parent.$.modalDialog.handler.find('#projectRegistAddForm');
-					f.submit();
-				}
-			} ]
-		});
+			buttons : [
+			   {
+					text : '添加',
+					handler : function() {
+						parent.$.modalDialog.openner_dataGrid = dataGrid;
+						parent.$.modalDialog.handler
+								.find('#option').val(0);//过期申请
+						var f = parent.$.modalDialog.handler
+								.find('#projectRegistAddForm');
+						f.submit();
+					}
+				},{
+					text : '申请上传',
+					handler : function() {
+						parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
+						parent.$.modalDialog.handler
+								.find('#option').val(1);//过期申请
+						var f = parent.$.modalDialog.handler
+								.find('#projectRegistAddForm');
+						f.submit();
+					}
+				} ]                 
+		});		
 	}
 
 	function deleteFun() {
@@ -280,40 +286,47 @@
 			parent.$.messager.alert('警告', '只能对一条记录编辑!');
 			return;
 		}
-		
+
 		id = rows[0].id;
-		
+
 		var state = rows[0].state;
-		if(state == 1){
+		if (state == 1) {
 			alert('审核中,不能修改!');
 			return;
 		}
-		
-		parent.$.modalDialog({
-			title : '项目报名登记编辑',
-			width : 850,
-			height : 535,
-			href : '${ctx}/projectRegist/editPage?id=' + id,
-			buttons : [ {
-				text : '编辑',
-				handler : function() {
-					//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					parent.$.modalDialog.openner_dataGrid = dataGrid;
-					parent.$.modalDialog.handler.find('#option').val(0);//过期申请
-					var f = parent.$.modalDialog.handler.find('#projectRegistEditForm');
-					f.submit();
-				}
-			} ,{
-				text : '申请上传',
-				id : 'regist_apply',
-				handler : function() {
-					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
-					parent.$.modalDialog.handler.find('#option').val(1);//过期申请
-					var f = parent.$.modalDialog.handler.find('#projectRegistEditForm');
-					f.submit();
-				}
-			}]
-		});
+
+		parent.$
+				.modalDialog({
+					title : '项目报名登记编辑',
+					width : 850,
+					height : 535,
+					href : '${ctx}/projectRegist/editPage?id=' + id,
+					buttons : [
+							{
+								text : '编辑',
+								handler : function() {
+									//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+									parent.$.modalDialog.openner_dataGrid = dataGrid;
+									parent.$.modalDialog.handler
+											.find('#option').val(0);//过期申请
+									var f = parent.$.modalDialog.handler
+											.find('#projectRegistEditForm');
+									f.submit();
+								}
+							},
+							{
+								text : '申请上传',
+								id : 'regist_apply',
+								handler : function() {
+									parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
+									parent.$.modalDialog.handler
+											.find('#option').val(1);//过期申请
+									var f = parent.$.modalDialog.handler
+											.find('#projectRegistEditForm');
+									f.submit();
+								}
+							} ]
+				});
 	}
 
 	function detailFun() {
@@ -345,7 +358,7 @@
 			} ]
 		});
 	}
-	
+
 	function auditFun() {
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
@@ -360,10 +373,10 @@
 		}
 		id = rows[0].id;
 		var state = rows[0].state;
-		if(state == 0){
+		if (state == 0) {
 			alert('不是申请的数据，无需审核!');
 			return;
-		}else if(state == 2){
+		} else if (state == 2) {
 			alert('已经审核!');
 			return;
 		}
@@ -376,11 +389,12 @@
 				text : '同意上报',
 				handler : function() {
 					parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-					var f = parent.$.modalDialog.handler.find('#projectRegistEditForm');
+					var f = parent.$.modalDialog.handler
+							.find('#projectRegistEditForm');
 					parent.$.modalDialog.handler.find('#option').val(0);//过期申请
 					f.submit();
 				}
-			}]
+			} ]
 		});
 	}
 </script>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 	$(function() {
 		$('#certificateEditForm').form({
@@ -70,9 +71,9 @@
 				</tr>
 				<tr>
 					<th>证书获取时间&nbsp;</th>
-					<td><input class="Wdate" type="text" name="card_getdate" value="${certificate.card_getdate}" id="card_getdate" 
-							style="width: 100%;height:100%"
-							onfocus="showDate('yyyy-MM-dd HH:mm:ss')" /></td>
+					<td><input class="Wdate" type="text" name="card_getdate" id="card_getdate" 
+						value="<fmt:formatDate value="${certificate.card_getdate}" pattern="yyyy-MM-dd"/>"
+						style="width: 100%;height:100%" onfocus="showDate('yyyy-MM-dd')" /></td>
 					<th>证书到期时间 &nbsp;</th>
 					<td><input class="Wdate" type="text" name="card_enddate" id="card_enddate"
 							style="width: 100%;height:100%" value="${certificate.card_enddate}"

@@ -152,7 +152,6 @@
 						align : 'center',
 						field : 'bid_cost',
 						formatter : function(val,row,index){
-							debugger;
 							if(row != null && row.state == 1){
 								return '';
 							}else{
@@ -304,7 +303,7 @@
 		queryParams['county.id'] = isEmpty(county) ? -1 : county;
 
 		//重新加载datagrid的数据  
-		$("#dataGrid").datagrid('reload');
+		reloadGrid($("#dataGrid"));
 	}
 
 	function clearFun() {

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
@@ -22,7 +23,7 @@
 				<tr>
 					<th>证书获取时间&nbsp;</th>
 					<td><input name="card_getdate" type="text" disabled="disabled" id="card_getdate"
-						readonly="readonly" value="${certificate.card_getdate}"
+						readonly="readonly" value="<fmt:formatDate value="${certificate.card_getdate}" pattern="yyyy-MM-dd"/>"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
 					<th>证书到期时间 &nbsp;</th>

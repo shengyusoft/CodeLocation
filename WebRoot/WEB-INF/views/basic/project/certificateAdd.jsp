@@ -66,7 +66,7 @@
 					<td> 
 						<input class="Wdate" type="text" name="card_getdate" id="card_getdate" 
 							style="width: 100%;height:100%"
-							onfocus="showDate('yyyy-MM-dd HH:mm:ss')" />
+							onfocus="showDate('yyyy-MM-dd')" />
 					</td>
 					
 					<th>证书到期时间&nbsp;</th>
