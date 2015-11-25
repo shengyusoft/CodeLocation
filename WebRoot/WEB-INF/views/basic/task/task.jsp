@@ -211,7 +211,7 @@
 		parent.$.messager.confirm('询问', '确认删除选中的记录吗？', function(b) {
 			if (b) {
 				progressLoad();
-				$.post('${ctx}/taskAssignment/delete', {
+				$.post('${ctx}/task/delete', {
 					ids : selected
 				}, function(result) {
 					if (result.success) {
@@ -256,7 +256,7 @@
 		queryParams.pageAssignDtEt = isEmpty(et) ? "" : et;
 		
 		//重新加载datagrid的数据  
-		$("#dataGrid").datagrid('reload');
+		reloadGrid($("#dataGrid"));
 	}
 	
 	function clearFun() {
