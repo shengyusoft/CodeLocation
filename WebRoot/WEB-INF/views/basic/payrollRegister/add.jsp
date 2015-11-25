@@ -27,8 +27,64 @@
 			}
 		});
 	});
-
 	
+	registerListener();
+	
+	function registerListener(){
+		$('#basePay').bind('input propertychange', function() {
+			calc();
+		});
+		$('#agePay').bind('input propertychange', function() {
+			calc();
+		});
+		$('#royalty').bind('input propertychange', function() {
+			calc();
+		});
+		$('#pensionInsurance').bind('input propertychange', function() {
+			calc();
+		});
+		$('#injuryInsurance').bind('input propertychange', function() {
+			calc();
+		});
+		$('#medicalInsurance').bind('input propertychange', function() {
+			calc();
+		});
+		$('#joblessInsurance').bind('input propertychange', function() {
+			calc();
+		});
+		$('#homeFund').bind('input propertychange', function() {
+			calc();
+		});
+		$('#other').bind('input propertychange', function() {
+			calc();
+		});
+		$('#withhold').bind('input propertychange', function() {
+			calc();
+		});
+		$('#fine').bind('input propertychange', function() {
+			calc();
+		});
+	}
+	
+	function calc(){
+		var add1 = isEmpty($('#basePay').val()) ? 0 : $('#basePay').val();
+		var add2 = isEmpty($('#agePay').val()) ? 0 : $('#agePay').val();
+		var add3 = isEmpty($('#royalty').val()) ? 0 : $('#royalty').val();
+		var n1 = isEmpty($('#pensionInsurance').val()) ? 0 : $('#pensionInsurance').val();
+		var n2 = isEmpty($('#injuryInsurance').val()) ? 0 : $('#injuryInsurance').val();
+		var n3 = isEmpty($('#medicalInsurance').val()) ? 0 : $('#medicalInsurance').val();
+		var n4 = isEmpty($('#joblessInsurance').val()) ? 0 : $('#joblessInsurance').val();
+		var n5 = isEmpty($('#homeFund').val()) ? 0 : $('#homeFund').val();
+		var n6 = isEmpty($('#other').val()) ? 0 : $('#other').val();
+		
+		var n7 = isEmpty($('#withhold').val()) ? 0 : $('#withhold').val();
+		var n8 = isEmpty($('#fine').val()) ? 0 : $('#fine').val();
+		var shouldPay = parseFloat(add1)+parseFloat(add2)+parseFloat(add3)-parseFloat(n1)-parseFloat(n2)
+		-parseFloat(n3)-parseFloat(n4)-parseFloat(n5)-parseFloat(n6);
+		var realPay = shouldPay - parseFloat(n7)-parseFloat(n8);
+		$('#shouldPay').val(shouldPay);
+		$('#realPay').val(realPay);
+	}
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -118,7 +174,7 @@
 					</th>
 					<td>
 						<input name="shouldPay" id="shouldPay" type="text" style="width: 100%;"  
-							 class="easyui-numberbox" precision=2 data-options="required:true" />
+							 class="disabled" readonly="readonly" precision=2 data-options="required:true" />
 					</td>
 					<th>
 						代扣代缴 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
@@ -141,7 +197,7 @@
 					</th>
 					<td>
 						<input name="realPay" id="realPay" type="text" style="width: 100%;"  
-							 class="easyui-numberbox" precision=2 data-options="required:true" />
+							 class="disabled" readonly="readonly" precision=2 data-options="required:true" />
 					</td>
 					<td colspan="2"></td>
 				</tr>
