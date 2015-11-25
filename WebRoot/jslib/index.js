@@ -23,38 +23,39 @@ function loadindex() {
 		fit : true
 	});
 
-	index_tabs = $('#index_tabs').tabs(
-			{
-				fit : true,
-				border : false,
-				tools : [
-						{
-							iconCls : 'icon_home',
-							handler : function() {
-								index_tabs.tabs('select', 0);
-							}
-						},
-						{
-							iconCls : 'icon_refresh',
-							handler : function() {
-								var index = index_tabs.tabs('getTabIndex',
-										index_tabs.tabs('getSelected'));
-								index_tabs.tabs('getTab', index).panel(
-										'refresh');
-							}
-						},
-						{
-							iconCls : 'icon_del',
-							handler : function() {
-								var index = index_tabs.tabs('getTabIndex',
-										index_tabs.tabs('getSelected'));
-								var tab = index_tabs.tabs('getTab', index);
-								if (tab.panel('options').closable) {
-									index_tabs.tabs('close', index);
-								}
-							}
-						} ]
-			});
+	index_tabs = $('#index_tabs').tabs({
+		fit : true,
+		border : false,
+		tools : [{
+					iconCls : 'icon_home',
+					handler : function() {
+						index_tabs.tabs('select', 0);
+					}
+				},{
+					iconCls : 'icon_refresh',
+					handler : function() {
+						try {
+							//重复刷新过快
+							setTimeout(function(){
+								var index = index_tabs.tabs('getTabIndex',index_tabs.tabs('getSelected'));
+								index_tabs.tabs('getTab', index).panel('refresh');
+							},160);
+						} catch (e) {
+							console.log(e);
+						}
+					}
+				},{
+					iconCls : 'icon_del',
+					handler : function() {
+						var index = index_tabs.tabs('getTabIndex',
+								index_tabs.tabs('getSelected'));
+						var tab = index_tabs.tabs('getTab', index);
+						if (tab.panel('options').closable) {
+							index_tabs.tabs('close', index);
+						}
+					}
+				} ]
+	});					
 }
 
 // 加载menu
