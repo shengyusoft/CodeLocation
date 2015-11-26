@@ -88,8 +88,10 @@
 		var endMileage = parseFloat(isEmpty($("#endMileage").val())?0:$("#endMileage").val());
 		var startingMileage = parseFloat(isEmpty($("#startingMileage").val())?0:$("#startingMileage").val());
 		$("#drivingMileage").val(endMileage - startingMileage);
-		$("#carCost").val(parseFloat(isEmpty($("#unitPrice").val())?0:$("#unitPrice").val()) * parseFloat($("#drivingMileage").val()));
-		$("#totalCost").val(parseFloat(isEmpty($("#tolls").val())?0:$("#tolls").val()) + parseFloat($("#carCost").val()==null?0:$("#carCost").val()));
+		var carCost = (parseFloat(isEmpty($("#unitPrice").val())?0:$("#unitPrice").val()) * parseFloat($("#drivingMileage").val())).toFixed(2);
+		$("#carCost").val(carCost);
+		var totalCost = (parseFloat(isEmpty($("#tolls").val())?0:$("#tolls").val()) + parseFloat($("#carCost").val()==null?0:$("#carCost").val())).toFixed(2);
+		$("#totalCost").val(totalCost );
 	}
 	
 </script>

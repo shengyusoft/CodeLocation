@@ -22,8 +22,20 @@
 					var now = new Date();
 					if(option == 0){//save
 						//超过一周不能上传,只能申请上传
+						var msg = '';
 						if(now >= limitDate || now > limitDate2 || now > limitDate3){
-							alert('过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）');
+							msg = '过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）';
+						}else{
+							if(isEmpty($('#bidDt').val())){
+								msg = '中标时间不能为空';
+							}else if(isEmpty($('#signDt').val())){
+								msg = '合同签订时间不能为空';
+							}else if(isEmpty($('#duration').val())){
+								msg = '工期结束时间不能为空';
+							}
+						}
+						if(!isEmpty(msg)){
+							alert(msg);
 							isValid = false;
 						}
 					}else{//apply
@@ -39,7 +51,6 @@
 						}
 					}
 				}
-				
 				
 				if (!isValid) {
 					progressClose();
@@ -113,7 +124,7 @@
 		valueField : 'id',
 		value:'${projectBid.aqy.id}',
 		textField : 'card_name',
-		panelHeight : 'auto'	
+		panelHeight : '300'	
 	});
 	
 	$('#provice').combobox({
@@ -256,7 +267,8 @@
 					<th>工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
-						<input class="Wdate" type="text" name="duration" value="${projectBid.duration}" id="duration"
+						<input class="Wdate" type="text" name="duration" id="duration"
+						value="<fmt:formatDate value="${projectBid.duration}" pattern="yyyy-MM-dd"/>"
 						style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
 					</td>
 						
