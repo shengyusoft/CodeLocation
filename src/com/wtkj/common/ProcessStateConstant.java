@@ -11,6 +11,14 @@ public class ProcessStateConstant {
 	public static final Integer BX_AUDIT_ZJL = 3; // 总经理审批通过
 	public static final Integer BX_BACK_ZJL = -3; // 总经理审批不通过
 	public static final Integer BX_CN = 4; // 出纳成功
+	
+	// 员工费用支付状态值
+	public static final Integer FYZF_AUDIT_ZJL = 2; // 总经理审批通过
+	public static final Integer FYZF_BACK_ZJL = -2; // 总经理审批不通过
+	public static final Integer FYZF_AUDIT_KJ = 3; // 会计审批通过
+	public static final Integer FYZF_BACK_KJ = -3; // 会计审批不通过
+	public static final Integer FYZF_AUDIT_CN = 4; // 出纳成功
+	public static final Integer FYZF_BACK_CN = -4; // 出纳成功
 
 	// 流程统一状态值控制
 	public static final Integer STATE_INIT = 0; // 初始化（没提交之前的记录）

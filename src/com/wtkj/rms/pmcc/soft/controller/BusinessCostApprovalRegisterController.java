@@ -302,11 +302,11 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 				history.setOperator(tuser);
 				history.setOperateDT(new Date());
 
-				// 查询会计人员
-				String nextOper = getNextOperator("role_account");
+				// 查询总经理
+				String nextOper = getNextOperator(GlobalConstant.ROLE_ZJL);
 
 				history.setOperateDetail(user.getName() + " 于 " + DateUtil.convertDateToString(new Date())
-											+ "申请成功,下一步执行人为" + nextOper);
+											+ "申请成功,下一步执行人为->总经理：" + nextOper);
 				processHistoryService.add(history, request);
 				// 更新业务表
 				obj.setProcessFlag(process.getState());
@@ -366,11 +366,11 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 					history.setProcess(process);
 					history.setOperator(tuser);
 					history.setOperateDT(new Date());
-					// 查询会计人员
-					String nextOper = getNextOperator("role_account");
+					// 查询总经理
+					String nextOper = getNextOperator(GlobalConstant.ROLE_ZJL);
 					history.setOperateDetail(user.getName() + " 于 "
 							+ DateUtil.convertDateToString(new Date())
-							+ "申请成功,下一步执行人为" + nextOper);
+							+ "申请成功,下一步执行人为->总经理:" + nextOper);
 					processHistoryService.add(history, request);
 				}
 			}
@@ -488,23 +488,23 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 				String roleNames = user.getRoleNames();
 				// 状态更新
 				if (roleNames.indexOf("会计") >= 0) {
-					pro.setState(ProcessStateConstant.BX_AUDIT_KJ);// 会计审批通过
+					pro.setState(ProcessStateConstant.FYZF_AUDIT_KJ);// 会计审批通过
 					// 增加流程操作历史记录
-					String op = this.getNextOperator("role_top_manger");
-					updateHistory(request, user, pro, "会计：" + user.getName() + "审批通过,下一步执行人为:" + op);
+					String op = this.getNextOperator(GlobalConstant.ROLE_CN);
+					updateHistory(request, user, pro, "出纳：" + user.getName() + "审批通过,下一步执行人为->出纳:" + op);
 					// 更新业务表流程标记
 					updateBusiness(obj,pro.getState());
 
 				} else if (roleNames.indexOf("总经理") >= 0) {
-					pro.setState(ProcessStateConstant.BX_AUDIT_ZJL);// 总经理审批通过
+					pro.setState(ProcessStateConstant.FYZF_AUDIT_ZJL);// 总经理审批通过
 					// 增加流程操作历史记录
-					String op = this.getNextOperator("role_cashier");
-					updateHistory(request, user, pro, "总经理：" + user.getName() + "审批通过,下一步执行人为:" + op);
+					String op = this.getNextOperator(GlobalConstant.ROLE_KJ);
+					updateHistory(request, user, pro, "总经理：" + user.getName() + "审批通过,下一步执行人为->会计:" + op);
 					// 更新业务表流程标记
 					updateBusiness(obj,pro.getState());
 					
 				} else if (roleNames.indexOf("出纳") >= 0) {
-					pro.setState(ProcessStateConstant.BX_CN);// 出纳成功，流程结束
+					pro.setState(ProcessStateConstant.FYZF_AUDIT_CN);// 出纳成功，流程结束
 					pro.setEndDT(new Date());
 					// 增加流程操作历史记录
 					updateHistory(request, user, pro, "出纳：" + user.getName() + "出纳成功!流程结束");
@@ -519,7 +519,6 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 						updateHistory(request, user, pro, "超级管理员：" + user.getName() + "审批通过!");
 						// 更新业务表流程标记
 						updateBusiness(obj,pro.getState());
-						
 					} else {
 						updateHistory(request, user, pro, "超级管理员：" + user.getName() + "出纳成功!");
 						// 更新业务表流程标记
@@ -572,14 +571,14 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 		
 		// 状态更新
 		if (roleNames.indexOf("会计") >= 0) {
-			po.setState(ProcessStateConstant.BX_BACK_KJ);// 会计审批不通过
+			po.setState(ProcessStateConstant.FYZF_BACK_KJ);// 会计审批不通过
 			// 增加流程操作历史记录
 			updateHistory(request, user, po, "会计：" + user.getName() + "审批不通过");
 			// 更新业务表流程标记
 			updateBusiness(obj,po.getState());
 			
 		} else if (roleNames.indexOf("总经理") >= 0) {
-			po.setState(ProcessStateConstant.BX_BACK_ZJL);// 总经理审批不通过
+			po.setState(ProcessStateConstant.FYZF_BACK_ZJL);// 总经理审批不通过
 			// 增加流程操作历史记录
 			updateHistory(request, user, po, "总经理：" + user.getName() + "审批不通过");
 			// 更新业务表流程标记
@@ -593,7 +592,6 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 				updateHistory(request, user, po, "超级管理员：" + user.getName() + "审批不通过!");
 				// 更新业务表流程标记
 				updateBusiness(obj,po.getState());
-				
 			}
 		}
 		try {

@@ -42,6 +42,7 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	private String bds;// 标段
 	private String bdNames;// display
 	private Double bid_cost;
+	private Double otherCost;
 
 	// 管理费比例（%）
 	// private Float manage_cost;
@@ -307,6 +308,14 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 
 	public void setOption(int option) {
 		this.option = option;
+	}
+
+	public Double getOtherCost() {
+		return otherCost;
+	}
+
+	public void setOtherCost(Double otherCost) {
+		this.otherCost = otherCost;
 	}
 
 }

@@ -55,12 +55,12 @@ public class BusinessCostApprovalRegisterServiceImpl implements BusinessCostAppr
 				if (user.getRoleNames().indexOf("会计") >= 0) {
 					// 如果申请人是别人则审批人查看已到到达自己的任务,如果是自己则显示申请人是自己的
 					hql += " and (t.processFlag >= :state or (SELECT p.applyUser.id FROM Process p WHERE p.id = t.processId) = :userId)";
-					params.put("state", 1);
+					params.put("state", 2);
 					params.put("userId", user.getId());
 				} else if (user.getRoleNames().indexOf("总经理") >= 0) {
 					hql += " and (t.processFlag >= :state or (SELECT p.applyUser.id FROM Process p WHERE p.id = t.processId) = :userId)";
 					params.put("userId", user.getId());
-					params.put("state", 2);
+					params.put("state", 1);
 				} else if (user.getRoleNames().indexOf("出纳") >= 0) {
 					hql += " and (t.processFlag >= :state or (SELECT p.applyUser.id FROM Process p WHERE p.id = t.processId) = :userId)";
 					params.put("userId", user.getId());

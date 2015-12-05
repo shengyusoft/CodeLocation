@@ -84,6 +84,14 @@ public class GlobalConstant {
 	public static final String ACTION_COMMIT = "commit";//添加
 	public static final String ACTION_EDIT = "edit";//添加
 	
+	//角色code
+	public static final String ROLE_ZJL = "role_top_manger";//总经理
+	public static final String ROLE_CN = "role_cashier";//出纳
+	public static final String ROLE_KJ = "role_account";//会计
+	
+	
+	
+	
 	
 	
 	
