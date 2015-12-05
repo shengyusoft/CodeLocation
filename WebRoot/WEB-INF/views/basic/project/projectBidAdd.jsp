@@ -19,7 +19,6 @@
 				var limitDate3 = new Date(duration.getFullYear(),duration.getMonth(),duration.getDate()+7);
 				var now = new Date();
 				if(option == 0){//save
-					debugger;
 					//超过一周不能上传,只能申请上传
 					var msg = '';
 					if(now >= limitDate || now > limitDate2 || now > limitDate3){
@@ -251,7 +250,7 @@
 					<td><input name="manageFeeRate"
 						style="width: 100%; height: 100%" max="100" min="0"
 						type="text" id="manageFeeRate" precision="2"
-						class="easyui-numberbox" data-options="required:true" /></td>
+						class="easyui-numberbox" /></td>
 						
 					<th width="120px">管理费数额（元）&nbsp;</th>
 					<td><input name="manageFee" style="width: 100%; height: 100%"
@@ -288,13 +287,13 @@
 						data-options="required:true" /></td>
 					<th>联系方式 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="tel" style="width: 100%; height: 100%" data-options="required:true"
+					<td><input name="tel" style="width: 100%; height: 100%"
 						type="text" id="tel" class="easyui-validatebox span2"/></td>
 					<th >身份证号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td ><input name="headmanIdCard" type="text" id="headmanIdCard"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2" value="${projectBid.headmanIdCard}"
-						data-options="required:true" validtype="ID_CARD" /></td>
+						validtype="ID_CARD" /></td>
 				</tr>
 				<tr>
 					<th>登记人&nbsp;<label
@@ -307,11 +306,16 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="sender" type="text" id="sender"style="width: 100%; height: 100%" 
 						class="easyui-validatebox span2" validtype="NAME" data-options="required:true" /></td>
+						
+					<th>其他金额&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="otherCost" style="width: 100%; height: 100%"
+						type="text" id="bid_cost" class="easyui-numberbox" precision="2" min="0" /></td>
 				</tr>
 				
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="6"
+					<td colspan="5"><textarea style="width: 100%" rows="4"
 							name="remark"></textarea></td>
 				</tr>
 			</table>

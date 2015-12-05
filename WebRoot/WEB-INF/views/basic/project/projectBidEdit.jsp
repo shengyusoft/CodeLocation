@@ -277,7 +277,7 @@
 					<td><input name="manageFeeRate"
 						style="width: 100%; height: 100%" max="100" min="0" precision="2"
 						value="${projectBid.manageFeeRate}" type="text" id="manageFeeRate"
-						class="easyui-numberbox" data-options="required:true" /></td>
+						class="easyui-numberbox" /></td>
 
 					<th width="120px">管理费数额（元）&nbsp;</th>
 					<td><input name="manageFee"
@@ -316,13 +316,13 @@
 					<th>联系方式 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="tel" style="width: 100%; height: 100%"
-						data-options="required:true" type="text" id="tel"
-						value="${projectBid.tel}" class="easyui-validatebox span2" /></td>
+						type="text" id="tel" value="${projectBid.tel}" 
+						class="easyui-validatebox span2" /></td>
 					<th>身份证号&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="headmanIdCard" type="text" id="headmanIdCard" validtype="ID_CARD"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
-						value="${projectBid.headmanIdCard}" data-options="required:true" /></td>
+						value="${projectBid.headmanIdCard}" /></td>
 				</tr>
 				<tr>
 					<th>登记人&nbsp;<label
@@ -336,6 +336,11 @@
 					<td><input name="sender" type="text" id="sender" value="${projectBid.sender}"
 						style="width: 100%; height: 100%" class="easyui-validatebox span2"
 						data-options="required:true" validtype="NAME" /></td>
+					<th>其他金额&nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><input name="otherCost" style="width: 100%; height: 100%"
+						type="text" value="${projectBid.otherCost}" id="bid_cost" 
+						class="easyui-numberbox" precision="2" min="0" /></td>
 				</tr>
 				<tr>
 					<th>备注&nbsp;</th>
