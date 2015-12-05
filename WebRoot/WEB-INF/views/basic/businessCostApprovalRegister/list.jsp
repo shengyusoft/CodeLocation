@@ -29,7 +29,7 @@
 				checkbox : true,
 				field : 'id',
 				width : '30',
-			},{
+			}, {
 				title : '序号',
 				field : 'index',
 				align : 'center',
@@ -37,6 +37,40 @@
 				formatter : function(value, row, index) {
 					return index+1;
 				}
+			}, {
+				width : '100',
+				title : '申请人',
+				align : 'center',
+				field : 'applicant'
+			}, {
+				width : '100',
+				title : '申请时间',
+				align : 'center',
+				field : 'applicantDate',
+				formatter : Common.formatter
+			}, {
+				width : '220',
+				title : '费用名称',
+				sortable : true,
+				align : 'center',
+				field : 'costName'
+			}, {
+				width : '100',
+				title : '申请支付时间',
+				sortable : true,
+				align : 'center',
+				field : 'applypayDate',
+				formatter : Common.formatter
+			}, {
+				width : '120',
+				title : '申请支付金额(元)',
+				align : 'center',
+				field : 'applyCost'
+			}, {
+				width : '240',
+				title : '备注',
+				align : 'center',
+				field : 'remark'
 			}, {
 				width : '120',
 				title : '状态',
@@ -49,51 +83,17 @@
 					}else if(value == "1"){
 						return '<font color="green">已申请</font>';
 					}else if(value == "2"){
-						return '<font color="green">会计审批通过</font>';
-					}else if(value == "3"){
 						return '<font color="green">总经理审批通过</font>';
+					}else if(value == "3"){
+						return '<font color="green">会计审批通过</font>';
 					}else if(value == "4"){
 						return '<font color="green">【财务出纳成功】</font>';
 					}else if(value == "-2"){
-						return '<font color="red">【会计审核退回】</font>';
-					}else if(value == "-3"){
 						return '<font color="red">【总经理审核退回】</font>';
+					}else if(value == "-3"){
+						return '<font color="red">【会计审核退回】</font>';
 					}
 				}
-			}, {
-				width : '100',
-				title : '申请人',
-				align : 'center',
-				field : 'applicant'
-			},{
-				width : '100',
-				title : '申请时间',
-				align : 'center',
-				field : 'applicantDate',
-				formatter : Common.formatter
-			},{
-				width : '120',
-				title : '费用名称',
-				sortable : true,
-				align : 'center',
-				field : 'costName'
-			}, {
-				width : '100',
-				title : '申请支付时间',
-				sortable : true,
-				align : 'center',
-				field : 'applypayDate',
-				formatter : Common.formatter
-			},{
-				width : '120',
-				title : '申请支付金额(元)',
-				align : 'center',
-				field : 'applyCost'
-			},{
-				width : '150',
-				title : '备注',
-				align : 'center',
-				field : 'remark'
 			}] ],
 
 			toolbar : '#toolbar'
@@ -181,6 +181,7 @@
 	}
 	// 编辑
 	function editFun() {
+		debugger;
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
@@ -271,7 +272,7 @@
 		var id = rows[0].id;
 	
 		parent.$.modalDialog({
-			title : '员工借款审批',
+			title : '费用支付审批',
 			width : '800',
 			height : '520',
 			resizable : true,
@@ -320,7 +321,7 @@
 		parent.$.modalDialog({
 			title : '流程详情',
 			autoScroll : true,
-			width : document.body.clientWidth * 0.7,
+			width : document.body.clientWidth * 0.85,
 			height : document.body.clientHeight * 1,
 			href : '${ctx}/businessCostApprovalRegister/approvalDetailPage?id=' + id,
 			buttons : [ {

@@ -74,22 +74,16 @@
 					<th>
 						费用名称  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
-					<td width="320px">
+					<td colspan="5">
 						<input name="costName" id="costName" type="text" style="width: 100%;"  
 							 class="easyui-validatebox span2" data-options="required:true" />
-					</td>
-					<th>
-						申请支付时间 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
-					</th>
-					<td>
-						<input name="show_date" id="show_date" type="text" style="width: 100%; height: 100%" disabled="disabled" />
 					</td>
 				</tr>
 				<tr>
 					<th>
 						事由  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
-					<td colspan="3">
+					<td colspan="5">
 						<textarea name="reason" id="reason" style="width: 100%;" rows="1" 
 							 class="easyui-validatebox=" data-options="required:true"></textarea>
 					</td>
@@ -100,21 +94,28 @@
 					</th>
 					<td>
 						<input name="applyCost" id="applyCost" type="text" style="width: 100%;"  
-							 class="easyui-numberbox" data-options="required:true" precision=2 onblur="toUpperCase(this.value)" />
+							 class="easyui-numberbox" data-options="required:true" 
+							 precision=2 onblur="toUpperCase(this.value)" />
 					</td>
-					<td colspan="2">
+					<td colspan="2" width="150px">
 						<span id="applyCost_show"></span>
 						<input id="applyCostCap" name="applyCostCap" type="hidden" />
 					</td>
+					<th>
+						申请支付时间 &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
+					</th>
+					<td>
+						<input name="show_date" id="show_date" type="text" style="width: 100%; height: 100%" disabled="disabled" />
+					</td>
 				</tr>
 				<tr>
-					<td colspan="4" align="center"><b><font size="5">收款人信息</font></b></td>
+					<td colspan="6" align="center"><b><font size="5">收款人信息</font></b></td>
 				</tr>
 				<tr>
 					<th>
 						户名  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
-					<td colspan="3">
+					<td colspan="5">
 						<input name="userName" id="userName" type="text" style="width: 100%;"  
 							 class="easyui-validatebox span2" data-options="required:true" />
 					</td>
@@ -123,7 +124,7 @@
 					<th>
 						开户行  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
-					<td colspan="3">
+					<td colspan="5">
 						<input name="bank" id="bank" type="text" style="width: 100%;"  
 							 class="easyui-validatebox span2" data-options="required:true" />
 					</td>
@@ -132,7 +133,7 @@
 					<th>
 						账号  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
-					<td colspan="3">
+					<td colspan="5">
 						<input name="account" id="account" type="text" style="width: 100%;"  
 							 class="easyui-validatebox span2" data-options="required:true" />
 					</td>
@@ -141,7 +142,7 @@
 					<th>
 						联系人  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
-					<td width="320px">
+					<td colspan="3">
 						<input name="contactPerson" id="contactPerson" type="text" style="width: 100%;"  
 							 class="easyui-validatebox span2" data-options="required:true"  validtype="NAME" />
 					</td>
@@ -157,7 +158,7 @@
 					<th>
 						申请人  &nbsp;<label style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
-					<td width="320px">
+					<td colspan="3">
 						<input value="${name}" type="text" style="width: 100%; height: 100%" disabled="disabled" />
 					</td>
 					<th>
@@ -170,10 +171,9 @@
 				<tr>
 					<th>备注&nbsp;</th>
 					<td colspan="5">
-						<textarea style="width: 100%" rows="2" name="remark"></textarea>
+						<textarea style="width: 100%" rows="4" name="remark"></textarea>
 					</td>
 				</tr>
-
 			</table>
 		</form>
 	</div>

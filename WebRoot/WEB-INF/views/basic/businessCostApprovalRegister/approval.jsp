@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
 	$(function(){
 		$('#businessCostApprovalRegisterApprovalForm').form({
@@ -36,7 +37,7 @@
 	// 表单加载
 	$(function(){
 		// 加载表单
-		$('#businessCostApprovalRegisterDetailForm').form('load', '/businessCostApprovalRegister/get?id=${id}');
+		$('#businessCostApprovalRegisterDetailForm').form('load', '${ctx}/businessCostApprovalRegister/get?id=${id}');
 		// 
 		$('input,select,textarea',$('form[id="businessCostApprovalRegisterDetailForm"]')).prop('disabled',true);
 	});

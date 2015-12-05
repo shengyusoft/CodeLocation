@@ -19,30 +19,37 @@
 		if(isEmpty(state)){
 			return;
 		}
-		if(state <= 0){
+		if(state <= 0){//x-55;y-104
 			//申请
-			$('#process')[0].style.left = '47px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '42px';
+			$('#process')[0].style.left = '130px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
 			$('#process')[0].style.width = '76px';
 		}else if(state == 1){
-			//会计
-			$('#process')[0].style.left = '170px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '42px';
-			$('#process')[0].style.width = '70px';
-		}else if(state == 2){
 			//总经理
-			$('#process')[0].style.left = '399px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '42px';
-			$('#process')[0].style.width = '84px';
+			$('#process')[0].style.left = '253px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
+			$('#process')[0].style.width = '76px';
+		}else if(state == 2){
+			//会计
+			$('#process')[0].style.left = '487px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
+			$('#process')[0].style.width = '76px';
 		}else if(state == 3){
 			//出纳
-			$('#process')[0].style.left = '643px';
-			$('#process')[0].style.top = '86px';
-			$('#process')[0].style.height = '43px';
-			$('#process')[0].style.width = '83px';
+			$('#process')[0].style.left = '708px';
+			$('#process')[0].style.top = '46px';
+			$('#process')[0].style.height = '50px';
+			$('#process')[0].style.width = '76px';
+		}else if(state == 4){
+			//流程结束
+			$('#process')[0].style.left = '811px';
+			$('#process')[0].style.top = '50px';
+			$('#process')[0].style.height = '34px';
+			$('#process')[0].style.width = '52px';
+			$('#process')[0].style.borderRadius = '35%';
 		}
 	}
 
