@@ -7,6 +7,7 @@
 		$('#projectBidEditForm').form({
 			url : '${pageContext.request.contextPath}/projectBid/edit',
 			onSubmit : function() {
+				debugger;
 				progressLoad();
 				var isValid = $(this).form('validate');
 				//自定义验证
@@ -14,24 +15,16 @@
 				if(state == 0){
 					var option = $('#option').val();
 					var bidDt = new Date($('#bidDt').val());
-					var signDt = new Date($('#signDt').val());
-					var duration = new Date($('#duration').val());
 					var limitDate = new Date(bidDt.getFullYear(),bidDt.getMonth(),bidDt.getDate()+7);
-					var limitDate2 = new Date(signDt.getFullYear(),signDt.getMonth(),signDt.getDate()+7);
-					var limitDate3 = new Date(duration.getFullYear(),duration.getMonth(),duration.getDate()+7);
 					var now = new Date();
 					if(option == 0){//save
 						//超过一周不能上传,只能申请上传
 						var msg = '';
-						if(now >= limitDate || now > limitDate2 || now > limitDate3){
-							msg = '过期不能上传（注：员工必须在报名登记后一周之内上传登记信息，如需上传请申请总经理审批）';
+						if(now >= limitDate){
+							msg = '过期不能上传（注：员工必须在项目中标后一周之内上传登记信息，如需上传请申请总经理审批）';
 						}else{
 							if(isEmpty($('#bidDt').val())){
 								msg = '中标时间不能为空';
-							}else if(isEmpty($('#signDt').val())){
-								msg = '合同签订时间不能为空';
-							}else if(isEmpty($('#duration').val())){
-								msg = '工期结束时间不能为空';
 							}
 						}
 						if(!isEmpty(msg)){
@@ -39,15 +32,14 @@
 							isValid = false;
 						}
 					}else{//apply
-						if(now < limitDate && now < limitDate2 && now < limitDate3 ){
+						if(now < limitDate ){
 							alert('项目中标时间没有过期，请点击添加!');
 							isValid = false;
 						}else if(now >= limitDate){
-							$('#bidDt').val('${projectBid.bidDt}');
-						}else if(now >= limitDate2){
-							$('#signDt').val('${projectBid.signDt}');
-						}else if(now >= limitDate3){
-							$('#duration').val('${projectBid.duration}');
+							if(isEmpty($('#bidDt').val())){
+								msg = '中标时间不能为空';
+							}
+							//$('#bidDt').val('${projectBid.bidDt}');
 						}
 					}
 				}
@@ -259,17 +251,18 @@
 						
 					<th>合同签订时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input class="Wdate" type="text" name="signDt" id="signDt" style="width: 98%; height: 100%;"
-						value="<fmt:formatDate value="${projectBid.signDt}" pattern="yyyy-MM-dd"/>"
-						onfocus="showDate('yyyy-MM-dd')" /></td>
+					<td><input class="easyui-datebox" type="text" name="signDt" id="signDt" 
+						style="width: 120px;"
+						value="<fmt:formatDate value="${projectBid.signDt}" pattern="yyyy-MM-dd"/>"/></td>
 				</tr>
 				<tr>
 					<th>工期结束时间 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td>
-						<input class="Wdate" type="text" name="duration" id="duration"
+						<input class="easyui-datebox" type="text" name="duration" id="duration" 
+						data-options="required:true"
 						value="<fmt:formatDate value="${projectBid.duration}" pattern="yyyy-MM-dd"/>"
-						style="width: 98%; height: 100%;" onfocus="showDate('yyyy-MM-dd')" />
+						style="width: 120px;" />
 					</td>
 						
 					<th>管理费比例（%）&nbsp;<label

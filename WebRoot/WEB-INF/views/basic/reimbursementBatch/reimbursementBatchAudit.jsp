@@ -496,7 +496,14 @@
 			return;
 		}
 
-		id = rows[0].process_vo.id;
+		var process = rows[0].process_vo;
+		id = process.id;
+		var state = process.state;
+		
+		if(state == 0 ){
+			alert('没有提交不能审核！');
+			return;
+		}
 		
 		parent.$.modalDialog({
 			title : '报销审批',
