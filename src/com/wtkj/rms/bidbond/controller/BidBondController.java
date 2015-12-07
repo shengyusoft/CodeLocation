@@ -153,7 +153,7 @@ public class BidBondController extends BaseController {
 		viewType = StringUtils.isEmpty(viewType) ? "" : viewType;
 		try {
 			// 缴号自动生成，编号规则为年份+月份+编号
-			String idNum = validateIdNumber(generateIdNum(vo.getType()));
+			String idNum = validateIdNumber(generateIdNum(vo.getType()),vo.getType());
 			vo.setIdNumber(idNum);
 			// 保证金转大写
 			if (vo.getBondFee() != null) {
@@ -222,10 +222,10 @@ public class BidBondController extends BaseController {
 		return j;
 	}
 	
-	private String validateIdNumber(String idNum){
-		Long num = bidBondService.countByIdNumber(idNum);
+	private String validateIdNumber(String idNum,int type){
+		Long num = bidBondService.countByIdNumber(idNum,type);
 		if(num > 0 ){
-			idNum = validateIdNumber(String.valueOf(Long.valueOf(idNum)+1));
+			idNum = validateIdNumber(String.valueOf(Long.valueOf(idNum)+1),type);
 		}
 		return idNum;
 	}
@@ -389,9 +389,10 @@ public class BidBondController extends BaseController {
 
 	// 生成缴号:编号规则为年份+月份+编号
 	private String generateIdNum(int type) {
-		long number = bidBondService.countAll(type);// 获取缴纳申请总数
 		String dateStr = DateUtil.convertDateToString(new Date(), "yyyyMMdd");
-		String nstr = String.format("%04d", number + 1);// 4位数补零
+		//当天多少个
+		long number = bidBondService.countAll(type,dateStr);// 获取缴纳申请总数
+		String nstr = String.format("%03d", number + 1);// 3位数补零
 		return dateStr + nstr;
 	}
 

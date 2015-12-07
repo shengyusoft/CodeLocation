@@ -374,8 +374,9 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public List<Tuser> findByRole(String roleCode) {
-		String hql = "select * from sys_user u left join sys_user_role ur on u.id = ur.user_id left join sys_role r on ur.role_id=r.id where r.code='"
-				+ roleCode + "'";
+		String hql = "select * from sys_user u left join sys_user_role ur on u.id = ur.user_id "
+				+ "left join sys_role r on ur.role_id=r.id "
+				+ "where r.code='"+ roleCode + "' and u.deleteStatus = 0";
 		return userDao.findBySql(hql, Tuser.class);
 	}
 }

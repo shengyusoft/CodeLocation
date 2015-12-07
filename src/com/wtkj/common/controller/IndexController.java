@@ -189,10 +189,11 @@ public class IndexController extends BaseController {
 				state = 2;
 			} else if (roleStr.indexOf("出纳") >= 0) {
 				state = 3;
-			} else {
-				state = 0;
+			} else if (roleStr.indexOf("超级管理员") >= 0) {
+				state = 9;
 			}
 		}
+
 		return state;
 	}
 
@@ -238,7 +239,7 @@ public class IndexController extends BaseController {
 			j.setMsg("试用期已到,请联系开发人员（18326145167）");
 			return j;
 		}
-		
+
 		// validate login
 		String vcode = session.getAttribute("randCode").toString();
 		if (vcode == null) {

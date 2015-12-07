@@ -31,4 +31,25 @@ public class NumberUtils {
 
 		return df.format(digit);
 	}
+
+	/**
+	 * 
+	 * @param digit
+	 * @return
+	 * @throws Exception
+	 */
+	public static String parseNum2String(Object digit) throws Exception {
+		return parseNum2String(null, digit);
+	}
+
+	public static void main(String[] args) {
+		double totalBidCost = 12345.34567d;
+		try {
+			String s = parseNum2String(null, totalBidCost);
+			System.out.println(s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
