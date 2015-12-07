@@ -242,7 +242,7 @@ public class ReimbursementBatchController extends BaseController {
 
 				history.setOperateDetail(user.getName() + " 于 "
 						+ DateUtil.convertDateToString(new Date())
-						+ "重新申请报销单成功,下一步执行人为" + nextOper);
+						+ "重新申请报销单成功,下一步执行人为 会计：" + nextOper);
 				processHistoryService.add(history, request);
 
 			} else {
@@ -289,7 +289,7 @@ public class ReimbursementBatchController extends BaseController {
 					String nextOper = getNextOperator("role_account");
 					history.setOperateDetail(user.getName() + " 于 "
 							+ DateUtil.convertDateToString(new Date())
-							+ "申请报销单成功,下一步执行人为" + nextOper);
+							+ "申请报销单成功,下一步执行人为 会计：" + nextOper);
 					processHistoryService.add(history, request);
 				}
 			}
@@ -470,7 +470,7 @@ public class ReimbursementBatchController extends BaseController {
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_top_manger");
 							updateHistory(request, user, po,
-									"会计：" + user.getName() + "审批通过,下一步执行人为:"
+									"会计：" + user.getName() + "审批通过,下一步执行人为 总经理：:"
 											+ op);
 
 						} else if (roleNames.indexOf("总经理") >= 0) {
@@ -478,7 +478,7 @@ public class ReimbursementBatchController extends BaseController {
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_cashier");
 							updateHistory(request, user, po,
-									"总经理：" + user.getName() + "审批通过,下一步执行人为:"
+									"总经理：" + user.getName() + "审批通过,下一步执行人为 出纳:"
 											+ op);
 						} else if (roleNames.indexOf("出纳") >= 0) {
 							po.setState(ProcessStateConstant.BX_CN);// 出纳成功，流程结束

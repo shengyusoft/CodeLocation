@@ -234,14 +234,14 @@
 				width : '200',
 				align : 'center',
 				field : 'payeeComments'
-			}, {
+			}/* , {
 				title : '办理时间',
 				width : '75',
 				sortable : true,
 				align : 'center',
 				field : 'payeeHandleDT',
 				formatter : Common.formatter
-			} ] ],
+			} */ ] ],
 			toolbar : '#toolbar'
 		});
 
@@ -631,11 +631,9 @@
 					onfocus="showStart('yyyy-MM-dd')" /> <input class="Wdate"
 					data-options="required:true" type="text" name="endDT" id="endDT"
 					style="width: 110px;" onfocus="showEnd('yyyy-MM-dd')" /></td>
-				
-			</tr>
-			<tr>
 				<th>项目名称:</th>
-				<td colspan="6"><input type="text" id="projectName" style="width:100%;"></td>
+				<td><input type="text" id="projectName" style="width: 260px;"></td>
+				
 			</tr>
 		</table>
 	</div>

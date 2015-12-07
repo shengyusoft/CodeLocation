@@ -12,6 +12,8 @@ public interface ProjectBidServiceI {
 	public List<ProjectBid> dataGrid(ProjectBid p, PageFilter ph);
 	
 	public List<ProjectBid> findAll();
+	
+	public List<ProjectBid> find(ProjectBid p);
 
 	public Long count(ProjectBid p, PageFilter ph);
 

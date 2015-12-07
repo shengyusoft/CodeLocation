@@ -119,7 +119,7 @@ input {
 								<th rowspan="5" width="150px">收 款 人（客户）详细信息 &nbsp;</th>
 								<th>户 名&nbsp;<label
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-								<td colspan="3"><input name="payeeAccountName" validtype="NAME"
+								<td colspan="3"><input name="payeeAccountName" validtype="length[0,50]"
 									value="${bidBond.payeeAccountName}" type="text"
 									id="payeeAccountName" style="width: 100%; height: 100%"
 									class="easyui-validatebox span2" data-options="required:true" /></td>

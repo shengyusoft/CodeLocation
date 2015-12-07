@@ -112,6 +112,14 @@ public class ProjectBidServiceImpl implements ProjectBidServiceI {
 
 		return l;
 	}
+	
+	@Override
+	public List<ProjectBid> find(ProjectBid p) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String hql = " from ProjectBid t ";
+		List<ProjectBid> l = projectBidDao.find(hql + whereHql(p, params), params);
+		return l;
+	}
 
 	@Override
 	public Long count(ProjectBid p, PageFilter ph) {

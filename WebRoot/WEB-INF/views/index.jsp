@@ -171,9 +171,15 @@ a:hover {
 										</c:forEach>
 									</table>
 								</div>
-								<div id="task_to_do" title="我的待办" data-options="iconCls:'icon_rms_todo'"
+								<div id="task_to_do" title="我的任务" data-options="iconCls:'icon_rms_tasklist'"
 									style="padding: 10px; overflow: scroll;">
 									<table id="myTaskGrid" style="border: 0px; width: 480px;"
+										data-options="border:false"></table>
+								</div>
+								
+								<div id="tasks_to_do" title="我的待办" data-options="iconCls:'icon_rms_todo'"
+									style="padding: 10px; overflow: scroll;">
+									<table id="myTaskGrid2" style="border: 0px; width: 480px;"
 										data-options="border:false"></table>
 								</div>
 								

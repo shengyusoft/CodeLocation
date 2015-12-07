@@ -175,6 +175,7 @@
 						width : '100',
 						title : '管理费(元)',
 						align : 'center',
+						sum : true,
 						field : 'manageFee',
 						formatter : function(val,row,index){
 							if(row != null && row.state == 1){
@@ -216,10 +217,15 @@
 						align : 'center',
 						field : 'recordman'
 					} ] ],
-			onLoadSuccess:function(){
-			    //$('#dataGrid').datagrid('statistics');
+			onLoadSuccess:function(data){
 			    var footerObj = new Array();
-			    var obj = {bid_cost: "${totalBidCost}", index: "<b>合计:</b>"};
+			    var obj = 
+			    {
+			    	index: "<b>合计:</b>",
+			    	projectName: "<b>项目个数:</b>"+data.total,
+			    	bid_cost: data.dataMap.totalBidCost, 
+			    	manageFee: data.dataMap.totalManageFee, 
+			    };
 			   	footerObj.push(obj);
 			   	if(footerObj.length > 0){
 					$('#dataGrid').datagrid('reloadFooter',footerObj);

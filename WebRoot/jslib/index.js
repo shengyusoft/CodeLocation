@@ -14,8 +14,8 @@ function init() {
 	editTip();
 	taskRemind();// 任务提醒
 	//根据不同的用户权限显示不同的代办
-	//loadToDo();// 加载我的待办
-	loadToDo2();// 加载我的待办
+	loadToDo();// 加载我的待办
+	loadToDo2();// 加载我的任务
 }
 
 function loadindex() {
@@ -351,15 +351,20 @@ function detailRemind(id) {
 	});
 }
 
-var toDoGrid;
+//我的待办
+var toDoGrid2;
 function loadToDo() {
-	toDoGrid = $('#myTaskGrid').datagrid({
+	toDoGrid2 = $('#myTaskGrid2').datagrid({
 		url : ctxPath + '/admin/toDoGrid',
 		striped : true,
 		showHeader : false,
 		fit : true,
 		nowrap : true,
 		idField : 'id',
+		onLoadSuccess:function(data){
+			var todo = $('.icon_rms_todo').parent().children()[0];
+			todo.innerHTML="我的待办<font color='red'>("+data.rows.length+")</font>";
+		},
 		frozenColumns : [ [
 				{
 					id : 'img_tag',
@@ -401,18 +406,19 @@ function loadToDo() {
 					title : '操作',
 					formatter : function(value, row, index) {
 						var str = $.formatString(
-										'<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo(\'{0}\',\'{1}\');" >去处理</a>',
-										row.id, row.state);
+										'<a href="javascript:void(0)" style="text-decoration: underline;color:blue" onclick="handlerToDo(\'{0}\',\'{1}\',\'{2}\',\'{3}\');" >去处理</a>',
+										row.id,row.docId,row.state,row.processName);
 						return str;
 					}
 				} ] ],
 		toolbar : '#toolbar'
 	});
 	
-	$('#myTaskGrid').datagrid('getPanel').addClass('lines-no');
+	$('#myTaskGrid2').datagrid('getPanel').addClass('lines-no');
 }
 
-//加载任务分配待办
+//我的任务
+var toDoGrid;
 function loadToDo2() {
 	toDoGrid = $('#myTaskGrid').datagrid({
 		url : ctxPath + '/task/toDoGrid',
@@ -421,8 +427,8 @@ function loadToDo2() {
 		nowrap : true,
 		idField : 'id',
 		onLoadSuccess:function(data){
-			var todo = $('.icon_rms_todo').parent().children()[0];
-			todo.innerHTML="我的待办<font color='red'>("+data.rows.length+")</font>";
+			var todo = $('.icon_rms_tasklist').parent().children()[0];
+			todo.innerHTML="我的任务<font color='red'>("+data.rows.length+")</font>";
 		},
 		frozenColumns : [ [
 				{
@@ -506,7 +512,7 @@ function loadToDo2() {
 	});
 }
 
-//任务处理2
+//任务处理
 function handlerToDo2(id, state) {
 	var href = "",title = '';
 	if(state == 2){
@@ -527,7 +533,6 @@ function handlerToDo2(id, state) {
 				{
 					text : '保存',
 					handler : function() {
-						parent.$.modalDialog.openner_dataGrid = dataGrid;
 						var f = parent.$.modalDialog.handler.find('#taskEditForm');
 						f.submit();
 					}
@@ -541,21 +546,26 @@ function handlerToDo2(id, state) {
 
 }
 
-// 任务处理
-function handlerToDo(id, state) {
-	parent.$.modalDialog({
-		title : '报销审批',
+// 我的待办处理
+function handlerToDo(id,docId,state,processName) {
+	var obj = getHandlerInfoByProcessName(id,docId,processName);
+	if(obj == null){
+		alert('待办发生错误，请联系管理员');
+		return;
+	}
+	console.log(obj.title);
+	parent.parent.$.modalDialog({
+		title : obj.processName,
 		width : '900',
-		height : '650',
+		height : '600',
 		resizable : true,
-		href : ctxPath+'/reimbursementBatch/handlerPage?id='+id,
+		href : obj.href,
 		buttons : [
 				{
 					text : '通过',
 					handler : function() {
 						var f = parent.$.modalDialog.handler
-								.find('#processBatchForm');
-						parent.$.modalDialog.openner_dataGrid = dataGrid;
+								.find('#'+obj.formName);
 						parent.$.modalDialog.handler.find('#option').val(0);
 						f.submit();
 					}
@@ -563,8 +573,7 @@ function handlerToDo(id, state) {
 					text : '退回',
 					handler : function() {
 						var f = parent.$.modalDialog.handler
-								.find('#processBatchForm');
-						parent.$.modalDialog.openner_dataGrid = dataGrid;
+								.find('#'+obj.formName);
 						parent.$.modalDialog.handler.find('#option').val(1);
 						f.submit();
 					}
@@ -576,6 +585,31 @@ function handlerToDo(id, state) {
 				} ]
 	});
 
+}
+
+function getHandlerInfoByProcessName(id,docId,processName){
+	var obj = {};
+	if(isEmpty(processName)){
+		return null;
+	}
+	if(processName.indexOf('报销') >= 0){
+		obj.formName = 'processBatchForm';
+		obj.processName = '报销审批';
+		obj.href = ctxPath+'/reimbursementBatch/handlerPage?id='+id;
+	}else if(processName.indexOf('借款') >= 0){
+		obj.formName = 'processForm';
+		obj.processName = '借款审批';
+		obj.href = ctxPath+'/loanApprovalRegister/viewPage?viewType=handler&&id='+ docId;
+	}else if(processName.indexOf('租车') >= 0){
+		obj.formName = 'processForm';
+		obj.processName = '租车审批';
+		obj.href = ctxPath+'/carRentalReg/viewPage?viewType=handler&&id='+ docId;
+	}else if(processName.indexOf('业务费用') >= 0){
+		obj.formName = 'businessCostApprovalRegisterApprovalForm';
+		obj.processName = '业务费用审批';
+		obj.href = ctxPath + '/businessCostApprovalRegister/handlerPage?id=' + id;
+	}
+	return obj;
 }
 
 // 任务提醒
