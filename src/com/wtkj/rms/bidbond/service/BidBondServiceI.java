@@ -28,8 +28,16 @@ public interface BidBondServiceI {
 	public List<BidBondVo> findAll();
 
 	public long countAll(int type);
+	
+	public long countAll(int type,String idNumber);
 
 	public Long countByState(int i);
 
-	Long countByIdNumber(String idNumber);
+	/**
+	 * 通过类型和编号查询
+	 * @param idNumber
+	 * @param type
+	 * @return
+	 */
+	Long countByIdNumber(String idNumber,int type);
 }

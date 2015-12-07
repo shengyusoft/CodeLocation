@@ -121,13 +121,14 @@ public class ProcessServiceImpl implements ProcessServiceI {
 	@Override
 	public List<Process> findProcessByState(int state) {
 		String sql = "";
-		if (state > 0) {
+		if (state > 0 && state < 9) {
 			sql = " select * from process p where p.state=" + state;
+		} else if (state == 9) {//超级管理员查看所有的
+			sql = " select * from process p where p.state > 0";;
 		} else {
 			// 被退回的流程，用户重新申请
 			sql = " select * from process p where p.state < 0";
 		}
 		return processDao.findBySql(sql, Process.class);
 	}
-
 }

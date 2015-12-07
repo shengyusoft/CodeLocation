@@ -117,6 +117,28 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 		request.setAttribute("process", process);
 		return "/basic/businessCostApprovalRegister/approval";
 	}
+	
+	
+	//首页统一处理
+	@RequestMapping("/handlerPage")
+	public String handlerPage(HttpServletRequest request, Long id) {
+		// 流程
+		Process process = processService.get(id);
+		if (process == null || process.getApplyUser() == null || process.getDocId() == null) {
+			return "/error";
+		}
+		User user = userService.get(process.getApplyUser().getId());
+		process.setApplyUserName(user.getName());
+		process.setApplyUserId(user.getId());
+		
+		SessionInfo sessionInfo = 
+				(SessionInfo) request.getSession().getAttribute(GlobalConstant.SESSION_INFO);
+		String name = sessionInfo.getName();
+		request.setAttribute("name", name);
+		request.setAttribute("id", process.getDocId());
+		request.setAttribute("process", process);
+		return "/basic/businessCostApprovalRegister/approval";
+	}
 	/**
 	 * 查看流程
 	 * @param @param request
@@ -229,7 +251,7 @@ public class BusinessCostApprovalRegisterController extends BaseController {
 			Tuser tuser = new Tuser();
 			tuser.setId(user.getId());
 			// 流程名称：格式：用户名-类型-时间
-			process.setProcessName(user.getName() + "登记申请");
+			process.setProcessName(user.getName() + "业务费用登记申请");
 			process.setApplyUser(tuser);
 			process.setDocId(id);
 			process.setStartDT(new Date());

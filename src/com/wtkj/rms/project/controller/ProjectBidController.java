@@ -1,7 +1,8 @@
 package com.wtkj.rms.project.controller;
 
-import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,7 @@ import com.wtkj.common.PageFilter;
 import com.wtkj.common.controller.BaseController;
 import com.wtkj.common.model.User;
 import com.wtkj.common.service.DictionaryServiceI;
+import com.wtkj.common.utils.NumberUtils;
 import com.wtkj.rms.project.model.ProjectBid;
 import com.wtkj.rms.project.service.ProjectBidServiceI;
 
@@ -41,25 +43,34 @@ public class ProjectBidController extends BaseController {
 			request.setAttribute("flag", 0);
 		}
 
-		// 计算统计列
-		double totalBidCost = 0d;
-		List<ProjectBid> pbs = projectBidService.findAll();
-		for (ProjectBid p : pbs) {
-			totalBidCost += p.getBid_cost();
-		}
-
-		BigDecimal costDiget = new java.math.BigDecimal(totalBidCost);
-		java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
-		String costString = myformat.format(costDiget);
-		request.setAttribute("totalBidCost", costString);
 		return "/basic/project/projectBid";
-
 	}
 
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(ProjectBid projectBid, PageFilter ph) {
+	public Grid dataGrid(HttpServletRequest request, ProjectBid projectBid,
+			PageFilter ph) {
 		Grid grid = new Grid();
+
+		// 处理统计信息
+		List<ProjectBid> projectBids = projectBidService.find(projectBid);
+		double totalBidCost = 0d;
+		double totalManageFee = 0d;
+		for (ProjectBid p : projectBids) {
+			totalBidCost += p.getBid_cost();
+			totalManageFee += p.getManageFee();
+		}
+		Map<Object, Object> dataMap = new HashMap<Object, Object>();
+		grid.setDataMap(dataMap);
+		try {
+			dataMap.put("totalBidCost",
+					NumberUtils.parseNum2String(totalBidCost));
+			dataMap.put("totalManageFee",
+					NumberUtils.parseNum2String(totalManageFee));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		grid.setRows(projectBidService.dataGrid(projectBid, ph));
 		grid.setTotal(projectBidService.count(projectBid, ph));
 		return grid;
@@ -77,8 +88,8 @@ public class ProjectBidController extends BaseController {
 	public Json add(ProjectBid vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			
-			if(vo.getOption() == 1){
+
+			if (vo.getOption() == 1) {
 				vo.setState(1);
 			}
 			projectBidService.add(vo, request);
@@ -131,7 +142,7 @@ public class ProjectBidController extends BaseController {
 	public Json edit(ProjectBid vo, HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			if(vo.getOption() == 1){
+			if (vo.getOption() == 1) {
 				vo.setState(1);
 			}
 			projectBidService.edit(vo, request);
@@ -142,7 +153,7 @@ public class ProjectBidController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	@RequestMapping("/audit")
 	@ResponseBody
 	public Json audit(ProjectBid vo, HttpServletRequest request) {
@@ -167,14 +178,14 @@ public class ProjectBidController extends BaseController {
 		return "/basic/project/projectBidDetail";
 
 	}
-	
+
 	@RequestMapping("/auditPage")
 	public String auditPage(HttpServletRequest request, String id) {
 		ProjectBid vo = projectBidService.get(id);
 		request.setAttribute("projectBid", vo);
-		
+
 		return "/basic/project/projectBidAudit";
-		
+
 	}
 
 }

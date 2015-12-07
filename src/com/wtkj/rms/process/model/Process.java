@@ -43,6 +43,7 @@ public class Process extends IdEntity implements Serializable {
 	private String remark2;
 	private String applyUserName;
 	private Long applyUserId;
+	private String processType;
 
 	@Transient
 	public String getApplyUserName() {
@@ -146,6 +147,14 @@ public class Process extends IdEntity implements Serializable {
 
 	public void setRemark2(String remark2) {
 		this.remark2 = remark2;
+	}
+
+	public String getProcessType() {
+		return processType;
+	}
+
+	public void setProcessType(String processType) {
+		this.processType = processType;
 	}
 
 }

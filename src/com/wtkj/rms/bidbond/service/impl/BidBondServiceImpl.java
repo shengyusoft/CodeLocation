@@ -98,19 +98,19 @@ public class BidBondServiceImpl implements BidBondServiceI {
 		return bidBondDao.count(
 				"select count(*) " + hql + whereHql(vo, params), params);
 	}
-	
+
 	@Override
-	public Long countByIdNumber(String idNumber) {
+	public Long countByIdNumber(String idNumber, int type) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String hql = " from BidBond t ";
-		
-		//缴号，退号
+
+		// 缴号，退号
 		if (!StringUtils.isEmpty(idNumber)) {
-			hql += " where t.idNumber = :idNumber";
+			hql += " where t.idNumber = :idNumber and t.type =:type";
 			params.put("idNumber", idNumber);
+			params.put("type", type);
 		}
-		return bidBondDao.count(
-				"select count(*) " + hql, params);
+		return bidBondDao.count("select count(*) " + hql, params);
 	}
 
 	@Override
@@ -130,19 +130,19 @@ public class BidBondServiceImpl implements BidBondServiceI {
 				params.put("id", vo.getId());
 			}
 
-			//申请人ID查询
+			// 申请人ID查询
 			if (vo.getApplierId() != null && vo.getApplierId() > 0) {
 				hql += " and t.applier.id = :applierId";
 				params.put("applierId", vo.getApplierId());
 			}
 
-			//申请人姓名模糊查询
+			// 申请人姓名模糊查询
 			if (!StringUtils.isEmpty(vo.getApplierName())) {
 				hql += " and t.applier.name like :aName";
 				params.put("aName", "%%" + vo.getApplierName() + "%%");
 			}
-			
-			//申请时间范围查询
+
+			// 申请时间范围查询
 			if (vo.getStartDT() != null && vo.getEndDT() != null) {
 				hql += " and t.applyDT >= :startDT";
 				hql += " and t.applyDT <= :endDT";
@@ -155,20 +155,20 @@ public class BidBondServiceImpl implements BidBondServiceI {
 				hql += " and t.applyDT <= :endDT";
 				params.put("endDT", vo.getEndDT());
 			}
-			
-			//缴号，退号
+
+			// 缴号，退号
 			if (!StringUtils.isEmpty(vo.getIdNumber())) {
 				hql += " and t.idNumber like :idNumber";
 				params.put("idNumber", "%%" + vo.getIdNumber() + "%%");
 			}
-			
-			//项目名称
+
+			// 项目名称
 			if (!StringUtils.isEmpty(vo.getProjectName())) {
 				hql += " and t.projectName like :pname";
 				params.put("pname", "%%" + vo.getProjectName() + "%%");
 			}
-			
-			//类型，批量报销或者单独报销
+
+			// 类型，批量报销或者单独报销
 			if (vo.getType() >= 0) {
 				hql += " and t.type = :type";
 				params.put("type", vo.getType());
@@ -227,7 +227,7 @@ public class BidBondServiceImpl implements BidBondServiceI {
 			vo.setHandlerId(handler.getId());
 			vo.setHandlerName(handler.getName());
 		}
-		
+
 		if (po.getHandler2() != null) {
 			Tuser handler = userDao.get(Tuser.class, po.getHandler2().getId());
 			vo.setHandlerId2(handler.getId());
@@ -245,8 +245,18 @@ public class BidBondServiceImpl implements BidBondServiceI {
 	public long countAll(int type) {
 		// 根据类型获取总数
 		Map<String, Object> params = new HashMap<String, Object>();
-		String hql = "select count(*) from BidBond t where t.type=:type";
+		String hql = "select count(*) from BidBond t where t.type = :type";
 		params.put("type", type);
+		return bidBondDao.count(hql, params);
+	}
+
+	@Override
+	public long countAll(int type, String idNumber) {
+		// 根据类型获取总数
+		Map<String, Object> params = new HashMap<String, Object>();
+		String hql = "select count(*) from BidBond t where t.type=:type and t.idNumber like :idNumber";
+		params.put("type", type);
+		params.put("idNumber", idNumber + "%%");
 		return bidBondDao.count(hql, params);
 	}
 
