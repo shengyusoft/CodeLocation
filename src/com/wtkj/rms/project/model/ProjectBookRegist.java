@@ -32,6 +32,7 @@ public class ProjectBookRegist extends IdEntity implements java.io.Serializable 
 	private static final long serialVersionUID = 6625249529038114020L;
 	private String projectName;// 项目名称
 	private Tdictionary company;// 公司名称
+	
 	private String qualifyRequirement;// 资质要求
 	private String bidder;// 投标人姓名
 	private String contract;// 联系方式
@@ -44,6 +45,16 @@ public class ProjectBookRegist extends IdEntity implements java.io.Serializable 
 	private Long registerId;
 
 	private String registerName;
+
+	private String projectType;// 项目类型
+	
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
 
 	public String getProjectName() {
 		return projectName;
