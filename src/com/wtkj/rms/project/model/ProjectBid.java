@@ -76,6 +76,16 @@ public class ProjectBid extends IdEntity implements java.io.Serializable {
 	private int state = 0;
 
 	private int option;
+	
+	private String projectType;// 项目类型
+	
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
