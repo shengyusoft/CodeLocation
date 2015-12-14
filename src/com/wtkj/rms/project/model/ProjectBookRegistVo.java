@@ -2,6 +2,8 @@ package com.wtkj.rms.project.model;
 
 import java.util.Date;
 
+import com.wtkj.common.model.Tdictionary;
+
 /**
  * 投标项目预定登记表（登陆员工填写该表）
  * 
@@ -25,6 +27,8 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 	private Date registDT;// 登记时间
 	private String remark;// 备注
 
+	private String projectType;// 项目类型
+	
 	// for search
 	private Date st;// 登记时间
 	private Date et;// 登记时间
@@ -32,6 +36,15 @@ public class ProjectBookRegistVo implements java.io.Serializable {
 	private Long registerId;
 
 	private String registerName;
+
+	
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
 
 	public Long getCompanyId() {
 		return companyId;
