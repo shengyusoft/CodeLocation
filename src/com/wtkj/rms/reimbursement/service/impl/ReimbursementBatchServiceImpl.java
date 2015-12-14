@@ -120,7 +120,7 @@ public class ReimbursementBatchServiceImpl implements
 					params.put("state", 1);
 					params.put("userId", user.getId());
 				} else if (user.getRoleNames().indexOf("总经理") >= 0) {
-					hql += " and (t.process.state >= :state or t.process.applyUser.id = :userId)";
+					hql += " and (t.process.state >= :state or t.locked=1 or t.process.applyUser.id = :userId)";
 					params.put("userId", user.getId());
 					params.put("state", 2);
 				} else if (user.getRoleNames().indexOf("出纳") >= 0) {
