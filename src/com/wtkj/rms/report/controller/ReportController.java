@@ -493,6 +493,88 @@ public class ReportController extends BaseController {
 		return new ModelAndView("scoreCutRegister", parameterMap);
 	}
 
+	/**
+	 * 项目报名登记
+	 * @param @param ids
+	 * @param @param type
+	 * @param @param request
+	 * @param @return
+	 * @param @throws IOException
+	 */
+	@RequestMapping("/projectRegistBaoMing")
+	public ModelAndView projectRegistBaoMing(String ids, int type,
+			HttpServletRequest request) throws IOException {
+
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		String str = " where 1=1 ";
+		if (ids != null && !"".equals(ids)) {
+			str += " and t.id in (" + ids + ")";
+		}
+		parameterMap.put("whereSQL", str);
+
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+
+		return new ModelAndView("ProjectRegist_baoming", parameterMap);
+	}
+	/**
+	 * 项目开标登记
+	 * @param @param ids
+	 * @param @param type
+	 * @param @param request
+	 * @param @return
+	 * @param @throws IOException
+	 */
+	@RequestMapping("/projectRegistKaiBiao")
+	public ModelAndView projectRegistKaiBiao(String ids, int type,
+			HttpServletRequest request) throws IOException {
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		String str = " where 1=1 ";
+		if (ids != null && !"".equals(ids)) {
+			str += " and t.id in (" + ids + ")";
+		}
+		parameterMap.put("whereSQL", str);
+		
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+		
+		return new ModelAndView("projectregist_kaibiao", parameterMap);
+	}
+	/**
+	 * 证书管理
+	 * @param @param ids
+	 * @param @param type
+	 * @param @param request
+	 * @param @return
+	 * @param @throws IOException
+	 */
+	@RequestMapping("/tbCertificate")
+	public ModelAndView tbCertificate(String ids, int type,
+			HttpServletRequest request) throws IOException {
+		
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		String str = " where 1=1 ";
+		if (ids != null && !"".equals(ids)) {
+			str += " and t.id in (" + ids + ")";
+		}
+		parameterMap.put("whereSQL", str);
+		
+		if (type == 0) {
+			parameterMap.put("format", "pdf");
+		} else {
+			parameterMap.put("format", "xls");
+		}
+		
+		return new ModelAndView("tb_certificate", parameterMap);
+	}
+	
 	/*-----------------------------结束-----------------------------*/
 
 }
