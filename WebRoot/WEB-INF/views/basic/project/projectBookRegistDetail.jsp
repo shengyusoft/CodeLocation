@@ -3,6 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});	
+	var projectType = '${projectBookRegist.projectType}';
+	$('#projectType').combobox('setValue', projectType);
 	//资质要求
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
@@ -39,10 +48,16 @@
 				<tr>
 					<th>公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><input name="companyName"
+					<td><input name="companyName"
 						value="${projectBookRegist.companyName}" style="width: 100%;"
 						type="text" id="companyName" class="easyui-validatebox span2"
 						readonly="readonly" /></td>
+					<th>项目类型 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="projectType" name="projectType"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
+					</select></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

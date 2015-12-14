@@ -189,13 +189,29 @@
 	    defaultValue:'--请选择--',
 	    value:'${projectBid.county.id}'
 	});
-	
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});	
+	var projectType = '${projectBid.projectType}';
+	$('#projectType').combobox('setValue', projectType);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
 		<form id="projectBidEditForm" method="post">
 			<table class="grid">
+				<tr>
+					<th>项目名称 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td colspan="5"><input name="projectName"
+						value="${projectBid.projectName}" style="width: 100%;" type="text"
+						id="projectName" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+				</tr>
 				<tr>
 					<th width="150px">公司名称 &nbsp;</th>
 					<td>
@@ -205,17 +221,17 @@
 							style="width: 180px;">
 						</select>
 					</td>
-					<th width="150px">项目名称 &nbsp;<label
-						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input name="projectName"
-						value="${projectBid.projectName}" style="width: 100%;" type="text"
-						id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
 					<th width="120px">标段 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="bd" name="bds"
 						class="easyui-validatebox span2" style="width: 150px;"
 						data-options="editable:false,required:true">
+					</select></td>
+					<th>项目类型 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="projectType" name="projectType"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
 					</select></td>
 				</tr>
 				<tr>

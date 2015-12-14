@@ -183,12 +183,27 @@
 		editable : false,//不可编辑，只能选择
 		value : '--请选择--'
 	});
+	
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
 		style="overflow: hidden; padding: 3px;">
 		<form id="projectBidRegistAddForm" method="post">
 			<table class="grid">
+				<tr>
+					<th width="100px">项目名称 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td colspan="3"><input name="projectName" style="width: 100%;" type="text"
+						id="projectName" class="easyui-validatebox span2"
+						data-options="required:true" /></td>
+				</tr>
 				<tr>
 					<th width="90px">公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
@@ -199,13 +214,12 @@
 						data-options="required:true" class="easyui-validatebox span2"
 						style="width:150px;">
 					</select></td>
-				</tr>
-				<tr>
-					<th width="100px">项目名称 &nbsp;<label
+					<th>项目类型 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="3"><input name="projectName" style="width: 100%;" type="text"
-						id="projectName" class="easyui-validatebox span2"
-						data-options="required:true" /></td>
+					<td><select id="projectType" name="projectType"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
+					</select></td>
 				</tr>
 				<tr>
 					<th>地点 &nbsp;<label

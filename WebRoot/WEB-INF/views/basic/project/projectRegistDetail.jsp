@@ -191,7 +191,16 @@
 		editable : false,//不可编辑，只能选择
 		defaultValue : '--请选择--',
 		value : '${projectRegist.county.id}'
-	});				
+	});		
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});
+	var projectType = '${projectRegist.projectType}';
+	$('#projectType').combobox('setValue', projectType);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -202,6 +211,14 @@
 					<td colspan="4" style="padding: 0px;">
 						<table cellspacing="0" cellpadding="0" class="innerGrid">
 							<tr>
+								<th width="100px">项目名称 &nbsp;<label
+									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+								<td colspan="3"><input name="projectName"
+									value="${projectRegist.projectName}" style="width: 100%;"
+									type="text" id="projectName" class="easyui-validatebox span2"
+									data-options="required:true" /></td>
+							</tr>
+							<tr>
 								<th width="91px">公司名称 &nbsp;</th>
 								<td width="155px"><input type="hidden" name="id" id="id"
 									value="${projectRegist.id}"></input> <input type="hidden"
@@ -209,12 +226,12 @@
 									id="company" name="company.id" data-options="required:true"
 									class="easyui-validatebox span2" style="width: 100%;">
 								</select></td>
-								<th width="100px">项目名称 &nbsp;<label
+								<th>项目类型 &nbsp;<label
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-								<td><input name="projectName"
-									value="${projectRegist.projectName}" style="width: 100%;"
-									type="text" id="projectName" class="easyui-validatebox span2"
-									data-options="required:true" /></td>
+								<td><select id="projectType" name="projectType"
+									class="easyui-validatebox span2" 
+									data-options="editable:false,required:true" style="width: 180px;">
+								</select></td>
 							</tr>
 						</table>
 					</td>

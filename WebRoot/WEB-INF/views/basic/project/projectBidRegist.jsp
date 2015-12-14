@@ -412,6 +412,31 @@
 			}]
 		});
 	}
+	
+	// 打印导出
+	function printFun(type) {
+		var selected = "";
+		var rows = dataGrid.datagrid('getSelections');
+		if (rows != null && rows.length != 0) {
+			selected = getSelected();
+		}
+		var url = ctxPath + "/report/projectRegistKaiBiao?type=" + type + "&ids=" + selected;
+		console.log(url);
+		if(type == 0){
+			var tmp = window.open (
+					url,
+					'newwindow',
+					'width='+(window.screen.availWidth-10)+
+					',height='+(window.screen.availHeight-30)+ 
+					',top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no'
+			);
+			
+			tmp.focus();
+		}else{
+			var tmp = window.open(url);
+			tmp.focus();
+		}
+	}
 </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
@@ -487,6 +512,14 @@
 					color="gray">过期审核</font> </a>
 			</c:otherwise>
 		</c:choose>
+		
+		<a onclick="printFun(1);" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
+		<a onclick="printFun(0);" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览 </a>
+		
 		<a onclick="searchFun();" href="javascript:void(0);"
 			class="easyui-linkbutton"
 			data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a> 

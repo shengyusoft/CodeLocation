@@ -33,7 +33,15 @@
 		valueField : 'id',
 		textField : 'text',
 		panelHeight : 'auto'
-	});				
+	});	
+	
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});	
 
 	$('#qualifyRequirement').combobox({
 		url : "${pageContext.request.contextPath}/dictionary/combox?code=zzyq",
@@ -70,9 +78,15 @@
 				<tr>
 					<th>项目名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td colspan="5"><input name="projectName" style="width: 100%;" type="text"
+					<td><input name="projectName" style="width: 100%;" type="text"
 						id="projectName" class="easyui-validatebox span2"
 						data-options="required:true" /></td>
+					<th>项目类型 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="projectType" name="projectType"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
+					</select></td>
 				</tr>
 				<tr>
 					<th>投标人姓名&nbsp;<label

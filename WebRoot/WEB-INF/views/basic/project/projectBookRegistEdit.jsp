@@ -51,6 +51,16 @@
 	var qfs = '${projectBookRegist.qualifyRequirement}';
 	selectedQFs = qfs.split(',');
 	$('#qualifyRequirement').combobox('setValues', selectedQFs);
+	
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});	
+	var projectType = '${projectBookRegist.projectType}';
+	$('#projectType').combobox('setValue', projectType);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -76,6 +86,12 @@
 					<th>公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><select id="company" name="companyId"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
+					</select></td>
+					<th>项目类型 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="projectType" name="projectType"
 						class="easyui-validatebox span2"
 						data-options="editable:false,required:true" style="width: 180px;">
 					</select></td>

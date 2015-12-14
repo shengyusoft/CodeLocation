@@ -162,6 +162,14 @@
 	    value:'--请选择--'
 	});
 	
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});	
+	
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -171,8 +179,6 @@
 				<tr>
 					<th width="120px">公司名称 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-						
-						
 					<td>
 						<input type="hidden" name="option" id="option" value="0"></input>
 						<select id="company" name="company.id" class="easyui-validatebox span2" 
@@ -185,6 +191,13 @@
 					<td><select id="bd" name="bds"
 						class="easyui-validatebox span2" style="width: 150px;"
 						data-options="editable:false,required:true">
+					</select></td>
+					
+					<th>项目类型 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+					<td><select id="projectType" name="projectType"
+						class="easyui-validatebox span2"
+						data-options="editable:false,required:true" style="width: 180px;">
 					</select></td>
 				</tr>
 				<tr>
