@@ -199,19 +199,25 @@ public class ReimbursementBatchController extends BaseController {
 			HttpServletRequest request) {
 		Json j = new Json();
 		try {
-			//验证每月1-7号提交上月的报销单
-			//申请报销的月份
+			// 验证每月1-7号提交上月的报销单
+			// 申请报销的月份
 			Date applyMonth = reimbursementBatch.getMonth();
-			//上个月今天
+			// 上个月今天
 			Date now = new Date();
 			Date lastMonth = DateUtil.dateAdd(now, Calendar.MONTH, -1);
-			if(now.getDate() > 7 || (lastMonth.getMonth() != applyMonth.getMonth())){
-				j.setSuccess(false);
-				j.setObj(reimbursementBatch);
-				j.setMsg("注：每月1-7号提交上月的报销单！");
-				return j;
+			// 非过期审核通过
+			if (reimbursementBatch.getLocked() < 2) {
+				if (now.getDate() > 7
+						|| (lastMonth.getMonth() != applyMonth.getMonth())) {
+					// 设置为过期申请
+					reimbursementBatch.setLocked(1);
+					reimbursementBatchService.edit(reimbursementBatch, request);
+					j.setSuccess(true);
+					j.setObj(reimbursementBatch);
+					j.setMsg("此次为过期申请（注:每月1-7号提交上月的报销单！）");
+					return j;
+				}
 			}
-			
 			Long userId = getSessionInfo(request).getId();
 			User user = userService.get(userId);
 			Tuser tuser = new Tuser();
@@ -249,15 +255,16 @@ public class ReimbursementBatchController extends BaseController {
 				// 第一次申请提交报销单
 				Long docId = reimbursementBatch.getId();
 				Date month = reimbursementBatch.getMonth();
-				if (docId!= null && docId > 0) {
+				if (docId != null && docId > 0) {
 					reimbursementBatch = reimbursementBatchService.get(docId);
 					reimbursementBatch.setMonth(month);
 					reimbursementBatchService.edit(reimbursementBatch, request);
 
-				}else{
-					docId = reimbursementBatchService.add(reimbursementBatch,request);
+				} else {
+					docId = reimbursementBatchService.add(reimbursementBatch,
+							request);
 				}
-						
+
 				// 提交后保存流程以及流程历史操作记录
 				Process process = new Process();
 				if (user == null) {
@@ -369,17 +376,17 @@ public class ReimbursementBatchController extends BaseController {
 		}
 		return "/basic/reimbursementBatch/reimbursementBatchEdit";
 	}
-	
+
 	@RequestMapping("/auditPage")
 	public String auditPage(HttpServletRequest request, Long id) {
 		ReimbursementBatch ReimbursementBatch = reimbursementBatchService
 				.get(id);
-		
+
 		if (ReimbursementBatch != null) {
 			request.setAttribute("reimbursementBatch",
 					convert2Vo(ReimbursementBatch));
 		}
-		
+
 		return "/basic/reimbursementBatch/reimbursementBatchAudit";
 	}
 
@@ -470,16 +477,16 @@ public class ReimbursementBatchController extends BaseController {
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_top_manger");
 							updateHistory(request, user, po,
-									"会计：" + user.getName() + "审批通过,下一步执行人为 总经理：:"
-											+ op);
+									"会计：" + user.getName()
+											+ "审批通过,下一步执行人为 总经理：:" + op);
 
 						} else if (roleNames.indexOf("总经理") >= 0) {
 							po.setState(ProcessStateConstant.BX_AUDIT_ZJL);// 总经理审批通过
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_cashier");
 							updateHistory(request, user, po,
-									"总经理：" + user.getName() + "审批通过,下一步执行人为 出纳:"
-											+ op);
+									"总经理：" + user.getName()
+											+ "审批通过,下一步执行人为 出纳:" + op);
 						} else if (roleNames.indexOf("出纳") >= 0) {
 							po.setState(ProcessStateConstant.BX_CN);// 出纳成功，流程结束
 							vo.setEndDT(new Date());
@@ -581,6 +588,36 @@ public class ReimbursementBatchController extends BaseController {
 			j.setMsg(e.getMessage());
 		}
 
+		return j;
+	}
+
+	// 过期审核
+	@RequestMapping("/expiredPage")
+	public String expiredPage(HttpServletRequest request, Long id) {
+		ReimbursementBatch r = reimbursementBatchService.get(id);
+
+		if (r != null) {
+			request.setAttribute("reimbursementBatch", convert2Vo(r));
+		}
+		return "/basic/reimbursementBatch/reimbursementBatchExpired";
+	}
+
+	@RequestMapping("/expireAudit")
+	@ResponseBody
+	public Json expireAudit(ReimbursementBatch r, HttpServletRequest request) {
+		Json j = new Json();
+		try {
+			if (r.getId() != null && r.getId() > 0) {
+				r = reimbursementBatchService.get(r.getId());
+				r.setLocked(2);// 过期审核通过
+				reimbursementBatchService.edit(r, request);
+			}
+			j.setSuccess(true);
+			// j.setObj(r);
+			j.setMsg("过期审核成功！");
+		} catch (Exception e) {
+			j.setMsg(e.getMessage());
+		}
 		return j;
 	}
 

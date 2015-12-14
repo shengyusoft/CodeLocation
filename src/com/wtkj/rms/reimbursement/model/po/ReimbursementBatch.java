@@ -40,7 +40,7 @@ public class ReimbursementBatch extends IdEntity implements Serializable {
 
 	private int option;
 
-	// 过期申请的话锁住该申请
+	// 过期申请的话锁住该申请,0正常提交1过期提交
 	private int locked = 0;
 
 	// @NotNull

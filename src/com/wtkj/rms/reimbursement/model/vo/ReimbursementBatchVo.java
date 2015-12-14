@@ -16,9 +16,9 @@ public class ReimbursementBatchVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	
+
 	private Date month;
-	
+
 	private ProcessVo process_vo;
 
 	private Date createDT;
@@ -26,6 +26,8 @@ public class ReimbursementBatchVo implements Serializable {
 	private Double totalFee;
 
 	private int option;
+
+	private int locked = 0;
 
 	public Long getId() {
 		return id;
@@ -73,6 +75,14 @@ public class ReimbursementBatchVo implements Serializable {
 
 	public void setOption(int option) {
 		this.option = option;
+	}
+
+	public int getLocked() {
+		return locked;
+	}
+
+	public void setLocked(int locked) {
+		this.locked = locked;
 	}
 
 }
