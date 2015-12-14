@@ -101,6 +101,15 @@ public class BidBondVo implements Serializable {
 
 	private String remark3;// 会计备注
 
+	private String projectType;// 项目类型
+	
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
 	public String getRemark() {
 		return remark;
 	}

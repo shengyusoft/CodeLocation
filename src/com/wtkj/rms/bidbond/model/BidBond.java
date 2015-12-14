@@ -108,6 +108,16 @@ public class BidBond extends IdEntity implements Serializable {
 
 	private String remark3;// 保证金备注(财务会计备注)
 
+	private String projectType;// 项目类型
+	
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
+	
 	public String getIdNumber() {
 		return idNumber;
 	}

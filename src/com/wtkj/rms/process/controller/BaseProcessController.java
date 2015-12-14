@@ -48,13 +48,10 @@ public abstract class BaseProcessController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unused")
 	protected Process updateProcess(HttpServletRequest request, Long processId,
 			String processName, Long docId, User user, int state)
 			throws Exception {
 		Process process = null;
-		Tuser tuser = new Tuser();
-		tuser.setId(user.getId());
 		if (user == null) {
 			throw new Exception("操作人为空！请重新登录");
 		}
@@ -67,6 +64,8 @@ public abstract class BaseProcessController extends BaseController {
 			processService.edit(process, request);
 		} else {
 			// 第一次创建流程
+			Tuser tuser = new Tuser();
+			tuser.setId(user.getId());
 			process = new Process();
 			process.setProcessName(user.getName() + processName);
 			process.setDocId(docId);
@@ -75,8 +74,8 @@ public abstract class BaseProcessController extends BaseController {
 			process.setArriveDT(new Date());
 			process.setState(state);
 			processId = processService.add(process, request);
-			process = processService.get(processId);
 		}
+		process = processService.get(processId);
 		return process;
 	}
 
