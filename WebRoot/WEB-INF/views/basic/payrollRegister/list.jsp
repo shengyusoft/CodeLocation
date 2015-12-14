@@ -39,29 +39,6 @@
 							}
 						}, {
 							width : '120',
-							title : '状态',
-							sortable : true,
-							align : 'center',
-							field : 'processFlag',
-							formatter : function (value, row, index) {
-								if(value == "0"){
-									return "初始化";
-								}else if(value == "1"){
-									return '<font color="green">已申请</font>';
-								}else if(value == "2"){
-									return '<font color="green">会计审批通过</font>';
-								}else if(value == "3"){
-									return '<font color="green">总经理审批通过</font>';
-								}else if(value == "4"){
-									return '<font color="green">【财务出纳成功】</font>';
-								}else if(value == "-2"){
-									return '<font color="red">【会计审核退回】</font>';
-								}else if(value == "-3"){
-									return '<font color="red">【总经理审核退回】</font>';
-								}
-							}
-						}, {
-							width : '120',
 							title : '姓名',
 							sortable : true,
 							align : 'center',
@@ -138,7 +115,30 @@
 							title : '备注',
 							align : 'center',
 							field : 'remark'
-						}
+						}, {
+							width : '120',
+							title : '状态',
+							sortable : true,
+							align : 'center',
+							field : 'processFlag',
+							formatter : function (value, row, index) {
+								if(value == "0"){
+									return "初始化";
+								}else if(value == "1"){
+									return '<font color="green">已申请</font>';
+								}else if(value == "2"){
+									return '<font color="green">会计审批通过</font>';
+								}else if(value == "3"){
+									return '<font color="green">总经理审批通过</font>';
+								}else if(value == "4"){
+									return '<font color="green">【财务出纳成功】</font>';
+								}else if(value == "-2"){
+									return '<font color="red">【会计审核退回】</font>';
+								}else if(value == "-3"){
+									return '<font color="red">【总经理审核退回】</font>';
+								}
+							}
+						},
 					]],
 	
 				toolbar : '#toolbar'
@@ -358,7 +358,7 @@
 		parent.$.modalDialog({
 			title : '流程详情',
 			autoScroll : true,
-			width : document.body.clientWidth * 0.7,
+			width : document.body.clientWidth * 0.85,
 			height : document.body.clientHeight * 1,
 			href : '${ctx}/payrollRegister/approvalDetailPage?id=' + id,
 			buttons : [ {

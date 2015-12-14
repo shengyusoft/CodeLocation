@@ -65,6 +65,15 @@ input {
 		selectedBds = bss.split(',');
 		$('#bidSection').combobox('setValues', selectedBds);
 	}
+	$('#projectType').combobox({
+		url : "${pageContext.request.contextPath}/dictionary/combox?code=projectType",
+		parentField : 'dictionaryId',
+		valueField : 'text',
+		textField : 'text',
+		panelHeight : 'auto'
+	});	
+	var projectType = '${bidBond.projectType}';
+	$('#projectType').combobox('setValue', projectType);
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title=""
@@ -97,6 +106,12 @@ input {
 								<td><select id="bidSection" name="bidSection"
 									class="easyui-validatebox span2" style="width: 200px;"
 									data-options="editable:false,required:true">
+								</select></td>
+								<th>项目类型 &nbsp;<label
+									style="color: red; vertical-align: middle; text-align: center;">*</label></th>
+								<td><select id="projectType" name="projectType"
+									class="easyui-validatebox span2"
+									data-options="editable:false,required:true" style="width: 180px;">
 								</select></td>
 								<th>保证金数额（元）&nbsp;<label
 									style="color: red; vertical-align: middle; text-align: center;">*</label></th>

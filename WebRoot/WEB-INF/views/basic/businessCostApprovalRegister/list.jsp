@@ -274,7 +274,7 @@
 		parent.$.modalDialog({
 			title : '费用支付审批',
 			width : '800',
-			height : '520',
+			height : '620',
 			resizable : true,
 			href : ctxPath + '/businessCostApprovalRegister/approvalPage?id=' + id + '&processId=' + processId,
 			buttons : [{

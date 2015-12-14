@@ -81,5 +81,20 @@
 		<property name="url" value="/WEB-INF/reports/score_cut_register.jasper" />
 		<property name="jdbcDataSource" ref="dataSource" />
 	</bean>
+	<!--项目报名登记-->
+	<bean id="ProjectRegist_baoming" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/ProjectRegist_baoming.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	<!--项目开标登记-->
+	<bean id="projectregist_kaibiao" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/projectregist_kaibiao.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
+	<!--证书管理-->
+	<bean id="tb_certificate" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="/WEB-INF/reports/tb_certificate.jasper" />
+		<property name="jdbcDataSource" ref="dataSource" />
+	</bean>
 	<!--**************************结束**************************-->
 </beans>
