@@ -91,6 +91,15 @@ public class ProjectRegistVo implements java.io.Serializable {
 
 	private int state = 0;
 
+	private String projectType;// 项目类型
+	
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
 	public Long getId() {
 		return id;
 	}

@@ -112,6 +112,16 @@ public class ProjectRegist extends IdEntity implements java.io.Serializable {
 	// 超期状态
 	private int state = 0;
 
+	private String projectType;// 项目类型
+	
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
+	
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id")
