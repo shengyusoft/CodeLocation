@@ -329,8 +329,10 @@
 				<tr>
 					<th>月份 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input id="batchId" type="hidden" value="${reimbursementBatch.id}"
-						name="id"><input type="hidden" name="option" id="option" value="" />
+					<td>
+						<input id="batchId" type="hidden" value="${reimbursementBatch.id}" name="id">
+						<input type="hidden" name="option" id="option" value="" />
+						<input type="hidden" id="locked" value="${reimbursementBatch.locked}" name="locked">
 						<input type="hidden" name="process.id" value="${reimbursementBatch.process_vo.id}" />
 						<input class="Wdate" type="text" name="month" id="month"
 						style="width: 68%; height: 100%;" data-options="required:true"

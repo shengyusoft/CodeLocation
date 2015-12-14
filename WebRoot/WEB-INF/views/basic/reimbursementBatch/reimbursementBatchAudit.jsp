@@ -203,7 +203,7 @@
 					}
 				}
 			}, {
-				width : '90',
+				width : '120',
 				title : '报销人',
 				sortable : true,
 				align : 'center',
@@ -213,20 +213,34 @@
 					return isEmpty(process)?'':process.applyUserName;
 				}
 			}, {
-				width : '350',
+				width : '200',
 				title : '报销月份',
 				sortable : true,
 				align : 'center',
 				field : 'month',
 				formatter : Common.formatterMonth
 			}, {
-				width : '350',
+				width : '200',
 				title : '申请时间',
 				align : 'center',
 				field : 'process',
 				formatter : function(value, row, index){
 					var process = row.process_vo;
 					return isEmpty(process)?'':Common.formatter(process.startDT);
+				}
+			}, {
+				width : '200',
+				title : '过期状态',
+				align : 'center',
+				sortable : true,
+				field : 'locked',
+				formatter : function(value, row, index) {
+					var locked = row.locked;
+					if(locked == 1){
+						return '<font color="red">过期申请</font>';
+					}else if(locked == 2){
+						return '<font color="blue">过期审核通过</font>';
+					}
 				}
 			}, {
 				width : '300',
@@ -539,6 +553,51 @@
 		});
 	}
 	
+	//过期审核
+	function expiredFun() {
+		var rows = dataGrid.datagrid('getSelections');
+		var expired = rows[0].locked;
+		var id=rows[0].id;
+		if (rows == null || rows.length == 0) {
+			parent.$.messager.alert('警告', '没有审核对象!');
+			return;
+		}
+
+		if (rows.length > 1) {
+			parent.$.messager.alert('警告', '只能审核一条记录!');
+			return;
+		}
+		
+		if(!expired){
+			parent.$.messager.alert('警告', '非过期申请，无需过期审核!');
+			return;
+		}
+		
+		parent.$.modalDialog({
+			title : '报销过期审批',
+			width : '1000',
+			height : '650',
+			resizable : true,
+			href : ctxPath+'/reimbursementBatch/expiredPage?id='+id,
+			buttons : [
+					{
+						text : '通过',
+						handler : function() {
+							var f = parent.$.modalDialog.handler
+									.find('#reimbursementBatchExpiredForm');
+							parent.$.modalDialog.openner_dataGrid = dataGrid;
+							parent.$.modalDialog.handler.find('#option').val(0);
+							f.submit();
+						}
+					}, {
+						text : '退出',
+						handler : function() {
+							parent.$.modalDialog.handler.dialog('close');
+						}
+					} ]
+		});
+	}
+	
 	function printFun(type) {
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
@@ -654,6 +713,20 @@
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
 					color="gray">审核</font> </a>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/expiredPage')}">
+				<a onclick="expiredFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit'">过期审核 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
+					color="gray">过期审核</font> </a>
 			</c:otherwise>
 		</c:choose>
 		

@@ -240,6 +240,11 @@
 				align : 'center',
 				field : 'process_vo',
 				formatter : function(value, row, index) {
+					var locked = row.locked;
+					if(locked){
+						return '过期申请';
+					}
+					
 					if (value != null) {
 						switch (value.state) {
 						case 0:
@@ -659,6 +664,20 @@
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
 					color="gray">审核</font> </a>
+			</c:otherwise>
+		</c:choose>
+		
+		<c:choose>
+			<c:when
+				test="${fn:contains(sessionInfo.resourceList, '/reimbursementBatch/handlerPage')}">
+				<a onclick="auditFun();" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit'">过期审核 </a>
+			</c:when>
+			<c:otherwise>
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_audit_disabled'"><font
+					color="gray">过期审核</font> </a>
 			</c:otherwise>
 		</c:choose>
 		
