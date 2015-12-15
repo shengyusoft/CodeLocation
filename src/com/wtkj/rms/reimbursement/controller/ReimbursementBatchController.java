@@ -137,6 +137,7 @@ public class ReimbursementBatchController extends BaseController {
 			HttpServletRequest request) {
 		Json j = new Json();
 		try {
+			reimbursementBatch.setProcess(null);
 			Long docId = reimbursementBatchService.add(reimbursementBatch,
 					request);
 
@@ -347,8 +348,8 @@ public class ReimbursementBatchController extends BaseController {
 		}
 
 		try {
-			// 级联删除流程信息
-			processService.deleteByDocIds(ids);
+			// 级联删除流程信息,prolem:会导致删除其他业务的流程
+			//processService.deleteByDocIds(ids);
 			// 历史记录外键关联流程，流程删除时自动删除历史记录
 			reimbursementBatchService.delete(ids);
 			j.setMsg("删除成功！");
