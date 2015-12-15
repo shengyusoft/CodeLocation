@@ -324,6 +324,8 @@
 							},
 							{
 								text : '申请',
+								id:'applyBtn',
+								disabled : true,
 								handler : function() {
 									parent.$.modalDialog.openner_dataGrid = dataGrid;
 									parent.$.modalDialog.handler

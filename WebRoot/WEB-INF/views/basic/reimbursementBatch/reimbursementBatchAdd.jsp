@@ -27,10 +27,11 @@
 				result = $.parseJSON(result);
 				if (result.success) {
 					$("#batchRegistBtn").linkbutton("disable");
-					if (result.obj) {
-						console.log(result.obj);
-						console.log(result.obj.id);
-						$('#batchId').val(result.obj.id);
+					$("#applyBtn").linkbutton("enable");
+					var rbc = result.obj;
+					if (rbc != null) {
+						$('#batchId').val(rbc.id);
+						$('#processId').val(rbc.process.id);
 					}
 					//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
 					parent.$.modalDialog.openner_dataGrid
@@ -41,7 +42,7 @@
 				}
 			}
 		});
-		
+		$("#applyBtn").linkbutton("disable");
 		detailGridRegist();
 	});
 
@@ -353,9 +354,11 @@
 				<tr>
 					<th>月份 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
-					<td><input id="batchId" type="hidden" name="id"><input
-						type="hidden" name="option" id="option" value="" /> <input
-						class="Wdate" type="text" name="month" id="month"
+					<td>
+						<input id="batchId" type="hidden" name="id"/>
+						<input id="processId" type="hidden" name="process.id" />
+						<input type="hidden" name="option" id="option" /> 
+						<input class="Wdate" type="text" name="month" id="month"
 						style="width: 68%; height: 100%;" data-options="required:true"
 						onfocus="showMonth()" /></td>
 					<th>报销人&nbsp;</th>
@@ -363,9 +366,9 @@
 						style="width: 100%" name="bxr" id="bxr"
 						value="${sessionInfo.name}"readonly="readonly" disabled="disabled"></input></td>
 					<th>报销总额&nbsp;</th>
-					<td colspan="4"><input class="easyui-validatebox"
+					<td colspan="4"><input class="disabled"
 						style="width: 100%" name="totalFee" id="totalFee"
-						readonly="readonly" disabled="disabled"></input></td>
+						readonly="readonly" ></input></td>
 				</tr>
 			</table>
 		</form>

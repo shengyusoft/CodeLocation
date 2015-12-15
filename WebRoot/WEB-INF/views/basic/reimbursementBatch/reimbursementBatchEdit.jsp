@@ -342,9 +342,9 @@
 						style="width: 100%" name="bxr" id="bxr" value="${reimbursementBatch.process_vo.applyUserName}"
 						readonly="readonly" disabled="disabled"></input></td>
 					<th>报销总额&nbsp;</th>
-					<td colspan="4"><input class="easyui-validatebox"
+					<td colspan="4"><input class="disabled"
 						style="width: 100%" name="totalFee" id="totalFee" value="${reimbursementBatch.totalFee}"
-						readonly="readonly" disabled="disabled"></input></td>
+						readonly="readonly"></input></td>
 				</tr>
 			</table>
 		</form>
