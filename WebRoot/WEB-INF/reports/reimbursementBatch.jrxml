@@ -20,10 +20,12 @@
 	<queryString>
 		<![CDATA[select r.*,x.description,
 (r.trafficFee+r.mealFee+r.officeFee+r.receiveFee+r.badgeFee+r.communicationFee+r.trainFee+r.otherFee) as totalFee,
-u.name as applyUserName,p.startDT as applyDt
+u.name as applyUserName
+,p.startDT as applyDt
 from reimbursement r
 left join sys_dictionary x on r.county_id=x.id
-left join process p on r.batchId = p.docId
+left join reimbursementbatch b on b.id = r.batchId
+left join process p on b.process_id = p.id
 left join sys_user u on p.applyUserId = u.id
 where r.batchId = $P{batchId}]]>
 	</queryString>
