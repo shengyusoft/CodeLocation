@@ -143,7 +143,10 @@ public class TaskController extends BaseController {
 		try {
 			if (vo.getReceiverId() != null && vo.getReceiverId() > 0) {
 				vo.setAssignState(1);// 如果选择了分配人则表示已经分配
+			}else{
+				vo.setAssignState(0);
 			}
+			
 			if (vo.getId() != null && vo.getId() > 0) {
 				taskService.edit(toPo(vo), request);
 			} else {
@@ -168,7 +171,9 @@ public class TaskController extends BaseController {
 			}
 		}
 		if (po.getReceiver() != null) {
-			User u = userService.get(po.getReceiver().getId());
+			long id = po.getReceiver().getId();
+			System.out.println("userid="+id);
+			User u = userService.get(id);
 			if (u != null) {
 				vo.setReceiverId(u.getId());
 				vo.setReceiverName(u.getName());
@@ -189,7 +194,6 @@ public class TaskController extends BaseController {
 			Tuser receiver = new Tuser();
 			receiver.setId(vo.getReceiverId());
 			po.setReceiver(receiver);
-			;
 		}
 		return po;
 	}

@@ -251,12 +251,12 @@ public class UserServiceImpl implements UserServiceI {
 		// 根据部门编码以及用户类型编码查找用户
 		List<User> ul = new ArrayList<User>();
 		List<Tuser> users = null;
-		String sql = "select * from sys_user u ";
-		String whereSQL = "";
+		StringBuilder sql = new StringBuilder();
+		sql.append("select * from sys_user u where u.deleteStatus = 0");
 
 		if (!StringUtils.isEmpty(organization)) {
-			whereSQL = " where u.organization_id in ( select o.id from sys_organization o where o.code ='"
-					+ organization + "')";
+			sql.append(" and u.organization_id in ( select o.id from sys_organization o where o.code ='"
+					+ organization + "')");
 		}
 
 		if (!StringUtils.isEmpty(userType)) {
@@ -274,16 +274,12 @@ public class UserServiceImpl implements UserServiceI {
 				sqlin += "('ld')";
 
 			}
-
-			whereSQL += " and u.usertype in(" + sql1 + sqlin + ")";
+			sql.append(" and u.usertype in(" + sql1 + sqlin + ")");
 		}
-
-		System.out.println("get user by ocode and dcode-------->" + sql
-				+ whereSQL);
-
+		
 		try {
 			users = (List<Tuser>) userDao
-					.findBySql(sql + whereSQL, Tuser.class);
+					.findBySql(sql.toString(), Tuser.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

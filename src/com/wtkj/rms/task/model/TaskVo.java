@@ -3,27 +3,16 @@ package com.wtkj.rms.task.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import com.wtkj.common.model.IdEntity;
-
 /**
  * 任务分配
  * 
  * @author
  * 
  */
-@Entity
-@Table(name = "task", schema = "")
-@DynamicInsert(true)
-@DynamicUpdate(true)
-public class TaskVo extends IdEntity implements Serializable {
+public class TaskVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private Long id;
 
 	/**
 	 * 分配人录入
@@ -63,6 +52,14 @@ public class TaskVo extends IdEntity implements Serializable {
 	// 页面查询时间值,按分配时间查
 	private Date pageAssignDtSt;
 	private Date pageAssignDtEt;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getTopic() {
 		return topic;

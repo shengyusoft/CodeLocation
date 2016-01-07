@@ -189,8 +189,7 @@
 						<th>要求完成时间 &nbsp;</th>
 						<td><input class="Wdate" type="text" name="demandFinishDt"
 							value="<fmt:formatDate value="${task.demandFinishDt}" pattern="yyyy-MM-dd"/>"
-							id="demandFinishDt" style="width: 100%; height: 100%"
-							onclick="showDate('yyyy-MM-dd')" />
+							id="demandFinishDt" style="width: 100%; height: 100%" />
 						</td>
 					</tr>
 					<tr>

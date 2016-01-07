@@ -46,6 +46,17 @@
 		panelHeight : 200
 	});
 	
+	function showFinishDate() {
+		var assignDt = '${task.assignDt}';
+		if(assignDt == null || assignDt == ''){
+			assignDt = new Date();
+		}
+		WdatePicker({
+			dateFmt : 'yyyy-MM-dd',
+			minDate:assignDt
+		});
+	}
+	
 	//任务详情列表
 	function detailGridRegist(){
 		dataGrid = $('#dataGrid').datagrid({
@@ -105,22 +116,23 @@
 				<legend>任务分配：</legend>
 				<table class="grid">
 					<tr>
+						<td style="display: none">
+							<input type="hidden" name="viewType" id="viewType" value="${viewType}"/>
+							<input type="hidden" name="id" id="id" value="${task.id}"/>
+							<input type="hidden" name="assignerId" id="id" value="${task.assignerId}"/>
+						</td>
 						<th width="150px">任务主题 &nbsp;<label
 							style="color: red; vertical-align: middle; text-align: center;">*</label>
 							</th>
 						<c:choose>
 						<c:when test="${task.handlerState >= 1 || viewType == 'detail'}">
 							<td colspan="5">
-								<input type="hidden" name="id" id="id" value="${task.id}"/>
-								<input type="hidden" name="assignerId" id="id" value="${task.assignerId}"/>
 								<input id="topic" readonly="readonly" name="topic" value="${task.topic}" style="width: 100%;"
 								type="text" class="easyui-validatebox span2 disabled" data-options="required:true" />
 							</td>
 						</c:when>
 						<c:otherwise>
 							<td colspan="5">
-								<input type="hidden" name="id" id="id" value="${task.id}"/>
-								<input type="hidden" name="assignerId" id="id" value="${task.assignerId}"/>
 								<input id="topic" name="topic" value="${task.topic}" style="width: 100%;"
 								type="text" class="easyui-validatebox span2" data-options="required:true" />
 							</td>
@@ -168,7 +180,7 @@
 								<td><input class="Wdate" type="text" name="demandFinishDt"
 									value="<fmt:formatDate value="${task.demandFinishDt}" pattern="yyyy-MM-dd"/>"
 									id="demandFinishDt" style="width: 100%; height: 100%"
-									onclick="showDate('yyyy-MM-dd')" />
+									onclick="showFinishDate()" />
 								</td>
 							</c:otherwise>
 						</c:choose>

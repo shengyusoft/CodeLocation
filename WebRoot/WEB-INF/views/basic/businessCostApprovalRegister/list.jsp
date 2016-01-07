@@ -181,7 +181,6 @@
 	}
 	// 编辑
 	function editFun() {
-		debugger;
 		var id = null;
 		var rows = dataGrid.datagrid('getSelections');
 		if (rows == null || rows.length == 0) {
@@ -195,6 +194,12 @@
 		}
 
 		id = rows[0].id;
+		
+		var state = rows[0].processFlag;
+		if (!isEmpty(state) && state > 0) {
+			parent.$.messager.alert('提示', '申请已提交，不可编辑!');
+			return;
+		}
 
 		parent.$.modalDialog({
 			title : '业务费用支付',

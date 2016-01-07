@@ -88,13 +88,24 @@ public class TaskServiceImpl implements TaskServiceI {
 			// 如何是任务分配者(即为任务管理员):查看自己分配的任务,超级管理员或者总经理查看所有的任务
 			if (roleNames.indexOf("超级管理员") < 0 ) {
 				if (roleNames.indexOf("任务管理员") >= 0) {
-					// 分配者查看需要效果确认的任务
+					// 分配者查看已经办理完成的任务
 					hql += " and t.handlerState = 2";
+					
+					// 没效果确认的任务
+					hql += " and t.effectState = 0";
+					
+					//分配者查看自己分配的任务
 					hql += " and t.assigner.id = :assignerId";
 					params.put("assignerId", u.getId());
-				} else {
+				} else {//普通员工（所有的办理人）
+					
 					// 办理者查看已经分配的任务
 					hql += " and t.assignState = 1";
+					
+					//没有办理完的任务
+					hql += " and t.handlerState < 2";
+					
+					//办理者查看自己的任务
 					hql += " and t.receiver.id = :receiverId";
 					params.put("receiverId", u.getId());
 				}
@@ -103,18 +114,12 @@ public class TaskServiceImpl implements TaskServiceI {
 			}
 		
 			return hql;
-
-		}
-
-		if (vo != null) {
-			/**
-			 * 自动查询
-			 */
+		}else{
+			//加载列表
 			if (u != null) {
 				String roleNames = u.getRoleNames();
 				// 如何是任务分配者(即为任务管理员):查看自己分配的任务,超级管理员或者总经理查看所有的任务
-				if (roleNames.indexOf("超级管理员") < 0
-						&& roleNames.indexOf("总经理") < 0) {
+				if (roleNames.indexOf("超级管理员") < 0) {
 					if (roleNames.indexOf("任务管理员") >= 0) {
 						hql += " and t.assigner.id = :assignerId";
 						params.put("assignerId", u.getId());
@@ -125,10 +130,12 @@ public class TaskServiceImpl implements TaskServiceI {
 					}
 				}
 			}
+		}
 
-			/**
-			 * 业务查询
-			 */
+		/**
+		 * 业务查询
+		 */
+		if (vo != null) {
 			// 按分配人姓名模糊查询
 			if (!StringUtils.isEmpty(vo.getAssignerName())) {
 				hql += " and t.assigner.name like :name";

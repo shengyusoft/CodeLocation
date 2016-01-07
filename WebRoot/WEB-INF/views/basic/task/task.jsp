@@ -157,6 +157,12 @@
 			href += '&id=' + id;
 			
 			if('edit' == viewType){
+				//已经分配且没有处理完
+				if(row.assignState == 1 && row.handlerState != 2){
+					alert('任务已分配不可修改！');
+					return;
+				}
+				
 				if(row.handlerState == 1){
 					alert('任务办理中不可修改！');
 					return;
@@ -201,7 +207,6 @@
 	}
 	
 	function deleteFun() {
-		debugger;
 		var selected = getSelected();
 		if (isEmpty(selected)) {
 			parent.$.messager.alert('警告', '至少选中一条记录!');
@@ -233,7 +238,22 @@
 		//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
 		parent.$.modalDialog.openner_dataGrid = dataGrid;
 		var f = parent.$.modalDialog.handler.find('#taskEditForm');
-		f.submit();
+		//f.submit();
+		var viewType = parent.$('#viewType').val();
+		if(!isEmpty(viewType) && viewType == 'add'){
+			var receiverId = parent.$('#receiverId').combobox('getValue');
+			if(!isEmpty(receiverId)){
+				parent.$.messager.confirm('询问', '已经选择分配人,分配后不能修改信息,是否继续？', function(b) {
+					if (b) {
+						f.submit();
+					}
+				});
+			}else{
+				f.submit();
+			}
+		}else{
+			f.submit();
+		}
 	}
 
 	//关闭窗口
