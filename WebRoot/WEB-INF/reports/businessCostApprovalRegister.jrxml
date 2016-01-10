@@ -609,57 +609,7 @@ FROM
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="20" splitType="Stretch">
-			<staticText>
-				<reportElement x="271" y="0" width="16" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[共]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="214" y="0" width="22" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="198" y="0" width="16" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[第]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="309" y="0" width="20" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[页]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="255" y="0" width="16" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[/]]></text>
-			</staticText>
-			<textField evaluationTime="Report" isBlankWhenNull="true">
-				<reportElement x="287" y="0" width="22" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="236" y="0" width="19" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[页]]></text>
-			</staticText>
-		</band>
+		<band height="20" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

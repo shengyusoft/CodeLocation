@@ -35,7 +35,7 @@
 						title : '序号',
 						field : 'index',
 						align : 'center',
-						width : '30',
+						width : '40',
 						formatter : function(value, row, index) {
 							return index + 1;
 						}
@@ -107,9 +107,9 @@
 								case -3:
 									return '<font color="red">【会计审核退回】</font>';
 								case 4:
-									return '<font color="green">出纳审批通过</font>';
+									return '<font color="green">出纳已办理</font>';
 								case -4:
-									return '<font color="red">【出纳审核退回】</font>';
+									return '<font color="red">【出纳退回】</font>';
 								}
 							}
 						}

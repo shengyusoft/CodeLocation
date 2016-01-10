@@ -21,7 +21,8 @@
 	date_format(t.createDT,'%Y-%m-%d') AS createDT
 
 FROM
-	projectregist t  $P!{whereSQL}]]>
+	projectregist t  $P!{whereSQL}
+order by t.registDT]]>
 	</queryString>
 	<field name="company" class="java.lang.String"/>
 	<field name="projectName" class="java.lang.String"/>
@@ -305,7 +306,7 @@ FROM
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{createDT}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{registDT}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="779" y="0" width="95" height="28"/>
@@ -318,7 +319,7 @@ FROM
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{registDT}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{createDT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

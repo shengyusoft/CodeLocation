@@ -497,13 +497,13 @@
 					color="gray">过期审核</font> </a>
 			</c:otherwise>
 		</c:choose>
-
-		<a onclick="printFun(1);" href="javascript:void(0);"
-					class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
+	
 		<a onclick="printFun(0);" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览 </a>
+		<a onclick="printFun(1);" href="javascript:void(0);"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 
 		<a onclick="searchFun();" href="javascript:void(0);"
 			class="easyui-linkbutton"

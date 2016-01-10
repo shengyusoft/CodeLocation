@@ -261,7 +261,7 @@
 						case 3:
 							return '<font color="green">总经理审批通过</font>';
 						case 4:
-							return '<font color="green">【财务出纳成功】</font>';
+							return '<font color="green">【财务出纳已办理】</font>';
 						case -2:
 							return '<font color="red">【会计审核退回】</font>';
 						case -3:

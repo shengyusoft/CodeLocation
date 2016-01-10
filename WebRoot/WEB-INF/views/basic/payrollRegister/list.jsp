@@ -131,7 +131,7 @@
 								}else if(value == "3"){
 									return '<font color="green">总经理审批通过</font>';
 								}else if(value == "4"){
-									return '<font color="green">【财务出纳成功】</font>';
+									return '<font color="green">【财务出纳已办理】</font>';
 								}else if(value == "-2"){
 									return '<font color="red">【会计审核退回】</font>';
 								}else if(value == "-3"){

@@ -87,7 +87,7 @@
 					}else if(value == "3"){
 						return '<font color="green">会计审批通过</font>';
 					}else if(value == "4"){
-						return '<font color="green">【财务出纳成功】</font>';
+						return '<font color="green">【财务出纳已办理】</font>';
 					}else if(value == "-2"){
 						return '<font color="red">【总经理审核退回】</font>';
 					}else if(value == "-3"){
@@ -453,12 +453,13 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<a onclick="printFun(1);" href="javascript:void(0);"
-			class="easyui-linkbutton"
-			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
 		<a onclick="printFun(0);" href="javascript:void(0);"
 					class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon_toolbar_detail'">打印预览 </a>
+		<a onclick="printFun(1);" href="javascript:void(0);"
+			class="easyui-linkbutton"
+			data-options="plain:true,iconCls:'icon_toolbar_detail'">导出Excel</a>
+			
 		<a onclick="searchFun();" href="javascript:void(0);"
 						class="easyui-linkbutton"
 						data-options="plain:true,iconCls:'icon_toolbar_search'">搜索</a>
