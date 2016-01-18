@@ -336,21 +336,27 @@
 						<input type="hidden" name="process.id" value="${reimbursementBatch.process_vo.id}" />
 						<input class="Wdate" type="text" name="month" id="month"
 						style="width: 68%; height: 100%;" data-options="required:true"
-						onfocus="showMonth()" /></td>
+						onfocus="showMonth()"/></td>
 					<th>报销人&nbsp;</th>
-					<td colspan="4"><input class="easyui-validatebox"
+					<td><input class="easyui-validatebox"
 						style="width: 100%" name="bxr" id="bxr" value="${reimbursementBatch.process_vo.applyUserName}"
 						readonly="readonly" disabled="disabled"></input></td>
 					<th>报销总额&nbsp;</th>
-					<td colspan="4"><input class="disabled"
+					<td><input class="disabled"
 						style="width: 100%" name="totalFee" id="totalFee" value="${reimbursementBatch.totalFee}"
 						readonly="readonly"></input></td>
+				</tr>
+				<tr>
+					<th>超期原因<font color="red" size="10px">(超期时填写)</font></th>
+					<td colspan="5">
+						<textarea style="width: 100%;" id="lockReason" name="lockReason" rows="2">${reimbursementBatch.lockReason}</textarea>
+					</td>
 				</tr>
 			</table>
 		</form>
 	</div>
 	<span style="font-size: 14px; color: blue">报销明细</span>
-	<div data-options="fit:true,border:false" style="overflow: auto;height: 460px">
+	<div data-options="fit:true,border:false" style="overflow: auto;height: 400px">
 		<table id="dataGrid" data-options="fit:true,border:false"></table>
 	</div>
 	<div id="toolbar" class="mygrid-toolbar" style="inline: true">

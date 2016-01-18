@@ -136,6 +136,7 @@ public class IndexController extends BaseController {
 		if (sessionInfo != null && sessionInfo.getId() != null) {
 			user = userService.get(sessionInfo.getId());
 		}
+		
 		int state = getStateByCurrentUser(roleService, user);
 
 		if (state == 0) {
@@ -148,7 +149,9 @@ public class IndexController extends BaseController {
 		List<ProcessVo> pvs = new ArrayList<ProcessVo>();
 
 		try {
-			ps = processService.findProcessByState(state);
+			//TODO 根据不同角色获取不同的任务
+			//ps = processService.findProcessByState(user,state);
+			ps = processService.findProcessByUser(user);
 			for (Process p : ps) {
 				pvs.add(process2Vo(p));
 			}

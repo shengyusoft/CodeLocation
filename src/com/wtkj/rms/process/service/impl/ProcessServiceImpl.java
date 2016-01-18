@@ -1,5 +1,6 @@
 package com.wtkj.rms.process.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.wtkj.common.PageFilter;
 import com.wtkj.common.dao.BaseDaoI;
 import com.wtkj.common.model.Tdictionary;
 import com.wtkj.common.model.Tuser;
+import com.wtkj.common.model.User;
 import com.wtkj.rms.process.model.Process;
 import com.wtkj.rms.process.service.ProcessServiceI;
 
@@ -119,16 +121,36 @@ public class ProcessServiceImpl implements ProcessServiceI {
 	}
 
 	@Override
-	public List<Process> findProcessByState(int state) {
+	public List<Process> findProcessByState(User user, int state) {
 		String sql = "";
 		if (state > 0 && state < 9) {
 			sql = " select * from process p where p.state=" + state;
-		} else if (state == 9) {//超级管理员查看所有的
-			sql = " select * from process p where p.state > 0";;
+		} else if (state == 9) {// 超级管理员查看所有的
+			sql = " select * from process p where p.state > 0";
 		} else {
 			// 被退回的流程，用户重新申请
 			sql = " select * from process p where p.state < 0";
 		}
 		return processDao.findBySql(sql, Process.class);
+	}
+
+	@Override
+	public List<Process> findProcessByUser(User user) {
+		List<Process> processList = new ArrayList<Process>();
+		String sql = "";
+		if (user != null) {
+			String userId = user.getId() + "";// 只有一个
+			String likeId = "%," + userId + ",%";// 中间
+			String likeId2 = "%," + userId;// 最后一个
+			String likeId3 = userId + ",%";// 第一个
+			sql = " select * from process p where p.nextOperator like '"
+					+ likeId + "' or p.nextOperator like '" + likeId2
+					+ "' or p.nextOperator like '" + likeId3
+					+ "' or p.nextOperator =" + userId;
+		}
+		if (!StringUtils.isEmpty(sql)) {
+			processList = processDao.findBySql(sql, Process.class);
+		}
+		return processList;
 	}
 }

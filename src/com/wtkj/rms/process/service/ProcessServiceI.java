@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.wtkj.common.PageFilter;
+import com.wtkj.common.model.User;
 import com.wtkj.rms.process.model.Process;
 
 public interface ProcessServiceI {
@@ -27,6 +28,8 @@ public interface ProcessServiceI {
 
 	public void deleteByDocIds(String ids);
 
-	public List<Process> findProcessByState(int state);
+	public List<Process> findProcessByState(User user,int state);
+	
+	public List<Process> findProcessByUser(User user);
 
 }

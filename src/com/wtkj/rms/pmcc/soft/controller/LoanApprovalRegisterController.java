@@ -25,6 +25,7 @@ import com.wtkj.rms.pmcc.soft.model.LoanApprovalRegisterVo;
 import com.wtkj.rms.pmcc.soft.service.LoanApprovalRegisterServiceI;
 import com.wtkj.rms.process.controller.BaseProcessController;
 import com.wtkj.rms.process.model.Process;
+import com.wtkj.rms.process.model.ProcessHistory;
 import com.wtkj.rms.process.model.ProcessVo;
 
 /**
@@ -35,7 +36,7 @@ import com.wtkj.rms.process.model.ProcessVo;
 public class LoanApprovalRegisterController extends BaseProcessController {
 
 	// 流程名称
-	private static final String PROCESS_NAME = "申请借款";
+	private static final String PROCESS_NAME = GlobalConstant.PROCESS_NAME_LAR;
 
 	// 流程结束状态
 	private static final int PROCESS_FINISHED = 4;
@@ -127,6 +128,7 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 				loanApprovalRegisterService.edit(toPo(vo));
 
 			} else {
+				String nextOperator = "";
 				if (GlobalConstant.ACTION_ADD.equals(actionType)) {
 					msg = "添加成功!";
 					processState = ProcessStateConstant.STATE_INIT;
@@ -137,6 +139,7 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 					msg = "提交成功!";
 					processState = ProcessStateConstant.STATE_APPLYED;
 					String nextOper = getNextOperator("role_top_manger");
+					nextOperator = getNextOperatorIds("role_top_manger");
 					detail = user.getName() + " 于 "
 							+ DateUtil.convertDateToString(new Date())
 							+ " 申请借款成功,下一步执行人:" + nextOper;
@@ -156,7 +159,7 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 						.getProcess_vo().getId();
 				// 更新流程
 				Process process = updateProcess(request, processId,
-						PROCESS_NAME, docId, user, processState);
+						nextOperator, PROCESS_NAME, docId, user, processState);
 				// 更新资源-关联流程
 				carReg.setProcess(process);
 				loanApprovalRegisterService.edit(carReg);
@@ -194,7 +197,8 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 			if (vo.getOption() == 1) {
 				return abort(vo, request);
 			}
-			LoanApprovalRegister loanApprovalRegister =loanApprovalRegisterService.get(vo.getDocId());
+			LoanApprovalRegister loanApprovalRegister = loanApprovalRegisterService
+					.get(vo.getDocId());
 			if (loanApprovalRegister != null) {
 				User user = getLoginUser(request);
 				if (user != null) {
@@ -203,20 +207,23 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 					// 状态更新
 					if (roleNames.indexOf("总经理") >= 0) {
 						po.setState(2);
-						historyId = updateHistory(request, user, po,
-								"总经理：" + user.getName() + "审核通过!下一步执行人为:"
-										+ getNextOperator("role_account"));
+						historyId = updateHistory(request, user, po, "总经理："
+								+ user.getName() + "审核通过!下一步执行人为:"
+								+ getNextOperator("role_account"));
+						po.setNextOperator(getNextOperatorIds("role_account"));
 
 					} else if (roleNames.indexOf("会计") >= 0) {
 						po.setState(3);
-						historyId = updateHistory(request, user, po, "会计：" + user.getName()
-								+ "审核通过!下一步执行人为:"
+						historyId = updateHistory(request, user, po, "会计："
+								+ user.getName() + "审核通过!下一步执行人为:"
 								+ getNextOperator("role_cashier"));
+						po.setNextOperator(getNextOperatorIds("role_cashier"));
 
 					} else if (roleNames.indexOf("出纳") >= 0) {
 						po.setState(4);
-						historyId = updateHistory(request, user, po, "出纳：" + user.getName()
-								+ " 审核通过!借款流程结束");
+						historyId = updateHistory(request, user, po, "出纳："
+								+ user.getName() + " 审核通过!借款流程结束");
+						po.setNextOperator("");
 
 					} else if (roleNames.indexOf("超级管理员") >= 0) {
 						// 可以审批所有的单子,注：流程的状态递增的数列
@@ -231,13 +238,13 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 									"超级管理员：" + user.getName() + "审批通过!");
 						}
 					}
-					
-					//根据状态更新当前历史记录
-					if(po.getState() == 2){
+
+					// 根据状态更新当前历史记录
+					if (po.getState() == 2) {
 						loanApprovalRegister.setZjl_id(historyId);
-					}else if(po.getState() == 3){
+					} else if (po.getState() == 3) {
 						loanApprovalRegister.setKj_id(historyId);
-					}else if(po.getState() == 4){
+					} else if (po.getState() == 4) {
 						loanApprovalRegister.setCn_id(historyId);
 					}
 
@@ -284,8 +291,9 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 			j.setMsg("资源为空,数据异常!");
 			return j;
 		}
-		
-		LoanApprovalRegister loanApprovalRegister =loanApprovalRegisterService.get(vo.getDocId());
+
+		LoanApprovalRegister loanApprovalRegister = loanApprovalRegisterService
+				.get(vo.getDocId());
 		Long historyId = 0l;
 
 		String roleNames = user.getRoleNames();
@@ -294,38 +302,42 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 		if (roleNames.indexOf("总经理") >= 0) {
 			po.setState(-2);
 			// 增加流程操作历史记录
-			historyId = updateHistory(request, user, po, "总经理：" + user.getName() + "审批不通过!");
+			historyId = updateHistory(request, user, po,
+					"总经理：" + user.getName() + "审批不通过!");
 
 		} else if (roleNames.indexOf("会计") >= 0) {
 			po.setState(-3);
 			// 增加流程操作历史记录
-			historyId = updateHistory(request, user, po, "会计：" + user.getName() + "审批不通过!");
+			historyId = updateHistory(request, user, po, "会计：" + user.getName()
+					+ "审批不通过!");
 
 		} else if (roleNames.indexOf("出纳") >= 0) {
 			po.setState(-4);
 			// 增加流程操作历史记录
-			historyId = updateHistory(request, user, po, "出纳：" + user.getName() + "审批不通过!");
+			historyId = updateHistory(request, user, po, "出纳：" + user.getName()
+					+ "审批不通过!");
 
 		} else if (roleNames.indexOf("超级管理员") >= 0) {
 			// 可以审批所有的单子
 			po.setState(-(vo.getState() + 1));
 			// 增加流程操作历史记录
-			historyId = updateHistory(request, user, po, "超级管理员：" + user.getName()
-					+ "审批不通过!");
+			historyId = updateHistory(request, user, po,
+					"超级管理员：" + user.getName() + "审批不通过!");
 		}
-		
-		//根据状态更新当前历史记录
-		if(po.getState() == -2){
+
+		// 根据状态更新当前历史记录
+		if (po.getState() == -2) {
 			loanApprovalRegister.setZjl_id(historyId);
-		}else if(po.getState() == -3){
+		} else if (po.getState() == -3) {
 			loanApprovalRegister.setKj_id(historyId);
-		}else if(po.getState() == -4){
+		} else if (po.getState() == -4) {
 			loanApprovalRegister.setCn_id(historyId);
 		}
 
 		try {
 			loanApprovalRegisterService.edit(loanApprovalRegister);
 			po.setArriveDT(new Date());
+			po.setNextOperator(po.getApplyUserId() + "");
 			processService.edit(po, request);
 			j.setSuccess(true);
 			j.setMsg("审批成功！");
@@ -364,10 +376,33 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 			j.setSuccess(true);
 			return j;
 		}
+
+		String[] idArray = ids.split(",");
+		StringBuilder deleteProcessIds = new StringBuilder();
+		for (String id : idArray) {
+			LoanApprovalRegister rt = loanApprovalRegisterService.get(Long
+					.valueOf(id));
+
+			if (rt == null || rt.getProcess() == null
+					|| rt.getProcess().getState() == null) {
+				continue;
+			}
+			deleteProcessIds.append(rt.getProcess().getId() + ",");
+			if (rt.getProcess().getState() > 0) {
+				j.setMsg("选择记录中存在记录已经提交的，不可以删除！");
+				j.setSuccess(false);
+				return j;
+			}
+		}
 		try {
 			// 级联删除流程信息
-			processService.deleteByDocIds(ids);
-			// processHistoryService.deleteByProcessId(ids);
+			if (!StringUtils.isEmpty(deleteProcessIds.toString())) {
+				String processIds = deleteProcessIds.toString().substring(0,
+						deleteProcessIds.length() - 1);
+				processService.delete(processIds);
+				// 级联上次流程流程历史记录
+				processHistoryService.deleteByProcessId(processIds);
+			}
 			loanApprovalRegisterService.delete(ids);
 			j.setMsg("删除成功！");
 			j.setSuccess(true);
@@ -403,6 +438,20 @@ public class LoanApprovalRegisterController extends BaseProcessController {
 				&& po.getProcess().getId() > 0) {
 			Process process = processService.get(po.getProcess().getId());
 			vo.setProcess_vo(process2Vo(process));
+		}
+
+		// 设置审批意见
+		if (po.getZjl_id() != null && po.getZjl_id() > 0) {
+			ProcessHistory h = processHistoryService.get(po.getZjl_id());
+			vo.setZjl_remark(h == null ? "" : h.getRemark());
+		}
+		if (po.getKj_id() != null && po.getKj_id() > 0) {
+			ProcessHistory h = processHistoryService.get(po.getKj_id());
+			vo.setKj_remark(h == null ? "" : h.getRemark());
+		}
+		if (po.getCn_id() != null && po.getCn_id() > 0) {
+			ProcessHistory h = processHistoryService.get(po.getCn_id());
+			vo.setCn_remark(h == null ? "" : h.getRemark());
 		}
 		return vo;
 	}

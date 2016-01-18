@@ -40,7 +40,7 @@
 							return index + 1;
 						}
 					}, {
-						width : '90',
+						width : '60',
 						title : '申请人',
 						align : 'center',
 						field : 'applier',
@@ -51,7 +51,7 @@
 							
 						}
 					}, {
-						width : '90',
+						width : '80',
 						title : '申请时间',
 						align : 'center',
 						field : 'applierDt',
@@ -62,20 +62,20 @@
 							}
 						}
 					}, {
-						width : '90',
+						width : '60',
 						title : '借款人',
 						sortable : true,
 						align : 'center',
 						field : 'loan'
 					}, {
-						width : '90',
+						width : '80',
 						title : '借款日期',
 						sortable : true,
 						align : 'center',
 						field : 'loanDate',
 						formatter : Common.formatter
 					}, {
-						width : '100',
+						width : '80',
 						title : '借款金额',
 						sortable : true,
 						align : 'center',
@@ -86,7 +86,7 @@
 						align : 'center',
 						field : 'loanReason'
 					}, {
-						width : '140',
+						width : '100',
 						title : '状态',
 						rowspan : 2,
 						align : 'center',
@@ -113,6 +113,21 @@
 								}
 							}
 						}
+					}, {
+						width : '130',
+						title : '会计意见',
+						align : 'center',
+						field : 'kj_remark'
+					}, {
+						width : '130',
+						title : '出纳意见',
+						align : 'center',
+						field : 'cn_remark'
+					}, {
+						width : '130',
+						title : '总经理意见',
+						align : 'center',
+						field : 'zjl_remark'
 					}] ],
 			toolbar : '#toolbar'
 		});

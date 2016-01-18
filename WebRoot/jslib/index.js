@@ -377,13 +377,21 @@ function loadToDo() {
 					}
 				},
 				{
-					width : 150,
+					width : 60,
+					title : '申请人',
+					align : 'left',
+					field : 'applyUserName',
+					formatter : function(value, row, index) {
+						return isEmpty(value)?'【无申请人':'【'+value;
+					}
+				},
+				{
+					width : 180,
 					title : '待办任务',
-					align : 'center',
+					align : 'left',
 					field : 'processName',
 					formatter : function(value, row, index) {
-						var str = '【' + value + '】';
-						return str;
+						return isEmpty(value)?'流程名称_审批】':value+'审批】';
 					}
 				},
 				{

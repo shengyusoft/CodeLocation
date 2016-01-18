@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wtkj.common.GlobalConstant;
 import com.wtkj.common.Grid;
 import com.wtkj.common.Json;
 import com.wtkj.common.PageFilter;
@@ -155,7 +156,7 @@ public class ReimbursementBatchController extends BaseController {
 				throw new Exception("操作人为空！请重新登录");
 			}
 
-			process.setProcessName(user.getName() + "申请报销");
+			process.setProcessName(GlobalConstant.PROCESS_NAME_RB);
 			process.setApplyUser(tuser);
 			process.setDocId(docId);
 			process.setStartDT(new Date());
@@ -206,10 +207,15 @@ public class ReimbursementBatchController extends BaseController {
 			// 上个月今天
 			Date now = new Date();
 			Date lastMonth = DateUtil.dateAdd(now, Calendar.MONTH, -1);
-			// 非过期审核通过
-			if (reimbursementBatch.getLocked() < 2) {
-				if (now.getDate() > 7
-						|| (lastMonth.getMonth() != applyMonth.getMonth())) {
+			int state = 0;
+			if(reimbursementBatch.getProcess() != null){
+				Process process = reimbursementBatch.getProcess();
+				process = processService.get(process.getId());
+				state = process.getState();
+			}
+			// 非过期审核通过，如果是退回来的流程不需要判断是否过期
+			if (reimbursementBatch.getLocked() < 2 && state >= 0) {
+				if (now.getDate() > 7 || (lastMonth.getMonth() != applyMonth.getMonth())) {
 					// 设置为过期申请
 					reimbursementBatch.setLocked(1);
 					reimbursementBatchService.edit(reimbursementBatch, request);
@@ -236,6 +242,8 @@ public class ReimbursementBatchController extends BaseController {
 				// process.setApplyUser(tuser);
 				process.setArriveDT(new Date());
 				process.setState(ProcessStateConstant.BX_APPLYED);
+				String nextOperIds = getNextOperatorIds(GlobalConstant.ROLE_KJ);
+				process.setNextOperator(nextOperIds);
 				processService.edit(process, request);
 
 				// 历史记录保存
@@ -271,11 +279,13 @@ public class ReimbursementBatchController extends BaseController {
 				if (user == null) {
 					throw new Exception("操作人为空！请重新登录");
 				}
-				process.setProcessName(user.getName() + "申请报销");
+				process.setProcessName(GlobalConstant.PROCESS_NAME_RB);
 				process.setApplyUser(tuser);
 				process.setDocId(docId);
 				process.setStartDT(new Date());
 				process.setArriveDT(new Date());
+				String nextOperIds = getNextOperatorIds(GlobalConstant.ROLE_KJ);
+				process.setNextOperator(nextOperIds);
 				// 状态为申请成功
 				process.setState(ProcessStateConstant.BX_APPLYED);
 				Long processId = processService.add(process, request);
@@ -320,6 +330,18 @@ public class ReimbursementBatchController extends BaseController {
 				.toString().substring(0, sb.toString().length() - 1);
 		return nextOper;
 	}
+	
+	protected String getNextOperatorIds(String role) {
+		List<Tuser> users = userService.findByRole(role);
+		StringBuffer sb = new StringBuffer();
+		for (Tuser u : users) {
+			sb.append(u.getId() + ",");
+		}
+		String nextOper = StringUtils.isEmpty(sb.toString()) ? "" : sb
+				.toString().substring(0, sb.toString().length() - 1);
+		return nextOper;
+	}
+
 
 	@RequestMapping("/delete")
 	@ResponseBody
@@ -333,13 +355,16 @@ public class ReimbursementBatchController extends BaseController {
 		}
 
 		String[] idArray = ids.split(",");
+		StringBuilder deleteProcessIds = new StringBuilder();
 		for (String id : idArray) {
 			ReimbursementBatch rt = reimbursementBatchService.get(Long
 					.valueOf(id));
+
 			if (rt == null || rt.getProcess() == null
 					|| rt.getProcess().getState() == null) {
 				continue;
 			}
+			deleteProcessIds.append(rt.getProcess().getId() + ",");
 			if (rt.getProcess().getState() > 0) {
 				j.setMsg("选择记录中存在记录已经提交的，不可以删除！");
 				j.setSuccess(false);
@@ -348,8 +373,12 @@ public class ReimbursementBatchController extends BaseController {
 		}
 
 		try {
-			// 级联删除流程信息,prolem:会导致删除其他业务的流程
-			//processService.deleteByDocIds(ids);
+			// 级联删除流程信息
+			if (!StringUtils.isEmpty(deleteProcessIds.toString())) {
+				String processIds = deleteProcessIds.toString().substring(0,
+						deleteProcessIds.length() - 1);
+				processService.delete(processIds);
+			}
 			// 历史记录外键关联流程，流程删除时自动删除历史记录
 			reimbursementBatchService.delete(ids);
 			j.setMsg("删除成功！");
@@ -472,11 +501,13 @@ public class ReimbursementBatchController extends BaseController {
 					User user = userService.get(userId);
 					if (user != null) {
 						String roleNames = user.getRoleNames();
+						String nextOperIds = "";
 						// 状态更新
 						if (roleNames.indexOf("会计") >= 0) {
 							po.setState(ProcessStateConstant.BX_AUDIT_KJ);// 会计审批通过
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_top_manger");
+							nextOperIds = this.getNextOperator("role_top_manger");
 							updateHistory(request, user, po,
 									"会计：" + user.getName()
 											+ "审批通过,下一步执行人为 总经理：:" + op);
@@ -485,6 +516,7 @@ public class ReimbursementBatchController extends BaseController {
 							po.setState(ProcessStateConstant.BX_AUDIT_ZJL);// 总经理审批通过
 							// 增加流程操作历史记录
 							String op = this.getNextOperator("role_cashier");
+							nextOperIds = this.getNextOperator("role_cashier");
 							updateHistory(request, user, po,
 									"总经理：" + user.getName()
 											+ "审批通过,下一步执行人为 出纳:" + op);
@@ -509,6 +541,7 @@ public class ReimbursementBatchController extends BaseController {
 
 						try {
 							po.setArriveDT(new Date());
+							po.setNextOperator(nextOperIds);
 							processService.edit(po, request);
 							j.setSuccess(true);
 							j.setMsg("审批成功！");
@@ -571,7 +604,7 @@ public class ReimbursementBatchController extends BaseController {
 			updateHistory(request, user, po, "总经理：" + user.getName() + "审批不通过");
 		} else if (roleNames.indexOf("超级管理员") >= 0) {
 			// 可以审批所有的单子
-			po.setState(-vo.getState());
+			po.setState(-vo.getState()-1);
 			// 增加流程操作历史记录
 			if (po.getState() < 4) {
 				updateHistory(request, user, po, "超级管理员：" + user.getName()
@@ -581,6 +614,7 @@ public class ReimbursementBatchController extends BaseController {
 
 		try {
 			po.setArriveDT(new Date());
+			po.setNextOperator("");
 			processService.edit(po, request);
 			j.setSuccess(true);
 			j.setMsg("审批成功！");

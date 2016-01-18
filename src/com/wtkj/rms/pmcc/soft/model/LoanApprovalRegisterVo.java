@@ -14,6 +14,7 @@ public class LoanApprovalRegisterVo implements Serializable {
 
 	private Long id;
 	private String loan; // 借款人
+	private String loanPhone; // 借款人电话
 	private Date loanDate; // 借款日期
 	private Double loanMoney; // 借款金额
 	private String loanMoneyCap; // 借款金额大写
@@ -32,6 +33,11 @@ public class LoanApprovalRegisterVo implements Serializable {
 	private Long kj_id;
 	// 出纳最后审批
 	private Long cn_id;
+
+	// 各个步骤最后一步审批意见
+	private String zjl_remark;
+	private String kj_remark;
+	private String cn_remark;
 
 	// 关联流程
 	private ProcessVo process_vo;
@@ -65,6 +71,14 @@ public class LoanApprovalRegisterVo implements Serializable {
 
 	public void setLoan(String loan) {
 		this.loan = loan;
+	}
+	
+	public String getLoanPhone() {
+		return loanPhone;
+	}
+
+	public void setLoanPhone(String loanPhone) {
+		this.loanPhone = loanPhone;
 	}
 
 	public Date getLoanDate() {
@@ -193,6 +207,30 @@ public class LoanApprovalRegisterVo implements Serializable {
 
 	public void setCn_id(Long cn_id) {
 		this.cn_id = cn_id;
+	}
+
+	public String getZjl_remark() {
+		return zjl_remark;
+	}
+
+	public void setZjl_remark(String zjl_remark) {
+		this.zjl_remark = zjl_remark;
+	}
+
+	public String getKj_remark() {
+		return kj_remark;
+	}
+
+	public void setKj_remark(String kj_remark) {
+		this.kj_remark = kj_remark;
+	}
+
+	public String getCn_remark() {
+		return cn_remark;
+	}
+
+	public void setCn_remark(String cn_remark) {
+		this.cn_remark = cn_remark;
 	}
 
 }

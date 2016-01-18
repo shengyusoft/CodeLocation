@@ -23,6 +23,8 @@ public class ProcessVo implements Serializable {
 	private String remark;
 	private String remark2;
 	private int option;// 审批是否统一，仅仅用于前台传值
+	// 下一步操作人
+	private String nextOperator;
 
 	public Long getId() {
 		return id;
@@ -118,6 +120,18 @@ public class ProcessVo implements Serializable {
 
 	public void setRemark2(String remark2) {
 		this.remark2 = remark2;
+	}
+
+	public String getNextOperator() {
+		return nextOperator;
+	}
+
+	public void setNextOperator(String nextOperator) {
+		this.nextOperator = nextOperator;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

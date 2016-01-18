@@ -49,8 +49,8 @@ public abstract class BaseProcessController extends BaseController {
 	 * @throws Exception
 	 */
 	protected Process updateProcess(HttpServletRequest request, Long processId,
-			String processName, Long docId, User user, int state)
-			throws Exception {
+			String nextOperator, String processName, Long docId, User user,
+			int state) throws Exception {
 		Process process = null;
 		if (user == null) {
 			throw new Exception("操作人为空！请重新登录");
@@ -67,13 +67,17 @@ public abstract class BaseProcessController extends BaseController {
 			Tuser tuser = new Tuser();
 			tuser.setId(user.getId());
 			process = new Process();
-			process.setProcessName(user.getName() + processName);
+			process.setProcessName(processName);
 			process.setDocId(docId);
 			process.setApplyUser(tuser);
 			process.setStartDT(new Date());
 			process.setArriveDT(new Date());
 			process.setState(state);
 			processId = processService.add(process, request);
+		}
+		
+		if(!StringUtils.isEmpty(nextOperator)){
+			process.setNextOperator(nextOperator);
 		}
 		process = processService.get(processId);
 		return process;
@@ -121,6 +125,17 @@ public abstract class BaseProcessController extends BaseController {
 		return nextOper;
 	}
 
+	protected String getNextOperatorIds(String role) {
+		List<Tuser> users = userService.findByRole(role);
+		StringBuffer sb = new StringBuffer();
+		for (Tuser u : users) {
+			sb.append(u.getId() + ",");
+		}
+		String nextOper = StringUtils.isEmpty(sb.toString()) ? "" : sb
+				.toString().substring(0, sb.toString().length() - 1);
+		return nextOper;
+	}
+
 	protected Process process2Po(ProcessVo vo) {
 		Process p = null;
 		if (vo != null) {
@@ -143,6 +158,21 @@ public abstract class BaseProcessController extends BaseController {
 			p.setApplyUserName(user.getName());
 		}
 		return p;
+	}
+
+	// 级联删除流程信息
+	protected void deleteCaseCade(StringBuilder deleteProcessIds) {
+		try {
+			if (!StringUtils.isEmpty(deleteProcessIds.toString())) {
+				String processIds = deleteProcessIds.toString().substring(0,
+						deleteProcessIds.length() - 1);
+				processService.delete(processIds);
+				// 级联删除流程历史记录(外键关联自动删除)
+				// processHistoryService.deleteByProcessId(processIds);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

@@ -27,6 +27,7 @@ public class LoanApprovalRegister extends IdEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String loan; // 借款人
+	private String loanPhone; // 借款人电话
 	private Date loanDate; // 借款日期
 	private Double loanMoney; // 借款金额
 	private String loanMoneyCap; // 借款金额大写
@@ -62,6 +63,14 @@ public class LoanApprovalRegister extends IdEntity implements Serializable {
 
 	public void setLoan(String loan) {
 		this.loan = loan;
+	}
+
+	public String getLoanPhone() {
+		return loanPhone;
+	}
+
+	public void setLoanPhone(String loanPhone) {
+		this.loanPhone = loanPhone;
 	}
 
 	public Date getLoanDate() {

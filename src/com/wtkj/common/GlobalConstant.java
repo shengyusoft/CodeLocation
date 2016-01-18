@@ -89,6 +89,16 @@ public class GlobalConstant {
 	public static final String ROLE_CN = "role_cashier";//出纳
 	public static final String ROLE_KJ = "role_account";//会计
 	
+	//流程名称统一定义按Controller首字母
+	public static final String PROCESS_NAME_BCAR = "业务费支付";//
+	public static final String PROCESS_NAME_PR = "工资发放";
+	public static final String PROCESS_NAME_PA = "工程款支付";//
+	public static final String PROCESS_NAME_LAR = "员工借款";//
+	public static final String PROCESS_NAME_RB = "批量报销";//
+	public static final String PROCESS_NAME_SCR = "绩效提成";
+	public static final String PROCESS_NAME_CRR = "申请租车";
+	
+	
 	
 	
 	

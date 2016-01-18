@@ -177,9 +177,9 @@ a:hover {
 										data-options="border:false"></table>
 								</div>
 								
-								<div id="tasks_to_do" title="我的待办" data-options="iconCls:'icon_rms_todo'"
+								<div id="tasks_to_do" selected="true" title="我的待办" data-options="iconCls:'icon_rms_todo'"
 									style="padding: 10px; overflow: scroll;">
-									<table id="myTaskGrid2" style="border: 0px; width: 480px;"
+									<table id="myTaskGrid2" style="border: 0px; width: 580px;"
 										data-options="border:false"></table>
 								</div>
 								
@@ -227,31 +227,6 @@ a:hover {
 											</a>
 										</div>
 									</c:forEach>
-
-									<!-- <div
-										style="float: left; width: 60px; height: 70px; margin: 8px;">
-										<img src="../style/images/6570.png"
-											style="height: 55px; width: 55px;" /><br /> <a
-											href="http://www.baidu.com">运维查询</a>
-									</div>
-									<div
-										style="float: left; width: 60px; height: 70px; margin: 8px;">
-										<img src="../style/images/Other/12.png"
-											style="height: 55px; width: 55px;" /><br /> <a
-											href="http://www.baidu.com">事件记录</a>
-									</div>
-									<div
-										style="float: left; width: 60px; height: 70px; margin: 8px;">
-										<img src="../style/images/Other/11.png"
-											style="height: 55px; width: 55px;" /><br /> <a
-											href="http://www.baidu.com">通知公告</a>
-									</div>
-									<div
-										style="float: left; width: 60px; height: 70px; margin: 8px;">
-										<img src="../style/images/Other/10.png"
-											style="height: 55px; width: 55px;" /><br /> <a
-											href="http://www.baidu.com">文档管理</a>
-									</div> -->
 								</div>
 							</div>
 						</div>

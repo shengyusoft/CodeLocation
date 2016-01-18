@@ -120,12 +120,22 @@
 						style="width: 100%;" class="easyui-validatebox span2"  validtype="NAME"
 						value="${loanApprovalRegister.loan}" data-options="required:true" />
 					</td>
+					
 					<th>借款日期 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label>
 					</th>
 					<td><input id="loanDate" class="disabled" readonly="readonly"
 						name="loanDate"
 						value="<fmt:formatDate value="${loanApprovalRegister.loanDate}" pattern="yyyy-MM-dd"/>" />
+					</td>
+				</tr>
+				<tr>
+					<th>借款人电话 &nbsp;<label
+						style="color: red; vertical-align: middle; text-align: center;">*</label>
+					</th>
+					<td><input name="loanPhone" id="loanPhone" type="text"  
+						style="width: 100%;" class="easyui-numberbox"
+						value="${loanApprovalRegister.loanPhone}" data-options="required:true" />
 					</td>
 				</tr>
 				<tr>

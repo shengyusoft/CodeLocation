@@ -42,6 +42,9 @@ public class ReimbursementBatch extends IdEntity implements Serializable {
 
 	// 过期申请的话锁住该申请,0正常提交1过期提交
 	private int locked = 0;
+	
+	//备注原因,过期提报原因
+	private String lockReason;
 
 	// @NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -93,6 +96,14 @@ public class ReimbursementBatch extends IdEntity implements Serializable {
 
 	public void setLocked(int locked) {
 		this.locked = locked;
+	}
+
+	public String getLockReason() {
+		return lockReason;
+	}
+
+	public void setLockReason(String lockReason) {
+		this.lockReason = lockReason;
 	}
 
 }

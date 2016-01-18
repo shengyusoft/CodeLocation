@@ -44,34 +44,36 @@ public class ProjectAppropriateRegController extends BaseController {
 
 		// 根据子状态判断状态值
 		for (ProjectAppropriateReg reg : regs) {
-			//未申请的记录
+			// 未申请的记录
 			BigInteger countNotApplied = projectAppropriateAccountService
 					.countByRegIdAndState(reg.getId(), 0);
-			
-			//会计确认的数目
-			BigInteger countKj = projectAppropriateAccountService
-					.countByRegIdAndState(reg.getId(), 2);
-			
-			//出纳确认的数目
+
+			// 会计确认的数目
+			// BigInteger countKj = projectAppropriateAccountService
+			// .countByRegIdAndState(reg.getId(), 2);
+
+			// 出纳确认的数目
 			BigInteger countCn = projectAppropriateAccountService
 					.countByRegIdAndState(reg.getId(), 3);
-			
-			//总数
+
+			// 总数
 			BigInteger baseCount = projectAppropriateAccountService
 					.countByRegId(reg.getId());
 
-			//总数为0或者只有未申请的记录
-			if (baseCount.intValue() == 0 || countNotApplied.intValue() == baseCount.intValue()) {
-				reg.setState(-1);//所有的记录都是未申请或者没有记录则状态为未申请
+			// 总数为0或者只有未申请的记录
+			if (baseCount.intValue() == 0
+					|| countNotApplied.intValue() == baseCount.intValue()) {
+				reg.setState(-1);// 所有的记录都是未申请或者没有记录则状态为未申请
 			} else {
-				if (countCn.intValue() == baseCount.intValue()-countNotApplied.intValue()) {
+				if (countCn.intValue() == baseCount.intValue()
+						- countNotApplied.intValue()) {
 					// 所有申请的已经被出纳全部确认，代表已经拨付完成
-					reg.setState(2);//拨付完成
-				} else if(countCn.intValue()==0) {
-					//都没有确认，未拨付
+					reg.setState(2);// 拨付完成
+				} else if (countCn.intValue() == 0) {
+					// 都没有确认，未拨付
 					reg.setState(0);
-				}else{
-					reg.setState(1);//部分拨付
+				} else {
+					reg.setState(1);// 部分拨付
 				}
 			}
 		}

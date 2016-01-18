@@ -41,15 +41,16 @@ public class ScoreCutRegisterController extends BaseController {
 
 	@Autowired
 	private UserServiceI userService;
-	// 
+	//
 	@Autowired
 	private ProcessServiceI processService;
-	// 
+	//
 	@Autowired
 	private ProcessHistoryServiceI processHistoryService;
-		
+
 	/**
 	 * 菜单列表页面
+	 * 
 	 * @param request
 	 * @param type
 	 * @return
@@ -58,20 +59,24 @@ public class ScoreCutRegisterController extends BaseController {
 	public String listPage(HttpServletRequest request) {
 		return "/basic/scoreCutRegister/list";
 	}
+
 	/**
 	 * 新增页面
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
-		SessionInfo sessionInfo = 
-				(SessionInfo) request.getSession().getAttribute(GlobalConstant.SESSION_INFO);
+		SessionInfo sessionInfo = (SessionInfo) request.getSession()
+				.getAttribute(GlobalConstant.SESSION_INFO);
 		request.setAttribute("name", sessionInfo.getName());
 		return "/basic/scoreCutRegister/add";
 	}
+
 	/**
 	 * 编辑页面
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -80,8 +85,10 @@ public class ScoreCutRegisterController extends BaseController {
 		request.setAttribute("id", id);
 		return "/basic/scoreCutRegister/edit";
 	}
+
 	/**
 	 * 详情页面
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -90,49 +97,56 @@ public class ScoreCutRegisterController extends BaseController {
 		request.setAttribute("id", id);
 		return "/basic/scoreCutRegister/detail";
 	}
+
 	/**
 	 * 查看流程
+	 * 
 	 * @param @param request
 	 * @param @param id
 	 * @param @return
 	 */
 	@RequestMapping("/approvalDetailPage")
 	public String approvalDetailPage(HttpServletRequest request, Long id) {
-		
+
 		ScoreCutRegister obj = scoreCutRegisterService.find(id);
 		if (obj != null) {
 			request.setAttribute("scoreCutRegister", obj);
 		}
 		return "/basic/scoreCutRegister/approvalDetail";
 	}
+
 	/**
 	 * 审批页面
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/approvalPage")
-	public String approvalPage(HttpServletRequest request, Long id, Long processId) {
-		
+	public String approvalPage(HttpServletRequest request, Long id,
+			Long processId) {
+
 		// 流程
 		Process process = processService.get(processId);
-		if (process == null || process.getApplyUser() == null || process.getDocId() == null) {
+		if (process == null || process.getApplyUser() == null
+				|| process.getDocId() == null) {
 			return "/error";
 		}
 		User user = userService.get(process.getApplyUser().getId());
 		process.setApplyUserName(user.getName());
 		process.setApplyUserId(user.getId());
-		
-		SessionInfo sessionInfo = 
-				(SessionInfo) request.getSession().getAttribute(GlobalConstant.SESSION_INFO);
+
+		SessionInfo sessionInfo = (SessionInfo) request.getSession()
+				.getAttribute(GlobalConstant.SESSION_INFO);
 		String name = sessionInfo.getName();
 		request.setAttribute("name", name);
 		request.setAttribute("id", id);
 		request.setAttribute("process", process);
 		return "/basic/scoreCutRegister/approval";
 	}
-	
+
 	/**
 	 * 列表查询
+	 * 
 	 * @param vo
 	 * @param ph
 	 * @param request
@@ -140,7 +154,8 @@ public class ScoreCutRegisterController extends BaseController {
 	 */
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public Grid dataGrid(ScoreCutRegister vo, PageFilter ph, HttpServletRequest request) {
+	public Grid dataGrid(ScoreCutRegister vo, PageFilter ph,
+			HttpServletRequest request) {
 		Grid grid = new Grid();
 		Long userId = getSessionInfo(request).getId();
 		User user = userService.get(userId);
@@ -153,8 +168,10 @@ public class ScoreCutRegisterController extends BaseController {
 		grid.setTotal(scoreCutRegisterService.count(null, vo, ph));
 		return grid;
 	}
+
 	/**
 	 * 新增、修改或提交申请
+	 * 
 	 * @param @param obj
 	 * @param @param request
 	 * @param @return
@@ -162,7 +179,7 @@ public class ScoreCutRegisterController extends BaseController {
 	@RequestMapping("/apply")
 	@ResponseBody
 	public Json apply(ScoreCutRegister obj, HttpServletRequest request) {
-		
+
 		if (obj == null) {
 			Json j = new Json();
 			j.setSuccess(false);
@@ -180,9 +197,10 @@ public class ScoreCutRegisterController extends BaseController {
 			return edit(obj, request);
 		}
 	}
-	
+
 	/**
 	 * 保存
+	 * 
 	 * @param obj
 	 * @param request
 	 * @return
@@ -190,9 +208,9 @@ public class ScoreCutRegisterController extends BaseController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public Json add(ScoreCutRegister obj, HttpServletRequest request) {
-		
-		SessionInfo sessionInfo = 
-				(SessionInfo) request.getSession().getAttribute(GlobalConstant.SESSION_INFO);
+
+		SessionInfo sessionInfo = (SessionInfo) request.getSession()
+				.getAttribute(GlobalConstant.SESSION_INFO);
 		Json j = new Json();
 		try {
 			if (obj != null) {
@@ -215,30 +233,30 @@ public class ScoreCutRegisterController extends BaseController {
 			}
 			// 业务表保存后主键
 			Long id = scoreCutRegisterService.add(obj, request);
-			
+
 			// 保存流程以及流程历史操作记录
 			Process process = new Process();
-			
+
 			Long userId = getSessionInfo(request).getId();
 			User user = userService.get(userId);
 			Tuser tuser = new Tuser();
 			tuser.setId(user.getId());
 			// 流程名称：格式：用户名-类型-时间
-			process.setProcessName(user.getName() + "登记申请");
+			process.setProcessName(GlobalConstant.PROCESS_NAME_SCR);
 			process.setApplyUser(tuser);
 			process.setDocId(id);
 			process.setStartDT(new Date());
 			process.setArriveDT(new Date());
 			process.setState(ProcessStateConstant.BX_INIT);
 			Long processId = processService.add(process, request);
-			
+
 			// 更新业务表
 			obj.setId(id);
 			obj.setProcessFlag(process.getState());
 			obj.setProcessId(processId);
 			obj.setHandleDate(new Date());
 			scoreCutRegisterService.update(obj, request);
-			
+
 			// 历史记录保存
 			if (processId != null && processId > 0) {
 				ProcessHistory history = new ProcessHistory();
@@ -252,7 +270,7 @@ public class ScoreCutRegisterController extends BaseController {
 						+ " 生成成功,下一步需要提交申请!");
 				processHistoryService.add(history, request);
 			}
-			
+
 			if (id > 0) {
 				obj.setId(id);
 			}
@@ -264,8 +282,10 @@ public class ScoreCutRegisterController extends BaseController {
 		}
 		return j;
 	}
+
 	/**
 	 * 提交申请
+	 * 
 	 * @param @param obj
 	 * @param @param request
 	 * @param @return
@@ -273,8 +293,9 @@ public class ScoreCutRegisterController extends BaseController {
 	@RequestMapping("/commit")
 	@ResponseBody
 	public Json commit(ScoreCutRegister obj, HttpServletRequest request) {
-		
-		SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(GlobalConstant.SESSION_INFO);
+
+		SessionInfo sessionInfo = (SessionInfo) request.getSession()
+				.getAttribute(GlobalConstant.SESSION_INFO);
 		Json j = new Json();
 		try {
 			Long userId = getSessionInfo(request).getId();
@@ -282,13 +303,16 @@ public class ScoreCutRegisterController extends BaseController {
 			Tuser tuser = new Tuser();
 			tuser.setId(user.getId());
 
-			if (obj.getId() != null && obj.getId() > 0 && obj.getProcessId() != null) {
-				
+			if (obj.getId() != null && obj.getId() > 0
+					&& obj.getProcessId() != null) {
+
 				// 审批不通过重新申请的情况和只保存未申请的情况
 				Process process = processService.get(obj.getProcessId());
 				// process.setApplyUser(tuser);
 				process.setArriveDT(new Date());
 				process.setState(ProcessStateConstant.BX_APPLYED);
+				String nextOperIds = getNextOperatorIds(GlobalConstant.ROLE_KJ);
+				process.setNextOperator(nextOperIds);
 				processService.edit(process, request);
 
 				// 历史记录保存
@@ -300,8 +324,9 @@ public class ScoreCutRegisterController extends BaseController {
 				// 查询会计人员
 				String nextOper = getNextOperator("role_account");
 
-				history.setOperateDetail(user.getName() + " 于 " + DateUtil.convertDateToString(new Date())
-											+ "申请成功,下一步执行人为" + nextOper);
+				history.setOperateDetail(user.getName() + " 于 "
+						+ DateUtil.convertDateToString(new Date())
+						+ "申请成功,下一步执行人为" + nextOper);
 				processHistoryService.add(history, request);
 				// 更新业务表
 				obj.setProcessFlag(process.getState());
@@ -332,20 +357,22 @@ public class ScoreCutRegisterController extends BaseController {
 					obj.setHandleDate(new Date());
 				}
 				Long docId = obj.getId();
-				if (docId!= null && docId > 0) {
+				if (docId != null && docId > 0) {
 					scoreCutRegisterService.update(obj, request);
 
-				}else{
-					docId = scoreCutRegisterService.add(obj,request);
+				} else {
+					docId = scoreCutRegisterService.add(obj, request);
 				}
-				
+
 				// 提交后保存流程以及流程历史操作记录
 				Process process = new Process();
-				process.setProcessName(user.getName() + "登记申请");
+				process.setProcessName(GlobalConstant.PROCESS_NAME_SCR);
 				process.setApplyUser(tuser);
 				process.setDocId(docId);
 				process.setStartDT(new Date());
 				process.setArriveDT(new Date());
+				String nextOperIds = getNextOperatorIds(GlobalConstant.ROLE_KJ);
+				process.setNextOperator(nextOperIds);
 				// 状态为申请成功
 				process.setState(ProcessStateConstant.BX_APPLYED);
 				Long processId = processService.add(process, request);
@@ -356,7 +383,7 @@ public class ScoreCutRegisterController extends BaseController {
 				obj.setProcessId(processId);
 				obj.setHandleDate(new Date());
 				scoreCutRegisterService.update(obj, request);
-				
+
 				// 历史记录保存
 				if (processId != null && processId > 0) {
 					ProcessHistory history = new ProcessHistory();
@@ -380,9 +407,10 @@ public class ScoreCutRegisterController extends BaseController {
 		}
 		return j;
 	}
-	
+
 	/**
 	 * 编辑保存
+	 * 
 	 * @param obj
 	 * @param request
 	 * @return
@@ -403,6 +431,7 @@ public class ScoreCutRegisterController extends BaseController {
 
 	/**
 	 * 删除
+	 * 
 	 * @param ids
 	 * @return
 	 */
@@ -416,12 +445,16 @@ public class ScoreCutRegisterController extends BaseController {
 			return j;
 		}
 		String[] arr = ids.split(",");
-		for(String id : arr){
-			ScoreCutRegister obj = scoreCutRegisterService.find(Long.valueOf(id));
-			if(obj == null || obj.getProcessId() == null || obj.getProcessFlag() == null){
+		StringBuilder deleteProcessIds = new StringBuilder();
+		for (String id : arr) {
+			ScoreCutRegister obj = scoreCutRegisterService.find(Long
+					.valueOf(id));
+			if (obj == null || obj.getProcessId() == null
+					|| obj.getProcessFlag() == null) {
 				continue;
 			}
-			if(obj.getProcessFlag() > 0){
+			deleteProcessIds.append(obj.getProcessId() + ",");
+			if (obj.getProcessFlag() > 0) {
 				j.setMsg("选择记录中存在记录已经提交的，不可以删除！");
 				j.setSuccess(false);
 				return j;
@@ -429,9 +462,15 @@ public class ScoreCutRegisterController extends BaseController {
 		}
 		try {
 			// 级联删除流程信息
- 			processService.deleteByDocIds(ids);
- 			// 业务表删除
- 			scoreCutRegisterService.delete(ids);
+			if (!StringUtils.isEmpty(deleteProcessIds.toString())) {
+				String processIds = deleteProcessIds.toString().substring(0,
+						deleteProcessIds.length() - 1);
+				processService.delete(processIds);
+				// 级联上次流程流程历史记录
+				processHistoryService.deleteByProcessId(processIds);
+			}
+			// 业务表删除
+			scoreCutRegisterService.delete(ids);
 			j.setMsg("删除成功！");
 			j.setSuccess(true);
 		} catch (Exception e) {
@@ -443,6 +482,7 @@ public class ScoreCutRegisterController extends BaseController {
 
 	/**
 	 * 通过id加载单个
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -452,9 +492,10 @@ public class ScoreCutRegisterController extends BaseController {
 		ScoreCutRegister obj = scoreCutRegisterService.find(id);
 		return obj;
 	}
-	
+
 	/**
 	 * 审批
+	 * 
 	 * @param obj
 	 * @param request
 	 * @return
@@ -462,66 +503,75 @@ public class ScoreCutRegisterController extends BaseController {
 	@RequestMapping("/approval")
 	@ResponseBody
 	public Json approval(Process process, HttpServletRequest request) {
-		
+
 		Json j = new Json();
-		
+
 		Process pro = processService.get(process.getId());
 		pro.setRemark(process.getRemark());// 审批意见
 		pro.setOption(process.getOption());
-		
+
 		// 审批不通过
-		if(pro.getOption() == 1){
+		if (pro.getOption() == 1) {
 			return disagree(pro, request);
 		}
 		// 审批通过
 		ScoreCutRegister obj = scoreCutRegisterService.find(pro.getDocId());
-		if(obj != null){
+		if (obj != null) {
 			Long userId = getSessionInfo(request).getId();
 			User user = userService.get(userId);
 			if (user != null) {
 				String roleNames = user.getRoleNames();
+				String nextOperIds = "";
 				// 状态更新
 				if (roleNames.indexOf("会计") >= 0) {
 					pro.setState(ProcessStateConstant.BX_AUDIT_KJ);// 会计审批通过
 					// 增加流程操作历史记录
 					String op = this.getNextOperator("role_top_manger");
-					updateHistory(request, user, pro, "会计：" + user.getName() + "审批通过,下一步执行人为:" + op);
+					nextOperIds = getNextOperatorIds(GlobalConstant.ROLE_ZJL);
+					updateHistory(request, user, pro, "会计：" + user.getName()
+							+ "审批通过,下一步执行人为:" + op);
 					// 更新业务表流程标记
-					updateBusiness(obj,pro.getState());
+					updateBusiness(obj, pro.getState());
 
 				} else if (roleNames.indexOf("总经理") >= 0) {
 					pro.setState(ProcessStateConstant.BX_AUDIT_ZJL);// 总经理审批通过
 					// 增加流程操作历史记录
 					String op = this.getNextOperator("role_cashier");
-					updateHistory(request, user, pro, "总经理：" + user.getName() + "审批通过,下一步执行人为:" + op);
+					nextOperIds = getNextOperatorIds(GlobalConstant.ROLE_CN);
+					updateHistory(request, user, pro, "总经理：" + user.getName()
+							+ "审批通过,下一步执行人为:" + op);
 					// 更新业务表流程标记
-					updateBusiness(obj,pro.getState());
-					
+					updateBusiness(obj, pro.getState());
+
 				} else if (roleNames.indexOf("出纳") >= 0) {
 					pro.setState(ProcessStateConstant.BX_CN);// 出纳成功，流程结束
 					pro.setEndDT(new Date());
 					// 增加流程操作历史记录
-					updateHistory(request, user, pro, "出纳：" + user.getName() + "出纳成功!流程结束");
+					updateHistory(request, user, pro, "出纳：" + user.getName()
+							+ "出纳成功!流程结束");
 					// 更新业务表流程标记
-					updateBusiness(obj,pro.getState());
-					
+					updateBusiness(obj, pro.getState());
+
 				} else if (roleNames.indexOf("超级管理员") >= 0) {
 					// 可以审批所有的单子
 					pro.setState(pro.getState() + 1);
 					// 增加流程操作历史记录
 					if (pro.getState() < 4) {
-						updateHistory(request, user, pro, "超级管理员：" + user.getName() + "审批通过!");
+						updateHistory(request, user, pro,
+								"超级管理员：" + user.getName() + "审批通过!");
 						// 更新业务表流程标记
-						updateBusiness(obj,pro.getState());
-						
+						updateBusiness(obj, pro.getState());
+
 					} else {
-						updateHistory(request, user, pro, "超级管理员：" + user.getName() + "出纳成功!");
+						updateHistory(request, user, pro,
+								"超级管理员：" + user.getName() + "出纳成功!");
 						// 更新业务表流程标记
-						updateBusiness(obj,pro.getState());
+						updateBusiness(obj, pro.getState());
 					}
 				}
 				try {
 					pro.setArriveDT(new Date());
+					pro.setNextOperator(nextOperIds);
 					processService.edit(pro, request);
 					j.setSuccess(true);
 					j.setMsg("审批成功！");
@@ -534,8 +584,10 @@ public class ScoreCutRegisterController extends BaseController {
 		}
 		return j;
 	}
+
 	/**
 	 * 审批不通过
+	 * 
 	 * @param @param obj
 	 * @param @param request
 	 * @param @return
@@ -543,7 +595,7 @@ public class ScoreCutRegisterController extends BaseController {
 	@RequestMapping("/disagree")
 	@ResponseBody
 	public Json disagree(Process pro, HttpServletRequest request) {
-		
+
 		Json j = new Json();
 		// 审批不通过
 		User user = null;
@@ -563,35 +615,37 @@ public class ScoreCutRegisterController extends BaseController {
 		}
 		// 角色名称
 		String roleNames = user.getRoleNames();
-		
+
 		// 状态更新
 		if (roleNames.indexOf("会计") >= 0) {
 			po.setState(ProcessStateConstant.BX_BACK_KJ);// 会计审批不通过
 			// 增加流程操作历史记录
 			updateHistory(request, user, po, "会计：" + user.getName() + "审批不通过");
 			// 更新业务表流程标记
-			updateBusiness(obj,po.getState());
-			
+			updateBusiness(obj, po.getState());
+
 		} else if (roleNames.indexOf("总经理") >= 0) {
 			po.setState(ProcessStateConstant.BX_BACK_ZJL);// 总经理审批不通过
 			// 增加流程操作历史记录
 			updateHistory(request, user, po, "总经理：" + user.getName() + "审批不通过");
 			// 更新业务表流程标记
-			updateBusiness(obj,po.getState());
-			
+			updateBusiness(obj, po.getState());
+
 		} else if (roleNames.indexOf("超级管理员") >= 0) {
 			// 可以审批所有的单子
-			po.setState(0-pro.getState());
+			po.setState(0 - pro.getState());
 			// 增加流程操作历史记录
 			if (po.getState() < 4) {
-				updateHistory(request, user, po, "超级管理员：" + user.getName() + "审批不通过!");
+				updateHistory(request, user, po, "超级管理员：" + user.getName()
+						+ "审批不通过!");
 				// 更新业务表流程标记
-				updateBusiness(obj,po.getState());
-				
+				updateBusiness(obj, po.getState());
+
 			}
 		}
 		try {
 			po.setArriveDT(new Date());
+			po.setNextOperator("");
 			processService.edit(po, request);
 			j.setSuccess(true);
 			j.setMsg("审批成功！");
@@ -599,11 +653,13 @@ public class ScoreCutRegisterController extends BaseController {
 			j.setSuccess(false);
 			j.setMsg(e.getMessage());
 		}
-		
+
 		return j;
 	}
+
 	/**
 	 * 审批操作历史记录
+	 * 
 	 * @param @param request
 	 * @param @param user
 	 * @param @param process
@@ -611,7 +667,7 @@ public class ScoreCutRegisterController extends BaseController {
 	 */
 	private void updateHistory(HttpServletRequest request, User user,
 			Process process, String detail) {
-		
+
 		ProcessHistory history = new ProcessHistory();
 		history.setOperateDT(new Date());
 		Tuser tuser = new Tuser();
@@ -622,20 +678,24 @@ public class ScoreCutRegisterController extends BaseController {
 		history.setProcess(process);
 		processHistoryService.add(history, request);
 	}
+
 	/**
 	 * 更新业务流程标记
+	 * 
 	 * @param @param request
 	 * @param @param user
 	 * @param @param process
 	 * @param @param detail
 	 */
 	private void updateBusiness(ScoreCutRegister obj, int stat) {
-		
+
 		obj.setProcessFlag(stat);
 		scoreCutRegisterService.update(obj, null);
 	}
+
 	/**
 	 * 获取下个操作
+	 * 
 	 * @param @param role
 	 * @param @return
 	 */
@@ -644,6 +704,17 @@ public class ScoreCutRegisterController extends BaseController {
 		StringBuffer sb = new StringBuffer();
 		for (Tuser u : users) {
 			sb.append(u.getName() + ",");
+		}
+		String nextOper = StringUtils.isEmpty(sb.toString()) ? "" : sb
+				.toString().substring(0, sb.toString().length() - 1);
+		return nextOper;
+	}
+	
+	protected String getNextOperatorIds(String role) {
+		List<Tuser> users = userService.findByRole(role);
+		StringBuffer sb = new StringBuffer();
+		for (Tuser u : users) {
+			sb.append(u.getId() + ",");
 		}
 		String nextOper = StringUtils.isEmpty(sb.toString()) ? "" : sb
 				.toString().substring(0, sb.toString().length() - 1);

@@ -251,6 +251,7 @@
 				formatter : function(value, row, index) {
 					var process = row.process_vo;
 					if (process != null) {
+						debugger;
 						switch (process.state) {
 						case 0:
 							return '初始化';
