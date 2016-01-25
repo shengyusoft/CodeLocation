@@ -46,10 +46,11 @@ public class ArticleServiceImpl implements ArticleServiceI {
 	public void add(ArticleVo articleVo, HttpServletRequest request) {
 		Article article = new Article();
 
-		if (articleVo.isZd()) {
-			// 置顶,更新时间
-			articleVo.setUpdateDT(new Date());
-		}
+//		if (articleVo.isZd()) {
+//			// 置顶,更新时间
+//			articleVo.setUpdateDT(new Date());
+//		}
+		articleVo.setUpdateDT(new Date());
 
 		if (articleVo.getPublish()) {
 			// 发布,更新发布时间
@@ -96,17 +97,20 @@ public class ArticleServiceImpl implements ArticleServiceI {
 	@Override
 	public void edit(ArticleVo articleVo, HttpServletRequest request) {
 		Article article = new Article();
-		if (articleVo.isZd()) {
-			// 置顶,更新时间
-			articleVo.setUpdateDT(new Date());
-		}
+//		if (articleVo.isZd()) {
+//			// 置顶,更新时间
+//			articleVo.setUpdateDT(new Date());
+//		}
+		articleVo.setUpdateDT(new Date());
 
 		if (articleVo.getPublish() == null) {
 			articleVo.setPublish(false);
 
 		} else if (articleVo.getPublish()) {
 			// 发布,更新发布时间
-			articleVo.setPublishDT(new Date());
+			if(articleVo.getPublishDT() == null){
+				articleVo.setPublishDT(new Date());
+			}
 		}
 
 		BeanUtils.copyProperties(articleVo, article);
@@ -204,16 +208,10 @@ public class ArticleServiceImpl implements ArticleServiceI {
 	}
 
 	private String orderHql(PageFilter ph) {
-		String orderString = " order by t.updateDT desc";
-
+		String orderString = "";
 		if ((ph.getSort() != null) && (ph.getOrder() != null)) {
-			orderString += ",t." + ph.getSort() + " " + ph.getOrder();
+			orderString = " order by t." + ph.getSort() + " " + ph.getOrder();
 		}
-
-		if (StringUtils.isEmpty(orderString)) {
-			orderString = "  order by t.createDT";
-		}
-
 		return orderString;
 	}
 

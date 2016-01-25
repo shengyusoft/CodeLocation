@@ -315,7 +315,7 @@
 				
 				<tr>
 					<th>备注&nbsp;</th>
-					<td colspan="5"><textarea style="width: 100%" rows="4"
+					<td colspan="5"><textarea style="width: 100%" rows="6"
 							name="remark"></textarea></td>
 				</tr>
 			</table>

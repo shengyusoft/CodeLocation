@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 	$(function() {
 		$('#reimbursementEditForm').form({
@@ -17,7 +18,6 @@
 				progressClose();
 				result = $.parseJSON(result);
 				if (result.success) {
-					debugger;
 					//批量报销和单独报销两种情况
 					if(parent.$.modalDialogTwo.openner_dataGrid){
 						parent.$.modalDialogTwo.openner_dataGrid.datagrid('reload');
@@ -114,18 +114,15 @@
 					<th>时间范围 &nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input type="hidden" name="option" id="option" value="2" />
-						<input type="hidden" name="batchId" id="batchId"
-						value="${reimbursement.batchId}" /> <input type="hidden"
-						name="type" id="type" value="${reimbursement.type}" /> <input
-						type="hidden" name="id" value="${reimbursement.id}" /> <input
-						type="hidden" name="process.id"
-						value="${reimbursement.process_vo.id}" /> <input class="Wdate"
-						data-options="required:true" type="text" name="startDT"
-						value="${reimbursement.startDT}" id="startDT"
-						style="width: 68%; height: 100%;"
-						onfocus="showStart('yyyy-MM-dd')" /></td>
-					<td><input class="Wdate" data-options="required:true"
-						type="text" name="endDT" value="${reimbursement.endDT}" id="endDT"
+						<input type="hidden" name="batchId" id="batchId" value="${reimbursement.batchId}" /> 
+						<input type="hidden" name="type" id="type" value="${reimbursement.type}" /> 
+						<input type="hidden" name="id" value="${reimbursement.id}" /> 
+						<input type="hidden" name="process.id" value="${reimbursement.process_vo.id}" /> 
+						<input id="startDT" class="Wdate" data-options="required:true" type="text" name="startDT"
+						value="<fmt:formatDate value="${reimbursement.startDT}" pattern="yyyy-MM-dd"/>"
+						style="width: 68%; height: 100%;" onfocus="showStart('yyyy-MM-dd')" /></td>
+					<td><input id="endDT" class="Wdate" data-options="required:true" type="text" name="endDT" 
+						value="<fmt:formatDate value="${reimbursement.endDT}" pattern="yyyy-MM-dd"/>"
 						style="width: 68%; height: 100%;" onfocus="showEnd('yyyy-MM-dd')" />
 					</td>
 				</tr>
@@ -153,7 +150,7 @@
 				</tr>
 				<tr>
 					<th>费用明细&nbsp;</th>
-					<td colspan="4"><textarea style="width: 100%" rows="5"
+					<td colspan="4"><textarea style="width: 100%" rows="8"
 							name="costDetail" id="costDetail">${reimbursement.costDetail}</textarea></td>
 				</tr>
 				<tr>

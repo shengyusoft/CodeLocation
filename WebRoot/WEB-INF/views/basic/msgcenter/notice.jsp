@@ -20,9 +20,7 @@ $(function() {
 		pagination : true,
 		nowrap : true,
 		idField : 'id',
-		sortName : 'createDT',
-		sortOrder : 'desc',
-		pageSize : 10,
+		pageSize : getDefaultPageSize(),
 		pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400,
 				500 ],
 		frozenColumns : [ [
@@ -43,18 +41,7 @@ $(function() {
 					title : '发布时间',
 					align : 'center',
 					sortable : true,
-					field : 'publishDT',
-					formatter : function(value, row, index) {
-						if (!isEmpty(value)) {
-							var date = '';
-							if(value.indexOf(' ') > 0){
-								date = value.substring(0,value.indexOf(' '));
-							}
-							return date;
-						} else {
-							return "未发布";
-						}
-					}
+					field : 'publishDT'
 
 				},
 				{

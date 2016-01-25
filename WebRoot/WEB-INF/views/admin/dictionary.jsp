@@ -261,7 +261,7 @@
 		<table id="dictionarytypeTree" style="width:180px;margin: 10px 10px 10px 10px"></table>
 	</div>
 	<div id="toolbar" style="display: none;">
-		<c:if test="${fn:contains(sessionInfo.resourceList, '/user/add')}">
+		<c:if test="${fn:contains(sessionInfo.resourceList, '/dictionary/add')}">
 			<a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon_add'">添加</a>
 		</c:if>
 	</div>

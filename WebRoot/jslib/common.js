@@ -357,6 +357,31 @@ function reloadGrid(dg){
 	dg.datagrid('reload');
 }
 
+//每页默认显示条数
+//优化：做成可配置的，从后台读取，在系统管理中增加一个系统基本配置：页面配置（每页默认显示条数等，页面弹出框模式等）
+function getDefaultPageSize(){
+	return 50;
+}
+
+function toCap(n) {
+	if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)){
+		return "数据非法";
+	}
+	var unit = "仟佰拾亿仟佰拾万仟佰拾元角分", str = "";
+	n += "00";
+	var p = n.indexOf('.');
+	if (p >= 0){
+		n = n.substring(0, p) + n.substr(p + 1, 2);
+	}
+	unit = unit.substr(unit.length - n.length);
+	for ( var i = 0; i < n.length; i++){
+		str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i);
+	}
+	return str.replace(/零(仟|佰|拾|角)/g, "零").replace(/(零)+/g, "零")
+		.replace(/零(万|亿|元)/g, "$1").replace(/(亿)万|壹(拾)/g, "$1$2")
+		.replace(/^元零?|零分/g, "").replace(/元$/g, "元整");
+}
+
 // html编辑器,fix bug,第二次进入编辑器时,必须全屏然后才可以获取焦点
 function initKingEditor(editor) {
 	editor = KindEditor.create('#html', {

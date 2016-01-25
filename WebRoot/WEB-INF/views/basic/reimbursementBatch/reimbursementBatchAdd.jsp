@@ -61,7 +61,7 @@
 					idField : 'id',
 					sortName : 'id',
 					sortOrder : 'desc',
-					pageSize : 10,
+					pageSize : getDefaultPageSize(),
 					pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 					frozenColumns : [ [
 
@@ -209,8 +209,7 @@
 			parent.$.messager.alert('警告', '请先进行报销登记!');
 			return;
 		}
-		parent.$
-				.modalDialogTwo({
+		parent.$.modalDialogTwo({
 					title : '报销申请详情',
 					width : '900',
 					height : '500',
@@ -285,8 +284,7 @@
 
 		id = rows[0].id;
 
-		parent.$
-				.modalDialogTwo({
+		parent.$.modalDialogTwo({
 					title : '报销详情修改',
 					width : '900',
 					height : '500',

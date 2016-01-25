@@ -49,7 +49,7 @@
 			sortName : 'id',
 			sortOrder : 'desc',
 			showFooter : true,
-			pageSize : 10,
+			pageSize : getDefaultPageSize(),
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			frozenColumns : [ [
 
@@ -200,7 +200,7 @@
 		parent.$.modalDialogTwo({
 			title : '报销详情',
 			width : '900',
-			height : '450',
+			height : 500,
 			href : '${ctx}/reimbursement/addPage',
 			buttons : [ {
 				text : '添加',
@@ -269,7 +269,7 @@
 		parent.$.modalDialogTwo({
 			title : '报销详情修改',
 			width : '900',
-			height : '500',
+			height : 500,
 			href : '${ctx}/reimbursement/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',

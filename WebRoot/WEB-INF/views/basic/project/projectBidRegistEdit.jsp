@@ -255,7 +255,8 @@
 								</th>
 								<td>
 									<input type="hidden" name="id" id="id" value="${projectRegist.id}"></input>
-									<input type="hidden" name="createDT" id="createDT" value="${projectRegist.createDT}"></input>
+									<input type="hidden" name="createDT" id="createDT" 
+									value="<fmt:formatDate value="${projectRegist.createDT}" pattern="yyyy-MM-dd"/>"/>
 									<input type="hidden" name="option" id="option" value="0"></input>
 									<input type="hidden" name="type" id="type" value="${projectRegist.type}"></input>
 									<select id="company" name="company.id" data-options="required:true"

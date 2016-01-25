@@ -28,7 +28,7 @@
 			sortName : 'id',
 			sortOrder : 'desc',
 			showFooter : true,
-			pageSize : 10,
+			pageSize : getDefaultPageSize(),
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300,400, 500 ],
 			columns : [ [
 					{
@@ -355,7 +355,7 @@
 		parent.$.modalDialog({
 			title : '项目中标登记',
 			width : 980,
-			height : 410,
+			height : 450,
 			href : '${ctx}/projectBid/addPage',
 			buttons : [ {
 				text : '添加',
@@ -424,7 +424,7 @@
 		parent.$.modalDialog({
 			title : '项目中标登记编辑',
 			width : 980,
-			height : 410,
+			height : 450,
 			href : '${ctx}/projectBid/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -471,7 +471,7 @@
 		parent.$.modalDialog({
 			title : '项目中标登记过期审核',
 			width : 980,
-			height : 410,
+			height : 450,
 			href : '${ctx}/projectBid/auditPage?id=' + id,
 			buttons : [ {
 				text : '同意上报',
@@ -503,7 +503,7 @@
 		parent.$.modalDialog({
 			title : '项目中标登记详情',
 			width : 980,
-			height : 410,
+			height : 450,
 			href : '${ctx}/projectBid/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',

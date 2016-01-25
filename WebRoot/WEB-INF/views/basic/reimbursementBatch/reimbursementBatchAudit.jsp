@@ -182,7 +182,7 @@
 		        }); 
 		        $('#dataGrid').datagrid('fixDetailRowHeight',index); 
 		    },
-			pageSize : 10,
+			pageSize : getDefaultPageSize(),
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [
 			{
@@ -391,6 +391,7 @@
 		}
 
 		id = rows[0].id;
+		console.log(id);
 		var state = rows[0].process_vo.state;
 		if (!isEmpty(state) && state > 0) {
 			parent.$.messager.alert('提示', '申请已提交，不可编辑!');

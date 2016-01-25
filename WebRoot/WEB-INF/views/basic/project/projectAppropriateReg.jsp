@@ -27,7 +27,7 @@
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'desc',
-			pageSize : 10,
+			pageSize : getDefaultPageSize(),
 			view: detailview,   
 		    detailFormatter:function(index,row){   
 		        return '<div style="padding:2px"><table id="ddv-' + index + '"></table></div>';   

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="金鹰公司员工借款审批单      " language="groovy" pageWidth="705" pageHeight="360" whenNoDataType="NoDataSection" columnWidth="665" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="金鹰公司员工借款审批单      " language="groovy" pageWidth="765" pageHeight="360" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="725" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -89,9 +89,9 @@ where r.ID in ($P!{ids})]]>
 		</band>
 	</title>
 	<detail>
-		<band height="283" splitType="Stretch">
+		<band height="278" splitType="Stretch">
 			<staticText>
-				<reportElement x="74" y="0" width="49" height="25"/>
+				<reportElement x="74" y="0" width="59" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -104,7 +104,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[借 款 人]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="123" y="0" width="74" height="25"/>
+				<reportElement x="133" y="0" width="87" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -117,7 +117,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOAN}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="427" y="48" width="85" height="23"/>
+				<reportElement x="478" y="48" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -130,7 +130,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[借款日期]]></text>
 			</staticText>
 			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
-				<reportElement x="427" y="71" width="85" height="23"/>
+				<reportElement x="478" y="71" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -143,7 +143,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{LOANDATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="74" y="25" width="49" height="23"/>
+				<reportElement x="74" y="25" width="59" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -156,7 +156,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[借款事由]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="123" y="25" width="542" height="23"/>
+				<reportElement x="133" y="25" width="592" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -169,7 +169,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOANREASON}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="123" y="71" width="138" height="23"/>
+				<reportElement x="133" y="71" width="179" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -182,7 +182,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{BANK}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="261" y="71" width="166" height="23"/>
+				<reportElement x="312" y="71" width="166" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -195,7 +195,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{ACCOUNT}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="74" y="71" width="49" height="23"/>
+				<reportElement x="74" y="71" width="59" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -208,7 +208,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{USERNAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="74" y="94" width="49" height="46"/>
+				<reportElement x="74" y="94" width="59" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -221,7 +221,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[备    注]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="123" y="140" width="355" height="46"/>
+				<reportElement x="133" y="140" width="345" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -234,7 +234,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{zjl_remark}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="123" y="48" width="138" height="23"/>
+				<reportElement x="133" y="48" width="179" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -247,7 +247,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[借款人开户行]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="261" y="48" width="166" height="23"/>
+				<reportElement x="312" y="48" width="166" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -260,7 +260,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[借款人账号]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="140" width="49" height="46"/>
+				<reportElement x="74" y="140" width="59" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -286,7 +286,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[申 请 人]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="197" y="0" width="59" height="25"/>
+				<reportElement x="220" y="0" width="74" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -299,7 +299,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[借款金额]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="256" y="0" width="101" height="25"/>
+				<reportElement x="294" y="0" width="111" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -312,7 +312,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOANMONEY}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="413" y="0" width="252" height="25"/>
+				<reportElement x="473" y="0" width="252" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -325,7 +325,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOANMONEYCAP}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="74" y="48" width="49" height="23"/>
+				<reportElement x="74" y="48" width="59" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -338,7 +338,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[户    名]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="512" y="48" width="153" height="23"/>
+				<reportElement x="562" y="48" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -351,7 +351,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[借款人电话]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="512" y="71" width="153" height="23"/>
+				<reportElement x="562" y="71" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -377,7 +377,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[总 经 理]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="478" y="140" width="45" height="23"/>
+				<reportElement x="478" y="140" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -390,7 +390,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[签名]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="478" y="163" width="45" height="23"/>
+				<reportElement x="478" y="163" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -403,7 +403,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[日期]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="523" y="163" width="142" height="23"/>
+				<reportElement x="562" y="163" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -429,7 +429,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[会    计]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="478" y="186" width="45" height="23"/>
+				<reportElement x="478" y="186" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -442,7 +442,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[签名]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="123" y="186" width="355" height="46"/>
+				<reportElement x="133" y="186" width="345" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -455,7 +455,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{kj_remark}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="74" y="186" width="49" height="46"/>
+				<reportElement x="74" y="186" width="59" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -468,7 +468,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[审核意见]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="478" y="209" width="45" height="23"/>
+				<reportElement x="478" y="209" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -481,7 +481,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[日期]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="523" y="209" width="142" height="23"/>
+				<reportElement x="562" y="209" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -494,7 +494,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{kj_operateDT}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="478" y="232" width="45" height="23"/>
+				<reportElement x="478" y="232" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -507,7 +507,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[签名]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="74" y="232" width="49" height="46"/>
+				<reportElement x="74" y="232" width="59" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -533,7 +533,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[出    纳]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="123" y="232" width="355" height="46"/>
+				<reportElement x="133" y="232" width="345" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -546,7 +546,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cn_remark}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="478" y="255" width="45" height="23"/>
+				<reportElement x="478" y="255" width="84" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -559,7 +559,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[日期]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="523" y="255" width="142" height="23"/>
+				<reportElement x="562" y="255" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -572,7 +572,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cn_operateDT}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="357" y="0" width="56" height="25"/>
+				<reportElement x="405" y="0" width="68" height="25"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -585,7 +585,7 @@ where r.ID in ($P!{ids})]]>
 				<text><![CDATA[金额大写]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="523" y="140" width="142" height="23"/>
+				<reportElement x="562" y="140" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -598,7 +598,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{zjl_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="523" y="186" width="142" height="23"/>
+				<reportElement x="562" y="186" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -611,7 +611,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{kj_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="523" y="232" width="142" height="23"/>
+				<reportElement x="562" y="232" width="163" height="23"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -624,7 +624,7 @@ where r.ID in ($P!{ids})]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cn_name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="123" y="94" width="542" height="46"/>
+				<reportElement x="133" y="94" width="592" height="46"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>

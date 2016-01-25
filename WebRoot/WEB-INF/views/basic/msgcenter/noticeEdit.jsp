@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!-- html编辑器,fix bug,第二次进入编辑器时,必须全屏然后才可以获取焦点 -->
 <script type="text/javascript">
@@ -60,7 +61,8 @@
 					<input type="hidden" name="id" value="${article.id}"/>
 					<input type="hidden" name="createUserID" value="${article.createUserID}"/>
 					<input type="hidden" name="dictionaryId" value="${article.dictionaryId}"/>
-					<input type="hidden" name="createDT" value="${article.createDT}"/>
+					<input type="hidden" name="publishDT" value="<fmt:formatDate value="${article.publishDT}" pattern="yyyy-MM-dd"/>"/>
+					<input type="hidden" name="createDT" value="<fmt:formatDate value="${article.createDT}" pattern="yyyy-MM-dd"/>"/>
 					<input type="hidden" name="attachmentIds" id="attachmentIds" value="${article.attachmentIds}">
 					<label style="vertical-align: middle; text-align: center;">标题</label>
 						<input name="title" type="text" style="width: 90%;margin-left: 16px; " id="code"

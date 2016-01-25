@@ -60,7 +60,7 @@
 			idField : 'id',
 			sortName : 'id',
 			sortOrder : 'asc',
-			pageSize : 10,
+			pageSize : getDefaultPageSize(),
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [ {
 				checkbox : true,
@@ -443,7 +443,7 @@
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input class="Wdate" type="text" name="bidDT" id="bidDT"
 						style="width: 98%; height: 100%;"
-						value="${projectAppropriateReg.bidDT}"
+						value="<fmt:formatDate value="${projectAppropriateReg.bidDT}" pattern="yyyy-MM-dd"/>"
 						data-options="required:true" onfocus="showDate('yyyy-MM-dd')" /></td>
 				</tr>
 				<tr>

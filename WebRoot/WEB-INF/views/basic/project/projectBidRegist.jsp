@@ -28,7 +28,7 @@
 			idField : 'id',
 			sortName : 'registDT',
 			sortOrder : 'desc',
-			pageSize : 10,
+			pageSize : getDefaultPageSize(),
 			pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
 			columns : [ [ {
 				checkbox : true,
@@ -250,7 +250,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记',
 			width : 850,
-			height : 560,
+			height : 620,
 			href : '${ctx}/projectRegist/addPage?type=1',
 			buttons : [ {
 				text : '添加',
@@ -323,7 +323,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记编辑',
 			width : 850,
-			height : 560,
+			height : 620,
 			href : '${ctx}/projectRegist/editPage?id=' + id,
 			buttons : [ {
 				text : '编辑',
@@ -364,7 +364,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记详情',
 			width : 850,
-			height : 560,
+			height : 620,
 			href : '${ctx}/projectRegist/detailPage?id=' + id,
 			buttons : [ {
 				text : '退出',
@@ -400,7 +400,7 @@
 		parent.$.modalDialog({
 			title : '项目开标登记过期审核',
 			width : 980,
-			height : 410,
+			height : 560,
 			href : '${ctx}/projectRegist/auditPage?id=' + id,
 			buttons : [ {
 				text : '同意上报',

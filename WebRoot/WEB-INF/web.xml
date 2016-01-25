@@ -26,14 +26,14 @@
   
 	<!--opensession closesession全交给视图部分，最后视图部分用完了session再去关session-->
 
-	<filter>          
+	<!--<filter>          
 		<filter-name>openSessionInViewFilter</filter-name>          
 		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>        
 	</filter>
 	<filter-mapping>
 		<filter-name>openSessionInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping>-->
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

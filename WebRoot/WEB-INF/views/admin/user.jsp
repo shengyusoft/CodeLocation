@@ -50,10 +50,12 @@
 				width : '100',
 				title : '登录名',
 				field : 'loginname',
+				align : 'center',
 				sortable : true
 			}, {
-				width : '80',
+				width : '60',
 				title : '姓名',
+				align : 'center',
 				field : 'name',
 				sortable : true
 			},{
@@ -63,17 +65,20 @@
 				hidden : true
 			},{
 				width : '80',
+				align : 'center',
 				title : '所属部门',
 				field : 'organizationName'
 			}] ],
 			columns : [ [ {
 				width : '150',
 				title : '创建时间',
+				align : 'center',
 				field : 'createdatetime',
 				sortable : true
 			},  {
 				width : '50',
 				title : '性别',
+				align : 'center',
 				field : 'sex',
 				sortable : true,
 				formatter : function(value, row, index) {
@@ -87,12 +92,14 @@
 			}, {
 				width : '50',
 				title : '年龄',
+				align : 'center',
 				field : 'age',
 				sortable : true
 			}, {
 				width : '80',
 				title : '用户类型',
 				field : 'usertype',
+				align : 'center',
 				sortable : true,
 				formatter : function(value, row, index) {
 					var jsonObjs = $.parseJSON('${usertypeJson}');
@@ -104,7 +111,7 @@
 					}
 					return "未知类型";
 				}
-			},{
+			}/* ,{
 				width : '80',
 				title : '是否默认',
 				field : 'isdefault',
@@ -130,7 +137,12 @@
 						return '停用';
 					}
 				}
-			} , {
+			} */,{
+				width : '160',
+				title : '角色',
+				field : 'roleNames',
+				sortable : false
+			},{
 				field : 'action',
 				title : '操作',
 				width : 100,

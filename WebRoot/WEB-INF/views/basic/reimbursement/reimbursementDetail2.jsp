@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <script type="text/javascript">
 	$.fn.datebox.defaults.formatter = function(date) {
 		var y = date.getFullYear();
@@ -36,12 +37,14 @@
 			<table class="grid">
 				<tr>
 					<th>时间范围 &nbsp;</th>
-					<td><input class="easyui-datebox" readonly="readonly"
-						type="text" name="startDT" value="${reimbursement.startDT}"
-						id="startDT" /></td>
-					<td><input class="easyui-datebox" readonly="readonly"
-						data-options="required:true" type="text" name="endDT"
-						value="${reimbursement.endDT}" id="endDT" /></td>
+					<td>
+						<input id="startDT" name="startDT" class="easyui-datebox" readonly="readonly" type="text" 
+						value='<fmt:formatDate value="${reimbursement.startDT}" pattern="yyyy-MM-dd"/>'/>
+					</td>
+					<td>
+						<input id="endDT" name="endDT" class="easyui-datebox" readonly="readonly" type="text" 
+						value='<fmt:formatDate value="${reimbursement.endDT}" pattern="yyyy-MM-dd"/>' />
+					</td>
 				</tr>
 				<tr>
 					<th>地点 &nbsp;</th>

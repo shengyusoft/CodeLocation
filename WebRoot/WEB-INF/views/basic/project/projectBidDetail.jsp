@@ -270,7 +270,7 @@
 					<th>登记人&nbsp;<label
 						style="color: red; vertical-align: middle; text-align: center;">*</label></th>
 					<td><input name="recordman" type="text" readonly
-						id="recordman" value="${sessionInfo.name}"
+						id="recordman" value="${projectBid.recordman}"
 						style="width: 50%; height: 100%" class="easyui-validatebox span2"
 						value="${projectBid.recordman}" data-options="required:true" /></td>
 						
