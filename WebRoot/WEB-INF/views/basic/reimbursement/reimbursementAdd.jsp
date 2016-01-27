@@ -131,9 +131,8 @@
 				<tr>
 					<th>费用明细&nbsp;</th>
 					<td colspan="4"><textarea class="easyui-validatebox"
-							style="width: 100%" rows="8" name="costDetail"
-							validType="maxLength[2000]"
-							data-options="required:true,validType:'maxLength[100]" id="costDetail"></textarea></td>
+							style="width: 100%" rows="8" name="costDetail" maxlength="2000"
+							data-options="required:true" id="costDetail"></textarea></td>
 				</tr>
 				<tr>
 					<th>费用小计&nbsp;</th>

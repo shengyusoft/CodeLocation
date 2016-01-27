@@ -150,7 +150,7 @@
 				</tr>
 				<tr>
 					<th>费用明细&nbsp;</th>
-					<td colspan="4"><textarea style="width: 100%" rows="8"
+					<td colspan="4"><textarea style="width: 100%" rows="8" maxlength="2000"
 							name="costDetail" id="costDetail">${reimbursement.costDetail}</textarea></td>
 				</tr>
 				<tr>
