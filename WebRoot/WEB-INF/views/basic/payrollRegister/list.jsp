@@ -39,6 +39,13 @@
 							}
 						}, {
 							width : '120',
+							title : '月份',
+							sortable : true,
+							align : 'center',
+							field : 'creatTime',
+							formatter : Common.formatterMonth
+						}, {
+							width : '120',
 							title : '姓名',
 							sortable : true,
 							align : 'center',
