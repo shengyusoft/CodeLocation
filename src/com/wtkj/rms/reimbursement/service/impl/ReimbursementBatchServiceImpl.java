@@ -124,6 +124,7 @@ public class ReimbursementBatchServiceImpl implements
 					params.put("userId", user.getId());
 					params.put("state", 2);
 				} else if (user.getRoleNames().indexOf("出纳") >= 0) {
+					//TODO 如果是办理人自己的单子，，这里有问题，，需要在前台处理下用状体处理
 					hql += " and (t.process.state >= :state or t.process.applyUser.id = :userId)";
 					params.put("userId", user.getId());
 					params.put("state", 3);

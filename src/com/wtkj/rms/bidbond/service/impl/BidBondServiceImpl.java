@@ -167,6 +167,11 @@ public class BidBondServiceImpl implements BidBondServiceI {
 				hql += " and t.projectName like :pname";
 				params.put("pname", "%%" + vo.getProjectName() + "%%");
 			}
+			// 户名
+			if (!StringUtils.isEmpty(vo.getPayeeAccountName())) {
+				hql += " and t.payeeAccountName like :pname";
+				params.put("pname", "%%" + vo.getPayeeAccountName() + "%%");
+			}
 
 			// 类型，批量报销或者单独报销
 			if (vo.getType() >= 0) {
